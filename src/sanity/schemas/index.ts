@@ -14,18 +14,24 @@ const annotations = [
 // Document types
 import collection from './documents/collection';
 import colorTheme from './documents/colorTheme';
+import material from './documents/material';
+import materialAttribute from './documents/materialAttribute';
 import page from './documents/page';
 import product from './documents/product';
 import productVariant from './documents/productVariant';
 import sharedText from './documents/sharedText';
+import person from './documents/person';
 
 const documents = [
   collection,
   colorTheme,
+  material,
+  materialAttribute,
   page,
   product,
   productVariant,
   sharedText,
+  person,
 ];
 
 // Singleton document types
@@ -41,6 +47,7 @@ import simpleBlockContent from './blocks/simpleBlockContent';
 const blocks = [body, simpleBlockContent];
 
 // Object types
+import creator from './objects/creator';
 import customProductOptionColor from './objects/customProductOption/color';
 import customProductOptionSize from './objects/customProductOption/size';
 import imageWithProductHotspots from './objects/imageWithProductHotspots';
@@ -73,25 +80,15 @@ import shopifyProduct from './objects/shopifyProduct';
 import shopifyProductVariant from './objects/shopifyProductVariant';
 
 const objects = [
-  linkExternal,
-  linkInternal,
-  shopifyProduct,
-  productOption,
-  shopifyProductVariant,
-  shopifyCollection,
-  shopifyCollectionRule,
-  seoShopify,
-  seoPage,
-  seoHome,
+  creator,
   customProductOptionColor,
   customProductOptionSize,
-  proxyString,
+  imageWithProductHotspots,
+  linkExternal,
+  linkInternal,
   heroCollection,
   heroHome,
   heroPage,
-  productWithVariant,
-  imageWithProductHotspots,
-  productHotspots,
   moduleAccordion,
   moduleCallout,
   moduleCallToAction,
@@ -103,6 +100,17 @@ const objects = [
   moduleProduct,
   moduleProducts,
   placeholderString,
+  productHotspots,
+  productOption,
+  productWithVariant,
+  proxyString,
+  seoHome,
+  seoPage,
+  seoShopify,
+  shopifyCollection,
+  shopifyCollectionRule,
+  shopifyProduct,
+  shopifyProductVariant,
 ];
 
 export const schemaTypes = [

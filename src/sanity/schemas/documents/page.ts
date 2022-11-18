@@ -1,6 +1,6 @@
-import {DocumentIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
-import {validateSlug} from '../../utils/validateSlug'
+import {DocumentIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
+import {validateSlug} from '../../utils/validateSlug';
 
 export default defineField({
   name: 'page',
@@ -85,12 +85,12 @@ export default defineField({
       title: 'title',
     },
     prepare(selection) {
-      const {seoImage, title} = selection
+      const {seoImage, title} = selection;
 
       return {
         media: seoImage,
         title,
-      }
+      };
     },
   },
-})
+});

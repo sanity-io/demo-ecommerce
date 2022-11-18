@@ -15,7 +15,7 @@ export const LINK_INTERNAL = groq`
     (_type == "page") => {
       "slug": "/pages/" + slug.current,
     },
-    (_type == "product" && store.isEnabled && store.status == "active") => {
+    (_type == "product" && !store.isDeleted && store.status == "active") => {
       "slug": "/products/" + store.slug.current,
     },
   }

@@ -1,15 +1,16 @@
-import {TagIcon} from '@sanity/icons'
-import pluralize from 'pluralize'
-import ShopifyIcon from '../../components/icons/Shopify'
-import ProductHiddenInput from '../../components/inputs/ProductHidden'
-import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
-import {defineField, defineType} from 'sanity'
-import {getPriceRange} from '../../utils/getPriceRange'
+import {TagIcon} from '@sanity/icons';
+import pluralize from 'pluralize';
+import ShopifyIcon from '../../components/icons/Shopify';
+import ProductHiddenInput from '../../components/inputs/ProductHidden';
+import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus';
+import {defineField, defineType} from 'sanity';
+import {getPriceRange} from '../../utils/getPriceRange';
 
 const GROUPS = [
   {
     name: 'editorial',
     title: 'Editorial',
+    default: true,
   },
   {
     name: 'shopifySync',
@@ -20,7 +21,7 @@ const GROUPS = [
     name: 'seo',
     title: 'SEO',
   },
-]
+];
 
 export default defineType({
   name: 'product',
@@ -37,9 +38,9 @@ export default defineType({
       },
       group: GROUPS.map((group) => group.name),
       hidden: ({parent}) => {
-        const isActive = parent?.store?.status === 'active'
-        const isDeleted = parent?.store?.isDeleted
-        return !parent?.store || (isActive && !isDeleted)
+        const isActive = parent?.store?.status === 'active';
+        const isDeleted = parent?.store?.isDeleted;
+        return !parent?.store || (isActive && !isDeleted);
       },
     }),
     // Title (proxy)
@@ -69,6 +70,20 @@ export default defineType({
       title: 'Body',
       type: 'body',
       group: 'editorial',
+    }),
+    defineField({
+      name: 'creators',
+      title: 'Creators',
+      type: 'array',
+      group: 'editorial',
+      of: [{type: 'creator'}],
+    }),
+    defineField({
+      name: 'composition',
+      title: 'Composition',
+      type: 'array',
+      group: 'editorial',
+      of: [{type: 'reference', to: [{type: 'material'}]}],
     }),
     defineField({
       name: 'store',
@@ -117,22 +132,30 @@ export default defineType({
       variantCount: 'store.variants',
     },
     prepare(selection) {
-      const {isDeleted, options, previewImageUrl, priceRange, status, title, variants} = selection
+      const {
+        isDeleted,
+        options,
+        previewImageUrl,
+        priceRange,
+        status,
+        title,
+        variants,
+      } = selection;
 
-      const optionCount = options?.length
-      const variantCount = variants?.length
+      const optionCount = options?.length;
+      const variantCount = variants?.length;
 
-      let description = [
+      const description = [
         variantCount ? pluralize('variant', variantCount, true) : 'No variants',
         optionCount ? pluralize('option', optionCount, true) : 'No options',
-      ]
+      ];
 
-      let subtitle = getPriceRange(priceRange)
+      let subtitle = getPriceRange(priceRange);
       if (status !== 'active') {
-        subtitle = '(Unavailable in Shopify)'
+        subtitle = '(Unavailable in Shopify)';
       }
       if (isDeleted) {
-        subtitle = '(Deleted from Shopify)'
+        subtitle = '(Deleted from Shopify)';
       }
 
       return {
@@ -147,7 +170,7 @@ export default defineType({
             url={previewImageUrl}
           />
         ),
-      }
+      };
     },
   },
-})
+});

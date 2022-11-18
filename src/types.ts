@@ -88,6 +88,18 @@ export type SanityColorTheme = {
   text: string;
 };
 
+export type SanityPerson = {
+  name: string;
+  bio: Block[];
+  image: SanityAssetImage;
+};
+
+export type SanityCreator = {
+  _key: string;
+  role: string;
+  person: SanityPerson;
+};
+
 export type SanityCustomProductOption =
   | SanityCustomProductOptionColor
   | SanityCustomProductOptionSize;
@@ -340,6 +352,7 @@ export type SanityProductPage = {
   customProductOptions?: SanityCustomProductOption[];
   gid: string;
   slug?: string;
+  creators: SanityCreator[];
   seo: SanitySeo;
 };
 

@@ -1,18 +1,22 @@
-import {DocumentTextIcon} from '@sanity/icons';
+import {UsersIcon} from '@sanity/icons';
 import {defineField} from 'sanity';
 
 export default defineField({
-  name: 'sharedText',
-  title: 'Shared Text',
+  name: 'person',
+  title: 'Person',
   type: 'document',
-  icon: DocumentTextIcon,
+  icon: UsersIcon,
   fields: [
     defineField({
-      name: 'title',
+      name: 'name',
       type: 'string',
     }),
     defineField({
-      name: 'content',
+      name: 'image',
+      type: 'image',
+    }),
+    defineField({
+      name: 'bio',
       type: 'simpleBlockContent',
     }),
   ],
