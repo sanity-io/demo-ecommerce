@@ -21,6 +21,7 @@ const config = defineConfig({
   title: 'AKVA',
   basePath: `/studio`,
 
+  // To do - move to env variables
   projectId: 'k4hg38xw',
   dataset: 'production',
   apiVersion: '2022-05-01',
