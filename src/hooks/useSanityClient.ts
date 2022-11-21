@@ -13,7 +13,7 @@ export default function useSanityClient() {
     ...(preview
       ? {
           useCdn: false,
-          token: Oxygen.env.PRIVATE_SANITY_API_TOKEN,
+          token: import.meta.env.PRIVATE_SANITY_API_TOKEN,
         }
       : {}),
   });
