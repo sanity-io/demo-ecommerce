@@ -54,6 +54,7 @@
     "react-social-media-embed": "^2.2.2",
     "sanity": "^3.0.0-rc.2",
     "sanity-plugin-hotspot-array": "^1.0.0",
+    "sanity-plugin-iframe-pane": "^2.0.1-v3-studio.3",
     "sanity-plugin-media": "^2.0.0-v3-studio.3",
     "slug": "^8.2.2",
     "styled-components": "^5.3.6",

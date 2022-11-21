@@ -4,8 +4,12 @@ import usePreviewMode from './usePreviewMode';
 
 export default function useSanityClient() {
   const preview = usePreviewMode();
+  const {projectId, dataset, apiVersion} = sanityConfig;
+
   return new PicoSanity({
-    ...sanityConfig,
+    projectId,
+    dataset,
+    apiVersion,
     ...(preview
       ? {
           useCdn: false,

@@ -1,6 +1,7 @@
-import {ListItemBuilder} from 'sanity/desk'
-import defineStructure from '../utils/defineStructure'
-import {InfoOutlineIcon} from '@sanity/icons'
+import {ListItemBuilder} from 'sanity/desk';
+import defineStructure from '../utils/defineStructure';
+import {InfoOutlineIcon} from '@sanity/icons';
+import {previewPane} from './preview';
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -17,7 +18,12 @@ export default defineStructure<ListItemBuilder>((S) =>
               S.listItem()
                 .title('Details')
                 .icon(InfoOutlineIcon)
-                .child(S.document().schemaType('product').documentId(id)),
+                .child(
+                  S.document()
+                    .schemaType('product')
+                    .documentId(id)
+                    .views([S.view.form(), previewPane(S)]),
+                ),
               // Product variants
               S.listItem()
                 .title('Variants')
@@ -30,13 +36,13 @@ export default defineStructure<ListItemBuilder>((S) =>
                       `
                       _type == "productVariant"
                       && store.productId == $productId
-                    `
+                    `,
                     )
                     .params({
                       productId: Number(id.replace('shopifyProduct-', '')),
-                    })
+                    }),
                 ),
-            ])
-        )
-    )
-)
+            ]),
+        ),
+    ),
+);
