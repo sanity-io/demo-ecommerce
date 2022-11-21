@@ -13,7 +13,6 @@
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
-    "@netlify/hydrogen-platform": "^1.0.0",
     "@portabletext/types": "^1.0.3",
     "@sanity/vision": "^3.0.0-rc.2",
     "@shopify/cli": "^3.0.23",
