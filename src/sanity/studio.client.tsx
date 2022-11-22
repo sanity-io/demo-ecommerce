@@ -1,15 +1,21 @@
-import {useState, useEffect} from 'react';
-import {Studio} from 'sanity';
-import config from '../../sanity.config';
+import {lazy, Suspense} from 'react';
 
-import './studio.css';
+/**
+ * Provide a consistent fallback to prevent hydration mismatch errors.
+ */
+const StudioFallback = () => <></>;
 
-export default function StudioPage() {
-  const [isClient, setIsClient] = useState<boolean>(false);
+/**
+ * If server-side rendering, then return the fallback instead of the heavy dependency.
+ */
+const SanityStudio = import.meta.env.SSR
+  ? StudioFallback
+  : lazy(() => import('./SanityStudio.client'));
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  return isClient ? <Studio config={config} /> : <></>;
+export default function Studio() {
+  return (
+    <Suspense fallback={<StudioFallback />}>
+      <SanityStudio />
+    </Suspense>
+  );
 }
