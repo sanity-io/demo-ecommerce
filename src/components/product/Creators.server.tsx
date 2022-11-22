@@ -1,7 +1,6 @@
 // @ts-expect-error incompatibility with node16 resolution
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
-import sanityConfig from '../../../sanity.config';
 import SanityImage from '../media/SanityImage.client';
 import {SanityCreator, SanityPerson} from '../../types';
 import PortableText from '../portableText/PortableText.server';
@@ -18,11 +17,11 @@ const PersonCard = ({person, role}: {person: SanityPerson; role: string}) => {
           <SanityImage
             alt={person.image?.altText}
             crop={person.image?.crop}
-            dataset={sanityConfig.dataset}
+            dataset={import.meta.env.PUBLIC_SANITY_DATASET}
             hotspot={person.image?.hotspot}
             layout="fill"
             objectFit="cover"
-            projectId={sanityConfig.projectId}
+            projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
             sizes="25vw"
             src={person.image?.asset._ref}
           />

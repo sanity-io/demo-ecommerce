@@ -1,7 +1,6 @@
 // @ts-expect-error incompatibility with node16 resolution
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
-import sanityConfig from '../../../../sanity.config';
 import type {SanityModuleGrid} from '../../../types';
 import PortableText from '../PortableText.server';
 import SanityImage from '../../media/SanityImage.client';
@@ -29,11 +28,11 @@ export default function GridBlock({node}: Props) {
               <SanityImage
                 alt={item.image?.altText}
                 crop={item.image?.crop}
-                dataset={sanityConfig.dataset}
+                dataset={import.meta.env.PUBLIC_SANITY_DATASET}
                 hotspot={item.image?.hotspot}
                 layout="fill"
                 objectFit="cover"
-                projectId={sanityConfig.projectId}
+                projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
                 sizes="25vw"
                 src={item.image?.asset._ref}
               />

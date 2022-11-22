@@ -4,7 +4,6 @@ import type {
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
-import sanityConfig from '../../../sanity.config';
 import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import type {
@@ -138,10 +137,10 @@ const ImageContent = ({module}: Props) => {
     >
       <SanityImage
         crop={image?.crop}
-        dataset={sanityConfig.dataset}
+        dataset={import.meta.env.PUBLIC_SANITY_DATASET}
         hotspot={image?.hotspot}
         layout="responsive"
-        projectId={sanityConfig.projectId}
+        projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes={['50vw, 100vw']}
         src={image?.asset._ref}
       />
