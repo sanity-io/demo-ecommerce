@@ -1,3 +1,7 @@
+/**
+ * To keep the worker bundle size small, lazy load the Studio in the client
+ * @see https://shopify.dev/custom-storefronts/hydrogen/best-practices/performance#server-bundle-size
+ */
 import {lazy, Suspense} from 'react';
 
 /**
