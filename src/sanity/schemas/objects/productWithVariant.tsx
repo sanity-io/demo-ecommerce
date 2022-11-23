@@ -3,7 +3,7 @@ import pluralize from 'pluralize'
 import React from 'react'
 import {defineField} from 'sanity'
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
-import {SANITY_API_VERSION} from '../../constants'
+import {PUBLIC_SANITY_API_VERSION} from '../../constants'
 import {getPriceRange} from '../../utils/getPriceRange'
 
 export default defineField({
@@ -61,7 +61,7 @@ export default defineField({
 
           // If both product + product variant are specified,
           // check to see if `product` references this product variant.
-          const result = await getClient({apiVersion: SANITY_API_VERSION}).fetch(
+          const result = await getClient({apiVersion: PUBLIC_SANITY_API_VERSION}).fetch(
             `*[_id == $productId && references($productVariantId)][0]._id`,
             {
               productId,

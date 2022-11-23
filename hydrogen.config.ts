@@ -4,8 +4,8 @@ export default defineConfig({
   shopify: {
     defaultCountryCode: 'US',
     defaultLanguageCode: 'EN',
-    storeDomain: import.meta.env.SHOPIFY_STORE_DOMAIN,
-    storefrontToken: import.meta.env.STOREFRONT_API_TOKEN,
+    storeDomain: import.meta.env.PUBLIC_SHOPIFY_STORE_DOMAIN,
+    storefrontToken: import.meta.env.PUBLIC_STOREFRONT_API_TOKEN,
     storefrontApiVersion: '2022-07',
   },
   session: CookieSessionStorage('__session', {

@@ -28,11 +28,11 @@ export default function GridBlock({node}: Props) {
               <SanityImage
                 alt={item.image?.altText}
                 crop={item.image?.crop}
-                dataset={import.meta.env.SANITY_DATASET}
+                dataset={import.meta.env.PUBLIC_SANITY_DATASET}
                 hotspot={item.image?.hotspot}
                 layout="fill"
                 objectFit="cover"
-                projectId={import.meta.env.SANITY_PROJECT_ID}
+                projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
                 sizes="25vw"
                 src={item.image?.asset._ref}
               />

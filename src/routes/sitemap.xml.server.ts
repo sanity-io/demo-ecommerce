@@ -16,9 +16,9 @@ type SanityPayload = {
 };
 
 const client = new PicoSanity({
-  dataset: import.meta.env.SANITY_DATASET,
-  projectId: import.meta.env.SANITY_PROJECT_ID,
-  apiVersion: import.meta.env.SANITY_API_VERSION,
+  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
 });
 
 export async function api(request: HydrogenRequest) {

@@ -137,10 +137,10 @@ const ImageContent = ({module}: Props) => {
     >
       <SanityImage
         crop={image?.crop}
-        dataset={import.meta.env.SANITY_DATASET}
+        dataset={import.meta.env.PUBLIC_SANITY_DATASET}
         hotspot={image?.hotspot}
         layout="responsive"
-        projectId={import.meta.env.SANITY_PROJECT_ID}
+        projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes={['50vw, 100vw']}
         src={image?.asset._ref}
       />

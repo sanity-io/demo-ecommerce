@@ -7,7 +7,7 @@ export async function api(
   request: HydrogenRequest,
   {session}: HydrogenApiRouteOptions,
 ) {
-  const corsOrigin = import.meta.env.SANITY_PREVIEW_URL;
+  const corsOrigin = import.meta.env.SANITY_PUBLIC_PREVIEW_URL;
 
   const headers = {
     'Access-Control-Allow-Origin': corsOrigin,
@@ -17,7 +17,7 @@ export async function api(
   const url = new URL(request.url);
   const secret = url.searchParams.get('secret');
   const slug = url.searchParams.get('slug');
-  const previewSecret = import.meta.env.SANITY_PREVIEW_SECRET;
+  const previewSecret = import.meta.env.SANITY_PUBLIC_PREVIEW_SECRET;
 
   if (!secret || secret !== previewSecret) {
     return new Response(JSON.stringify({message: 'Invalid Secret'}), {
