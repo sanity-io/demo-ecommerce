@@ -80,3 +80,6 @@ dist
 
 # Netlify
 .netlify
+
+# Cloudflare
+mini-oxygen.config.json
