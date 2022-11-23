@@ -13,7 +13,7 @@ import groq from 'groq';
 import Layout from '../../components/global/Layout.server';
 import NotFound from '../../components/global/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
-import Creators from '../../components/product/Creators.server';
+import Magazine from '../../components/product/Magazine.server';
 import ProductDetails from '../../components/product/Details.client';
 import AccessoryDetails from '../../components/product/AccessoryDetails.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
@@ -137,12 +137,18 @@ export default function ProductRoute() {
             </div>
           </>
         )}
-      </div>
 
-      {/* Designer and Artisan cards */}
-      {sanityProduct?.creators && (
-        <Creators creators={sanityProduct?.creators} />
-      )}
+        {/* Designer and Artisan cards */}
+        {(sanityProduct?.creators || sanityProduct?.composition) && (
+          <>
+            <Magazine
+              sanityProduct={sanityProduct}
+              storefrontProduct={storefrontProduct}
+              creators={sanityProduct?.creators}
+            />
+          </>
+        )}
+      </div>
 
       <RelatedProducts
         colorTheme={sanityProduct?.colorTheme}

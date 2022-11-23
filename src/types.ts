@@ -100,6 +100,23 @@ export type SanityCreator = {
   person: SanityPerson;
 };
 
+export type SanityMaterialAttribute = {
+  _key: string;
+  name: string;
+  vector: string;
+};
+
+export type SanityMaterial = {
+  name: string;
+  attributes: SanityMaterialAttribute[];
+  story: Block[];
+};
+
+export type SanityComposition = {
+  _key: string;
+  material: SanityMaterial;
+};
+
 export type SanityCustomProductOption =
   | SanityCustomProductOptionColor
   | SanityCustomProductOptionSize;
@@ -353,6 +370,7 @@ export type SanityProductPage = {
   gid: string;
   slug?: string;
   creators: SanityCreator[];
+  composition: SanityComposition[];
   seo: SanitySeo;
 };
 

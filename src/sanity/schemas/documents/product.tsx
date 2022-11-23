@@ -77,6 +77,7 @@ export default defineType({
       type: 'array',
       group: 'editorial',
       of: [{type: 'creator'}],
+      validation: (Rule) => Rule.max(1),
     }),
     defineField({
       name: 'composition',

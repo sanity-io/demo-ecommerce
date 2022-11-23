@@ -15,11 +15,13 @@ import ProductOptionsWrapper from '../ProductOptionsWrapper.client';
 type Props = {
   imageAspectClassName?: string;
   storefrontProduct: ProductWithNodes;
+  imageOnly?: boolean;
 };
 
 export default function ProductCard({
   imageAspectClassName = 'aspect-square',
   storefrontProduct,
+  imageOnly = false,
 }: Props) {
   const firstVariant = storefrontProduct.variants.nodes[0];
 
@@ -84,44 +86,46 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className="mt-3 text-md">
-        <div className="space-y-1">
-          {/* Title */}
-          <Link
-            className={clsx(
-              'font-bold', //
-              'hover:underline',
+      {!imageOnly && (
+        <div className="mt-3 text-md">
+          <div className="space-y-1">
+            {/* Title */}
+            <Link
+              className={clsx(
+                'font-bold', //
+                'hover:underline',
+              )}
+              to={`/products/${storefrontProduct.handle}`}
+            >
+              {storefrontProduct.title}
+            </Link>
+
+            {/* Vendor */}
+            {storefrontProduct.vendor && (
+              <div className="text-darkGray">{storefrontProduct.vendor}</div>
             )}
-            to={`/products/${storefrontProduct.handle}`}
-          >
-            {storefrontProduct.title}
-          </Link>
 
-          {/* Vendor */}
-          {storefrontProduct.vendor && (
-            <div className="text-darkGray">{storefrontProduct.vendor}</div>
-          )}
+            {/* Product options */}
+            {multipleProductOptions && (
+              <div className="text-darkGray">{productOptions}</div>
+            )}
+          </div>
 
-          {/* Product options */}
-          {multipleProductOptions && (
-            <div className="text-darkGray">{productOptions}</div>
-          )}
+          {/* Price / compare at price */}
+          <div className="mt-3 flex font-bold">
+            {firstVariant.compareAtPriceV2 && (
+              <span className="text-darkGray">
+                <Suspense fallback={null}>
+                  <MoneyCompareAtPrice money={firstVariant.compareAtPriceV2} />
+                </Suspense>
+              </span>
+            )}
+            <Suspense fallback={null}>
+              <MoneyPrice money={firstVariant.priceV2} />
+            </Suspense>
+          </div>
         </div>
-
-        {/* Price / compare at price */}
-        <div className="mt-3 flex font-bold">
-          {firstVariant.compareAtPriceV2 && (
-            <span className="text-darkGray">
-              <Suspense fallback={null}>
-                <MoneyCompareAtPrice money={firstVariant.compareAtPriceV2} />
-              </Suspense>
-            </span>
-          )}
-          <Suspense fallback={null}>
-            <MoneyPrice money={firstVariant.priceV2} />
-          </Suspense>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

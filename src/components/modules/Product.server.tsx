@@ -11,7 +11,7 @@ import ProductPill from '../product/Pill';
 
 type Props = {
   imageAspectClassName?: string;
-  layout?: 'card' | 'pill';
+  layout?: 'card' | 'pill' | 'image';
   module?: SanityModuleProduct;
 };
 
@@ -65,6 +65,16 @@ export default function ProductModule({
       <ProductCard
         imageAspectClassName={imageAspectClassName}
         storefrontProduct={storefrontProduct}
+      />
+    );
+  }
+
+  if (layout === 'image') {
+    return (
+      <ProductCard
+        imageAspectClassName={imageAspectClassName}
+        storefrontProduct={storefrontProduct}
+        imageOnly={true}
       />
     );
   }
