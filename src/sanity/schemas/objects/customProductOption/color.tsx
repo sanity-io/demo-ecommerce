@@ -1,6 +1,6 @@
-import pluralize from 'pluralize'
-import React from 'react'
-import {defineField} from 'sanity'
+import pluralize from 'pluralize';
+import React from 'react';
+import {defineField} from 'sanity';
 
 const ColorPreview = ({color}: {color: string}) => {
   return (
@@ -13,8 +13,8 @@ const ColorPreview = ({color}: {color: string}) => {
         width: '100%',
       }}
     />
-  )
-}
+  );
+};
 
 export default defineField({
   name: 'customProductOption.color',
@@ -62,12 +62,12 @@ export default defineField({
               title: 'title',
             },
             prepare(selection) {
-              const {color, title} = selection
+              const {color, title} = selection;
               return {
                 media: <ColorPreview color={color} />,
                 subtitle: color,
                 title,
-              }
+              };
             },
           },
         },
@@ -76,12 +76,12 @@ export default defineField({
         Rule.custom((options) => {
           // Each size must have a unique title
           if (options) {
-            const uniqueTitles = new Set(options.map((option) => option.title))
+            const uniqueTitles = new Set(options.map((option) => option.title));
             if (options.length > uniqueTitles.size) {
-              return 'Each product option must have a unique title'
+              return 'Each product option must have a unique title';
             }
           }
-          return true
+          return true;
         }),
     }),
   ],
@@ -91,11 +91,14 @@ export default defineField({
       title: 'title',
     },
     prepare(selection) {
-      const {colors, title} = selection
+      const {colors, title} = selection;
       return {
-        subtitle: colors.length ? pluralize('color', colors.length, true) : 'No colors',
+        subtitle:
+          colors?.length > 0
+            ? pluralize('color', colors.length, true)
+            : 'No colors',
         title,
-      }
+      };
     },
   },
-})
+});

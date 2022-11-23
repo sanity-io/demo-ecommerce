@@ -1,6 +1,6 @@
-import {TagIcon} from '@sanity/icons'
-import pluralize from 'pluralize'
-import {defineField} from 'sanity'
+import {TagIcon} from '@sanity/icons';
+import pluralize from 'pluralize';
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'module.products',
@@ -44,11 +44,14 @@ export default defineField({
       products: 'modules',
     },
     prepare(selection) {
-      const {products} = selection
+      const {products} = selection;
       return {
         subtitle: 'Products',
-        title: products.length > 0 ? pluralize('product', products.length, true) : 'No products',
-      }
+        title:
+          products?.length > 0
+            ? pluralize('product', products.length, true)
+            : 'No products',
+      };
     },
   },
-})
+});

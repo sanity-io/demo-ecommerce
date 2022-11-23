@@ -5,6 +5,7 @@
 import {ListItemBuilder, StructureResolver} from 'sanity/desk';
 import collections from './collections';
 import colorThemes from './colorThemes';
+import guides from './guides';
 import materials from './materials';
 import home from './home';
 import pages from './pages';
@@ -30,6 +31,7 @@ import sharedText from './sharedText';
 const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
+  'guide',
   'home',
   'material',
   'materialAttribute',
@@ -48,6 +50,7 @@ export const structure: StructureResolver = (S, context) =>
     .items([
       home(S, context),
       pages(S, context),
+      guides(S, context),
       S.divider(),
       collections(S, context),
       products(S, context),

@@ -1,6 +1,5 @@
 import groq from 'groq';
 import {SanityComposition, SanityModuleProduct} from '../../types';
-import {PRODUCT_PAGE} from '../../fragments/sanity/pages/product';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import PortableText from '../portableText/PortableText.server';
 import Square from '../elements/Square';
@@ -26,7 +25,7 @@ export default function Composition({compositionStories}: Props) {
   return (
     <>
       {sanityProducts && (
-        <>
+        <div className="mb-3 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
           <Square />
           <div className="col-span-2">
             <ProductModule module={sanityProducts[0]} layout="image" />
@@ -45,29 +44,39 @@ export default function Composition({compositionStories}: Props) {
                     <h3 className="mb-2 text-xl font-bold text-purple-600">
                       {composition.material.name}
                     </h3>
+                    {composition.material.attributes.map((attribute) => (
+                      <div
+                        className="text-bold mb-2 text-sm text-green-700"
+                        key={attribute._key}
+                      >
+                        {attribute.name}
+                      </div>
+                    ))}
                     <PortableText blocks={composition.material.story} />
                   </div>
                 </>
               ))}
             </div>
           </Square>
-        </>
+        </div>
       )}
     </>
   );
 }
 
+// To do - update GROQ to select products that match the artist(s) behind the product
 const QUERY_SANITY = groq`
   *[
     _type == 'product'
     && references(*[_type=="material" && name in $materials]._id)
-  ][0..2] | order(_updatedAt desc){
+  ] {
     "productWithVariant": {
       _id,
       "available": !store.isDeleted && store.status == 'active',
       "gid": store.gid,
       "slug": store.slug.current,
-      "variantGid": coalesce(^.variant->store.gid, store.variants[0]->store.gid)
+      "variantGid": coalesce(^.variant->store.gid, store.variants[0]->store.gid),
+      "variantPrice": coalesce(^.variant->store.price, store.variants[0]->store.price)
     }
-  }
+  } | order(productWithVariant.variantPrice desc, _updatedAt desc)[0..2]
 `;

@@ -1,11 +1,21 @@
 // @ts-expect-error incompatibility with node16 resolution
 import type {PortableTextBlock} from '@portabletext/types';
+import {Link} from '@shopify/hydrogen';
+import groq from 'groq';
 import clsx from 'clsx';
-import {SanityCreator, ProductWithNodes, SanityProductPage} from '../../types';
+import {
+  SanityCreator,
+  ProductWithNodes,
+  SanityProductPage,
+  SanityGuideProducts,
+} from '../../types';
+import {MODULE_IMAGE} from '../../fragments/sanity/modules/image';
+import {PRODUCT_HOTSPOT} from '../../fragments/sanity/productHotspot';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import Creator from './Creator.server';
+import Guide from './Guide.server';
 import Composition from './Composition.server';
-import Square from '../elements/Square';
-import PortableText from '../portableText/PortableText.server';
+import Image from '../modules/Image.server';
 
 type Props = {
   sanityProduct: SanityProductPage;
@@ -18,9 +28,18 @@ export default function Magazine({
   sanityProduct,
   creators,
 }: Props) {
-  const compositionStories = sanityProduct.composition.filter(
-    (block) => block?.material?.story !== null,
-  );
+  const compositionStories =
+    sanityProduct.composition &&
+    sanityProduct?.composition.filter(
+      (block) => block?.material?.story !== null,
+    );
+
+  const {data: productGuide} = useSanityQuery<SanityGuideProducts>({
+    params: {
+      sanityId: sanityProduct._id,
+    },
+    query: QUERY_SANITY,
+  });
 
   return (
     <div
@@ -39,44 +58,40 @@ export default function Magazine({
           />
         ))}
 
-      <div className="grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
-        <div className="col-span-2">
-          <Square className="overflow-hidden rounded bg-purple-500">
-            {/* eslint-disable-next-line hydrogen/prefer-image-component */}
-            <img
-              src="https://cdn.myportfolio.com/ad803868292c892b9e8b7723af165616/d2698f8c-5c3f-48b6-99a6-36b5c7fd1607_rw_3840.JPG?h=e7acf2d04734f3e34bc09dff18991782"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-              alt=""
-            />
-          </Square>
-        </div>
-        <div className="col-span-2">
-          <Square className="bg-magenta-300 overflow-hidden rounded">
-            {/* eslint-disable-next-line hydrogen/prefer-image-component */}
-            <img
-              src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-              alt=""
-            />
-          </Square>
-        </div>
-        <div className="col-span-2 grid aspect-[2/3] grid-cols-2 grid-rows-3 gap-3">
-          <Square className="overflow-hidden rounded bg-red"></Square>
-          <Square className="col-span-2 overflow-hidden rounded bg-darkGray"></Square>
-        </div>
+      {productGuide && <Guide productGuide={productGuide} />}
 
-        {compositionStories.length > 0 && (
-          <Composition compositionStories={compositionStories} />
-        )}
-      </div>
+      {compositionStories && compositionStories.length > 0 && (
+        <Composition compositionStories={compositionStories} />
+      )}
     </div>
   );
 }
+
+// To do - update GROQ to select products that match the artist(s) behind the product
+const QUERY_SANITY = groq`
+  *[
+    _type == 'guide'
+    && references($sanityId)
+    && (
+      $sanityId in hero.content[0].productHotspots[].productWithVariant.product._ref
+      ||
+      $sanityId in body[_type == "blockImages"].modules[].productHotspots[].productWithVariant.product._ref
+    )
+  ] {
+    title,
+    "slug": "/guides/" + slug.current,
+    "images": [
+      ...hero.content[_type == "imageWithProductHotspots"] {
+        ...,
+        "variant": "productHotspots",
+        productHotspots[] {
+          _key,
+          ${PRODUCT_HOTSPOT}
+        }
+      },
+      ...@.body[_type == "blockImages"].modules[] {
+        ${MODULE_IMAGE}
+      }
+    ]
+  } [ count(images) > 1 ] | order(_updatedAt desc)[0]
+`;

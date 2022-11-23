@@ -138,16 +138,12 @@ export default function ProductRoute() {
           </>
         )}
 
-        {/* Designer and Artisan cards */}
-        {(sanityProduct?.creators || sanityProduct?.composition) && (
-          <>
-            <Magazine
-              sanityProduct={sanityProduct}
-              storefrontProduct={storefrontProduct}
-              creators={sanityProduct?.creators}
-            />
-          </>
-        )}
+        {/* Magazine features */}
+        <Magazine
+          sanityProduct={sanityProduct}
+          storefrontProduct={storefrontProduct}
+          creators={sanityProduct?.creators}
+        />
       </div>
 
       <RelatedProducts

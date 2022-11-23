@@ -344,6 +344,14 @@ export type SanityPage = {
   title: string;
 };
 
+export type SanityGuide = SanityPage;
+
+export type SanityGuideProducts = {
+  title: string;
+  slug: string;
+  images: SanityModuleImage[];
+};
+
 export type SanityProductHotspot = {
   _key?: string;
   product: SanityProductWithVariant;

@@ -14,6 +14,7 @@ const annotations = [
 // Document types
 import collection from './documents/collection';
 import colorTheme from './documents/colorTheme';
+import guide from './documents/guide';
 import material from './documents/material';
 import materialAttribute from './documents/materialAttribute';
 import page from './documents/page';
@@ -25,6 +26,7 @@ import person from './documents/person';
 const documents = [
   collection,
   colorTheme,
+  guide,
   material,
   materialAttribute,
   page,
