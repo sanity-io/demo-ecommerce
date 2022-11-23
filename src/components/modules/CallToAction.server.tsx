@@ -73,11 +73,11 @@ function ModuleContent({
         <SanityImage
           alt={content?.altText}
           crop={content?.crop}
-          dataset={import.meta.env.PUBLIC_SANITY_DATASET}
+          dataset={import.meta.env.SANITY_DATASET}
           hotspot={content?.hotspot}
           layout="fill"
           objectFit="cover"
-          projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
+          projectId={import.meta.env.SANITY_PROJECT_ID}
           sizes="100vw"
           src={content?.asset._ref}
         />

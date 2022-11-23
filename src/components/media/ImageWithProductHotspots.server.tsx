@@ -66,11 +66,11 @@ export default function ImageWithProductHotspots({content}: Props) {
       <SanityImage
         alt={content?.image?.altText}
         crop={content?.image?.crop}
-        dataset={import.meta.env.PUBLIC_SANITY_DATASET}
+        dataset={import.meta.env.SANITY_DATASET}
         hotspot={content?.image?.hotspot}
         layout="responsive"
         objectFit="cover"
-        projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
+        projectId={import.meta.env.SANITY_PROJECT_ID}
         sizes="100vw"
         src={content?.image?.asset._ref}
       />

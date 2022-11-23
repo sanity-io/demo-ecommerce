@@ -17,11 +17,11 @@ const PersonCard = ({person, role}: {person: SanityPerson; role: string}) => {
           <SanityImage
             alt={person.image?.altText}
             crop={person.image?.crop}
-            dataset={import.meta.env.PUBLIC_SANITY_DATASET}
+            dataset={import.meta.env.SANITY_DATASET}
             hotspot={person.image?.hotspot}
             layout="fill"
             objectFit="cover"
-            projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
+            projectId={import.meta.env.SANITY_PROJECT_ID}
             sizes="25vw"
             src={person.image?.asset._ref}
           />
