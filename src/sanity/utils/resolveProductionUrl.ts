@@ -20,12 +20,12 @@ export default async function resolveProductionUrl(
 export const resolvePreviewUrl = (document: SanityDocumentLike) => {
   const previewUrl = new URL(
     '/api/preview',
-    import.meta.env.SANITY_PUBLIC_PREVIEW_URL,
+    import.meta.env.PUBLIC_PREVIEW_URL,
   );
 
   previewUrl.searchParams.append(
     `secret`,
-    import.meta.env.SANITY_PUBLIC_PREVIEW_SECRET,
+    import.meta.env.PUBLIC_PREVIEW_SECRET,
   );
 
   if (document?._type === 'page') {
