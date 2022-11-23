@@ -27,7 +27,7 @@ export const PAGE_REFERENCES = [
 
 // API version to use when using the Sanity client within the studio
 // https://www.sanity.io/help/studio-client-specify-api-version
-export const SANITY_API_VERSION = '2022-10-25';
+export const PUBLIC_SANITY_API_VERSION = '2022-10-25';
 
 // Your Shopify store ID.
 // This is your unique store URL (e.g. 'my-store-name.myshopify.com').

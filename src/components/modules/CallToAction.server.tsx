@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import sanityConfig from '../../../sanity.config';
 import type {
   SanityAssetImage,
   SanityModuleCallToAction,
@@ -74,11 +73,11 @@ function ModuleContent({
         <SanityImage
           alt={content?.altText}
           crop={content?.crop}
-          dataset={sanityConfig.dataset}
+          dataset={import.meta.env.PUBLIC_SANITY_DATASET}
           hotspot={content?.hotspot}
           layout="fill"
           objectFit="cover"
-          projectId={sanityConfig.projectId}
+          projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
           sizes="100vw"
           src={content?.asset._ref}
         />

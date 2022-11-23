@@ -1,19 +1,17 @@
 import PicoSanity from 'picosanity';
-import sanityConfig from '../../sanity.config';
 import usePreviewMode from './usePreviewMode';
 
 export default function useSanityClient() {
   const preview = usePreviewMode();
-  const {projectId, dataset, apiVersion} = sanityConfig;
 
   return new PicoSanity({
-    projectId,
-    dataset,
-    apiVersion,
+    projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+    dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+    apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
     ...(preview
       ? {
           useCdn: false,
-          token: import.meta.env.PRIVATE_SANITY_API_TOKEN,
+          token: import.meta.env.PUBLIC_SANITY_API_TOKEN,
         }
       : {}),
   });

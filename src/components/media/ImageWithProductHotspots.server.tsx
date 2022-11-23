@@ -1,6 +1,5 @@
 import {gql, useShopQuery} from '@shopify/hydrogen';
 import {Product, ProductVariant} from '@shopify/hydrogen/storefront-api-types';
-import sanityConfig from '../../../sanity.config';
 import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import type {
@@ -67,11 +66,11 @@ export default function ImageWithProductHotspots({content}: Props) {
       <SanityImage
         alt={content?.image?.altText}
         crop={content?.image?.crop}
-        dataset={sanityConfig.dataset}
+        dataset={import.meta.env.PUBLIC_SANITY_DATASET}
         hotspot={content?.image?.hotspot}
         layout="responsive"
         objectFit="cover"
-        projectId={sanityConfig.projectId}
+        projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes="100vw"
         src={content?.image?.asset._ref}
       />

@@ -1,7 +1,6 @@
 import PicoSanity from 'picosanity';
 import type {HydrogenRequest} from '@shopify/hydrogen';
 import groq from 'groq';
-import sanityConfig from '../../sanity.config';
 
 type SitemapPage = {
   _updatedAt: string;
@@ -16,7 +15,11 @@ type SanityPayload = {
   products: SitemapPage[];
 };
 
-const client = new PicoSanity(sanityConfig);
+const client = new PicoSanity({
+  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
+});
 
 export async function api(request: HydrogenRequest) {
   const baseUrl = new URL(request.url).origin;
