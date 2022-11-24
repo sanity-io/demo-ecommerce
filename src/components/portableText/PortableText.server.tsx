@@ -14,6 +14,7 @@ import ImagesBlock from './blocks/Images.server';
 import InstagramBlock from './blocks/Instagram.server';
 import ListBlock from './blocks/List';
 import ProductsBlock from './blocks/Products.server';
+import TaggedProductsBlock from './blocks/TaggedProducts.server';
 import SharedText from './blocks/SharedText.server';
 
 type Props = {
@@ -63,6 +64,7 @@ export default function PortableText({
           ),
           blockInstagram: InstagramBlock,
           blockProducts: ProductsBlock,
+          blockTaggedProducts: TaggedProductsBlock,
           sharedText: SharedText,
         },
       }}

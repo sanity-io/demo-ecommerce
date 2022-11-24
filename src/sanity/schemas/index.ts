@@ -68,6 +68,7 @@ import moduleImages from './objects/module/images';
 import moduleInstagram from './objects/module/instagram';
 import moduleProduct from './objects/module/product';
 import moduleProducts from './objects/module/products';
+import moduleTaggedProducts from './objects/module/taggedProducts';
 import placeholderString from './objects/placeholderString';
 import productHotspots from './objects/productHotspots';
 import productOption from './objects/productOption';
@@ -101,6 +102,7 @@ const objects = [
   moduleInstagram,
   moduleProduct,
   moduleProducts,
+  moduleTaggedProducts,
   placeholderString,
   productHotspots,
   productOption,

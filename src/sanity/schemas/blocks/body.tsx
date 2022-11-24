@@ -51,6 +51,10 @@ export default defineField({
       type: 'module.products',
     },
     {
+      name: 'blockTaggedProducts',
+      type: 'module.taggedProducts',
+    },
+    {
       name: 'sharedText',
       title: 'Shared Text',
       type: 'reference',

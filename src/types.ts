@@ -323,6 +323,14 @@ export type SanityModuleProducts = {
   modules: SanityModuleProduct[];
 };
 
+export type SanityModuleTaggedProducts = {
+  _key?: string;
+  _type: 'module.taggedProducts';
+  tag: string;
+  number: number;
+  layout?: 'card' | 'pill';
+};
+
 export type SanityModuleSharedText = {
   _key?: string;
   _type: 'sharedText';

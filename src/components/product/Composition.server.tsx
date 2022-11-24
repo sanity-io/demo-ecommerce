@@ -4,6 +4,7 @@ import useSanityQuery from '../../hooks/useSanityQuery';
 import PortableText from '../portableText/PortableText.server';
 import Square from '../elements/Square';
 import ProductModule from '../modules/Product.server';
+import {PRODUCT_WITH_VARIANT_FIELDS} from '../../fragments/sanity/productWithVariantFields';
 
 type Props = {
   compositionStories: SanityComposition[];
@@ -71,11 +72,7 @@ const QUERY_SANITY = groq`
     && references(*[_type=="material" && name in $materials]._id)
   ] {
     "productWithVariant": {
-      _id,
-      "available": !store.isDeleted && store.status == 'active',
-      "gid": store.gid,
-      "slug": store.slug.current,
-      "variantGid": coalesce(^.variant->store.gid, store.variants[0]->store.gid),
+      ${PRODUCT_WITH_VARIANT_FIELDS},
       "variantPrice": coalesce(^.variant->store.price, store.variants[0]->store.price)
     }
   } | order(productWithVariant.variantPrice desc, _updatedAt desc)[0..2]

@@ -5,6 +5,7 @@ import {MODULE_GRID} from '../modules/grid';
 import {MODULE_IMAGES} from '../modules/images';
 import {MODULE_INSTAGRAM} from '../modules/instagram';
 import {MODULE_PRODUCTS} from '../modules/products';
+import {MODULE_TAGGED_PRODUCTS} from '../modules/taggedProducts';
 import {MODULE_SHARED_TEXT} from '../modules/sharedText';
 import {MARK_DEFS} from './markDefs';
 
@@ -27,6 +28,9 @@ export const PORTABLE_TEXT = groq`
   },
   (_type == 'blockProducts') => {
     ${MODULE_PRODUCTS}
+  },
+  (_type == 'blockTaggedProducts') => {
+    ${MODULE_TAGGED_PRODUCTS}
   },
   (_type == 'sharedText') => {
     ${MODULE_SHARED_TEXT}

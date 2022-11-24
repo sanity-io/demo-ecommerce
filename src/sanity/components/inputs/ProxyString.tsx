@@ -1,15 +1,15 @@
-import {LockIcon} from '@sanity/icons'
-import {Box, Text, TextInput, Tooltip} from '@sanity/ui'
-import {StringInputProps, useFormValue, SanityDocument} from 'sanity'
-import get from 'lodash.get'
+import {LockIcon} from '@sanity/icons';
+import {Box, Text, TextInput, Tooltip} from '@sanity/ui';
+import {StringInputProps, useFormValue, SanityDocument} from 'sanity';
+import get from 'lodash.get';
 
 const ProxyString = (props: StringInputProps) => {
-  const {schemaType} = props
+  const {schemaType} = props;
 
-  const path = schemaType?.options?.field
-  const doc = useFormValue([]) as SanityDocument
+  const path = schemaType?.options?.field;
+  const doc = useFormValue([]) as SanityDocument;
 
-  const proxyValue = get(doc, path) as string
+  const proxyValue = get(doc, path) as string;
 
   return (
     <Tooltip
@@ -24,7 +24,7 @@ const ProxyString = (props: StringInputProps) => {
     >
       <TextInput iconRight={LockIcon} readOnly={true} value={proxyValue} />
     </Tooltip>
-  )
-}
+  );
+};
 
-export default ProxyString
+export default ProxyString;
