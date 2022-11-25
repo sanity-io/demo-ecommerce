@@ -100,15 +100,14 @@ export type SanityCreator = {
   person: SanityPerson;
 };
 
-export type SanityMaterialAttribute = {
-  _key: string;
-  name: string;
-  vector: string;
+export type SanityMaterialAttributes = {
+  environmentallyFriendly: boolean;
+  dishwasherSafe: boolean;
 };
 
 export type SanityMaterial = {
   name: string;
-  attributes: SanityMaterialAttribute[];
+  attributes: SanityMaterialAttributes;
   story: Block[];
 };
 
@@ -207,8 +206,7 @@ export type SanityModule =
   | SanityModuleGrid
   | SanityModuleImage
   | SanityModuleInstagram
-  | SanityModuleProduct
-  | SanityModuleSharedText;
+  | SanityModuleProduct;
 
 export type SanityModuleAccordion = {
   _key?: string;
@@ -331,12 +329,6 @@ export type SanityModuleTaggedProducts = {
   layout?: 'card' | 'pill';
 };
 
-export type SanityModuleSharedText = {
-  _key?: string;
-  _type: 'sharedText';
-  content: Block[];
-};
-
 export type SanityNotFoundPage = {
   body?: string;
   collectionGid?: string;
@@ -388,6 +380,11 @@ export type SanityProductPage = {
   creators: SanityCreator[];
   composition: SanityComposition[];
   seo: SanitySeo;
+  sharedText: {
+    deliveryAndReturns: Block[];
+    deliverySummary: string;
+    environmentallyFriendly: string;
+  };
 };
 
 export type SanitySeo = {

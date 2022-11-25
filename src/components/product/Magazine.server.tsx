@@ -15,7 +15,6 @@ import useSanityQuery from '../../hooks/useSanityQuery';
 import Creator from './Creator.server';
 import Guide from './Guide.server';
 import Composition from './Composition.server';
-import Image from '../modules/Image.server';
 
 type Props = {
   sanityProduct: SanityProductPage;
@@ -67,7 +66,7 @@ export default function Magazine({
   );
 }
 
-// To do - update GROQ to select products that match the artist(s) behind the product
+// Query to get any guides that include the product in the hotspots
 const QUERY_SANITY = groq`
   *[
     _type == 'guide'

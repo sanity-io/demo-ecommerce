@@ -5,10 +5,7 @@ export const MATERIAL = groq`
   _key,
   'material': @->{
     name,
-    attributes[]->{
-      name,
-      vector,
-    },
+    attributes,
     story[]{
       ...,
       markDefs[] {

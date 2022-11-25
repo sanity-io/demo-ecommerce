@@ -45,14 +45,12 @@ export default function Composition({compositionStories}: Props) {
                     <h3 className="mb-2 text-xl font-bold text-purple-600">
                       {composition.material.name}
                     </h3>
-                    {composition.material.attributes.map((attribute) => (
-                      <div
-                        className="text-bold mb-2 text-sm text-green-700"
-                        key={attribute._key}
-                      >
-                        {attribute.name}
+                    {composition.material.attributes
+                      .environmentallyFriendly && (
+                      <div className="text-bold mb-2 text-sm text-green-700">
+                        Environmentally Friendly
                       </div>
-                    ))}
+                    )}
                     <PortableText blocks={composition.material.story} />
                   </div>
                 </>

@@ -16,11 +16,9 @@ import collection from './documents/collection';
 import colorTheme from './documents/colorTheme';
 import guide from './documents/guide';
 import material from './documents/material';
-import materialAttribute from './documents/materialAttribute';
 import page from './documents/page';
 import product from './documents/product';
 import productVariant from './documents/productVariant';
-import sharedText from './documents/sharedText';
 import person from './documents/person';
 
 const documents = [
@@ -28,11 +26,9 @@ const documents = [
   colorTheme,
   guide,
   material,
-  materialAttribute,
   page,
   product,
   productVariant,
-  sharedText,
   person,
 ];
 

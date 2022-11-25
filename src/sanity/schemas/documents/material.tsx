@@ -12,19 +12,26 @@ export default defineField({
       type: 'string',
     }),
     defineField({
-      name: 'attributes',
-      type: 'array',
-      of: [
-        {
-          name: 'attribute',
-          type: 'reference',
-          to: [{type: 'materialAttribute'}],
-        },
-      ],
-    }),
-    defineField({
       name: 'story',
       type: 'simpleBlockContent',
+    }),
+    defineField({
+      name: 'attributes',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'environmentallyFriendly',
+          type: 'boolean',
+        }),
+        defineField({
+          name: 'dishwasherSafe',
+          type: 'boolean',
+        }),
+      ],
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
     }),
   ],
 });

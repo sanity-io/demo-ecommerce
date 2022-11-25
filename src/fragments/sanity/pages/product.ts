@@ -27,4 +27,9 @@ export const PRODUCT_PAGE = groq`
   "gid": store.gid,
   ${SEO_SHOPIFY},
   "slug": store.slug.current,
+  "sharedText": *[_type == 'settings'][0] {
+    deliveryAndReturns,
+    deliverySummary,
+    environmentallyFriendly
+  },
 `;

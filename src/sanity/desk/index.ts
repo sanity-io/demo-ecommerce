@@ -12,7 +12,6 @@ import pages from './pages';
 import people from './people';
 import products from './products';
 import settings from './settings';
-import sharedText from './sharedText';
 
 /**
  * Desk structure overrides
@@ -34,14 +33,12 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'guide',
   'home',
   'material',
-  'materialAttribute',
   'media.tag',
   'page',
   'person',
   'product',
   'productVariant',
   'settings',
-  'sharedText',
 ];
 
 export const structure: StructureResolver = (S, context) =>
@@ -58,7 +55,6 @@ export const structure: StructureResolver = (S, context) =>
       people(S, context),
       materials(S, context),
       colorThemes(S, context),
-      sharedText(S, context),
       S.divider(),
       settings(S, context),
       S.divider(),
