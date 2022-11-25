@@ -105,6 +105,16 @@ export type SanityMaterialAttributes = {
   dishwasherSafe: boolean;
 };
 
+export type SanityFaq = {
+  _key: string;
+  title: string;
+  body: Block[];
+};
+
+export type SanityFaqs = {
+  groups: SanityFaq[];
+};
+
 export type SanityMaterial = {
   name: string;
   attributes: SanityMaterialAttributes;
@@ -380,6 +390,7 @@ export type SanityProductPage = {
   creators: SanityCreator[];
   composition: SanityComposition[];
   seo: SanitySeo;
+  faqs: SanityFaqs;
   sharedText: {
     deliveryAndReturns: Block[];
     deliverySummary: string;

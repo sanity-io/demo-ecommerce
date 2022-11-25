@@ -1,16 +1,25 @@
 import groq from 'groq';
-import {SanityComposition, SanityModuleProduct} from '../../types';
+import {
+  SanityComposition,
+  SanityModuleProduct,
+  SanityProductPage,
+} from '../../types';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import PortableText from '../portableText/PortableText.server';
 import Square from '../elements/Square';
 import ProductModule from '../modules/Product.server';
 import {PRODUCT_WITH_VARIANT_FIELDS} from '../../fragments/sanity/productWithVariantFields';
+import {EarthAmericasIcon} from '@sanity/icons';
 
 type Props = {
   compositionStories: SanityComposition[];
+  sanityProduct: SanityProductPage;
 };
 
-export default function Composition({compositionStories}: Props) {
+export default function Composition({
+  compositionStories,
+  sanityProduct,
+}: Props) {
   // Fetch products that match the material
   const materials = compositionStories.map(
     (composition) => composition.material.name,
@@ -38,19 +47,21 @@ export default function Composition({compositionStories}: Props) {
           </div>
 
           <Square className="col-span-2 grid">
-            <div className="lg:mt-auto">
+            <div className="mt-auto">
+              <h2>Made from...</h2>
               {compositionStories.map((composition) => (
                 <>
                   <div className="mb-8 last:mb-0" key={composition._key}>
                     <h3 className="mb-2 text-xl font-bold text-purple-600">
                       {composition.material.name}
                     </h3>
-                    {composition.material.attributes
-                      .environmentallyFriendly && (
-                      <div className="text-bold mb-2 text-sm text-green-700">
-                        Environmentally Friendly
-                      </div>
-                    )}
+                    {composition.material.attributes.environmentallyFriendly &&
+                      sanityProduct?.sharedText?.environmentallyFriendly && (
+                        <div className="text-bold mb-2 flex items-center text-sm text-green-700">
+                          <EarthAmericasIcon className="mr-1 text-lg" />{' '}
+                          {sanityProduct?.sharedText?.environmentallyFriendly}
+                        </div>
+                      )}
                     <PortableText blocks={composition.material.story} />
                   </div>
                 </>

@@ -16,6 +16,12 @@ export default defineField({
       type: 'simpleBlockContent',
     }),
     defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      description: 'Shown on products using this material',
+      type: 'faqs',
+    }),
+    defineField({
       name: 'attributes',
       type: 'object',
       fields: [

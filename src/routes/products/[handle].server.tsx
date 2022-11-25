@@ -21,7 +21,14 @@ import {PRODUCT_PAGE} from '../../fragments/sanity/pages/product';
 import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import useSanityQuery from '../../hooks/useSanityQuery';
-import type {ProductWithNodes, SanityProductPage} from '../../types';
+import type {
+  ProductWithNodes,
+  SanityFaqs,
+  SanityProductPage,
+} from '../../types';
+import Square from '../../components/elements/Square';
+import AccordionBlock from '../../components/portableText/blocks/Accordion.client';
+import {Block} from '@sanity/types';
 
 type ShopifyPayload = {
   product: Pick<
@@ -43,13 +50,41 @@ const SanityProductBody = (sanityProduct: SanityProductPage) => {
       {sanityProduct?.body && (
         <PortableText
           blocks={sanityProduct.body}
-          className={clsx(
-            'max-w-[660px] px-4 pb-24 pt-8', //
-            'md:px-8',
-          )}
           colorTheme={sanityProduct?.colorTheme}
         />
       )}
+    </>
+  );
+};
+
+const SanityProductShipping = ({blocks}: {blocks: Block[]}) => {
+  return (
+    <>
+      <h2
+        className={clsx(
+          'first:mt-0 last:mb-0', //
+          'mt-16 mb-6 text-xl font-bold',
+        )}
+      >
+        Shipping &amp; Returns
+      </h2>
+      <PortableText blocks={blocks} />
+    </>
+  );
+};
+
+const SanityProductFaqs = ({faqs}: {faqs: SanityFaqs}) => {
+  return (
+    <>
+      <h2
+        className={clsx(
+          'first:mt-0 last:mb-0', //
+          'mt-16 -mb-6 text-xl font-bold',
+        )}
+      >
+        FAQs
+      </h2>
+      <AccordionBlock node={faqs} />
     </>
   );
 };
@@ -116,7 +151,27 @@ export default function ProductRoute() {
             sanityProduct={sanityProduct}
             storefrontProduct={storefrontProduct}
           >
-            <SanityProductBody {...sanityProduct} />
+            <div
+              className={clsx(
+                'max-w-[660px] px-4 pb-24 pt-8', //
+                'md:px-8',
+              )}
+            >
+              {/* Body content */}
+              <SanityProductBody {...sanityProduct} />
+
+              {/* Shipping info */}
+              {sanityProduct?.sharedText?.deliveryAndReturns && (
+                <SanityProductShipping
+                  blocks={sanityProduct?.sharedText?.deliveryAndReturns}
+                />
+              )}
+
+              {/* FAQs */}
+              {sanityProduct?.faqs?.groups.length > 0 && (
+                <SanityProductFaqs faqs={sanityProduct.faqs} />
+              )}
+            </div>
           </AccessoryDetails>
         ) : (
           <>
@@ -126,24 +181,57 @@ export default function ProductRoute() {
               storefrontProduct={storefrontProduct}
             />
 
+            {/* Body content */}
             <div
               className={clsx(
                 'w-full', //
                 'lg:w-[calc(100%-315px)]',
+                'mb-10 mt-8 p-5',
               )}
             >
-              {/* Body */}
-              {sanityProduct?.body && <SanityProductBody {...sanityProduct} />}
+              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                <Square className="hidden xl:block" />
+                <div className="col-span-6 xl:col-span-5">
+                  {sanityProduct?.body && (
+                    <SanityProductBody {...sanityProduct} />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Magazine features */}
+            <Magazine
+              sanityProduct={sanityProduct}
+              storefrontProduct={storefrontProduct}
+              creators={sanityProduct?.creators}
+            />
+
+            {/* Shipping info and FAQs */}
+            <div
+              className={clsx(
+                'w-full', //
+                'lg:w-[calc(100%-315px)]',
+                'mb-10 mt-8 p-5',
+              )}
+            >
+              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                <Square className="hidden xl:block" />
+                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                  {sanityProduct?.sharedText?.deliveryAndReturns && (
+                    <SanityProductShipping
+                      blocks={sanityProduct?.sharedText?.deliveryAndReturns}
+                    />
+                  )}
+                </div>
+                <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                  {sanityProduct?.faqs?.groups.length > 0 && (
+                    <SanityProductFaqs faqs={sanityProduct.faqs} />
+                  )}
+                </div>
+              </div>
             </div>
           </>
         )}
-
-        {/* Magazine features */}
-        <Magazine
-          sanityProduct={sanityProduct}
-          storefrontProduct={storefrontProduct}
-          creators={sanityProduct?.creators}
-        />
       </div>
 
       <RelatedProducts

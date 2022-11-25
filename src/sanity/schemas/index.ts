@@ -48,6 +48,7 @@ const blocks = [body, simpleBlockContent];
 import creator from './objects/creator';
 import customProductOptionColor from './objects/customProductOption/color';
 import customProductOptionSize from './objects/customProductOption/size';
+import faqs from './objects/faqs';
 import imageWithProductHotspots from './objects/imageWithProductHotspots';
 import linkExternal from './objects/linkExternal';
 import linkInternal from './objects/linkInternal';
@@ -82,6 +83,7 @@ const objects = [
   creator,
   customProductOptionColor,
   customProductOptionSize,
+  faqs,
   imageWithProductHotspots,
   linkExternal,
   linkInternal,

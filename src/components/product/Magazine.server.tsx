@@ -60,7 +60,10 @@ export default function Magazine({
       {productGuide && <Guide productGuide={productGuide} />}
 
       {compositionStories && compositionStories.length > 0 && (
-        <Composition compositionStories={compositionStories} />
+        <Composition
+          sanityProduct={sanityProduct}
+          compositionStories={compositionStories}
+        />
       )}
     </div>
   );

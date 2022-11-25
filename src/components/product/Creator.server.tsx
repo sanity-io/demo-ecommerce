@@ -1,4 +1,3 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {Link} from '@shopify/hydrogen';
 import {SanityCreator, ProductWithNodes} from '../../types';
 import PortableText from '../portableText/PortableText.server';
@@ -11,7 +10,7 @@ type Props = {
 
 export default function Creator({storefrontProduct, creator}: Props) {
   return (
-    <div className="mb-10 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
+    <div className="mb-10 grid grid-cols-3 gap-3 lg:grid-cols-6">
       <Square />
       <div className="col-span-2">
         <Square className="relative overflow-hidden rounded bg-lightGray">

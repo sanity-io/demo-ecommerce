@@ -25,8 +25,8 @@ export default function Guide({
           className="col-span-1 flex overflow-hidden rounded bg-darkGray p-5 text-white hover:bg-lightGray hover:text-darkGray"
         >
           <div className="leading-paragraph">
-            <h2>Guide</h2>
-            <p className="text-xl">{productGuide.title}</p>
+            <h2 className="lg-text-lg">Guide</h2>
+            <p className="text-lg lg:text-xl">{productGuide.title}</p>
           </div>
         </Link>
         <div className="col-span-2 rounded">

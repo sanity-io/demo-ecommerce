@@ -21,6 +21,16 @@ export const PRODUCT_PAGE = groq`
   composition[]{
     ${MATERIAL}
   },
+  "faqs": {
+    "groups": [
+      ...composition[]->{
+        faqs[] {
+          "title": question,
+          "body": answer
+        }
+      }.faqs[]
+    ]
+  },
   "customProductOptions": *[_type == 'settings'][0].customProductOptions[title in ^.store.options[].name] {
     ${CUSTOM_PRODUCT_OPTIONS}
   },
