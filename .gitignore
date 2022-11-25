@@ -83,3 +83,7 @@ dist
 
 # Cloudflare
 mini-oxygen.config.json
+
+# local env files
+.env*
+!.env.example
