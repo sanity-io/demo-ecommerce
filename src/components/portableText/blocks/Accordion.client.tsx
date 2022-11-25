@@ -20,8 +20,8 @@ export default function AccordionBlock({node}: Props) {
         'my-8',
       )}
     >
-      {node?.groups?.map((group) => (
-        <Disclosure key={group._key}>
+      {node?.groups?.map((group, index) => (
+        <Disclosure key={group._key ? group._key : index}>
           {({open}: {open: boolean}) => (
             <div className="flex flex-col border-b border-b-gray">
               <Disclosure.Button

@@ -87,6 +87,13 @@ export default defineType({
       of: [{type: 'reference', to: [{type: 'material'}]}],
     }),
     defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      description: 'Shown in addition to any material FAQs',
+      type: 'faqs',
+      group: 'editorial',
+    }),
+    defineField({
       name: 'store',
       title: 'Shopify',
       type: 'shopifyProduct',

@@ -23,6 +23,10 @@ export const PRODUCT_PAGE = groq`
   },
   "faqs": {
     "groups": [
+      ...faqs[] {
+        "title": question,
+        "body": answer
+      },
       ...composition[]->{
         faqs[] {
           "title": question,
