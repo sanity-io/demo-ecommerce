@@ -189,7 +189,7 @@ export default function ProductRoute() {
                 'mb-10 mt-8 p-5',
               )}
             >
-              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+              <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
                 <Square className="hidden xl:block" />
                 <div className="col-span-6 xl:col-span-5">
                   {sanityProduct?.body && (

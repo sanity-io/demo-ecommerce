@@ -9,6 +9,7 @@
   html {
     @apply font-medium;
     @apply text-offBlack;
+    @apply bg-white;
     @apply text-md;
   }
 }

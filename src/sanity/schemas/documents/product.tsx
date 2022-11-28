@@ -70,6 +70,13 @@ export default defineType({
       title: 'Body',
       type: 'body',
       group: 'editorial',
+      hidden: true, // Temporarily hidden to support new demo without breaking existing demo. Content will be replaced by that from 'bodyNew' field.
+    }),
+    defineField({
+      name: 'bodyNew', // Temporary field to support new demo without breaking old demo.
+      title: 'Body (new)',
+      type: 'body',
+      group: 'editorial',
     }),
     defineField({
       name: 'creators',

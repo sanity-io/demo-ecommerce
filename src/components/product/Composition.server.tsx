@@ -50,21 +50,19 @@ export default function Composition({
             <div className="mt-auto">
               <h2>Made from...</h2>
               {compositionStories.map((composition) => (
-                <>
-                  <div className="mb-8 last:mb-0" key={composition._key}>
-                    <h3 className="mb-2 text-xl font-bold text-purple-600">
-                      {composition.material.name}
-                    </h3>
-                    {composition.material.attributes.environmentallyFriendly &&
-                      sanityProduct?.sharedText?.environmentallyFriendly && (
-                        <div className="text-bold mb-2 flex items-center text-sm text-green-700">
-                          <EarthAmericasIcon className="mr-1 text-lg" />{' '}
-                          {sanityProduct?.sharedText?.environmentallyFriendly}
-                        </div>
-                      )}
-                    <PortableText blocks={composition.material.story} />
-                  </div>
-                </>
+                <div className="mb-8 last:mb-0" key={composition._key}>
+                  <h3 className="mb-2 text-xl font-bold text-purple-600">
+                    {composition.material.name}
+                  </h3>
+                  {composition.material.attributes.environmentallyFriendly &&
+                    sanityProduct?.sharedText?.environmentallyFriendly && (
+                      <div className="text-bold mb-2 flex items-center text-sm text-green-700">
+                        <EarthAmericasIcon className="mr-1 text-lg" />{' '}
+                        {sanityProduct?.sharedText?.environmentallyFriendly}
+                      </div>
+                    )}
+                  <PortableText blocks={composition.material.story} />
+                </div>
               ))}
             </div>
           </Square>
