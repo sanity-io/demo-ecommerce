@@ -90,8 +90,15 @@ export type SanityColorTheme = {
 
 export type SanityPerson = {
   name: string;
+  slug: string;
   bio: Block[];
   image: SanityAssetImage;
+  seo: SanitySeo;
+};
+
+export type SanityPersonPage = SanityPerson & {
+  seo: SanitySeo;
+  products: SanityModuleProduct[];
 };
 
 export type SanityCreator = {

@@ -7,6 +7,7 @@ export const CREATOR = groq`
   role,
   person->{
     name,
+    "slug": "/people/" + slug.current,
     image {
       ${IMAGE}
     },

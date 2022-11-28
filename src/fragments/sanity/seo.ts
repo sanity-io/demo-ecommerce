@@ -8,6 +8,6 @@ export const SEO = groq`
     "image": seo.image {
       ${IMAGE}
     },
-    "title": coalesce(seo.title, title),
+    "title": coalesce(seo.title, title, name),
   }
 `;
