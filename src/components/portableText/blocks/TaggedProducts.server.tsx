@@ -27,7 +27,7 @@ export default function TaggedProductsBlock({node}: Props) {
 
   return (
     <>
-      {taggedProducts && (
+      {taggedProducts.length > 0 && (
         <div
           className={clsx(
             'first:mt-0 last:mb-0', //
