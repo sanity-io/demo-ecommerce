@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function TaggedProductsBlock({node}: Props) {
-  const {data: taggedProducts} = useSanityQuery<SanityModuleProduct[]>({
+  const {data: taggedProducts = []} = useSanityQuery<SanityModuleProduct[]>({
     params: {
       tag: node.tag,
       number: node.number - 1,
