@@ -33,14 +33,19 @@ export async function api(
     });
   }
 
-  const pathname = `/${slug}` ?? `/`;
-  await session?.set('preview', true);
+  if (!slug.startsWith('/')) {
+    return new Response(JSON.stringify({message: 'Slug must be a URL path'}), {
+      headers,
+      status: 401,
+    });
+  }
+  await session?.set('preview', 'true');
 
   // TODO: set alternative dataset from query param?
   // TODO: add additional security to cookie to prevent preview for those that shouldn't have it!
 
   return new Response(null, {
     status: 307,
-    headers: {Location: pathname},
+    headers: {Location: slug},
   });
 }

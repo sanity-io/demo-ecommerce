@@ -6,5 +6,5 @@ import {useSession} from '@shopify/hydrogen';
  **/
 export default function usePreviewMode(): boolean {
   const session = useSession();
-  return typeof session.preview === 'boolean' ? session.preview : false;
+  return session.preview === 'true';
 }

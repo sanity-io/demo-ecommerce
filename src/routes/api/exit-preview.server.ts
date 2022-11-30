@@ -10,7 +10,18 @@ export async function api(
   const url = new URL(request.url);
   const slug = url.searchParams.get('slug');
 
-  const pathname = slug ?? `/`;
+  if (!slug) {
+    return new Response(JSON.stringify({message: 'No slug in query'}), {
+      status: 401,
+    });
+  }
+
+  if (!slug.startsWith('/')) {
+    return new Response(JSON.stringify({message: 'Slug must be a URL path'}), {
+      status: 401,
+    });
+  }
+
   await session?.destroy();
 
   // TODO: set alternative dataset from query param?
@@ -18,6 +29,6 @@ export async function api(
 
   return new Response(null, {
     status: 307,
-    headers: {Location: pathname},
+    headers: {Location: slug},
   });
 }
