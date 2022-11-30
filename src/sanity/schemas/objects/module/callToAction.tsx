@@ -1,5 +1,5 @@
-import {BlockElementIcon, ImageIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {BlockElementIcon, ImageIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'module.callToAction',
@@ -86,11 +86,12 @@ export default defineField({
       title: 'title',
     },
     prepare(selection) {
-      const {title} = selection
+      const {title} = selection;
       return {
         subtitle: 'Call to action',
         title,
-      }
+        media: BlockElementIcon,
+      };
     },
   },
-})
+});

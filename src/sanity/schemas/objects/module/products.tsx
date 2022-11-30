@@ -51,6 +51,7 @@ export default defineField({
           products?.length > 0
             ? pluralize('product', products.length, true)
             : 'No products',
+        media: TagIcon,
       };
     },
   },

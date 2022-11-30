@@ -56,6 +56,7 @@ export default defineField({
       return {
         title: `${number} tagged products`,
         subtitle: tag ? `Tag: ${tag}` : 'No tag selected',
+        media: TagIcon,
       };
     },
   },

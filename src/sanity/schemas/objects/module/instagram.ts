@@ -1,5 +1,5 @@
-import {UserIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {UserIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'module.instagram',
@@ -13,9 +13,10 @@ export default defineField({
       type: 'string',
       validation: (Rule) =>
         Rule.custom((url) => {
-          const pattern = /(https?:\/\/(?:www\.)?instagram\.com\/p\/([^/?#&]+)).*/g
-          const isValid = url?.match(pattern)
-          return isValid ? true : 'Not a valid Instagram post URL'
+          const pattern =
+            /(https?:\/\/(?:www\.)?instagram\.com\/p\/([^/?#&]+)).*/g;
+          const isValid = url?.match(pattern);
+          return isValid ? true : 'Not a valid Instagram post URL';
         }),
     }),
   ],
@@ -24,11 +25,12 @@ export default defineField({
       url: 'url',
     },
     prepare(selection) {
-      const {url} = selection
+      const {url} = selection;
       return {
         subtitle: 'Instagram',
         title: url,
-      }
+        media: UserIcon,
+      };
     },
   },
-})
+});

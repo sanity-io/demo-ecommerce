@@ -64,6 +64,7 @@ export default defineField({
           groups?.length > 0
             ? pluralize('group', groups.length, true)
             : 'No groups',
+        media: StackCompactIcon,
       };
     },
   },

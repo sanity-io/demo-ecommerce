@@ -65,6 +65,7 @@ export default defineField({
           images?.length > 0
             ? pluralize('image', images?.length, true)
             : 'No images',
+        media: ImageIcon,
       };
     },
   },

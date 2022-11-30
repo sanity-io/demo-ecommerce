@@ -1,7 +1,7 @@
-import {ThLargeIcon} from '@sanity/icons'
-import pluralize from 'pluralize'
-import {defineField} from 'sanity'
-import blocksToText from '../../../utils/blocksToText'
+import {ThLargeIcon} from '@sanity/icons';
+import pluralize from 'pluralize';
+import {defineField} from 'sanity';
+import blocksToText from '../../../utils/blocksToText';
 
 export default defineField({
   name: 'module.grid',
@@ -93,12 +93,12 @@ export default defineField({
               title: 'title',
             },
             prepare(selection) {
-              const {body, image, title} = selection
+              const {body, image, title} = selection;
               return {
                 media: image,
                 subtitle: body && blocksToText(body),
                 title,
-              }
+              };
             },
           },
         },
@@ -111,11 +111,13 @@ export default defineField({
       url: 'url',
     },
     prepare(selection) {
-      const {items} = selection
+      const {items} = selection;
       return {
         subtitle: 'Grid',
-        title: items.length > 0 ? pluralize('item', items.length, true) : 'No items',
-      }
+        title:
+          items.length > 0 ? pluralize('item', items.length, true) : 'No items',
+        media: ThLargeIcon,
+      };
     },
   },
-})
+});

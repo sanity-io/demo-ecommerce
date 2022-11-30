@@ -1,5 +1,5 @@
-import {BulbOutlineIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {BulbOutlineIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'module.callout',
@@ -15,7 +15,9 @@ export default defineField({
       rows: 2,
       validation: (Rule) => [
         Rule.required(),
-        Rule.max(70).warning(`Callout length shouldn't be more than 70 characters.`),
+        Rule.max(70).warning(
+          `Callout length shouldn't be more than 70 characters.`,
+        ),
       ],
     }),
     // Link
@@ -33,11 +35,12 @@ export default defineField({
       url: 'url',
     },
     prepare(selection) {
-      const {text, url} = selection
+      const {text, url} = selection;
       return {
         subtitle: 'Callout',
         title: text,
-      }
+        media: BulbOutlineIcon,
+      };
     },
   },
-})
+});
