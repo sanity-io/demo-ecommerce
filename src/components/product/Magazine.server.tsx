@@ -27,9 +27,11 @@ export default function Magazine({
   sanityProduct,
   creators = [],
 }: Props) {
-  const compositionStories = sanityProduct?.composition.filter(
-    (block) => block?.material?.story ?? false,
-  );
+  const compositionStories =
+    sanityProduct?.composition &&
+    sanityProduct?.composition.filter(
+      (block) => block?.material?.story ?? false,
+    );
 
   // Get the guides for this product - make sure we use the non-draft ID
   const isDraft = sanityProduct._id.startsWith('drafts.');
@@ -59,7 +61,7 @@ export default function Magazine({
 
       {productGuide && <Guide productGuide={productGuide} />}
 
-      {compositionStories.length > 0 && (
+      {compositionStories && compositionStories.length > 0 && (
         <Composition
           sanityProduct={sanityProduct}
           compositionStories={compositionStories}

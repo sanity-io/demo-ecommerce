@@ -48,6 +48,7 @@ export default function ProductWidget({
   const availableForSale = selectedVariant?.availableForSale;
 
   const environmentallyFriendly =
+    sanityProduct?.composition &&
     sanityProduct?.composition.length > 0 &&
     sanityProduct?.composition?.every(
       (comp) => comp?.material?.attributes?.environmentallyFriendly,
