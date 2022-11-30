@@ -19,19 +19,17 @@ import Composition from './Composition.server';
 type Props = {
   sanityProduct: SanityProductPage;
   storefrontProduct: ProductWithNodes;
-  creators: SanityCreator[];
+  creators?: SanityCreator[];
 };
 
 export default function Magazine({
   storefrontProduct,
   sanityProduct,
-  creators,
+  creators = [],
 }: Props) {
-  const compositionStories =
-    sanityProduct.composition &&
-    sanityProduct?.composition.filter(
-      (block) => block?.material?.story !== null,
-    );
+  const compositionStories = sanityProduct?.composition.filter(
+    (block) => block?.material?.story ?? false,
+  );
 
   const {data: productGuide} = useSanityQuery<SanityGuideProducts>({
     params: {
@@ -48,18 +46,17 @@ export default function Magazine({
         'mb-10 p-5',
       )}
     >
-      {creators &&
-        creators.map((creator) => (
-          <Creator
-            storefrontProduct={storefrontProduct}
-            creator={creator}
-            key={creator._key}
-          />
-        ))}
+      {creators.map((creator) => (
+        <Creator
+          storefrontProduct={storefrontProduct}
+          creator={creator}
+          key={creator._key}
+        />
+      ))}
 
       {productGuide && <Guide productGuide={productGuide} />}
 
-      {compositionStories && compositionStories.length > 0 && (
+      {compositionStories.length > 0 && (
         <Composition
           sanityProduct={sanityProduct}
           compositionStories={compositionStories}

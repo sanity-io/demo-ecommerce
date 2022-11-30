@@ -23,7 +23,7 @@ export default function TaggedProductsBlock({node}: Props) {
     query: QUERY_SANITY,
   });
 
-  const multipleProducts = taggedProducts ? taggedProducts?.length > 1 : 0;
+  const multipleProducts = taggedProducts.length > 1;
 
   return (
     <>

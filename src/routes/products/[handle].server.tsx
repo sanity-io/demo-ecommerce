@@ -26,7 +26,6 @@ import type {
   SanityFaqs,
   SanityProductPage,
 } from '../../types';
-import Square from '../../components/elements/Square';
 import AccordionBlock from '../../components/portableText/blocks/Accordion.client';
 import {Block} from '@sanity/types';
 
@@ -190,7 +189,7 @@ export default function ProductRoute() {
               )}
             >
               <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                <Square className="hidden xl:block" />
+                <div className="hidden aspect-square xl:block" />
                 <div className="col-span-6 xl:col-span-5">
                   {sanityProduct?.body && (
                     <SanityProductBody {...sanityProduct} />
@@ -215,7 +214,7 @@ export default function ProductRoute() {
               )}
             >
               <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                <Square className="hidden xl:block" />
+                <div className="hidden aspect-square xl:block" />
                 <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
                   {sanityProduct?.sharedText?.deliveryAndReturns && (
                     <SanityProductShipping

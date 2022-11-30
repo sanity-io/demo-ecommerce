@@ -6,7 +6,6 @@ import {
 } from '../../types';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import PortableText from '../portableText/PortableText.server';
-import Square from '../elements/Square';
 import ProductModule from '../modules/Product.server';
 import {PRODUCT_WITH_VARIANT_FIELDS} from '../../fragments/sanity/productWithVariantFields';
 import {EarthAmericasIcon} from '@sanity/icons';
@@ -36,7 +35,7 @@ export default function Composition({
     <>
       {sanityProducts && (
         <div className="mb-3 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
-          <Square />
+          <div className="aspect-square" />
           <div className="col-span-2">
             <ProductModule module={sanityProducts[0]} layout="image" />
           </div>
@@ -46,7 +45,7 @@ export default function Composition({
             <ProductModule module={sanityProducts[2]} layout="image" />
           </div>
 
-          <Square className="col-span-2 grid">
+          <div className="col-span-2 grid aspect-square">
             <div className="mt-auto">
               <h2>Made from...</h2>
               {compositionStories.map((composition) => (
@@ -65,7 +64,7 @@ export default function Composition({
                 </div>
               ))}
             </div>
-          </Square>
+          </div>
         </div>
       )}
     </>

@@ -5,11 +5,13 @@ export const PRODUCT_FAQS = groq`
     "groups": array::compact(
       [
         ...faqs[] {
+          _key,
           "title": question,
           "body": answer
         },
         ...composition[]->{
           faqs[] {
+            _key,
             "title": question,
             "body": answer
           }

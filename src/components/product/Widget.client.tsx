@@ -47,9 +47,11 @@ export default function ProductWidget({
 
   const availableForSale = selectedVariant?.availableForSale;
 
-  const environmentallyFriendly = sanityProduct?.composition?.every(
-    (comp) => comp?.material?.attributes?.environmentallyFriendly,
-  );
+  const environmentallyFriendly =
+    sanityProduct?.composition.length > 0 &&
+    sanityProduct?.composition?.every(
+      (comp) => comp?.material?.attributes?.environmentallyFriendly,
+    );
 
   if (!selectedVariant) {
     return null;
