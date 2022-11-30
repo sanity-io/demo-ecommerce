@@ -18,10 +18,7 @@ export default async function resolveProductionUrl(
 }
 
 export const resolvePreviewUrl = (document: SanityDocumentLike) => {
-  const previewUrl = new URL(
-    '/api/preview',
-    import.meta.env.PUBLIC_PREVIEW_URL,
-  );
+  const previewUrl = new URL('/api/preview', location.origin);
 
   previewUrl.searchParams.append(
     `secret`,
