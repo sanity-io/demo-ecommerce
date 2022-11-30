@@ -3,7 +3,7 @@ import CalloutModule from './Callout.server';
 import CallToActionModule from './CallToAction.server';
 import CollectionModule from './Collection.server';
 import ImageModule from './Image.server';
-import InstagramModule from './Instagram.client';
+import InstagramModule from './Instagram/index.client';
 import ProductModule from './Product.server';
 
 type Props = {

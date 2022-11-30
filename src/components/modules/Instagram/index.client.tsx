@@ -1,7 +1,7 @@
 import {lazy, Suspense} from 'react';
 import type {SanityModuleInstagram} from '../../../types';
 
-const InstagramFallback = () => <></>;
+const InstagramFallback = () => <>loading...</>;
 
 const InstagramModule = import.meta.env.SSR
   ? InstagramFallback
