@@ -47,7 +47,7 @@ export default function Magazine({
     <>
       {((creators && creators.length > 0) ||
         productGuide ||
-        compositionStories.length > 0) && (
+        compositionStories) && (
         <div
           className={clsx(
             'w-full', //
