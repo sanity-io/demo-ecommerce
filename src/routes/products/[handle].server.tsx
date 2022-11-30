@@ -189,7 +189,7 @@ export default function ProductRoute() {
               )}
             >
               <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                <div className="hidden aspect-square xl:block" />
+                <div className="hidden xl:block" />
                 <div className="col-span-6 xl:col-span-5">
                   {sanityProduct?.body && (
                     <SanityProductBody {...sanityProduct} />

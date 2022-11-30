@@ -44,30 +44,36 @@ export default function Magazine({
   });
 
   return (
-    <div
-      className={clsx(
-        'w-full', //
-        'lg:w-[calc(100%-315px)]',
-        'mb-10 p-5',
-      )}
-    >
-      {creators.map((creator) => (
-        <Creator
-          storefrontProduct={storefrontProduct}
-          creator={creator}
-          key={creator._key}
-        />
-      ))}
+    <>
+      {((creators && creators.length > 0) ||
+        productGuide ||
+        compositionStories.length > 0) && (
+        <div
+          className={clsx(
+            'w-full', //
+            'lg:w-[calc(100%-315px)]',
+            'mb-10 p-5',
+          )}
+        >
+          {creators.map((creator) => (
+            <Creator
+              storefrontProduct={storefrontProduct}
+              creator={creator}
+              key={creator._key}
+            />
+          ))}
 
-      {productGuide && <Guide productGuide={productGuide} />}
+          {productGuide && <Guide productGuide={productGuide} />}
 
-      {compositionStories && compositionStories.length > 0 && (
-        <Composition
-          sanityProduct={sanityProduct}
-          compositionStories={compositionStories}
-        />
+          {compositionStories && compositionStories.length > 0 && (
+            <Composition
+              sanityProduct={sanityProduct}
+              compositionStories={compositionStories}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
