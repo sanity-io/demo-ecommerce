@@ -10,21 +10,35 @@ export default defineField({
     defineField({
       name: 'name',
       type: 'string',
-    }),
-    defineField({
-      name: 'attributes',
-      type: 'array',
-      of: [
-        {
-          name: 'attribute',
-          type: 'reference',
-          to: [{type: 'materialAttribute'}],
-        },
-      ],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'story',
       type: 'simpleBlockContent',
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      description: 'Shown on products using this material',
+      type: 'faqs',
+    }),
+    defineField({
+      name: 'attributes',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'environmentallyFriendly',
+          type: 'boolean',
+        }),
+        defineField({
+          name: 'dishwasherSafe',
+          type: 'boolean',
+        }),
+      ],
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
     }),
   ],
 });

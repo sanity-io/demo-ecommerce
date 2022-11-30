@@ -1,20 +1,28 @@
 import {TagIcon} from '@sanity/icons';
-import pluralize from 'pluralize';
 import {defineField} from 'sanity';
+import {ShopifyProductTagList} from '../../../components/inputs/ShopifyProductTagList';
 
 export default defineField({
-  name: 'module.products',
-  title: 'Products',
+  name: 'module.taggedProducts',
+  title: 'Tagged Products',
   type: 'object',
   icon: TagIcon,
   fields: [
     // Modules (products)
     defineField({
-      name: 'modules',
-      title: 'Products',
-      type: 'array',
-      of: [{type: 'module.product'}],
-      validation: (Rule) => Rule.required().max(2),
+      name: 'tag',
+      title: 'Tag to show',
+      type: 'string',
+      components: {
+        input: ShopifyProductTagList,
+      },
+    }),
+    // Layout
+    defineField({
+      name: 'number',
+      title: 'Number of products',
+      type: 'number',
+      initialValue: 2,
     }),
     // Layout
     defineField({
@@ -41,16 +49,13 @@ export default defineField({
   ],
   preview: {
     select: {
-      products: 'modules',
+      tag: 'tag',
+      number: 'number',
     },
-    prepare(selection) {
-      const {products} = selection;
+    prepare({tag, number}) {
       return {
-        subtitle: 'Products',
-        title:
-          products?.length > 0
-            ? pluralize('product', products.length, true)
-            : 'No products',
+        title: `${number} tagged products`,
+        subtitle: tag ? `Tag: ${tag}` : 'No tag selected',
       };
     },
   },

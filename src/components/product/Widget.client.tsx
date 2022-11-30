@@ -5,6 +5,7 @@ import {hasMultipleProductOptions} from '../../utils/productOptions';
 import SelectedVariantBuyNowButton from './buttons/SelectedVariantBuyNow.client';
 import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
 import ProductOptions from './options/ProductOptions.client';
+import {PackageIcon, EarthAmericasIcon} from '@sanity/icons';
 
 type Props = {
   sanityProduct: SanityProductPage;
@@ -45,6 +46,12 @@ export default function ProductWidget({
   );
 
   const availableForSale = selectedVariant?.availableForSale;
+
+  const environmentallyFriendly =
+    sanityProduct?.composition.length > 0 &&
+    sanityProduct?.composition?.every(
+      (comp) => comp?.material?.attributes?.environmentallyFriendly,
+    );
 
   if (!selectedVariant) {
     return null;
@@ -101,6 +108,32 @@ export default function ProductWidget({
         <SelectedVariantAddToCartButton />
         <SelectedVariantBuyNowButton />
       </div>
+
+      {(sanityProduct?.sharedText?.deliverySummary ||
+        (environmentallyFriendly &&
+          sanityProduct?.sharedText?.environmentallyFriendly)) && (
+        <>
+          {/* Divider */}
+          <div className="my-4 w-full border-b border-gray" />
+
+          {/* Delivery */}
+          {sanityProduct?.sharedText?.deliverySummary && (
+            <div className="text-bold mt-1 flex items-center text-xs">
+              <PackageIcon className="mr-1 text-lg" />
+              {sanityProduct.sharedText.deliverySummary}
+            </div>
+          )}
+
+          {/* Environmentally Friendly */}
+          {environmentallyFriendly &&
+            sanityProduct?.sharedText?.environmentallyFriendly && (
+              <div className="mt-1 flex items-center text-xs text-green-700">
+                <EarthAmericasIcon className="mr-1 text-lg" />
+                {sanityProduct.sharedText.environmentallyFriendly}
+              </div>
+            )}
+        </>
+      )}
     </div>
   );
 }

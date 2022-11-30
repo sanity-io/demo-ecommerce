@@ -1,5 +1,5 @@
-import pluralize from 'pluralize'
-import {defineField} from 'sanity'
+import pluralize from 'pluralize';
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'customProductOption.size',
@@ -55,11 +55,11 @@ export default defineField({
               width: 'width',
             },
             prepare(selection) {
-              const {height, title, width} = selection
+              const {height, title, width} = selection;
               return {
                 subtitle: `${width || '??'}cm x ${height || '??'}cm`,
                 title,
-              }
+              };
             },
           },
         },
@@ -68,12 +68,12 @@ export default defineField({
         Rule.custom((options) => {
           // Each size must have a unique title
           if (options) {
-            const uniqueTitles = new Set(options.map((option) => option.title))
+            const uniqueTitles = new Set(options.map((option) => option.title));
             if (options.length > uniqueTitles.size) {
-              return 'Each product option must have a unique title'
+              return 'Each product option must have a unique title';
             }
           }
-          return true
+          return true;
         }),
     }),
   ],
@@ -83,11 +83,14 @@ export default defineField({
       title: 'title',
     },
     prepare(selection) {
-      const {sizes, title} = selection
+      const {sizes, title} = selection;
       return {
-        subtitle: sizes.length > 0 ? pluralize('size', sizes.length, true) : 'No sizes',
+        subtitle:
+          sizes?.length > 0
+            ? pluralize('size', sizes.length, true)
+            : 'No sizes',
         title,
-      }
+      };
     },
   },
-})
+});

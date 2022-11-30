@@ -7,7 +7,8 @@ export async function api(
   request: HydrogenRequest,
   {session}: HydrogenApiRouteOptions,
 ) {
-  const corsOrigin = import.meta.env.PUBLIC_PREVIEW_URL;
+  const corsOrigin =
+    import.meta.env.VERCEL_URL ?? import.meta.env.PUBLIC_PREVIEW_URL;
 
   const headers = {
     'Access-Control-Allow-Origin': corsOrigin,

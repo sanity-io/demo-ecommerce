@@ -15,7 +15,7 @@ export default function CalloutBlock({centered, colorTheme, node}: Props) {
     <div
       className={clsx(
         'first:mt-0 last:mb-0', //
-        'relative my-12 w-screen px-6',
+        'relative my-12 px-6',
         'md:px-8',
         centered
           ? 'left-1/2 right-1/2 mr-[-50vw] ml-[-50vw]'

@@ -1,7 +1,7 @@
-import {CogIcon, PackageIcon} from '@sanity/icons'
-import {defineType, defineField} from 'sanity'
+import {CogIcon, PackageIcon} from '@sanity/icons';
+import {defineType, defineField} from 'sanity';
 
-const TITLE = 'Settings'
+const TITLE = 'Settings';
 
 export default defineType({
   name: 'settings',
@@ -17,6 +17,10 @@ export default defineType({
     {
       name: 'productOptions',
       title: 'Product options',
+    },
+    {
+      name: 'sharedText',
+      title: 'Shared text',
     },
     {
       name: 'notFoundPage',
@@ -164,13 +168,32 @@ export default defineType({
         Rule.custom((options) => {
           // Each product option type must have a unique title
           if (options) {
-            const uniqueTitles = new Set(options.map((option) => option.title))
+            const uniqueTitles = new Set(options.map((option) => option.title));
             if (options.length > uniqueTitles.size) {
-              return 'Each product option type must have a unique title'
+              return 'Each product option type must have a unique title';
             }
           }
-          return true
+          return true;
         }),
+    }),
+    // Shared text
+    defineField({
+      name: 'deliveryAndReturns',
+      type: 'simpleBlockContent',
+      group: 'sharedText',
+    }),
+    defineField({
+      name: 'deliverySummary',
+      type: 'string',
+      description: 'Displayed on PDP alongside add to cart button',
+      group: 'sharedText',
+    }),
+    defineField({
+      name: 'environmentallyFriendly',
+      type: 'string',
+      description: 'Displayed on PDP alongside add to cart button',
+      group: 'sharedText',
+      initialValue: 'Environmentally friendly',
     }),
     // Not found page
     defineField({
@@ -237,7 +260,9 @@ export default defineType({
           type: 'text',
           rows: 2,
           validation: (Rule) =>
-            Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
+            Rule.max(150).warning(
+              'Longer descriptions may be truncated by search engines',
+            ),
         }),
       ],
       validation: (Rule) => Rule.required(),
@@ -247,7 +272,7 @@ export default defineType({
     prepare() {
       return {
         title: TITLE,
-      }
+      };
     },
   },
-})
+});

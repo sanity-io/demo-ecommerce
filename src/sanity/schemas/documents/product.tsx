@@ -70,6 +70,13 @@ export default defineType({
       title: 'Body',
       type: 'body',
       group: 'editorial',
+      hidden: true, // Temporarily hidden to support new demo without breaking existing demo. Content will be replaced by that from 'bodyNew' field.
+    }),
+    defineField({
+      name: 'bodyNew', // Temporary field to support new demo without breaking old demo.
+      title: 'Body (new)',
+      type: 'body',
+      group: 'editorial',
     }),
     defineField({
       name: 'creators',
@@ -77,6 +84,7 @@ export default defineType({
       type: 'array',
       group: 'editorial',
       of: [{type: 'creator'}],
+      validation: (Rule) => Rule.max(1),
     }),
     defineField({
       name: 'composition',
@@ -84,6 +92,13 @@ export default defineType({
       type: 'array',
       group: 'editorial',
       of: [{type: 'reference', to: [{type: 'material'}]}],
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      description: 'Shown in addition to any material FAQs',
+      type: 'faqs',
+      group: 'editorial',
     }),
     defineField({
       name: 'store',

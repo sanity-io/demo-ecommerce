@@ -14,23 +14,21 @@ const annotations = [
 // Document types
 import collection from './documents/collection';
 import colorTheme from './documents/colorTheme';
+import guide from './documents/guide';
 import material from './documents/material';
-import materialAttribute from './documents/materialAttribute';
 import page from './documents/page';
 import product from './documents/product';
 import productVariant from './documents/productVariant';
-import sharedText from './documents/sharedText';
 import person from './documents/person';
 
 const documents = [
   collection,
   colorTheme,
+  guide,
   material,
-  materialAttribute,
   page,
   product,
   productVariant,
-  sharedText,
   person,
 ];
 
@@ -50,6 +48,7 @@ const blocks = [body, simpleBlockContent];
 import creator from './objects/creator';
 import customProductOptionColor from './objects/customProductOption/color';
 import customProductOptionSize from './objects/customProductOption/size';
+import faqs from './objects/faqs';
 import imageWithProductHotspots from './objects/imageWithProductHotspots';
 import linkExternal from './objects/linkExternal';
 import linkInternal from './objects/linkInternal';
@@ -66,6 +65,7 @@ import moduleImages from './objects/module/images';
 import moduleInstagram from './objects/module/instagram';
 import moduleProduct from './objects/module/product';
 import moduleProducts from './objects/module/products';
+import moduleTaggedProducts from './objects/module/taggedProducts';
 import placeholderString from './objects/placeholderString';
 import productHotspots from './objects/productHotspots';
 import productOption from './objects/productOption';
@@ -83,6 +83,7 @@ const objects = [
   creator,
   customProductOptionColor,
   customProductOptionSize,
+  faqs,
   imageWithProductHotspots,
   linkExternal,
   linkInternal,
@@ -99,6 +100,7 @@ const objects = [
   moduleInstagram,
   moduleProduct,
   moduleProducts,
+  moduleTaggedProducts,
   placeholderString,
   productHotspots,
   productOption,

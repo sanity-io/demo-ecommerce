@@ -5,13 +5,13 @@
 import {ListItemBuilder, StructureResolver} from 'sanity/desk';
 import collections from './collections';
 import colorThemes from './colorThemes';
+import guides from './guides';
 import materials from './materials';
 import home from './home';
 import pages from './pages';
 import people from './people';
 import products from './products';
 import settings from './settings';
-import sharedText from './sharedText';
 
 /**
  * Desk structure overrides
@@ -30,16 +30,15 @@ import sharedText from './sharedText';
 const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
+  'guide',
   'home',
   'material',
-  'materialAttribute',
   'media.tag',
   'page',
   'person',
   'product',
   'productVariant',
   'settings',
-  'sharedText',
 ];
 
 export const structure: StructureResolver = (S, context) =>
@@ -48,6 +47,7 @@ export const structure: StructureResolver = (S, context) =>
     .items([
       home(S, context),
       pages(S, context),
+      guides(S, context),
       S.divider(),
       collections(S, context),
       products(S, context),
@@ -55,7 +55,6 @@ export const structure: StructureResolver = (S, context) =>
       people(S, context),
       materials(S, context),
       colorThemes(S, context),
-      sharedText(S, context),
       S.divider(),
       settings(S, context),
       S.divider(),

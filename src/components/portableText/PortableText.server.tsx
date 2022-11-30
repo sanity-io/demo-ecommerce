@@ -14,7 +14,7 @@ import ImagesBlock from './blocks/Images.server';
 import InstagramBlock from './blocks/Instagram.server';
 import ListBlock from './blocks/List';
 import ProductsBlock from './blocks/Products.server';
-import SharedText from './blocks/SharedText.server';
+import TaggedProductsBlock from './blocks/TaggedProducts.server';
 
 type Props = {
   blocks: SanityBlock[];
@@ -63,7 +63,7 @@ export default function PortableText({
           ),
           blockInstagram: InstagramBlock,
           blockProducts: ProductsBlock,
-          sharedText: SharedText,
+          blockTaggedProducts: TaggedProductsBlock,
         },
       }}
     />

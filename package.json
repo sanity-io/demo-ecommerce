@@ -18,6 +18,7 @@
     "@shopify/cli": "^3.0.23",
     "@shopify/cli-hydrogen": "^3.0.23",
     "@shopify/prettier-config": "^1.1.2",
+    "@tailwindcss/typography": "^0.5.8",
     "@types/pluralize": "^0.0.29",
     "@types/react": "^18.0.14",
     "autoprefixer": "^10.4.2",

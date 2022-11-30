@@ -90,14 +90,47 @@ export type SanityColorTheme = {
 
 export type SanityPerson = {
   name: string;
+  slug: string;
   bio: Block[];
   image: SanityAssetImage;
+  seo: SanitySeo;
+};
+
+export type SanityPersonPage = SanityPerson & {
+  seo: SanitySeo;
+  products: SanityModuleProduct[];
 };
 
 export type SanityCreator = {
   _key: string;
   role: string;
   person: SanityPerson;
+};
+
+export type SanityMaterialAttributes = {
+  environmentallyFriendly: boolean;
+  dishwasherSafe: boolean;
+};
+
+export type SanityFaq = {
+  _key: string;
+  title: string;
+  body: Block[];
+};
+
+export type SanityFaqs = {
+  groups: SanityFaq[];
+};
+
+export type SanityMaterial = {
+  name: string;
+  attributes: SanityMaterialAttributes;
+  story: Block[];
+};
+
+export type SanityComposition = {
+  _key: string;
+  material: SanityMaterial;
 };
 
 export type SanityCustomProductOption =
@@ -190,8 +223,7 @@ export type SanityModule =
   | SanityModuleGrid
   | SanityModuleImage
   | SanityModuleInstagram
-  | SanityModuleProduct
-  | SanityModuleSharedText;
+  | SanityModuleProduct;
 
 export type SanityModuleAccordion = {
   _key?: string;
@@ -306,10 +338,12 @@ export type SanityModuleProducts = {
   modules: SanityModuleProduct[];
 };
 
-export type SanityModuleSharedText = {
+export type SanityModuleTaggedProducts = {
   _key?: string;
-  _type: 'sharedText';
-  content: Block[];
+  _type: 'module.taggedProducts';
+  tag: string;
+  number: number;
+  layout?: 'card' | 'pill';
 };
 
 export type SanityNotFoundPage = {
@@ -325,6 +359,14 @@ export type SanityPage = {
   hero?: SanityHeroPage;
   seo: SanitySeo;
   title: string;
+};
+
+export type SanityGuide = SanityPage;
+
+export type SanityGuideProducts = {
+  title: string;
+  slug: string;
+  images: SanityModuleImage[];
 };
 
 export type SanityProductHotspot = {
@@ -353,7 +395,14 @@ export type SanityProductPage = {
   gid: string;
   slug?: string;
   creators: SanityCreator[];
+  composition: SanityComposition[];
   seo: SanitySeo;
+  faqs: SanityFaqs;
+  sharedText: {
+    deliveryAndReturns: Block[];
+    deliverySummary: string;
+    environmentallyFriendly: string;
+  };
 };
 
 export type SanitySeo = {

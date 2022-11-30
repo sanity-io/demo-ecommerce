@@ -1,10 +1,10 @@
-import React from 'react'
-import {PackageIcon} from '@sanity/icons'
-import pluralize from 'pluralize'
-import {defineField, defineType} from 'sanity'
-import CollectionHiddenInput from '../../components/inputs/CollectionHidden'
-import ShopifyIcon from '../../components/icons/Shopify'
-import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
+import React from 'react';
+import {PackageIcon} from '@sanity/icons';
+import pluralize from 'pluralize';
+import {defineField, defineType} from 'sanity';
+import CollectionHiddenInput from '../../components/inputs/CollectionHidden';
+import ShopifyIcon from '../../components/icons/Shopify';
+import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus';
 
 const GROUPS = [
   {
@@ -25,7 +25,7 @@ const GROUPS = [
     name: 'seo',
     title: 'SEO',
   },
-]
+];
 
 export default defineType({
   name: 'collection',
@@ -42,8 +42,8 @@ export default defineType({
         field: CollectionHiddenInput,
       },
       hidden: ({parent}) => {
-        const isDeleted = parent?.store?.isDeleted
-        return !isDeleted
+        const isDeleted = parent?.store?.isDeleted;
+        return !isDeleted;
       },
     }),
     // Title (proxy)
@@ -81,14 +81,14 @@ export default defineType({
       validation: (Rule) =>
         Rule.custom((image) => {
           if (!image) {
-            return true
+            return true;
           }
-          const pattern = /^image-([a-f\d]+)-(\d+x\d+)-(\w+)$/
-          const format = image.asset._ref.match(pattern)[3]
+          const pattern = /^image-([a-f\d]+)-(\d+x\d+)-(\w+)$/;
+          const format = image.asset._ref.match(pattern)[3];
           if (format !== 'svg') {
-            return 'Image must be an SVG'
+            return 'Image must be an SVG';
           }
-          return true
+          return true;
         }),
     }),
     // Show hero
@@ -157,14 +157,23 @@ export default defineType({
       title: 'store.title',
     },
     prepare(selection) {
-      const {imageUrl, isDeleted, rules, title} = selection
-      const ruleCount = rules?.length || 0
+      const {imageUrl, isDeleted, rules, title} = selection;
+      const ruleCount = rules?.length || 0;
 
       return {
-        media: <ShopifyDocumentStatus isDeleted={isDeleted} type="collection" url={imageUrl} />,
-        subtitle: ruleCount > 0 ? `Automated (${pluralize('rule', ruleCount, true)})` : 'Manual',
+        media: (
+          <ShopifyDocumentStatus
+            isDeleted={isDeleted}
+            type="collection"
+            url={imageUrl}
+          />
+        ),
+        subtitle:
+          ruleCount > 0
+            ? `Automated (${pluralize('rule', ruleCount, true)})`
+            : 'Manual',
         title,
-      }
+      };
     },
   },
-})
+});

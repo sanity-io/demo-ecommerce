@@ -1,17 +1,12 @@
 import groq from 'groq';
-import {IMAGE} from './image';
 import {MARK_DEFS} from './portableText/markDefs';
 
-export const CREATOR = groq`
+export const MATERIAL = groq`
   _key,
-  role,
-  person->{
+  'material': @->{
     name,
-    "slug": "/people/" + slug.current,
-    image {
-      ${IMAGE}
-    },
-    bio[]{
+    attributes,
+    story[]{
       ...,
       markDefs[] {
         ${MARK_DEFS}

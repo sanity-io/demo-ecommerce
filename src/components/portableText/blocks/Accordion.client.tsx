@@ -3,13 +3,13 @@ import {Disclosure} from '@headlessui/react';
 // @ts-expect-error incompatibility with node16 resolution
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
-import type {SanityModuleAccordion} from '../../../types';
+import type {SanityFaqs, SanityModuleAccordion} from '../../../types';
 import MinusIcon from '../../icons/Minus';
 import PlusIcon from '../../icons/Plus';
 import PortableText from '../PortableText.client';
 
 type Props = {
-  node: PortableTextBlock & SanityModuleAccordion;
+  node: (PortableTextBlock & SanityModuleAccordion) | SanityFaqs;
 };
 
 export default function AccordionBlock({node}: Props) {
