@@ -31,9 +31,12 @@ export default function Magazine({
     (block) => block?.material?.story ?? false,
   );
 
+  // Get the guides for this product - make sure we use the non-draft ID
+  const isDraft = sanityProduct._id.startsWith('drafts.');
+  const id = isDraft ? sanityProduct._id.slice(7) : sanityProduct._id;
   const {data: productGuide} = useSanityQuery<SanityGuideProducts>({
     params: {
-      sanityId: sanityProduct._id,
+      sanityId: id,
     },
     query: QUERY_SANITY,
   });
