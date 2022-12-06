@@ -9,7 +9,8 @@
     "dev": "shopify hydrogen dev",
     "build": "shopify hydrogen build",
     "preview": "shopify hydrogen preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "type-check": "tsc --noEmit"
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
