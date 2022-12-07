@@ -1,7 +1,6 @@
-import {IceCreamIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField, defineType} from 'sanity'
-import ColorTheme from '../../components/media/ColorTheme'
+import {IceCreamIcon} from '@sanity/icons';
+import {defineField, defineType} from 'sanity';
+import ColorTheme from '../../components/media/ColorTheme';
 
 export default defineType({
   name: 'colorTheme',
@@ -46,13 +45,15 @@ export default defineType({
       title: 'title',
     },
     prepare(selection) {
-      const {backgroundColor, textColor, title} = selection
+      const {backgroundColor, textColor, title} = selection;
 
       return {
         media: <ColorTheme background={backgroundColor} text={textColor} />,
-        subtitle: `${textColor || '(No color)'} / ${backgroundColor || '(No color)'}`,
+        subtitle: `${textColor || '(No color)'} / ${
+          backgroundColor || '(No color)'
+        }`,
         title,
-      }
+      };
     },
   },
-})
+});

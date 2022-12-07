@@ -1,7 +1,6 @@
-import {PackageIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField} from 'sanity'
-import ShopifyDocumentStatus from '../../../components/media/ShopifyDocumentStatus'
+import {PackageIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
+import ShopifyDocumentStatus from '../../../components/media/ShopifyDocumentStatus';
 
 export default defineField({
   name: 'module.collection',
@@ -34,12 +33,19 @@ export default defineField({
       isDeleted: 'collection.store.isDeleted',
     },
     prepare(selection) {
-      const {collectionTitle, imageUrl, isDeleted} = selection
+      const {collectionTitle, imageUrl, isDeleted} = selection;
       return {
-        media: <ShopifyDocumentStatus isDeleted={isDeleted} type="collection" url={imageUrl} />,
+        media: (
+          <ShopifyDocumentStatus
+            isDeleted={isDeleted}
+            type="collection"
+            url={imageUrl}
+            title={collectionTitle}
+          />
+        ),
         subtitle: 'Collection',
         title: collectionTitle,
-      }
+      };
     },
   },
-})
+});

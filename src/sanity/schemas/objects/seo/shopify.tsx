@@ -1,5 +1,4 @@
-import React from 'react'
-import {defineField} from 'sanity'
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'seo.shopify',
@@ -17,14 +16,17 @@ export default defineField({
       type: 'placeholderString',
       description: (
         <>
-          If empty, displays the default Shopify document title (<code>store.title</code>)
+          If empty, displays the default Shopify document title (
+          <code>store.title</code>)
         </>
       ),
       options: {
         field: 'store.title',
       },
       validation: (Rule) =>
-        Rule.max(50).warning('Longer titles may be truncated by search engines'),
+        Rule.max(50).warning(
+          'Longer titles may be truncated by search engines',
+        ),
     },
     {
       name: 'description',
@@ -32,7 +34,9 @@ export default defineField({
       type: 'text',
       rows: 2,
       validation: (Rule) =>
-        Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
+        Rule.max(150).warning(
+          'Longer descriptions may be truncated by search engines',
+        ),
     },
     {
       name: 'image',
@@ -40,4 +44,4 @@ export default defineField({
       type: 'image',
     },
   ],
-})
+});

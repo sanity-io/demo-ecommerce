@@ -1,20 +1,16 @@
-import React from 'react'
-import {WarningOutlineIcon} from '@sanity/icons'
-import {StringFieldProps} from 'sanity'
-import {Box, Card, Flex, Stack, Text} from '@sanity/ui'
+import {WarningOutlineIcon} from '@sanity/icons';
+import {Box, Card, Flex, Stack, Text} from '@sanity/ui';
 
-export default function CollectionHiddenInput(props: StringFieldProps) {
+export default function CollectionHiddenInput() {
   return (
     <Card padding={4} radius={2} shadow={1} tone="critical">
       <Flex align="flex-start">
-        <Text size={2}>
+        <Text>
           <WarningOutlineIcon />
         </Text>
         <Box flex={1} marginLeft={3}>
           <Box>
-            <Text size={2} weight="semibold">
-              This collection is hidden
-            </Text>
+            <Text weight="semibold">This collection is hidden</Text>
           </Box>
           <Stack marginTop={4} space={2}>
             <Text size={1}>It has been deleted from Shopify.</Text>
@@ -22,5 +18,5 @@ export default function CollectionHiddenInput(props: StringFieldProps) {
         </Box>
       </Flex>
     </Card>
-  )
+  );
 }

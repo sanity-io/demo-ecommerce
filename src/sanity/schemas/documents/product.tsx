@@ -1,5 +1,5 @@
 import {TagIcon} from '@sanity/icons';
-import pluralize from 'pluralize';
+import pluralize from 'pluralize-esm';
 import ShopifyIcon from '../../components/icons/Shopify';
 import ProductHiddenInput from '../../components/inputs/ProductHidden';
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus';
@@ -144,7 +144,7 @@ export default defineType({
       priceRange: 'store.priceRange',
       status: 'store.status',
       title: 'store.title',
-      variantCount: 'store.variants',
+      variants: 'store.variants',
     },
     prepare(selection) {
       const {
@@ -183,6 +183,7 @@ export default defineType({
             isDeleted={isDeleted}
             type="product"
             url={previewImageUrl}
+            title={title}
           />
         ),
       };

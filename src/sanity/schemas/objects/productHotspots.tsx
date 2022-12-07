@@ -1,7 +1,6 @@
-import React from 'react'
-import {defineField} from 'sanity'
-import ProductTooltip from '../../components/hotspots/ProductTooltip'
-import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
+import {defineField} from 'sanity';
+import ProductTooltip from '../../components/hotspots/ProductTooltip';
+import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus';
 
 export default defineField({
   name: 'productHotspots',
@@ -41,13 +40,21 @@ export default defineField({
           previewImageUrl: 'productWithVariant.product.store.previewImageUrl',
           productTitle: 'productWithVariant.product.store.title',
           status: 'productWithVariant.product.store.status',
-          variantPreviewImageUrl: 'productWithVariant.variant.store.previewImageUrl',
+          variantPreviewImageUrl:
+            'productWithVariant.variant.store.previewImageUrl',
           x: 'x',
           y: 'y',
         },
         prepare(selection) {
-          const {isDeleted, previewImageUrl, productTitle, status, variantPreviewImageUrl, x, y} =
-            selection
+          const {
+            isDeleted,
+            previewImageUrl,
+            productTitle,
+            status,
+            variantPreviewImageUrl,
+            x,
+            y,
+          } = selection;
           return {
             media: (
               <ShopifyDocumentStatus
@@ -55,11 +62,12 @@ export default defineField({
                 isDeleted={isDeleted}
                 type="product"
                 url={variantPreviewImageUrl || previewImageUrl}
+                title={productTitle}
               />
             ),
             title: productTitle,
             subtitle: x && y ? `[${x}%, ${y}%]` : `No position set`,
-          }
+          };
         },
       },
     },
@@ -71,4 +79,4 @@ export default defineField({
       pathRoot: 'parent',
     },
   },
-})
+});

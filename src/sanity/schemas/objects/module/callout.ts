@@ -35,7 +35,7 @@ export default defineField({
       url: 'url',
     },
     prepare(selection) {
-      const {text, url} = selection;
+      const {text} = selection;
       return {
         subtitle: 'Callout',
         title: text,

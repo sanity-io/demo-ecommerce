@@ -1,7 +1,6 @@
-import {TagIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField} from 'sanity'
-import ShopifyDocumentStatus from '../../../components/media/ShopifyDocumentStatus'
+import {TagIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
+import ShopifyDocumentStatus from '../../../components/media/ShopifyDocumentStatus';
 
 export default defineField({
   name: 'module.product',
@@ -24,7 +23,7 @@ export default defineField({
       title: 'productWithVariant.product.store.title',
     },
     prepare(selection) {
-      const {isDeleted, previewImageUrl, status, title} = selection
+      const {isDeleted, previewImageUrl, status, title} = selection;
       return {
         media: (
           <ShopifyDocumentStatus
@@ -32,11 +31,12 @@ export default defineField({
             isDeleted={isDeleted}
             type="product"
             url={previewImageUrl}
+            title={title}
           />
         ),
         subtitle: 'Product',
         title,
-      }
+      };
     },
   },
-})
+});

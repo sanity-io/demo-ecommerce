@@ -3,9 +3,8 @@
  *
  * Read more: https://www.sanity.io/docs/customization#f924645007e1
  */
-import {TagIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField} from 'sanity'
+import {TagIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   title: 'Product',
@@ -71,4 +70,4 @@ export default defineField({
       validation: (Rule) => Rule.required().min(1).max(10),
     }),
   ],
-})
+});

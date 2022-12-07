@@ -1,5 +1,4 @@
-import React from 'react'
-import {defineField} from 'sanity'
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'seo.page',
@@ -21,7 +20,9 @@ export default defineField({
       ),
       options: {field: 'title'},
       validation: (Rule) =>
-        Rule.max(50).warning('Longer titles may be truncated by search engines'),
+        Rule.max(50).warning(
+          'Longer titles may be truncated by search engines',
+        ),
     }),
     defineField({
       name: 'description',
@@ -29,7 +30,9 @@ export default defineField({
       type: 'text',
       rows: 2,
       validation: (Rule) =>
-        Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
+        Rule.max(150).warning(
+          'Longer descriptions may be truncated by search engines',
+        ),
     }),
     defineField({
       name: 'image',
@@ -37,4 +40,4 @@ export default defineField({
       type: 'image',
     }),
   ],
-})
+});
