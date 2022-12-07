@@ -1,5 +1,5 @@
-import {ImageIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {ImageIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 const VARIANTS = [
   {title: 'Simple', value: undefined},
@@ -7,7 +7,7 @@ const VARIANTS = [
   {title: 'Call to action', value: 'callToAction'},
   {title: 'Product hotspots', value: 'productHotspots'},
   {title: 'Product tags', value: 'productTags'},
-]
+];
 
 export default defineField({
   name: 'module.image',
@@ -95,14 +95,15 @@ export default defineField({
       variant: 'variant',
     },
     prepare(selection) {
-      const {fileName, image, variant} = selection
-      const currentVariant = VARIANTS.find((v) => v.value === variant)
+      const {fileName, image, variant} = selection;
+      const currentVariant = VARIANTS.find((v) => v.value === variant);
 
       return {
         media: image,
-        subtitle: 'Image' + (currentVariant ? ` [${currentVariant.title}]` : ''),
+        subtitle:
+          'Image' + (currentVariant ? ` [${currentVariant.title}]` : ''),
         title: fileName,
-      }
+      };
     },
   },
-})
+});

@@ -1,4 +1,4 @@
-import PlaceholderStringInput from '../../components/inputs/PlaceholderString'
+import PlaceholderStringInput from '../../components/inputs/PlaceholderString';
 
 export default {
   name: 'placeholderString',
@@ -7,4 +7,4 @@ export default {
   components: {
     input: PlaceholderStringInput,
   },
-}
+};

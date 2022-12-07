@@ -18,7 +18,7 @@ import settings from './settings';
  *
  * Sanity Studio automatically lists document types out of the box.
  * With this custom desk structure we achieve things like showing the `home`
- * and `settings` document types as singletons, and grouping product details
+ * and `settings` document types as singletons, and grouping product details
  * and variants for easy editorial access.
  *
  * You can customize this even further as your schemas progress.

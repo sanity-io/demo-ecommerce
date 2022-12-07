@@ -13,6 +13,7 @@ export default function Creator({storefrontProduct, creator}: Props) {
       <div className="aspect-square" />
       <div className="col-span-2">
         <div className="relative aspect-square overflow-hidden rounded bg-lightGray">
+          {/* eslint-disable-next-line hydrogen/prefer-image-component */}
           <img
             src="https://images.unsplash.com/photo-1519993796861-26556330a4a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2375&q=80"
             style={{

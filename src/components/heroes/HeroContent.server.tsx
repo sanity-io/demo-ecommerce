@@ -33,7 +33,7 @@ export default function HeroContent({content}: Props) {
         );
       }
     }
-  }, []);
+  }, [content]);
 
   return (
     <div className="relative flex w-full place-content-center overflow-hidden rounded-md bg-lightGray">
