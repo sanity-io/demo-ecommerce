@@ -1,7 +1,7 @@
-import {HomeIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {HomeIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
-const TITLE = 'Home'
+const TITLE = 'Home';
 
 export default defineField({
   name: 'home',
@@ -56,7 +56,7 @@ export default defineField({
         // media: icon,
         subtitle: 'Index',
         title: TITLE,
-      }
+      };
     },
   },
-})
+});

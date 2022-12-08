@@ -12,7 +12,7 @@ export default function SanityFooter() {
         {/* Intro */}
         <div>
           This demo shows how Sanity.io can power remarkable storefronts on
-          Shopify's Hydrogen framework.
+          Shopify&apos;s Hydrogen framework.
         </div>
         {/* Links */}
         <div

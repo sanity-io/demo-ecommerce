@@ -1,5 +1,5 @@
 import {OptionWithValues} from '@shopify/hydrogen';
-import pluralize from 'pluralize';
+import pluralize from 'pluralize-esm';
 
 export const hasMultipleProductOptions = (options?: OptionWithValues[]) => {
   const firstOption = options?.[0];

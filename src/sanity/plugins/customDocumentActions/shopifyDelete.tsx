@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {TrashIcon} from '@sanity/icons';
 import {Stack, Text, useToast} from '@sanity/ui';
 import {

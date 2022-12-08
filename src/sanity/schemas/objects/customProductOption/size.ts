@@ -1,5 +1,9 @@
-import pluralize from 'pluralize';
+import pluralize from 'pluralize-esm';
 import {defineField} from 'sanity';
+
+interface SizeOption {
+  title: string;
+}
 
 export default defineField({
   name: 'customProductOption.size',
@@ -65,7 +69,7 @@ export default defineField({
         },
       ],
       validation: (Rule) =>
-        Rule.custom((options) => {
+        Rule.custom((options: SizeOption[] | undefined) => {
           // Each size must have a unique title
           if (options) {
             const uniqueTitles = new Set(options.map((option) => option.title));

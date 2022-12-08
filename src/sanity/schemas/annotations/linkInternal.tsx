@@ -3,10 +3,9 @@
  *
  * Read more: https://www.sanity.io/docs/customization#f924645007e1
  */
-import {LinkIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField} from 'sanity'
-import {PAGE_REFERENCES} from '../../constants'
+import {LinkIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
+import {PAGE_REFERENCES} from '../../constants';
 
 export default defineField({
   title: 'Internal Link',
@@ -39,4 +38,4 @@ export default defineField({
       to: PAGE_REFERENCES,
     },
   ],
-})
+});

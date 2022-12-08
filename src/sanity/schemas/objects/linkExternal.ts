@@ -1,5 +1,5 @@
-import {EarthGlobeIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {EarthGlobeIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   title: 'External Link',
@@ -35,18 +35,18 @@ export default defineField({
       url: 'url',
     },
     prepare(selection) {
-      const {title, url} = selection
+      const {title, url} = selection;
 
-      let subtitle = []
+      const subtitle = [];
       if (url) {
-        subtitle.push(`→ ${url}`)
+        subtitle.push(`→ ${url}`);
       }
 
       return {
         // media: image,
         subtitle: subtitle.join(' '),
         title,
-      }
+      };
     },
   },
-})
+});

@@ -1,26 +1,43 @@
-import {useSchema} from 'sanity'
-import {Box} from '@sanity/ui'
-import {HotspotTooltipProps} from 'sanity-plugin-hotspot-array'
+import styled from 'styled-components';
+import {PreviewLayoutKey, SchemaType, useSchema} from 'sanity';
+import {Box} from '@sanity/ui';
+import {HotspotTooltipProps} from 'sanity-plugin-hotspot-array';
+import {useMemo} from 'react';
 
 interface HotspotFields {
-  productWithVariant: {
+  productWithVariant?: {
     product: {
-      _ref: string
-    }
-  }
+      _ref: string;
+    };
+  };
 }
 
-export default function ProductPreview({value, renderPreview}: HotspotTooltipProps<HotspotFields>) {
-  const productSchemaType = useSchema().get('product')
+const StyledBox = styled(Box)`
+  width: 200px;
+`;
+
+export default function ProductPreview(
+  props: HotspotTooltipProps<HotspotFields>,
+) {
+  const {value, renderPreview} = props;
+  const productSchemaType = useSchema().get('product');
+  const hasProduct =
+    value?.productWithVariant?.product?._ref && productSchemaType;
+
+  const previewProps = useMemo(
+    () => ({
+      value: value?.productWithVariant?.product,
+      schemaType: productSchemaType as SchemaType,
+      layout: 'default' as PreviewLayoutKey,
+    }),
+    [productSchemaType, value?.productWithVariant?.product],
+  );
+
   return (
-    <Box padding={2} style={{minWidth: 200}}>
-      {value?.productWithVariant?.product?._ref
-        ? renderPreview({
-            value: value?.productWithVariant?.product,
-            schemaType: productSchemaType,
-            layout: 'default',
-          })
+    <StyledBox padding={2}>
+      {hasProduct && previewProps
+        ? renderPreview(previewProps)
         : `No product selected`}
-    </Box>
-  )
+    </StyledBox>
+  );
 }

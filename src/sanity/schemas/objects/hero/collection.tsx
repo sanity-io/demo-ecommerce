@@ -1,4 +1,4 @@
-import {defineField} from 'sanity'
+import {defineField} from 'sanity';
 
 export default defineField({
   name: 'hero.collection',
@@ -39,4 +39,4 @@ export default defineField({
       ],
     }),
   ],
-})
+});

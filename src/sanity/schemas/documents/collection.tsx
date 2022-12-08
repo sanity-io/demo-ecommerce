@@ -1,10 +1,10 @@
-import React from 'react';
 import {PackageIcon} from '@sanity/icons';
-import pluralize from 'pluralize';
+import pluralize from 'pluralize-esm';
 import {defineField, defineType} from 'sanity';
 import CollectionHiddenInput from '../../components/inputs/CollectionHidden';
 import ShopifyIcon from '../../components/icons/Shopify';
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus';
+import {getExtension} from '@sanity/asset-utils';
 
 const GROUPS = [
   {
@@ -80,11 +80,12 @@ export default defineType({
       group: 'theme',
       validation: (Rule) =>
         Rule.custom((image) => {
-          if (!image) {
+          if (!image?.asset?._ref) {
             return true;
           }
-          const pattern = /^image-([a-f\d]+)-(\d+x\d+)-(\w+)$/;
-          const format = image.asset._ref.match(pattern)[3];
+
+          const format = getExtension(image.asset._ref);
+
           if (format !== 'svg') {
             return 'Image must be an SVG';
           }
@@ -166,6 +167,7 @@ export default defineType({
             isDeleted={isDeleted}
             type="collection"
             url={imageUrl}
+            title={title}
           />
         ),
         subtitle:

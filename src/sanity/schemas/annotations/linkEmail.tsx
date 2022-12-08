@@ -3,9 +3,8 @@
  *
  * Read more: https://www.sanity.io/docs/customization#f924645007e1
  */
-import {EnvelopeIcon} from '@sanity/icons'
-import React from 'react'
-import {defineField} from 'sanity'
+import {EnvelopeIcon} from '@sanity/icons';
+import {defineField} from 'sanity';
 
 export default defineField({
   title: 'Email link',
@@ -36,4 +35,4 @@ export default defineField({
       type: 'email',
     },
   ],
-})
+});
