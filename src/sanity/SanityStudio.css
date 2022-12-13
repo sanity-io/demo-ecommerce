@@ -1,14 +1,15 @@
-html {
-  background-color: #111111;
-}
-
-html,
-body,
-#root {
-  height: 100%;
-}
-
 body {
   margin: 0;
+}
+
+#root {
+  height: 100vh;
+  max-height: 100dvh;
+  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
+  overflow: auto;
+}
+
+*:not([data-ui='Popover__arrow']):not([data-ui='Tooltip__arrow']) > svg {
+  display: inline;
 }

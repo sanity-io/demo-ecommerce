@@ -1,3 +1,4 @@
+import {Head} from '@shopify/hydrogen';
 import groq from 'groq';
 import {ReactNode} from 'react';
 import {LINKS} from '../../fragments/sanity/links';
@@ -25,6 +26,22 @@ export default function Layout({backgroundColor, children}: Props) {
 
   return (
     <>
+      <Head>
+        <link rel="stylesheet" href="/src/index.css" />
+        <link rel="preconnect" href="https://cdn.shopify.com" />
+        <link rel="preconnect" href="https://shop.app/" />
+        <link rel="preconnect" href="https://oxygenator.myshopify.com/" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
       {preview && <Preview />}
       <div className="absolute top-0 left-0">
         <a
