@@ -10,7 +10,8 @@
     "build": "shopify hydrogen build",
     "preview": "shopify hydrogen preview",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "npx prettier --write . --ignore-path .gitignore"
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
