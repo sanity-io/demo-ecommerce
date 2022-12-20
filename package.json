@@ -9,7 +9,8 @@
     "dev": "shopify hydrogen dev",
     "build": "shopify hydrogen build",
     "preview": "shopify hydrogen preview",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore"
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
+    "prepare": "husky install"
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
@@ -26,6 +27,8 @@
     "autoprefixer": "^10.4.2",
     "eslint": "^8.16.0",
     "eslint-plugin-hydrogen": "^0.12.2",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "postcss": "^8.4.5",
     "prettier": "^2.6.2",
     "prettier-plugin-tailwindcss": "^0.1.13",
