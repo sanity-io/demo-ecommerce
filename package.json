@@ -9,7 +9,7 @@
     "dev": "shopify hydrogen dev",
     "build": "shopify hydrogen build",
     "preview": "shopify hydrogen preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore"
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
