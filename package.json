@@ -19,7 +19,8 @@
     "preview": "shopify hydrogen preview",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
     "prepare": "husky install",
-    "format": "npx prettier --write . --ignore-path .gitignore"
+    "format": "npx prettier --write . --ignore-path .gitignore",
+    "type-check": "tsc --noEmit"
   },
   "prettier": "@shopify/prettier-config",
   "devDependencies": {
