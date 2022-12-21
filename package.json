@@ -5,6 +5,14 @@
   "license": "MIT",
   "private": true,
   "author": "Sanity.io <hello@sanity.io>",
+  "homepage": "https://github.com/sanity-io/demo-ecommerce",
+  "bugs": {
+    "url": "https://github.com/sanity-io/demo-ecommerce/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sanity-io/demo-ecommerce.git"
+  },
   "scripts": {
     "dev": "shopify hydrogen dev",
     "build": "shopify hydrogen build",
