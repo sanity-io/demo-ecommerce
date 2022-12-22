@@ -9,7 +9,7 @@ type Store = {
   isDeleted: boolean;
 };
 
-export default function ProductHiddenInput(props: StringFieldProps) {
+export default function ProductHiddenInput(_: StringFieldProps) {
   const store: Store = useFormValue(['store']) as Store;
 
   let message;

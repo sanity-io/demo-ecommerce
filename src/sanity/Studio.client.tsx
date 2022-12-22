@@ -14,7 +14,11 @@ const StudioFallback = () => <></>;
  */
 const SanityStudio = import.meta.env.SSR
   ? StudioFallback
-  : lazy(() => import('./SanityStudio.client'));
+  : lazy(
+      () =>
+        // @ts-expect-error
+        import('./SanityStudio.client'),
+    );
 
 export default function Studio() {
   return (

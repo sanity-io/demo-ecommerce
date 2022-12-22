@@ -1,4 +1,5 @@
 import {TagIcon} from '@sanity/icons';
+// @ts-expect-error
 import pluralize from 'pluralize-esm';
 import ShopifyIcon from '../../components/icons/Shopify';
 import ProductHiddenInput from '../../components/inputs/ProductHidden';
