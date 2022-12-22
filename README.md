@@ -12,7 +12,7 @@ This demo is an enhanced version of our [AKVA][standard-akva] demo, powered by S
 
 AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts. This is an enhanced version demonstrating some additional features, such as enhanced structured content for products, and the addition of a "guide" content type.
 
-It's features an embedded version of our pre-configured Studio and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
+It features an embedded version of our pre-configured Studio and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
 
 This starter showcases a few patterns you can adopt when creating your own custom storefronts. Use Sanity and Hydrogen to delight customers with rich, shoppable editorial experiences that best tell your story.
 
