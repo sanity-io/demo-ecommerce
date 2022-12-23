@@ -1,4 +1,5 @@
 import {OptionWithValues} from '@shopify/hydrogen';
+// @ts-expect-error
 import pluralize from 'pluralize-esm';
 
 export const hasMultipleProductOptions = (options?: OptionWithValues[]) => {

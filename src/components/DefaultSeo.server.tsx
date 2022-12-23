@@ -12,7 +12,7 @@ export default function DefaultSeo() {
     description?: string;
     title: string;
   }>({
-    hydrogenQueryOptions: {
+    options: {
       preload: '*',
     },
     query: QUERY_SANITY,
