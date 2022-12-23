@@ -10,15 +10,19 @@ This demo is an enhanced version of our [AKVA][standard-akva] demo, powered by S
 
 ## About the storefront
 
-AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts. This is an enhanced version demonstrating some additional features, such as enhanced structured content for products, and the addition of a "guide" content type.
+AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts. This is an enhanced version demonstrating some additional features such as enhanced structured content for products and the addition of a "guide" content type, all of which lead to richer PDPs (Product Display Pages). These additions include:
 
-It features an embedded version of our pre-configured Studio and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
+- A material document type to tell a story about the materials a product is made up of. A product can be composed of multiple materials. The PDP is updated to display this information as well as cross-sell other products made of the same material.
+- A people document type allows details to be added for makers of the products. Again, this content is displayed on the PDP with a short biography and link through to the catalogue of the artists work.
+- The guide document type is an example of how content and sales strategies can work together through structured content. If a guide references a product, then any hotspotted images are pulled onto any relevant PDPs in order to show products in context.
+
+This demo also features an embedded version of our pre-configured Studio and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
 
 This starter showcases a few patterns you can adopt when creating your own custom storefronts. Use Sanity and Hydrogen to delight customers with rich, shoppable editorial experiences that best tell your story.
 
 ## About the Studio
 
-This studio is based on our [Shopify Studio][standard-studio] template, which has a [number of features][standard-studio-features]. In addition to this, we've modelled some additional content for products, such as materials and creators, and added a guide document type.
+This studio is based on our [Shopify Studio][standard-studio] template, which has a [number of features][standard-studio-features]. In addition to this, we've modelled some additional content as detailed above.
 
 # Storefront Features
 
