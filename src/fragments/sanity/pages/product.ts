@@ -11,7 +11,7 @@ import {SHARED_TEXT} from '../sharedText';
 export const PRODUCT_PAGE = groq`
   _id,
   "available": !store.isDeleted && store.status == 'active',
-  "body": bodyNew[]{
+  "body": body[]{
     ${PORTABLE_TEXT}
   },
   colorTheme->{
