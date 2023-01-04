@@ -1,6 +1,7 @@
 import {Link} from '@shopify/hydrogen';
 import {SanityCreator, ProductWithNodes} from '../../types';
 import PortableText from '../portableText/PortableText.server';
+import SanityImage from '../media/SanityImage.client';
 
 type Props = {
   storefrontProduct: ProductWithNodes;
@@ -13,29 +14,19 @@ export default function Creator({storefrontProduct, creator}: Props) {
       <div className="aspect-square" />
       <div className="col-span-2">
         <div className="relative aspect-square overflow-hidden rounded bg-lightGray">
-          {/* eslint-disable-next-line hydrogen/prefer-image-component */}
-          <img
-            src="https://images.unsplash.com/photo-1519993796861-26556330a4a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2375&q=80"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-            alt=""
-          />
-          {/* {creator.person.image && (
+          {creator.person.image && (
             <SanityImage
               alt={creator.person.image?.altText}
               crop={creator.person.image?.crop}
-              dataset={sanityConfig.dataset}
+              dataset={import.meta.env.PUBLIC_SANITY_DATASET}
               hotspot={creator.person.image?.hotspot}
               layout="fill"
               objectFit="cover"
-              projectId={sanityConfig.projectId}
+              projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
               sizes="25vw"
               src={creator.person.image?.asset._ref}
             />
-          )} */}
+          )}
         </div>
       </div>
       <div className="aspect-square" />
