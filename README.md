@@ -1,20 +1,30 @@
-# AKVA - An example storefront powered by Sanity + Hydrogen
+# Ecommerce Demo - AKVA
 
-This demo is compatible with `@shopify/hydrogen ~= 1.3.0`
+This demo is an enhanced version of our [AKVA][standard-akva] demo, powered by Sanity + Hydrogen. This demo is compatible with `@shopify/hydrogen ~= 1.3.0`.
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
-[Demo][hydrogen-sanity-demo] | [Sanity Studio][sanity-shopify-studio] | [Sanity Connect for Shopify][sanity-connect]
+[Demo][hydrogen-sanity-demo] | [Sanity Connect for Shopify][sanity-connect]
 
 # About
 
-AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts.
+## About the storefront
 
-It's designed to be used alongside our [pre-configured Studio][sanity-shopify-studio] and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
+AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts. This is an enhanced version demonstrating some additional features such as enhanced structured content for products and the addition of a "guide" content type, all of which lead to richer PDPs (Product Display Pages). These additions include:
+
+- A material document type to tell a story about the materials a product is made up of. A product can be composed of multiple materials. The PDP is updated to display this information as well as cross-sell other products made of the same material.
+- A people document type allows details to be added for makers of the products. Again, this content is displayed on the PDP with a short biography and link through to the catalogue of the artists work.
+- The guide document type is an example of how content and sales strategies can work together through structured content. If a guide references a product, then any hotspotted images are pulled onto any relevant PDPs in order to show products in context.
+
+This demo also features an embedded version of our pre-configured Studio and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
 
 This starter showcases a few patterns you can adopt when creating your own custom storefronts. Use Sanity and Hydrogen to delight customers with rich, shoppable editorial experiences that best tell your story.
 
-# Features
+## About the Studio
+
+This studio is based on our [Shopify Studio][standard-studio] template, which has a [number of features][standard-studio-features]. In addition to this, we've modelled some additional content as detailed above.
+
+# Storefront Features
 
 **[View the feature gallery][about]**
 
@@ -38,7 +48,7 @@ export default function MyServerComponent() {
     // Optional
     params: PARAMS,
     // Optional: pass through any useQuery options
-    hydrogenQueryOptions: {
+    options: {
       preload: false,
     },
   });
@@ -47,19 +57,6 @@ export default function MyServerComponent() {
 ```
 
 [The hook itself][use-sanity-query-hook] is super lightweight - it uses our official [`@sanity/client`][sanity-js-client] library wrapped in a Hydrogen [`useQuery`][hydrogen-use-query] hook to make it suspense-friendly. That's it!
-
-<details>
-<summary>What happened to <code>hydrogen-plugin-sanity</code>?</summary>
-
-We've deprecated this plugin as it promoted conducting larger fetches (at the page level) and using shared context.
-
-In practice, this was very difficult to reason about and worked against the benefits of using React Server Components.
-
-We recommend that you keep fetching logic scoped to the specific components that need them, even if they are deeply nested in Portable Text.
-
-Whilst this will may mean more queries, you'll have _much better_ control over exactly how much you're fetching from the Storefront API as well as being able to define component-specific caching / prefetching logic.
-
-</details>
 
 # Opinions
 
@@ -84,7 +81,7 @@ We've taken the following opinions on how we've approached this demo.
 <details>
 <summary><strong>Collections are managed entirely by Shopify</strong></summary>
 
-- Shopify is used to handle collection rules and sort orders.
+- Shopify is used to handle collection rules and sort orders. Sanity is used to enhance the content displayed on the storefront.
 
 </details>
 
@@ -128,14 +125,9 @@ We've taken the following opinions on how we've approached this demo.
 
 ## Installation
 
-1.  Update the following configuration files (optional)
+These installation instructions assume you have already installed and configured [Sanity Connect][sanity-connect] on your Shopify store.
 
-    - **`sanity.config.ts`**: point to your Sanity project's `dataset` and `projectId`
-    - **`hydrogen.config.ts`**: point to your Shopify storefront's `storeDomain` and `storefrontToken`
-
-    You can skip this step if you'd like to run the starter with our test data.
-
-    Remember to update your shop's domain and Storefront API token!
+1.  Duplicate the `.env.example` file to `.env` and replace the values to point to your Sanity project's `dataset` and `projectId`, and your Shopify storefront's `storeDomain` and `storefrontToken`
 
 2.  Install dependencies and start the development server
 
@@ -175,8 +167,11 @@ See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
 
 This repository is published under the [MIT][license] license.
 
-[about]: https://hydrogen-sanity-demo.com/pages/about
-[hydrogen-sanity-demo]: https://hydrogen-sanity-demo.com
+[standard-akva]: https://github.com/sanity-io/hydrogen-sanity-demo
+[standard-studio]: https://github.com/sanity-io/sanity-shopify-studio
+[standard-studio-features]: https://github.com/sanity-io/sanity-shopify-studio/blob/main/docs/features.md
+[about]: https://demo-ecommerce.sanity.build/pages/about
+[hydrogen-sanity-demo]: https://demo-ecommerce.sanity.build/
 [hydrogen-github]: https://github.com/Shopify/hydrogen
 [hydrogen-framework]: https://shopify.dev/api/hydrogen/framework
 [hydrogen-framework-deployment]: https://shopify.dev/custom-storefronts/hydrogen/deployment
@@ -186,7 +181,6 @@ This repository is published under the [MIT][license] license.
 [sanity-connect]: https://www.sanity.io/docs/sanity-connect-for-shopify
 [sanity-js-client]: https://www.sanity.io/docs/js-client
 [sanity-portable-text]: https://www.sanity.io/guides/introduction-to-portable-text
-[sanity-shopify-studio]: https://github.com/sanity-io/sanity-shopify-studio
 [sanity-structured-content-patterns]: https://www.sanity.io/guides/structured-content-patterns-for-e-commerce
 [shopify-storefront-api]: https://shopify.dev/api/storefront
 [shopify-analytics]: https://shopify.dev/api/hydrogen/components/framework/shopifyanalytics
