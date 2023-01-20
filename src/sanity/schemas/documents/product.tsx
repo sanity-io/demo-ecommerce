@@ -1,4 +1,5 @@
 import {TagIcon} from '@sanity/icons';
+// @ts-expect-error
 import pluralize from 'pluralize-esm';
 import ShopifyIcon from '../../components/icons/Shopify';
 import ProductHiddenInput from '../../components/inputs/ProductHidden';
@@ -68,13 +69,6 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'body',
-      group: 'editorial',
-      hidden: true, // Temporarily hidden to support new demo without breaking existing demo. Content will be replaced by that from 'bodyNew' field.
-    }),
-    defineField({
-      name: 'bodyNew', // Temporary field to support new demo without breaking old demo.
-      title: 'Body (new)',
       type: 'body',
       group: 'editorial',
     }),

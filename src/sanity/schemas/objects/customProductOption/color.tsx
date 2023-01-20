@@ -1,3 +1,4 @@
+// @ts-expect-error
 import pluralize from 'pluralize-esm';
 import {defineField} from 'sanity';
 

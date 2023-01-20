@@ -5,7 +5,11 @@ const InstagramFallback = () => <>loading...</>;
 
 const InstagramModule = import.meta.env.SSR
   ? InstagramFallback
-  : lazy(() => import('./Instagram.client'));
+  : lazy(
+      () =>
+        // @ts-expect-error
+        import('./Instagram.client'),
+    );
 
 export default function Instagram({module}: {module: SanityModuleInstagram}) {
   return (

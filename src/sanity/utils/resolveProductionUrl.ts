@@ -9,7 +9,7 @@ type store = {
 };
 
 export default async function resolveProductionUrl(
-  prev: string | undefined,
+  _: string | undefined,
   context: ResolveProductionUrlContext,
 ) {
   const {document} = context;

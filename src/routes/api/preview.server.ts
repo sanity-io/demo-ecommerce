@@ -34,7 +34,7 @@ export async function api(
   }
 
   const pathname = `/${slug}` ?? `/`;
-  await session?.set('preview', true);
+  await session?.set('preview', `${true}`);
 
   // TODO: set alternative dataset from query param?
   // TODO: add additional security to cookie to prevent preview for those that shouldn't have it!

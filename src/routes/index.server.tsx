@@ -15,7 +15,7 @@ import type {SanityHomePage} from '../types';
 
 export default function IndexRoute() {
   const {data: sanityHome} = useSanityQuery<SanityHomePage>({
-    hydrogenQueryOptions: {preload: true},
+    options: {preload: true},
     query: QUERY_SANITY,
   });
 

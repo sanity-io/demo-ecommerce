@@ -1,4 +1,5 @@
 import {PackageIcon} from '@sanity/icons';
+// @ts-expect-error
 import pluralize from 'pluralize-esm';
 import {defineField, defineType} from 'sanity';
 import CollectionHiddenInput from '../../components/inputs/CollectionHidden';

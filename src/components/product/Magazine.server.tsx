@@ -1,6 +1,5 @@
 // @ts-expect-error incompatibility with node16 resolution
 import type {PortableTextBlock} from '@portabletext/types';
-import {Link} from '@shopify/hydrogen';
 import groq from 'groq';
 import clsx from 'clsx';
 import {
