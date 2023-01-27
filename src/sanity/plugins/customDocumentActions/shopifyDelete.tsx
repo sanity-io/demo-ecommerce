@@ -8,7 +8,7 @@ import {
 } from 'sanity';
 import {useRouter} from 'sanity/router';
 import type {ShopifyDocument, ShopifyDocumentActionProps} from './types';
-import {PUBLIC_SANITY_API_VERSION} from '../../constants';
+import {SANITY_API_VERSION} from '../../constants';
 
 export default (
   props: ShopifyDocumentActionProps,
@@ -29,7 +29,7 @@ export default (
 
   const router = useRouter();
   const toast = useToast();
-  const client = useClient({apiVersion: PUBLIC_SANITY_API_VERSION});
+  const client = useClient({apiVersion: SANITY_API_VERSION});
 
   let dialog: DocumentActionConfirmDialogProps | null = null;
 

@@ -15,6 +15,7 @@ import {schemaTypes} from './src/sanity/schemas';
 import {structure} from './src/sanity/desk';
 import {defaultDocumentNode} from './src/sanity/desk/preview';
 import resolveProductionUrl from './src/sanity/utils/resolveProductionUrl';
+import {SANITY_API_VERSION} from './src/sanity/constants';
 
 const BASE_PATH = '/studio';
 const devOnlyPlugins = [visionTool()];
@@ -26,7 +27,7 @@ export default defineConfig({
 
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
-  apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
+  apiVersion: SANITY_API_VERSION,
 
   plugins: [
     deskTool({
