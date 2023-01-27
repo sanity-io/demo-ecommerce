@@ -1,10 +1,10 @@
 import {useState, useEffect} from 'react';
 import {StringInputProps, useClient} from 'sanity';
-import {PUBLIC_SANITY_API_VERSION} from '../../constants';
+import {SANITY_API_VERSION} from '../../constants';
 
 export function ShopifyProductTagList(props: StringInputProps) {
   const [options, setOptions] = useState<string[]>([]);
-  const client = useClient({apiVersion: PUBLIC_SANITY_API_VERSION});
+  const client = useClient({apiVersion: SANITY_API_VERSION});
 
   useEffect(() => {
     client
