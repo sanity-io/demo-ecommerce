@@ -127,7 +127,7 @@ We've taken the following opinions on how we've approached this demo.
 
 These installation instructions assume you have already installed and configured [Sanity Connect][sanity-connect] on your Shopify store.
 
-1.  Duplicate the `.env.example` file to `.env` and replace the values to point to your Sanity project's `dataset` and `projectId`, and your Shopify storefront's `storeDomain` and `storefrontToken`
+1.  Duplicate the `.env.example` file to `.env` and replace the values to point to your Sanity project's `dataset` and `projectId`, and your Shopify storefront's `storeDomain` and `storefrontToken`. See [Shopify's documentation][storefront-api] on how to create a token for the Storefront API.
 
 2.  Install dependencies and start the development server
 
@@ -177,6 +177,7 @@ This repository is published under the [MIT][license] license.
 [hydrogen-framework-deployment]: https://shopify.dev/custom-storefronts/hydrogen/deployment
 [hydrogen-product-components]: https://shopify.dev/api/hydrogen/components/product-variant
 [hydrogen-use-query]: https://shopify.dev/api/hydrogen/hooks/global/usequery
+[storefront-api]: https://shopify.dev/api/usage/authentication#access-tokens-for-the-storefront-api
 [license]: https://github.com/sanity-io/sanity/blob/next/LICENSE
 [sanity-connect]: https://www.sanity.io/docs/sanity-connect-for-shopify
 [sanity-js-client]: https://www.sanity.io/docs/js-client
