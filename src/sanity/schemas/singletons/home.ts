@@ -37,6 +37,7 @@ export default defineField({
         {type: 'module.callToAction'},
         {type: 'module.collection'},
         {type: 'module.image'},
+        {type: 'module.video'},
         {type: 'module.instagram'},
         {type: 'module.product'},
       ],

@@ -11,6 +11,8 @@ import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array';
 import {media, mediaAssetSource} from 'sanity-plugin-media';
 import {customDocumentActions} from './src/sanity/plugins/customDocumentActions/index';
 
+const {muxInput} = await import('sanity-plugin-mux-input');
+
 import {schemaTypes} from './src/sanity/schemas';
 import {structure} from './src/sanity/desk';
 import {defaultDocumentNode} from './src/sanity/desk/preview';
@@ -37,6 +39,7 @@ export default defineConfig({
     imageHotspotArrayPlugin(),
     customDocumentActions(),
     media(),
+    muxInput({mp4_support: 'standard'}),
     ...(isDev ? devOnlyPlugins : []),
   ],
 

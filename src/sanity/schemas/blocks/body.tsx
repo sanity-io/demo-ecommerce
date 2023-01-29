@@ -43,6 +43,10 @@ export default defineField({
       type: 'module.images',
     },
     {
+      name: 'blockVideo',
+      type: 'module.video',
+    },
+    {
       name: 'blockInstagram',
       type: 'module.instagram',
     },

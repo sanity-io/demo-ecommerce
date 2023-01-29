@@ -61,6 +61,7 @@ import moduleCallToAction from './objects/module/callToAction';
 import moduleCollection from './objects/module/collection';
 import moduleGrid from './objects/module/grid';
 import moduleImage from './objects/module/image';
+import moduleVideo from './objects/module/video';
 import moduleImages from './objects/module/images';
 import moduleInstagram from './objects/module/instagram';
 import moduleProduct from './objects/module/product';
@@ -96,6 +97,7 @@ const objects = [
   moduleCollection,
   moduleGrid,
   moduleImage,
+  moduleVideo,
   moduleImages,
   moduleInstagram,
   moduleProduct,
