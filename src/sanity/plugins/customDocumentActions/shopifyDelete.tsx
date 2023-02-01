@@ -5,6 +5,7 @@ import {
   type DocumentActionDescription,
   type DocumentActionConfirmDialogProps,
   useClient,
+  useWorkspace,
 } from 'sanity';
 import {useRouter} from 'sanity/router';
 import type {ShopifyDocument, ShopifyDocumentActionProps} from './types';
@@ -28,6 +29,7 @@ export default (
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const router = useRouter();
+  const {basePath} = useWorkspace();
   const toast = useToast();
   const client = useClient({apiVersion: SANITY_API_VERSION});
 
@@ -80,7 +82,7 @@ export default (
         try {
           await transaction.commit();
           // Navigate back to products root
-          router.navigateUrl({path: '/desk/products'});
+          router.navigateUrl({path: `${basePath}/desk/products`});
         } catch (err) {
           let message = 'Unknown Error';
           if (err instanceof Error) message = err.message;
@@ -120,7 +122,7 @@ export default (
         try {
           await transaction.commit();
           // Navigate back to collections root
-          router.navigateUrl({path: '/desk/collections'});
+          router.navigateUrl({path: `${basePath}/desk/collections`});
         } catch (err) {
           let message = 'Unknown Error';
           if (err instanceof Error) message = err.message;
