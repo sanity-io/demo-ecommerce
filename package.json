@@ -71,6 +71,7 @@
     "react-is": "^18.2.0",
     "react-social-media-embed": "^2.2.2",
     "sanity": "^3.0.6",
+    "sanity-plugin-documents-pane": "^2.1.0",
     "sanity-plugin-hotspot-array": "^1.0.0",
     "sanity-plugin-iframe-pane": "^2.1.0",
     "sanity-plugin-media": "^2.0.2",
