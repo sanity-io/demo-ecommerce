@@ -142,7 +142,7 @@ const ImageContent = ({module}: Props) => {
         layout="responsive"
         projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes={['50vw, 100vw']}
-        src={image?.asset._ref}
+        src={image?.asset?._ref}
       />
 
       {/* Call to action */}

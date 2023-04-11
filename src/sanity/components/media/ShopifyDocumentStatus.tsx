@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {CloseIcon, ImageIcon, LinkRemovedIcon} from '@sanity/icons';
 import {forwardRef, useState} from 'react';
 

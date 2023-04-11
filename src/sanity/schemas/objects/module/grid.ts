@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {ThLargeIcon} from '@sanity/icons';
 // @ts-expect-error
 import pluralize from 'pluralize-esm';

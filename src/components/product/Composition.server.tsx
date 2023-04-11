@@ -8,6 +8,7 @@ import useSanityQuery from '../../hooks/useSanityQuery';
 import PortableText from '../portableText/PortableText.server';
 import ProductModule from '../modules/Product.server';
 import {PRODUCT_WITH_VARIANT_FIELDS} from '../../fragments/sanity/productWithVariantFields';
+// @ts-expect-error incompatibility with node16 resolution
 import {EarthAmericasIcon} from '@sanity/icons';
 
 type Props = {

@@ -27,7 +27,7 @@ import type {
   SanityProductPage,
 } from '../../types';
 import AccordionBlock from '../../components/portableText/blocks/Accordion.client';
-import {Block} from '@sanity/types';
+import {PortableTextBlock} from '@sanity/types';
 
 type ShopifyPayload = {
   product: Pick<
@@ -56,7 +56,7 @@ const SanityProductBody = (sanityProduct: SanityProductPage) => {
   );
 };
 
-const SanityProductShipping = ({blocks}: {blocks: Block[]}) => {
+const SanityProductShipping = ({blocks}: {blocks: PortableTextBlock[]}) => {
   return (
     <>
       <h2

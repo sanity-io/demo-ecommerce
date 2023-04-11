@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {IceCreamIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 import ColorTheme from '../../components/media/ColorTheme';

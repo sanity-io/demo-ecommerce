@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {CogIcon, PackageIcon} from '@sanity/icons';
 import {defineType, defineField} from 'sanity';
 

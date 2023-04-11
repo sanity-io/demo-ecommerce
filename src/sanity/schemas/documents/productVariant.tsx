@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {CopyIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 import ShopifyIcon from '../../components/icons/Shopify';

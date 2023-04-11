@@ -1,5 +1,5 @@
 import BlockContent from '@sanity/block-content-to-react';
-import type {Block as SanityBlock} from '@sanity/types';
+import type {PortableTextBlock as SanityBlock} from '@sanity/types';
 import clsx from 'clsx';
 import type {SanityColorTheme} from '../../types';
 import LinkEmailAnnotation from './annotations/LinkEmail';

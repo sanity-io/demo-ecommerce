@@ -18,7 +18,7 @@ export default function GridBlock({node}: Props) {
         'md:grid-cols-2',
       )}
     >
-      {node?.items?.map((item) => (
+      {node?.items?.map((item: SanityModuleGrid['items'][number]) => (
         <div
           className="flex items-start gap-3 border-t border-t-gray py-3"
           key={item._key}
@@ -34,7 +34,7 @@ export default function GridBlock({node}: Props) {
                 objectFit="cover"
                 projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
                 sizes="25vw"
-                src={item.image?.asset._ref}
+                src={item.image?.asset?._ref}
               />
             )}
           </div>

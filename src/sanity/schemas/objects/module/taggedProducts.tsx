@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {TagIcon} from '@sanity/icons';
 import {defineField} from 'sanity';
 import {ShopifyProductTagList} from '../../../components/inputs/ShopifyProductTagList';
