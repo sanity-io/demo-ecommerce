@@ -62,7 +62,7 @@ const SanityProductShipping = ({blocks}: {blocks: Block[]}) => {
       <h2
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 mb-6 text-xl font-bold',
+          'mb-6 mt-16 text-xl font-bold',
         )}
       >
         Shipping &amp; Returns
@@ -78,7 +78,7 @@ const SanityProductFaqs = ({faqs}: {faqs: SanityFaqs}) => {
       <h2
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 -mb-6 text-xl font-bold',
+          '-mb-6 mt-16 text-xl font-bold',
         )}
       >
         FAQs

@@ -61,7 +61,7 @@ export default function Cart() {
         >
           <Dialog.Panel
             className={clsx(
-              'rounded-l-none fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:w-[470px]',
+              'rounded-l-none fixed bottom-0 left-0 right-0 top-0 z-40 flex h-full w-full flex-col overflow-y-auto bg-white md:bottom-auto md:left-auto md:w-[470px]',
               'md:rounded-l-xl',
             )}
           >

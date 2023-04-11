@@ -25,7 +25,7 @@ export default function ProductDetails({
     >
       <div
         className={clsx(
-          'mx-auto grid w-full max-w-[1400px] gap-3 px-4 pt-32 pb-4 pb-6 md:grid-cols-2', //
+          'mx-auto grid w-full max-w-[1400px] gap-3 px-4 pb-4 pb-6 pt-32 md:grid-cols-2', //
           'md:px-8',
         )}
       >
