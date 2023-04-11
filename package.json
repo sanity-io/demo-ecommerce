@@ -70,7 +70,7 @@
     "react-hook-form": "^7.34.2",
     "react-is": "^18.2.0",
     "react-social-media-embed": "^2.2.2",
-    "sanity": "^3.0.6",
+    "sanity": "^3.8.3",
     "sanity-plugin-documents-pane": "^2.1.0",
     "sanity-plugin-hotspot-array": "^1.0.0",
     "sanity-plugin-iframe-pane": "^2.1.0",
@@ -79,5 +79,10 @@
     "styled-components": "^5.3.6",
     "tailwind-merge": "^1.6.0",
     "yup": "^0.32.11"
+  },
+  "overrides": {
+    "@shopify/cli-hydrogen": {
+      "vite": "2.9.6"
+    }
   }
 }
