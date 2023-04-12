@@ -36,7 +36,6 @@ const productsPane = (S: StructureBuilder) =>
         }.products[references($id)] | order(title)
       `,
       params: {id: `_id`},
-      debug: true,
     })
     .id('products')
     .title('Products');
