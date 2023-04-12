@@ -79,7 +79,7 @@ function ModuleContent({
           objectFit="cover"
           projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
           sizes="100vw"
-          src={content?.asset._ref}
+          src={content?.asset?._ref}
         />
       );
     }

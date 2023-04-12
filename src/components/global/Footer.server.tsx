@@ -1,4 +1,4 @@
-import type {Block} from '@sanity/types';
+import type {PortableTextBlock} from '@sanity/types';
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
@@ -16,7 +16,7 @@ import SanityFooter from './SanityFooter.server';
 export default function Footer() {
   const {data: footer} = useSanityQuery<{
     links?: SanityLink[];
-    text?: Block[];
+    text?: PortableTextBlock[];
   }>({query: QUERY_SANITY});
 
   const renderLinks = footer?.links?.map((link) => {
@@ -55,7 +55,7 @@ export default function Footer() {
       {/* AVKA Footer */}
       <div
         className={clsx(
-          'align-start relative overflow-hidden rounded-xl bg-peach py-8 px-4', //
+          'align-start relative overflow-hidden rounded-xl bg-peach px-4 py-8', //
           'md:px-8 md:py-10',
         )}
       >

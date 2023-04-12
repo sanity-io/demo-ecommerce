@@ -73,7 +73,6 @@ export default defineField({
     },
   ],
   options: {
-    // @ts-expect-error declaration merging from library isn't working
     imageHotspot: {
       imagePath: 'image',
       tooltip: ProductTooltip,

@@ -14,7 +14,7 @@ export default function Block({children, node}: Props) {
       <h2
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 mb-4 text-xl font-bold',
+          'mb-4 mt-16 text-xl font-bold',
         )}
       >
         {children}
@@ -40,7 +40,7 @@ export default function Block({children, node}: Props) {
       <h4
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 mb-4 font-bold',
+          'mb-4 mt-16 font-bold',
         )}
       >
         {children}

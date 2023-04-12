@@ -72,7 +72,7 @@ export default function ImageWithProductHotspots({content}: Props) {
         objectFit="cover"
         projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes="100vw"
-        src={content?.image?.asset._ref}
+        src={content?.image?.asset?._ref}
       />
     </>
   );

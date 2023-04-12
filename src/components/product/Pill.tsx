@@ -60,7 +60,7 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
             )}
 
             {/* Badges */}
-            <div className="absolute top-2 left-2">
+            <div className="absolute left-2 top-2">
               {/* Sale */}
               {availableForSale && compareAtPriceV2 && (
                 <Badge label="Sale" small tone="critical" />

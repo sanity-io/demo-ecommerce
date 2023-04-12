@@ -1,3 +1,4 @@
+// @ts-expect-error incompatibility with node16 resolution
 import {LockIcon} from '@sanity/icons';
 import {Box, Text, TextInput, Tooltip} from '@sanity/ui';
 import {

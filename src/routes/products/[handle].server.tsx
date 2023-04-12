@@ -27,7 +27,7 @@ import type {
   SanityProductPage,
 } from '../../types';
 import AccordionBlock from '../../components/portableText/blocks/Accordion.client';
-import {Block} from '@sanity/types';
+import {PortableTextBlock} from '@sanity/types';
 
 type ShopifyPayload = {
   product: Pick<
@@ -56,13 +56,13 @@ const SanityProductBody = (sanityProduct: SanityProductPage) => {
   );
 };
 
-const SanityProductShipping = ({blocks}: {blocks: Block[]}) => {
+const SanityProductShipping = ({blocks}: {blocks: PortableTextBlock[]}) => {
   return (
     <>
       <h2
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 mb-6 text-xl font-bold',
+          'mb-6 mt-16 text-xl font-bold',
         )}
       >
         Shipping &amp; Returns
@@ -78,7 +78,7 @@ const SanityProductFaqs = ({faqs}: {faqs: SanityFaqs}) => {
       <h2
         className={clsx(
           'first:mt-0 last:mb-0', //
-          'mt-16 -mb-6 text-xl font-bold',
+          '-mb-6 mt-16 text-xl font-bold',
         )}
       >
         FAQs

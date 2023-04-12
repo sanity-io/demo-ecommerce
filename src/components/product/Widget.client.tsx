@@ -5,6 +5,7 @@ import {hasMultipleProductOptions} from '../../utils/productOptions';
 import SelectedVariantBuyNowButton from './buttons/SelectedVariantBuyNow.client';
 import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
 import ProductOptions from './options/ProductOptions.client';
+// @ts-expect-error incompatibility with node16 resolution
 import {PackageIcon, EarthAmericasIcon} from '@sanity/icons';
 
 type Props = {

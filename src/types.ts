@@ -1,4 +1,4 @@
-import type {Block, Image} from '@sanity/types';
+import type {PortableTextBlock, Image} from '@sanity/types';
 import type {
   Collection,
   Customer,
@@ -91,7 +91,7 @@ export type SanityColorTheme = {
 export type SanityPerson = {
   name: string;
   slug: string;
-  bio: Block[];
+  bio: PortableTextBlock[];
   image: SanityAssetImage;
   seo: SanitySeo;
 };
@@ -115,7 +115,7 @@ export type SanityMaterialAttributes = {
 export type SanityFaq = {
   _key: string;
   title: string;
-  body: Block[];
+  body: PortableTextBlock[];
 };
 
 export type SanityFaqs = {
@@ -125,7 +125,7 @@ export type SanityFaqs = {
 export type SanityMaterial = {
   name: string;
   attributes: SanityMaterialAttributes;
-  story: Block[];
+  story: PortableTextBlock[];
 };
 
 export type SanityComposition = {
@@ -231,7 +231,7 @@ export type SanityModuleAccordion = {
   groups: {
     _key: string;
     _type: 'group';
-    body: Block[];
+    body: PortableTextBlock[];
     title: string;
   }[];
 };
@@ -272,7 +272,7 @@ export type SanityModuleGrid = {
   items: {
     _key: string;
     _type: 'items';
-    body: Block[];
+    body: PortableTextBlock[];
     image: SanityAssetImage;
     title: string;
   }[];
@@ -354,7 +354,7 @@ export type SanityNotFoundPage = {
 };
 
 export type SanityPage = {
-  body: Block[];
+  body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
   seo: SanitySeo;
@@ -389,7 +389,7 @@ export type SanityProductWithVariant = {
 export type SanityProductPage = {
   _id: string;
   available: boolean;
-  body: Block[];
+  body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
   gid: string;
@@ -399,7 +399,7 @@ export type SanityProductPage = {
   seo: SanitySeo;
   faqs: SanityFaqs;
   sharedText: {
-    deliveryAndReturns: Block[];
+    deliveryAndReturns: PortableTextBlock[];
     deliverySummary: string;
     environmentallyFriendly: string;
   };

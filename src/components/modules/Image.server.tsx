@@ -142,14 +142,14 @@ const ImageContent = ({module}: Props) => {
         layout="responsive"
         projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
         sizes={['50vw, 100vw']}
-        src={image?.asset._ref}
+        src={image?.asset?._ref}
       />
 
       {/* Call to action */}
       {module.variant === 'callToAction' && (
         <div
           className={clsx(
-            'absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out',
+            'absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out',
             'group-hover:bg-opacity-30',
           )}
         >

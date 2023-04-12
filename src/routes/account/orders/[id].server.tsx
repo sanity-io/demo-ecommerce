@@ -186,17 +186,17 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
                       <th
                         scope="row"
                         colSpan={3}
-                        className="font-normal hidden pt-6 pl-6 pr-3 text-right sm:table-cell md:pl-0"
+                        className="font-normal hidden pl-6 pr-3 pt-6 text-right sm:table-cell md:pl-0"
                       >
                         Discount
                       </th>
                       <th
                         scope="row"
-                        className="font-normal pt-6 pr-3 text-left sm:hidden"
+                        className="font-normal pr-3 pt-6 text-left sm:hidden"
                       >
                         Discount
                       </th>
-                      <td className="pt-6 pl-3 pr-4 text-right font-medium md:pr-3">
+                      <td className="pl-3 pr-4 pt-6 text-right font-medium md:pr-3">
                         {discountPercentage ? (
                           <span>-{discountPercentage}% off</span>
                         ) : (
@@ -209,17 +209,17 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
                     <th
                       scope="row"
                       colSpan={3}
-                      className="font-normal hidden pt-6 pl-6 pr-3 text-right sm:table-cell md:pl-0"
+                      className="font-normal hidden pl-6 pr-3 pt-6 text-right sm:table-cell md:pl-0"
                     >
                       Subtotal
                     </th>
                     <th
                       scope="row"
-                      className="font-normal pt-6 pr-3 text-left sm:hidden"
+                      className="font-normal pr-3 pt-6 text-left sm:hidden"
                     >
                       Subtotal
                     </th>
-                    <td className="pt-6 pl-3 pr-4 text-right md:pr-3">
+                    <td className="pl-3 pr-4 pt-6 text-right md:pr-3">
                       <Money data={order.subtotalPriceV2!} />
                     </td>
                   </tr>
@@ -227,17 +227,17 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
                     <th
                       scope="row"
                       colSpan={3}
-                      className="font-normal hidden pt-4 pl-6 pr-3 text-right sm:table-cell md:pl-0"
+                      className="font-normal hidden pl-6 pr-3 pt-4 text-right sm:table-cell md:pl-0"
                     >
                       Tax
                     </th>
                     <th
                       scope="row"
-                      className="font-normal pt-4 pr-3 text-left sm:hidden"
+                      className="font-normal pr-3 pt-4 text-left sm:hidden"
                     >
                       Tax
                     </th>
-                    <td className="pt-4 pl-3 pr-4 text-right md:pr-3">
+                    <td className="pl-3 pr-4 pt-4 text-right md:pr-3">
                       <Money data={order.totalTaxV2!} />
                     </td>
                   </tr>
@@ -245,17 +245,17 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
                     <th
                       scope="row"
                       colSpan={3}
-                      className="hidden pt-4 pl-6 pr-3 text-right font-bold sm:table-cell md:pl-0"
+                      className="hidden pl-6 pr-3 pt-4 text-right font-bold sm:table-cell md:pl-0"
                     >
                       Total
                     </th>
                     <th
                       scope="row"
-                      className="pt-4 pr-3 text-left font-bold sm:hidden"
+                      className="pr-3 pt-4 text-left font-bold sm:hidden"
                     >
                       Total
                     </th>
-                    <td className="pt-4 pl-3 pr-4 text-right font-bold md:pr-3">
+                    <td className="pl-3 pr-4 pt-4 text-right font-bold md:pr-3">
                       <Money data={order.totalPriceV2!} />
                     </td>
                   </tr>

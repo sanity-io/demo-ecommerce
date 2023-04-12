@@ -1,4 +1,5 @@
 import {useState} from 'react';
+// @ts-expect-error incompatibility with node16 resolution
 import {TrashIcon} from '@sanity/icons';
 import {Stack, Text, useToast} from '@sanity/ui';
 import {

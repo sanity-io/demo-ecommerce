@@ -24,7 +24,7 @@ export default function Creator({storefrontProduct, creator}: Props) {
               objectFit="cover"
               projectId={import.meta.env.PUBLIC_SANITY_PROJECT_ID}
               sizes="25vw"
-              src={creator.person.image?.asset._ref}
+              src={creator.person.image?.asset?._ref}
             />
           )}
         </div>
