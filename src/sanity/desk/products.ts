@@ -37,7 +37,6 @@ const guidesPane = (S: StructureBuilder) =>
         }.guides[references($id)] | order(title)
       `,
       params: {id: `_id`},
-      debug: true,
     })
     .id('guides')
     .title('Guides');
