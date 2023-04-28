@@ -21,6 +21,14 @@ const SanityStudio = import.meta.env.SSR
     );
 
 export default function Studio() {
+  if (typeof window !== 'undefined') {
+    try {
+      // @ts-expect-error
+      window.WebSocket = null;
+      // eslint-disable-next-line no-empty
+    } catch {}
+  }
+
   return (
     <Suspense fallback={<StudioFallback />}>
       <SanityStudio />
