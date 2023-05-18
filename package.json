@@ -69,7 +69,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
     "react-is": "^18.2.0",
-    "react-joyride": "^2.5.3",
+    "react-joyride": "^2.5.4",
     "react-social-media-embed": "^2.2.2",
     "sanity": "^3.8.3",
     "sanity-plugin-documents-pane": "^2.1.0",
