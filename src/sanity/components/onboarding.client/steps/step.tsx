@@ -7,10 +7,11 @@ export default function WalkthroughStep(props: TooltipProps) {
   const router = useRouter();
 
   return spin ? (
-    <div>SPIN</div>
+    <SpinnerIcon />
   ) : (
     <>
-      <div>{props.index}</div>
+      <span style={{display: 'flex', justifyContent: 'space-between', width: '100%', padding: '18px'}}>
+        <span>{props.step.chapter}</span>
       <button
         style={{
           color: '#101112',

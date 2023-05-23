@@ -1,21 +1,49 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Joyride, {CallBackProps, ACTIONS, STATUS, EVENTS} from 'react-joyride';
 import createWalkthrough from './steps';
 import {Steps} from './steps/types';
 
 export default function OnboardingLayout(props: any) {
   const [run, setRun] = useState(false);
+  const [closed, setClosed] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
 
+  const [isMinWidth, setIsMinWidth] = useState(false);
+  const [isMinHeight, setIsMinHeight] = useState(false);
+
+  const minWidthRef = useRef(window?.matchMedia('(min-width: 980px)'));
+  const minHeightRef = useRef(window?.matchMedia('(min-height: 620px)'));
+
   useEffect(() => {
-    const isLandscape = window?.matchMedia('(orientation: landscape)')?.matches;
-    const prefersLightmode = window?.matchMedia(
-      '(prefers-color-scheme: light)',
-    )?.matches;
-    if (isLandscape && prefersLightmode) {
-      setTimeout(() => setRun(true), 2000);
-    }
+    const handleMinWidth = ({matches}: MediaQueryListEvent) =>
+      setIsMinWidth(matches);
+    const currentMinWidthRef = minWidthRef.current;
+    currentMinWidthRef?.addEventListener('change', handleMinWidth);
+
+    const handleMinHeight = ({matches}: MediaQueryListEvent) =>
+      setIsMinHeight(matches);
+    const currentMinHeightRef = minHeightRef.current;
+    currentMinHeightRef?.addEventListener('change', handleMinHeight);
+
+    // for first render
+    const initialCheck = setTimeout(() => {
+      setIsMinWidth(currentMinWidthRef?.matches ?? false);
+      setIsMinHeight(currentMinHeightRef?.matches ?? false);
+      clearTimeout(initialCheck);
+    }, 2000);
+
+    return () => {
+      currentMinWidthRef?.removeEventListener('change', handleMinWidth);
+      currentMinHeightRef?.removeEventListener('change', handleMinHeight);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!closed) {
+      const matchesRequirements = true && isMinWidth && isMinHeight;
+      setRun(matchesRequirements);
+    }
+  }, [isMinWidth, isMinHeight, closed]);
 
   const steps: Steps[] = [
     {
@@ -29,41 +57,94 @@ export default function OnboardingLayout(props: any) {
     },
     {
       target: "[data-ui='Navbar'] [data-ui='Button']", // logo
+      chapter: 'The Studio',
+      title: 'This is a Sanity Studio for a store called AKVA',
       disableBeacon: true,
       placement: 'bottom-start',
-      content: 'This another awesome feature!',
+      content:
+        '[This is where their editors do stuff]\n[connected to content lake, through apis]',
       nextUrl: '/studio/desk/home',
       nextUrlTarget: "[data-testid='permission-check-banner']",
       type: 'step',
     },
     {
       target: "[data-testid='permission-check-banner']", // roles warning banner
+      chapter: 'The Studio',
+      title: 'Read only demo',
       disableBeacon: true,
       placement: 'bottom',
-      content: 'This another awesome feature!',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
       type: 'step',
     },
     {
       target: 'body',
+      chapter: 'The Studio',
+      title: 'Create your own workspace',
       disableBeacon: true,
       placement: 'center',
-      content: 'This another awesome feature!',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
       type: 'step',
     },
     {
       target: "[href='/studio/desk/guides']",
+      chapter: 'The Sanity Way',
+      title: 'Documents and references',
       disableBeacon: true,
       placement: 'right',
-      content: 'This another awesome feature!',
       type: 'step',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
       nextUrl: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
       nextUrlTarget: "[data-testid='field-hero.content']",
     },
     {
       target: "[data-testid='field-hero.content']",
+      chapter: 'The Sanity Way',
+      title: 'Content as data',
+      disableBeacon: true,
+      placement: 'left-end',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      type: 'step',
+    },
+    {
+      target: "[data-testid='field-hero.content']",
+      chapter: 'The Sanity Way',
+      title: 'Rich commerce experience',
+      disableBeacon: true,
+      placement: 'left-end',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      type: 'step',
+    },
+    {
+      target: "[data-testid='field-hero.content']",
+      chapter: 'Ecommerce use cases',
       disableBeacon: true,
       placement: 'left-end',
       content: 'This another awesome feature!',
+      type: 'step',
+    },
+    {
+      target: "[data-testid='field-hero.content']",
+      chapter: 'Ecommerce use cases',
+      title: 'Synced with Shopify',
+      disableBeacon: true,
+      placement: 'left-end',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      type: 'step',
+    },
+    {
+      target: "[data-testid='field-hero.content']",
+      chapter: 'Ecommerce use cases',
+      title: 'Live preview, side by side',
+      disableBeacon: true,
+      placement: 'left-end',
+      content:
+        'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
       type: 'step',
     },
     {
@@ -91,6 +172,7 @@ export default function OnboardingLayout(props: any) {
     ) {
       setStepIndex(0);
       setRun(false);
+      setClosed(true);
     } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
       setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
     }
