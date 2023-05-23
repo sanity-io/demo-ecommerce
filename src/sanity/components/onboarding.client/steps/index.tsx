@@ -1,5 +1,4 @@
-import WalkthroughIntro from './introModal';
-import WalkthroughFinal from './finalModal';
+import WalkthroughModal from './modal';
 import WalkthroughStep from './step';
 import {TooltipProps} from './types';
 
@@ -11,9 +10,8 @@ export default function createWalkthrough(setIndex: (n: number) => void) {
 
     const isModalMode = props.step.type !== 'step';
     const Dialog = {
-      intro: WalkthroughIntro,
+      modal: WalkthroughModal,
       step: WalkthroughStep,
-      final: WalkthroughFinal,
     }[props.step.type];
     return (
       <div

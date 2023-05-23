@@ -25,7 +25,7 @@ export default function OnboardingLayout(props: any) {
       title: 'Welcome to a Sanity Studio',
       subtitle:
         'Super short about where we are and what this tour is (3 short steps)',
-      type: 'intro',
+      type: 'modal',
     },
     {
       target: "[data-ui='Navbar'] [data-ui='Button']", // logo
@@ -73,7 +73,7 @@ export default function OnboardingLayout(props: any) {
       title: 'That’s the tour!..',
       subtitle:
         '... but we haven’t even gotten to features like real time editing, presence, revision history, image hotspot, mobile, a11y, responsiveness, AI plugins – and so much more!',
-      type: 'final',
+      type: 'modal',
     },
   ];
 

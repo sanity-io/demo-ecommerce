@@ -4,7 +4,7 @@ export type Steps = Step & {
   subtitle?: string;
   nextUrl?: string;
   nextUrlTarget?: string;
-  type: 'step' | 'intro' | 'final';
+  type: 'step' | 'modal';
 };
 
 export type TooltipProps = TooltipRenderProps & {
