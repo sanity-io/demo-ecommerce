@@ -44,7 +44,7 @@ export default function Magazine({
 
   return (
     <>
-      {((creators && creators.length > 0) ||
+      {((Array.isArray(creators) && creators.length > 0) ||
         productGuide ||
         compositionStories) && (
         <div
@@ -54,7 +54,7 @@ export default function Magazine({
             'mb-10 p-5',
           )}
         >
-          {creators.map((creator) => (
+          {creators?.map((creator) => (
             <Creator
               storefrontProduct={storefrontProduct}
               creator={creator}
