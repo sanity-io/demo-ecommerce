@@ -1,23 +1,25 @@
 {
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"],
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": false,
-    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
-    "lib": ["dom", "dom.iterable", "scripthost", "es2020"],
+    "esModuleInterop": true,
     "jsx": "react-jsx",
-    "outDir": "dist",
-    "module": "esnext",
-    "moduleResolution": "node16",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "target": "ES2022",
     "strict": true,
-    "target": "es2020",
-    "types": ["vite/client", "vitest/globals"],
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "types": ["@shopify/oxygen-workers-types"],
+    "paths": {
+      "~/*": ["app/*"]
+    },
+
+    // Remix takes care of building everything in `./app` with `remix build`.
+    // Wrangler takes care of building everything in `./worker` with `wrangler start` / `wrangler publish`.
     "noEmit": true
-  },
-  "exclude": ["node_modules", "dist"],
-  "include": ["**/*.ts", "**/*.tsx", ".d.ts"]
+  }
 }
