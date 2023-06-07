@@ -1,7 +1,6 @@
 import { Form, useActionData } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import type { CustomerResetPayload } from "@shopify/hydrogen/storefront-api-types";
-import { type ActionFunction, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { useRef, useState } from "react";
 
@@ -9,6 +8,7 @@ import FormCardWrapper from "~/components/account/FormCardWrapper";
 import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { badRequest } from "~/lib/utils";
+import { type ActionFunction, redirect } from "~/lib/vercel";
 
 type ActionData = {
   formError?: string;

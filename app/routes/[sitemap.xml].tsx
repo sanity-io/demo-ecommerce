@@ -4,9 +4,10 @@ import {
   PageConnection,
   ProductConnection,
 } from "@shopify/hydrogen/storefront-api-types";
-import type { LoaderArgs } from "@shopify/remix-oxygen";
 import groq from "groq";
 import invariant from "tiny-invariant";
+
+import type { LoaderArgs } from "~/lib/vercel";
 
 type SitemapPage = {
   _updatedAt: string;

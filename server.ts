@@ -1,16 +1,15 @@
 // Virtual entry point for the app
 import * as remixBuild from "@remix-run/dev/server-build";
 import { createStorefrontClient, storefrontRedirect } from "@shopify/hydrogen";
-import {
-  createCookieSessionStorage,
-  createRequestHandler,
-  getStorefrontHeaders,
-  type Session,
-  type SessionStorage,
-} from "@shopify/remix-oxygen";
 import { createSanityClient, PreviewSession } from "hydrogen-sanity";
 
 import { getLocaleFromRequest } from "~/lib/utils";
+import {
+  createCookieSessionStorage,
+  type Session,
+  type SessionStorage,
+} from "~/lib/vercel";
+import { createRequestHandler, getStorefrontHeaders } from "~/lib/vercel";
 
 /**
  * Export a fetch handler in module format.
@@ -76,6 +75,7 @@ export default {
        * Hydrogen's Storefront client to the loader context.
        */
       const handleRequest = createRequestHandler({
+        // @ts-expect-error incompatible types
         build: remixBuild,
         mode: process.env.NODE_ENV,
         getLoadContext: () => ({
