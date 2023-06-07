@@ -36,13 +36,13 @@ This demo comes with a custom `useSanityQuery` hook that allows you to query you
 
 ```js
 // MyServerComponent.server.jsx
-import useSanityQuery from './hooks/useSanityQuery';
+import useSanityQuery from "./hooks/useSanityQuery";
 
 const QUERY = `*[_type == 'page' && slug.current == $slug]`;
-const PARAMS = {slug: 'about'};
+const PARAMS = { slug: "about" };
 
 export default function MyServerComponent() {
-  const {data, error} = useSanityQuery({
+  const { data, error } = useSanityQuery({
     // Required
     query: QUERY,
     // Optional
