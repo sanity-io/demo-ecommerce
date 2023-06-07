@@ -1,12 +1,11 @@
+import { isLocalPath } from "~/lib/utils";
+import { notFound } from "~/lib/utils";
 import {
   type ActionFunction,
   json,
   type LoaderFunction,
   redirect,
-} from "@shopify/remix-oxygen";
-
-import { isLocalPath } from "~/lib/utils";
-import { notFound } from "~/lib/utils";
+} from "~/lib/vercel";
 
 const ROOT_PATH = "/" as const;
 

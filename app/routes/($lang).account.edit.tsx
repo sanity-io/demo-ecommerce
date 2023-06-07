@@ -10,12 +10,12 @@ import type {
   CustomerUpdateInput,
   CustomerUpdatePayload,
 } from "@shopify/hydrogen/storefront-api-types";
-import { type ActionFunction, redirect } from "@shopify/remix-oxygen";
 import invariant from "tiny-invariant";
 
 import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { assertApiErrors, badRequest } from "~/lib/utils";
+import { type ActionFunction, redirect } from "~/lib/vercel";
 
 import { getCustomer } from "./($lang).account";
 

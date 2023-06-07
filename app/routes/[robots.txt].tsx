@@ -1,4 +1,4 @@
-import { type LoaderArgs } from "@shopify/remix-oxygen";
+import { type LoaderArgs } from "~/lib/vercel";
 
 export const loader = ({ request }: LoaderArgs) => {
   const url = new URL(request.url);

@@ -1,6 +1,5 @@
 import { Await, useLoaderData, useSearchParams } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
@@ -12,12 +11,16 @@ import CollectionHero from "~/components/heroes/Collection";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
+import { defer, type LoaderArgs } from "~/lib/vercel";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
+  // @ts-expect-error
   title: data?.page?.seo?.title ?? data?.collection?.title,
+  // @ts-expect-error
   description: data?.page?.seo?.description ?? data?.collection?.description,
+  // @ts-expect-error
   media: data?.page?.seo?.image ?? data?.collection?.image,
 });
 
@@ -100,7 +103,7 @@ export default function Collection() {
   const [params] = useSearchParams();
   const sort = params.get("sort");
 
-  const products = collection.products.nodes;
+  const products = (collection as any).products.nodes;
 
   return (
     <ColorTheme value={page.colorTheme}>
@@ -137,10 +140,10 @@ export default function Collection() {
             )}
 
             <ProductGrid
-              collection={collection}
+              collection={collection as any}
               modules={page.modules}
-              url={`/collections/${collection.handle}`}
-              key={`${collection.handle}-${sort}`}
+              url={`/collections/${(collection as any).handle}`}
+              key={`${(collection as any).handle}-${sort}`}
             />
           </div>
         </Await>

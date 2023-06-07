@@ -1,6 +1,5 @@
 import { Await, useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -9,6 +8,7 @@ import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
 import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
+import { defer, type LoaderArgs } from "~/lib/vercel";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
 const seo: SeoHandleFunction = ({ data }) => ({

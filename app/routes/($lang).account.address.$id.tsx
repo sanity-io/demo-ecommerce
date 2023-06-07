@@ -13,7 +13,6 @@ import type {
   CustomerDefaultAddressUpdatePayload,
   MailingAddressInput,
 } from "@shopify/hydrogen/storefront-api-types";
-import { type ActionFunction, redirect } from "@shopify/remix-oxygen";
 import invariant from "tiny-invariant";
 
 import FormFieldCheckbox from "~/components/account/FormFieldCheckbox";
@@ -21,6 +20,7 @@ import FormFieldCountries from "~/components/account/FormFieldCountries";
 import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { assertApiErrors, badRequest } from "~/lib/utils";
+import { type ActionFunction, redirect } from "~/lib/vercel";
 
 import type { AccountOutletContext } from "./($lang).account.edit";
 
