@@ -1,17 +1,72 @@
 import {useState} from 'react';
 import {useRouter} from 'sanity/router';
 import {TooltipProps} from './types';
+import SpinnerIcon from '../../../../components/icons/Spinner';
+// @ts-expect-error incompatibility with node16 resolution
+import {ArrowRightIcon, CloseIcon} from '@sanity/icons';
 
 export default function WalkthroughStep(props: TooltipProps) {
   const [spin, setSpin] = useState(false);
   const router = useRouter();
 
   return spin ? (
-    <SpinnerIcon />
+    <div style={{margin: 'auto'}}>
+      <SpinnerIcon />
+    </div>
   ) : (
     <>
-      <span style={{display: 'flex', justifyContent: 'space-between', width: '100%', padding: '18px'}}>
+      <span
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          padding: '18px',
+        }}
+      >
         <span>{props.step.chapter}</span>
+        <button {...props.closeProps}>
+          <CloseIcon style={{fontSize: '1.5em'}} />
+        </button>
+      </span>
+      <h1>{props.step.title}</h1>
+      <div>{props.step.content}</div>
+      <span>
+        Hit <strong>⏎ Enter</strong> to proceed
+      </span>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          gap: '4px',
+        }}
+      >
+        <div
+          style={{
+            borderRadius: '1.5px',
+            height: '3px',
+            flex: 1,
+            background: '#4E91FC',
+          }}
+        />
+        <div
+          style={{
+            borderRadius: '1.5px',
+            height: '3px',
+            flex: 1,
+            background: '#17396F',
+          }}
+        />
+        <div
+          style={{
+            borderRadius: '1.5px',
+            height: '3px',
+            flex: 1,
+            background: '#17396F',
+          }}
+        />
+      </div>
       <button
         style={{
           color: '#101112',
@@ -40,7 +95,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           }
         }}
       >
-        NEXT
+        Next <ArrowRightIcon style={{fontSize: '1.5em'}} />
       </button>
     </>
   );
