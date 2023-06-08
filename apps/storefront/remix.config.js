@@ -17,8 +17,7 @@ module.exports = {
   serverDependenciesToBundle: "all",
   serverModuleFormat: "esm",
   serverPlatform: "neutral",
-  // serverMinify: isProduction,
-  serverMinify: false,
+  serverMinify: isProduction,
   future: {
     v2_errorBoundary: true,
     v2_meta: true,
