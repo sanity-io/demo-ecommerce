@@ -23,7 +23,7 @@ export default function createWalkthrough(setIndex: (n: number) => void) {
           justifyContent: isModalMode ? 'space-between' : 'flex-start',
           padding: '20px',
           width: isModalMode ? '500px' : '315px',
-          height: '385px',
+          height: isModalMode ? '385px' : 'auto',
           color: '#FFFFFF',
           background: '#101112',
           border: '1px solid rgba(255, 255, 255, 0.002)',

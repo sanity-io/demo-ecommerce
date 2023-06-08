@@ -41,9 +41,41 @@ export default function WalkthroughStep(props: TooltipProps) {
           <CloseIcon style={{fontSize: '1.5em', color: '#8690A0'}} />
         </button>
       </span>
-      <h2>{props.step.title}</h2>
-      <div>{props.step.content}</div>
-      <span>
+      <h2
+        style={{
+          fontStyle: 'normal',
+          fontWeight: 700,
+          fontSize: '21px',
+          lineHeight: '27px',
+          letterSpacing: '0.5PX',
+          color: '#FFFFFF',
+          marginBottom: '10px',
+        }}
+      >
+        {props.step.title}
+      </h2>
+      <p
+        style={{
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '13px',
+          lineHeight: '17px',
+          marginBottom: '22px',
+        }}
+      >
+        {props.step.content}
+      </p>
+      <span
+        style={{
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '10px',
+          lineHeight: '13px',
+          color: '#9EA6B3',
+          alignSelf: 'flex-start',
+          marginBottom: '6px',
+        }}
+      >
         Hit <strong>⏎ Enter</strong> to proceed
       </span>
       <div
@@ -53,6 +85,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           flexDirection: 'row',
           justifyContent: 'space-between',
           gap: '4px',
+          marginBottom: '12px',
         }}
       >
         <div
@@ -85,7 +118,8 @@ export default function WalkthroughStep(props: TooltipProps) {
           color: '#101112',
           background: '#FFFFFF',
           borderRadius: '3px',
-          padding: '6px 10px',
+          padding: '8px',
+          width: '100%',
         }}
         {...props.primaryProps}
         onClick={(e) => {
@@ -108,7 +142,8 @@ export default function WalkthroughStep(props: TooltipProps) {
           }
         }}
       >
-        Next <ArrowRightIcon style={{fontSize: '1.5em'}} />
+        Next{' '}
+        <ArrowRightIcon style={{fontSize: '1.5em', paddingBottom: '1px'}} />
       </button>
     </>
   );
