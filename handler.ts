@@ -25,11 +25,26 @@ export async function handler(
     }
 
     const waitUntil = (p: Promise<any>) => executionContext.waitUntil(p);
-    const [cache, session, previewSession] = await Promise.all([
-      caches.open("hydrogen"),
+    // eslint-disable-next-line prefer-const
+    let [cache, session, previewSession] = await Promise.all([
+      caches?.open("hydrogen"),
       HydrogenSession.init(request, [env.SESSION_SECRET]),
       PreviewSession.init(request, [env.SESSION_SECRET]),
     ]);
+
+    // shim `Cache` when deployed in an environment that
+    // doesn't implement `CacheStorage`
+    if (cache == null) {
+      cache = {
+        add: async () => {},
+        addAll: async () => {},
+        delete: async () => true,
+        keys: async () => [],
+        match: async () => undefined,
+        matchAll: async () => [],
+        put: async () => {},
+      };
+    }
 
     /**
      * Create Hydrogen's Storefront client.
