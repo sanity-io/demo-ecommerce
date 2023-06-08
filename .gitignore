@@ -77,4 +77,6 @@ public/build
 
 # Mac OS finder cache files
 .DS_Store
+
+# vercel
 .vercel
