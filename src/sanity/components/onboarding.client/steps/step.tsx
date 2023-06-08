@@ -20,15 +20,28 @@ export default function WalkthroughStep(props: TooltipProps) {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          padding: '18px',
+          margin: '16px',
         }}
       >
-        <span>{props.step.chapter}</span>
+        <span
+          style={{
+            background: '#4E91FC',
+            borderRadius: '3px',
+            textTransform: 'uppercase',
+            fontWeight: 600,
+            fontSize: '11px',
+            color: '#101112',
+            letterSpacing: '0.5px',
+            padding: '2px 4px',
+          }}
+        >
+          {props.step.chapter}
+        </span>
         <button {...props.closeProps}>
-          <CloseIcon style={{fontSize: '1.5em'}} />
+          <CloseIcon style={{fontSize: '1.5em', color: '#8690A0'}} />
         </button>
       </span>
-      <h1>{props.step.title}</h1>
+      <h2>{props.step.title}</h2>
       <div>{props.step.content}</div>
       <span>
         Hit <strong>⏎ Enter</strong> to proceed

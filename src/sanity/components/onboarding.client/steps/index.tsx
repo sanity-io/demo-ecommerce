@@ -20,7 +20,7 @@ export default function createWalkthrough(setIndex: (n: number) => void) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: isModalMode ? 'space-between' : 'flex-start',
           padding: '20px',
           width: isModalMode ? '500px' : '315px',
           height: '385px',
