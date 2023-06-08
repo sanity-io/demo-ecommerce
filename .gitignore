@@ -62,9 +62,9 @@ yalc.lock
 .cache
 
 # output
-/build
-/dist
-/public/build
+build
+dist
+public/build
 
 # miniflare
 .mf
