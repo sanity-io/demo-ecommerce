@@ -1,9 +1,11 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: ["**/.*"],
   watchPaths: ["./public"],
-  server: "./server.ts",
+  server: isProduction ? "./server.vercel.ts" : "./server.ts",
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:
    */
@@ -15,8 +17,7 @@ module.exports = {
   serverDependenciesToBundle: "all",
   serverModuleFormat: "esm",
   serverPlatform: "neutral",
-  // serverMinify: process.env.NODE_ENV === "production",
-  serverMinify: false,
+  serverMinify: isProduction,
   future: {
     v2_errorBoundary: true,
     v2_meta: true,
