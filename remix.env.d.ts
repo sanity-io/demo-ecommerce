@@ -1,5 +1,5 @@
 /// <reference types="@remix-run/dev" />
-/// <reference types="~/lib/vercel" />
+/// <reference types="@shopify/remix-oxygen" />
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type { Storefront } from "~/types/shopify";
@@ -34,7 +34,7 @@ declare global {
 /**
  * Declare local additions to `AppLoadContext` to include the session utilities we injected in `server.ts`.
  */
-declare module "~/lib/vercel" {
+declare module "@shopify/remix-oxygen" {
   export interface AppLoadContext {
     session: HydrogenSession;
     waitUntil: ExecutionContext["waitUntil"];

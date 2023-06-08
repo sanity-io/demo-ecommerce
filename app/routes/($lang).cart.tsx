@@ -9,6 +9,7 @@ import type {
   CartUserError,
   UserError,
 } from "@shopify/hydrogen/storefront-api-types";
+import { ActionArgs, type AppLoadContext, json } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
@@ -20,7 +21,6 @@ import {
 } from "~/components/cart/Cart";
 import SpinnerIcon from "~/components/icons/Spinner";
 import { isLocalPath } from "~/lib/utils";
-import { ActionArgs, type AppLoadContext, json } from "~/lib/vercel";
 import {
   CartAction,
   type CartActions as CartActionsType,

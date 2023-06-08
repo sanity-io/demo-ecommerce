@@ -12,6 +12,13 @@ import type {
   MailingAddress,
   Order,
 } from "@shopify/hydrogen/storefront-api-types";
+import {
+  type AppLoadContext,
+  defer,
+  json,
+  type LoaderArgs,
+  redirect,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { ReactNode } from "react";
 
@@ -22,13 +29,6 @@ import AccountOrderHistory from "~/components/account/OrderHistory";
 import Button from "~/components/elements/Button";
 import { CACHE_NONE, routeHeaders } from "~/data/cache";
 import { usePrefixPathWithLocale } from "~/lib/utils";
-import {
-  type AppLoadContext,
-  defer,
-  json,
-  type LoaderArgs,
-  redirect,
-} from "~/lib/vercel";
 
 import { doLogout } from "./($lang).account.logout";
 

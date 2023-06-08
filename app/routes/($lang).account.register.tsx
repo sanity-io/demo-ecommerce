@@ -1,6 +1,11 @@
 import { Form, useActionData } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import type { CustomerCreatePayload } from "@shopify/hydrogen/storefront-api-types";
+import {
+  type ActionFunction,
+  type LoaderArgs,
+  redirect,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -9,7 +14,6 @@ import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import { badRequest } from "~/lib/utils";
-import { type ActionFunction, type LoaderArgs, redirect } from "~/lib/vercel";
 
 import { doLogin } from "./($lang).account.login";
 

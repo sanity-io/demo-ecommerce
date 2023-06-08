@@ -13,6 +13,7 @@ import type {
   SelectedOptionInput,
 } from "@shopify/hydrogen/storefront-api-types";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
+import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
@@ -23,7 +24,6 @@ import RelatedProducts from "~/components/product/RelatedProducts";
 import type { SanityProductPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
-import { defer, type LoaderArgs } from "~/lib/vercel";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
 import {
   PRODUCT_QUERY,

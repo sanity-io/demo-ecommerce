@@ -1,7 +1,7 @@
 import type { Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
+import { json, type LoaderArgs } from "@shopify/remix-oxygen";
 
 import { validateLocale } from "~/lib/utils";
-import { json, type LoaderArgs } from "~/lib/vercel";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
 
 const PAGINATION_SIZE = 12;

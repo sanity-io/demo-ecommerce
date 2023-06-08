@@ -6,6 +6,11 @@ import type {
   ProductOption,
   ProductVariant,
 } from "@shopify/hydrogen/storefront-api-types";
+import {
+  type AppLoadContext,
+  json,
+  type LoaderArgs,
+} from "@shopify/remix-oxygen";
 import { usePreviewContext } from "hydrogen-sanity";
 import pluralize from "pluralize-esm";
 import { useEffect, useMemo } from "react";
@@ -18,7 +23,6 @@ import type {
   SanityPage,
   SanityProductPage,
 } from "~/lib/sanity";
-import { type AppLoadContext, json, type LoaderArgs } from "~/lib/vercel";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
 import type { I18nLocale } from "~/types/shopify";
 
