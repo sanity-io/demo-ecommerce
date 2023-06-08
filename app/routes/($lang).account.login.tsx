@@ -1,6 +1,12 @@
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import type { CustomerAccessTokenCreatePayload } from "@shopify/hydrogen/storefront-api-types";
+import {
+  type ActionFunction,
+  type AppLoadContext,
+  type LoaderArgs,
+  redirect,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -9,12 +15,6 @@ import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import { badRequest } from "~/lib/utils";
-import {
-  type ActionFunction,
-  type AppLoadContext,
-  type LoaderArgs,
-  redirect,
-} from "~/lib/vercel";
 import { cartUpdateBuyerIdentity } from "~/routes/($lang).cart";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({

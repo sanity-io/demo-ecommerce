@@ -1,7 +1,6 @@
 import { Shop } from "@shopify/hydrogen/storefront-api-types";
+import { type LoaderArgs, redirect } from "@shopify/remix-oxygen";
 import invariant from "tiny-invariant";
-
-import { type LoaderArgs, redirect } from "~/lib/vercel";
 
 /*
  If your online store had active orders before you launched your Hydrogen storefront,

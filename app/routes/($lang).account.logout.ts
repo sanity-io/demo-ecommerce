@@ -4,7 +4,8 @@ import {
   type AppLoadContext,
   type LoaderArgs,
   redirect,
-} from "~/lib/vercel";
+} from "@shopify/remix-oxygen";
+
 import { cartUpdateBuyerIdentity } from "~/routes/($lang).cart";
 
 export async function doLogout(context: AppLoadContext) {

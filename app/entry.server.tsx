@@ -1,9 +1,9 @@
 import { RemixServer } from "@remix-run/react";
+import type { EntryContext } from "@shopify/remix-oxygen";
 import isbot from "isbot";
 import { renderToReadableStream } from "react-dom/server";
 
 import { generateNonce, NonceProvider } from "~/lib/nonce";
-import type { EntryContext } from "~/lib/vercel";
 
 export default async function handleRequest(
   request: Request,
@@ -32,7 +32,6 @@ export default async function handleRequest(
 
   const body = await renderToReadableStream(
     <NonceProvider value={nonce}>
-      {/* @ts-expect-error vercel */}
       <RemixServer context={remixContext} url={request.url} />
     </NonceProvider>,
     {

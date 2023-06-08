@@ -1,4 +1,4 @@
-import { type LoaderArgs, redirect } from "~/lib/vercel";
+import { type LoaderArgs, redirect } from "@shopify/remix-oxygen";
 
 import { cartCreate } from "./($lang).cart";
 

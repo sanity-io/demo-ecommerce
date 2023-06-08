@@ -1,5 +1,6 @@
 import { Await, useLoaderData, useSearchParams } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
+import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
@@ -11,16 +12,12 @@ import CollectionHero from "~/components/heroes/Collection";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
-import { defer, type LoaderArgs } from "~/lib/vercel";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  // @ts-expect-error
   title: data?.page?.seo?.title ?? data?.collection?.title,
-  // @ts-expect-error
   description: data?.page?.seo?.description ?? data?.collection?.description,
-  // @ts-expect-error
   media: data?.page?.seo?.image ?? data?.collection?.image,
 });
 

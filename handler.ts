@@ -1,15 +1,18 @@
 // Virtual entry point for the app
 import * as remixBuild from "@remix-run/dev/server-build";
 import { createStorefrontClient, storefrontRedirect } from "@shopify/hydrogen";
-import { createSanityClient, PreviewSession } from "hydrogen-sanity";
-
-import { getLocaleFromRequest } from "~/lib/utils";
 import {
   createCookieSessionStorage,
   type Session,
   type SessionStorage,
-} from "~/lib/vercel";
-import { createRequestHandler, getStorefrontHeaders } from "~/lib/vercel";
+} from "@shopify/remix-oxygen";
+import {
+  createRequestHandler,
+  getStorefrontHeaders,
+} from "@shopify/remix-oxygen";
+import { createSanityClient, PreviewSession } from "hydrogen-sanity";
+
+import { getLocaleFromRequest } from "~/lib/utils";
 
 export async function handler(
   request: Request,
@@ -86,7 +89,6 @@ export async function handler(
      * Hydrogen's Storefront client to the loader context.
      */
     const handleRequest = createRequestHandler({
-      // @ts-expect-error incompatible types
       build: remixBuild,
       mode: process.env.NODE_ENV,
       getLoadContext: () => ({

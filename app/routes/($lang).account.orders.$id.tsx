@@ -10,13 +10,13 @@ import type {
   Order,
   OrderLineItem,
 } from "@shopify/hydrogen/storefront-api-types";
+import { json, type LoaderArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import invariant from "tiny-invariant";
 
 import { Link } from "~/components/Link";
 import { notFound, statusMessage } from "~/lib/utils";
-import { json, type LoaderArgs, redirect } from "~/lib/vercel";
 
 export const seo: SeoHandleFunction = ({ data }) => ({
   title: `Order ${data?.order?.name}`,

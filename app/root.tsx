@@ -20,6 +20,12 @@ import type {
   Shop,
 } from "@shopify/hydrogen/storefront-api-types";
 import {
+  type AppLoadContext,
+  defer,
+  type LinksFunction,
+  type LoaderArgs,
+} from "@shopify/remix-oxygen";
+import {
   isPreviewModeEnabled,
   Preview,
   type PreviewData,
@@ -32,12 +38,6 @@ import { PreviewLoading } from "~/components/global/PreviewLoading";
 import { useAnalytics } from "~/hooks/useAnalytics";
 import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
-import {
-  type AppLoadContext,
-  defer,
-  type LinksFunction,
-  type LoaderArgs,
-} from "~/lib/vercel";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
@@ -45,13 +45,10 @@ import stylesheet from "~/styles/tailwind.css";
 import type { I18nLocale } from "~/types/shopify";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  // @ts-expect-error
   title: data?.layout?.seo?.title,
   titleTemplate: `%s${
-    // @ts-expect-error
     data?.layout?.seo?.title ? ` · ${data?.layout?.seo?.title}` : ""
   }`,
-  // @ts-expect-error
   description: data?.layout?.seo?.description,
 });
 
