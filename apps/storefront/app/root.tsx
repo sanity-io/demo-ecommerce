@@ -4,7 +4,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  // ScrollRestoration,
+  ScrollRestoration,
   useLoaderData,
   useMatches,
   useRouteError,
@@ -131,7 +131,7 @@ export default function App() {
           <Outlet />
         </Preview>
         {/* TODO: scroll is janky */}
-        {/* <ScrollRestoration nonce={nonce} /> */}
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
     </html>
