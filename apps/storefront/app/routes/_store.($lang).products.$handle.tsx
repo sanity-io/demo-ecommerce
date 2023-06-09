@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData } from "@remix-run/react";
 import {
   flattenConnection,
@@ -18,10 +19,12 @@ import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
+import AccordionBlock from "~/components/portableText/blocks/Accordion";
 import PortableText from "~/components/portableText/PortableText";
 import ProductDetails from "~/components/product/Details";
+import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
-import type { SanityProductPage } from "~/lib/sanity";
+import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
@@ -152,30 +155,58 @@ export default function ProductHandle() {
           storefrontProduct={product}
           analytics={analytics}
         />
+        <Suspense>
+          <Await resolve={gids}>
+            {/* Body */}
+            {page?.body && (
+              <div
+                className={clsx(
+                  "w-full", //
+                  "lg:w-[calc(100%-315px)]",
+                  "mb-10 mt-8 p-5"
+                )}
+              >
+                <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                  <div className="hidden xl:block" />
+                  <div className="col-span-6 xl:col-span-5">
+                    <PortableText blocks={page.body} />
+                  </div>
+                </div>
+              </div>
+            )}
 
-        <div
-          className={clsx(
-            "w-full", //
-            "lg:w-[calc(100%-315px)]"
-          )}
-        >
-          {/* Body */}
-          {page?.body && (
-            <Suspense>
-              <Await resolve={gids}>
-                <PortableText
-                  blocks={page.body}
-                  className={clsx(
-                    "max-w-[660px] px-4 pb-24 pt-8", //
-                    "md:px-8"
+            {/* Magazine */}
+            <Magazine page={page} product={product} />
+
+            {/* Shipping info and FAQs */}
+            <div
+              className={clsx(
+                "w-full", //
+                "lg:w-[calc(100%-315px)]",
+                "mb-10 mt-8 p-5"
+              )}
+            >
+              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                <div className="hidden aspect-square xl:block" />
+                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                  {page?.sharedText?.deliveryAndReturns && (
+                    <SanityProductShipping
+                      blocks={page?.sharedText?.deliveryAndReturns}
+                    />
                   )}
-                />
-              </Await>
-            </Suspense>
-          )}
-        </div>
+                </div>
+                <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                  {page?.faqs?.groups.length > 0 && (
+                    <SanityProductFaqs faqs={page.faqs} />
+                  )}
+                </div>
+              </div>
+            </div>
+          </Await>
+        </Suspense>
       </div>
 
+      {/* Related products */}
       <Suspense>
         <Await
           errorElement="There was a problem loading related products"
@@ -191,3 +222,35 @@ export default function ProductHandle() {
     </ColorTheme>
   );
 }
+
+const SanityProductShipping = ({ blocks }: { blocks: PortableTextBlock[] }) => {
+  return (
+    <>
+      <h2
+        className={clsx(
+          "first:mt-0 last:mb-0", //
+          "mb-6 mt-16 text-xl font-bold"
+        )}
+      >
+        Shipping &amp; Returns
+      </h2>
+      <PortableText blocks={blocks} />
+    </>
+  );
+};
+
+const SanityProductFaqs = ({ faqs }: { faqs: SanityFaqs }) => {
+  return (
+    <>
+      <h2
+        className={clsx(
+          "first:mt-0 last:mb-0", //
+          "-mb-6 mt-16 text-xl font-bold"
+        )}
+      >
+        FAQs
+      </h2>
+      <AccordionBlock value={faqs} />
+    </>
+  );
+};

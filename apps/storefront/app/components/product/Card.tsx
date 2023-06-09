@@ -16,12 +16,14 @@ type Props = {
   imageAspectClassName?: string;
   storefrontProduct: ProductWithNodes;
   variantGid?: string;
+  imageOnly?: boolean;
 };
 
 export default function ProductCard({
   imageAspectClassName = "aspect-square",
   storefrontProduct,
   variantGid,
+  imageOnly = false,
 }: Props) {
   const firstVariant =
     useGid<ProductVariant>(variantGid) ??
@@ -109,43 +111,45 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className="mt-3 text-md">
-        <div className="space-y-1">
-          {/* Title */}
-          <Link
-            className={clsx(
-              "font-bold", //
-              "hover:underline"
+      {!imageOnly && (
+        <div className="mt-3 text-md">
+          <div className="space-y-1">
+            {/* Title */}
+            <Link
+              className={clsx(
+                "font-bold", //
+                "hover:underline"
+              )}
+              to={`/products/${storefrontProduct.handle}`}
+            >
+              {storefrontProduct.title}
+            </Link>
+
+            {/* Vendor */}
+            {storefrontProduct.vendor && (
+              <div className="text-darkGray">{storefrontProduct.vendor}</div>
             )}
-            to={`/products/${storefrontProduct.handle}`}
-          >
-            {storefrontProduct.title}
-          </Link>
 
-          {/* Vendor */}
-          {storefrontProduct.vendor && (
-            <div className="text-darkGray">{storefrontProduct.vendor}</div>
-          )}
+            {/* Product options */}
+            {multipleProductOptions && (
+              <div className="text-darkGray">{productOptions}</div>
+            )}
+          </div>
 
-          {/* Product options */}
-          {multipleProductOptions && (
-            <div className="text-darkGray">{productOptions}</div>
-          )}
+          {/* Price / compare at price */}
+          <div className="mt-3 flex font-bold">
+            {firstVariant.compareAtPrice && (
+              <span className="text-darkGray">
+                <Money
+                  data={firstVariant.compareAtPrice}
+                  className="mr-2.5 line-through decoration-red"
+                />
+              </span>
+            )}
+            {firstVariant.price && <Money data={firstVariant.price} />}
+          </div>
         </div>
-
-        {/* Price / compare at price */}
-        <div className="mt-3 flex font-bold">
-          {firstVariant.compareAtPrice && (
-            <span className="text-darkGray">
-              <Money
-                data={firstVariant.compareAtPrice}
-                className="mr-2.5 line-through decoration-red"
-              />
-            </span>
-          )}
-          {firstVariant.price && <Money data={firstVariant.price} />}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
