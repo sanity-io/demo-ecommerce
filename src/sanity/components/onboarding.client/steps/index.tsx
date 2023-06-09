@@ -2,7 +2,10 @@ import WalkthroughModal from './modal';
 import WalkthroughStep from './step';
 import {TooltipProps} from './types';
 
-export default function createWalkthrough(setIndex: (n: number) => void) {
+export default function createWalkthrough(
+  setIndex: (n: number) => void,
+  isDarkMode: boolean,
+) {
   return function (props: TooltipProps) {
     if (!props.step.type) {
       throw new Error('Missing step type');

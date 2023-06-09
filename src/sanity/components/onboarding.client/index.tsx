@@ -11,18 +11,29 @@ export default function OnboardingLayout(props: any) {
 
   const [isMinWidth, setIsMinWidth] = useState(false);
   const [isMinHeight, setIsMinHeight] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const minWidthRef = useRef(window?.matchMedia('(min-width: 980px)'));
   const minHeightRef = useRef(window?.matchMedia('(min-height: 620px)'));
+  const darkModeRef = useRef(
+    window?.matchMedia('(prefers-color-scheme: dark)'),
+  );
 
   useEffect(() => {
-    const handleMinWidth = ({matches}: MediaQueryListEvent) =>
-      setIsMinWidth(matches);
+    const handleMediaEvent =
+      (func: React.Dispatch<React.SetStateAction<boolean>>) =>
+      ({matches}: MediaQueryListEvent) =>
+        func(matches);
+
+    const handleDarkMode = handleMediaEvent(setIsDarkMode);
+    const currentDarkModRef = darkModeRef.current;
+    currentDarkModRef?.addEventListener('change', handleDarkMode);
+
+    const handleMinWidth = handleMediaEvent(setIsMinWidth);
     const currentMinWidthRef = minWidthRef.current;
     currentMinWidthRef?.addEventListener('change', handleMinWidth);
 
-    const handleMinHeight = ({matches}: MediaQueryListEvent) =>
-      setIsMinHeight(matches);
+    const handleMinHeight = handleMediaEvent(setIsMinHeight);
     const currentMinHeightRef = minHeightRef.current;
     currentMinHeightRef?.addEventListener('change', handleMinHeight);
 
@@ -34,6 +45,7 @@ export default function OnboardingLayout(props: any) {
     }, 2000);
 
     return () => {
+      currentDarkModRef?.removeEventListener('change', handleDarkMode);
       currentMinWidthRef?.removeEventListener('change', handleMinWidth);
       currentMinHeightRef?.removeEventListener('change', handleMinHeight);
     };
@@ -226,7 +238,7 @@ export default function OnboardingLayout(props: any) {
           disableOverlay={false}
           /*
           // @ts-ignore */
-          tooltipComponent={createWalkthrough(setStepIndex)}
+          tooltipComponent={createWalkthrough(setStepIndex, isDarkMode)}
           styles={{
             options: {
               arrowColor: '#101112',
