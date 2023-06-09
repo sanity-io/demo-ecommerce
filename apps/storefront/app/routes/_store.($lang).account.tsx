@@ -30,7 +30,7 @@ import Button from "~/components/elements/Button";
 import { CACHE_NONE, routeHeaders } from "~/data/cache";
 import { usePrefixPathWithLocale } from "~/lib/utils";
 
-import { doLogout } from "./($lang).account.logout";
+import { doLogout } from "./_store.($lang).account.logout";
 
 // Combining json + Response + defer in a loader breaks the
 // types returned by useLoaderData. This is a temporary fix.

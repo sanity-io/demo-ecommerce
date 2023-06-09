@@ -4,7 +4,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
+  // ScrollRestoration,
   useLoaderData,
   useMatches,
   useRouteError,
@@ -22,8 +22,8 @@ import type {
 import {
   type AppLoadContext,
   defer,
-  type LinksFunction,
   type LoaderArgs,
+  type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
 import {
   isPreviewModeEnabled,
@@ -41,7 +41,6 @@ import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
-import stylesheet from "~/styles/tailwind.css";
 import type { I18nLocale } from "~/types/shopify";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
@@ -56,33 +55,10 @@ export const handle = {
   seo,
 };
 
-export const links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: stylesheet },
-    {
-      href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap",
-      rel: "stylesheet",
-    },
-    {
-      rel: "preconnect",
-      href: "https://cdn.shopify.com",
-    },
-    {
-      rel: "preconnect",
-      href: "https://shop.app",
-    },
-    {
-      rel: "preconnect",
-      href: "https://fonts.gstatic.com",
-      crossOrigin: "anonymous",
-    },
-    {
-      rel: "preconnect",
-      href: "https://fonts.googleapis.com",
-      crossOrigin: "anonymous",
-    },
-  ];
-};
+export const meta: V2_MetaFunction = () => [
+  { charSet: "utf-8" },
+  { property: "content", content: "width=device-width,initial-scale=1" },
+];
 
 export async function loader({ context }: LoaderArgs) {
   const cache = context.storefront.CacheCustom({
@@ -146,19 +122,16 @@ export default function App() {
   return (
     <html lang={locale.language}>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Seo />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body key={`${locale.language}-${locale.country}`}>
         <Preview preview={preview} fallback={<PreviewLoading />}>
-          <Layout key={`${locale.language}-${locale.country}`}>
-            <Outlet />
-          </Layout>
+          <Outlet />
         </Preview>
-        <ScrollRestoration nonce={nonce} />
+        {/* TODO: scroll is janky */}
+        {/* <ScrollRestoration nonce={nonce} /> */}
         <Scripts nonce={nonce} />
       </body>
     </html>
