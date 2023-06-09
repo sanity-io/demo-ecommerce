@@ -1,3 +1,4 @@
+import { EarthAmericasIcon, PackageIcon } from "@sanity/icons";
 import { Money, ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   Product,
@@ -45,6 +46,13 @@ export default function ProductWidget({
   analytics,
 }: Props) {
   const availableForSale = selectedVariant?.availableForSale;
+
+  const environmentallyFriendly =
+    sanityProduct?.composition &&
+    sanityProduct?.composition.length > 0 &&
+    sanityProduct?.composition?.every(
+      (comp) => comp?.material?.attributes?.environmentallyFriendly
+    );
 
   if (!selectedVariant) {
     return null;
@@ -99,6 +107,32 @@ export default function ProductWidget({
         analytics={analytics}
         customProductOptions={sanityProduct.customProductOptions}
       />
+
+      {(sanityProduct?.sharedText?.deliverySummary ||
+        (environmentallyFriendly &&
+          sanityProduct?.sharedText?.environmentallyFriendly)) && (
+        <>
+          {/* Divider */}
+          <div className="my-4 w-full border-b border-gray" />
+
+          {/* Delivery */}
+          {sanityProduct?.sharedText?.deliverySummary && (
+            <div className="text-bold mt-1 flex items-center text-xs">
+              <PackageIcon className="mr-1 text-lg" />
+              {sanityProduct.sharedText.deliverySummary}
+            </div>
+          )}
+
+          {/* Environmentally Friendly */}
+          {environmentallyFriendly &&
+            sanityProduct?.sharedText?.environmentallyFriendly && (
+              <div className="mt-1 flex items-center text-xs text-green-700">
+                <EarthAmericasIcon className="mr-1 text-lg" />
+                {sanityProduct.sharedText.environmentallyFriendly}
+              </div>
+            )}
+        </>
+      )}
     </div>
   );
 }
