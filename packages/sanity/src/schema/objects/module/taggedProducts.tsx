@@ -1,6 +1,7 @@
 // @ts-expect-error incompatibility with node16 resolution
 import {TagIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+
 import {ShopifyProductTagList} from '../../../components/inputs/ShopifyProductTagList'
 
 export default defineField({
@@ -24,6 +25,7 @@ export default defineField({
       title: 'Number of products',
       type: 'number',
       initialValue: 2,
+      validation: (Rule) => Rule.max(4).min(1).required(),
     }),
     // Layout
     defineField({
