@@ -15,7 +15,7 @@ import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import { badRequest } from "~/lib/utils";
 
-import { doLogin } from "./($lang).account.login";
+import { doLogin } from "./_store.($lang).account.login";
 
 const seo: SeoHandleFunction<typeof loader> = () => ({
   title: "Register",

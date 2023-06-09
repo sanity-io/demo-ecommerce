@@ -6,7 +6,7 @@ import {
   redirect,
 } from "@shopify/remix-oxygen";
 
-import { cartUpdateBuyerIdentity } from "~/routes/($lang).cart";
+import { cartUpdateBuyerIdentity } from "~/routes/_store.($lang).cart";
 
 export async function doLogout(context: AppLoadContext) {
   const { session } = context;
