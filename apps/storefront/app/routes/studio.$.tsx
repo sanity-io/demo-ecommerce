@@ -1,4 +1,8 @@
-import { useCatch, useLoaderData } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import type { LinksFunction, LoaderArgs } from "@shopify/remix-oxygen";
 import { lazy, type ReactElement, Suspense } from "react";
 
@@ -61,14 +65,18 @@ export default function Studio() {
   );
 }
 
-export function CatchBoundary() {
-  const caught = useCatch();
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <GenericError error={{ message: `${error.status} ${error.data}` }} />
+    );
+  }
 
   return (
-    <GenericError error={{ message: `${caught.status} ${caught.data}` }} />
+    <GenericError
+      error={error instanceof Error ? error : { message: "Unknown Error" }}
+    />
   );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <GenericError error={error} />;
 }
