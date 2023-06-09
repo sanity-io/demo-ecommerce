@@ -15,7 +15,7 @@ import FormFieldText from "~/components/account/FormFieldText";
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import { badRequest } from "~/lib/utils";
-import { cartUpdateBuyerIdentity } from "~/routes/($lang).cart";
+import { cartUpdateBuyerIdentity } from "~/routes/_store.($lang).cart";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: "Login",

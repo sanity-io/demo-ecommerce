@@ -4,7 +4,7 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: ["**/.*"],
-  watchPaths: ["./public"],
+  watchPaths: ["./public", "../../packages/sanity/src"],
   server: isProduction ? "./server.vercel.ts" : "./server.ts",
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:

@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+  height: 100vh;
+  max-height: 100dvh;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  overflow: auto;
+}
