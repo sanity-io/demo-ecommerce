@@ -21,6 +21,32 @@ export default function Block({ children, value }: Props) {
     );
   }
 
+  if (value.style === "h3") {
+    return (
+      <h3
+        className={clsx(
+          "first:mt-0 last:mb-0", //
+          "my-4 mt-8 text-lg font-bold"
+        )}
+      >
+        {children}
+      </h3>
+    );
+  }
+
+  if (value.style === "h4") {
+    return (
+      <h4
+        className={clsx(
+          "first:mt-0 last:mb-0", //
+          "mb-4 mt-16 font-bold"
+        )}
+      >
+        {children}
+      </h4>
+    );
+  }
+
   // Pragraphs
   return (
     <p
