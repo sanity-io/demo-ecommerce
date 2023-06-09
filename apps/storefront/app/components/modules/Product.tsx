@@ -7,7 +7,7 @@ import { useGid } from "~/lib/utils";
 
 type Props = {
   imageAspectClassName?: string;
-  layout?: "card" | "pill";
+  layout?: "card" | "pill" | "image";
   module?: SanityModuleProduct;
 };
 
@@ -39,6 +39,16 @@ export default function ProductModule({
         imageAspectClassName={imageAspectClassName}
         storefrontProduct={storefrontProduct}
         variantGid={productVariantGid}
+      />
+    );
+  }
+
+  if (layout === "image") {
+    return (
+      <ProductCard
+        imageAspectClassName={imageAspectClassName}
+        storefrontProduct={storefrontProduct}
+        imageOnly={true}
       />
     );
   }

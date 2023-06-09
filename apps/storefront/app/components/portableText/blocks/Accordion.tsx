@@ -1,5 +1,4 @@
 import { Disclosure } from "@headlessui/react";
-import { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 
 import MinusIcon from "~/components/icons/Minus";
@@ -8,7 +7,7 @@ import PortableText from "~/components/portableText/PortableText";
 import type { SanityModuleAccordion } from "~/lib/sanity";
 
 type Props = {
-  value: PortableTextBlock & SanityModuleAccordion;
+  value: SanityModuleAccordion;
 };
 
 export default function AccordionBlock({ value }: Props) {

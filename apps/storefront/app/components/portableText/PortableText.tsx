@@ -2,7 +2,7 @@ import {
   PortableText as PortableTextReact,
   PortableTextComponents,
 } from "@portabletext/react";
-import { PortableTextBlock } from "@sanity/types";
+import { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 import { useMemo } from "react";
 
