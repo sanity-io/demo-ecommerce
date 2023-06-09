@@ -6,6 +6,7 @@ import { MODULE_GRID } from "../modules/grid";
 import { MODULE_IMAGES } from "../modules/images";
 import { MODULE_INSTAGRAM } from "../modules/instagram";
 import { MODULE_PRODUCTS } from "../modules/products";
+import { MODULE_TAGGED_PRODUCTS } from "../modules/taggedProducts";
 import { MARK_DEFS } from "./markDefs";
 
 // We check the _type for backwards compatibility with the old block type names.
@@ -34,6 +35,10 @@ export const PORTABLE_TEXT = groq`
   (_type == 'blockProducts' || _type == 'module.products') => {
     '_type': 'module.products',
     ${MODULE_PRODUCTS}
+  },
+  (_type == 'blockTaggedProducts' || _type == 'module.blockTaggedProducts') => {
+    '_type': 'module.taggedProducts',
+    ${MODULE_TAGGED_PRODUCTS}
   },
   markDefs[] {
     ${MARK_DEFS}

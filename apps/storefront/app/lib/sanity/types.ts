@@ -249,6 +249,15 @@ export type SanityModuleProducts = {
   modules: SanityModuleProduct[];
 };
 
+export type SanityModuleTaggedProducts = {
+  _key?: string;
+  _type: "module.taggedProducts";
+  tag: string;
+  number: number;
+  layout?: "card" | "pill";
+  products: SanityModuleProduct[];
+};
+
 export type SanityNotFoundPage = {
   body?: string;
   collectionGid?: string;
