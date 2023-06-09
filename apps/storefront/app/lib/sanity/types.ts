@@ -1,4 +1,5 @@
-import type { Image, PortableTextBlock } from "@sanity/types";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { Image } from "@sanity/types";
 
 import type { SanityColorTheme } from "~/lib/theme";
 import type { ProductWithNodes } from "~/types/shopify";
@@ -299,10 +300,75 @@ export type SanityProductPage = {
   gid: string;
   slug?: string;
   seo: SanitySeo;
+  creators: SanityCreator[];
+  composition: SanityComposition[];
+  faqs: SanityFaqs;
+  guide: SanityGuideProducts;
+  materialUpsells: SanityModuleProduct[];
+  sharedText: {
+    deliveryAndReturns: PortableTextBlock[];
+    deliverySummary: string;
+    environmentallyFriendly: string;
+  };
 };
 
 export type SanitySeo = {
   description?: string;
   image?: SanityAssetImage;
   title: string;
+};
+
+export type SanityPerson = {
+  name: string;
+  slug: string;
+  bio: PortableTextBlock[];
+  image: SanityAssetImage;
+  seo: SanitySeo;
+};
+
+export type SanityPersonPage = SanityPerson & {
+  seo: SanitySeo;
+  products: SanityModuleProduct[];
+};
+
+export type SanityCreator = {
+  _key: string;
+  role: string;
+  person: SanityPerson;
+};
+
+export type SanityMaterialAttributes = {
+  environmentallyFriendly: boolean;
+  dishwasherSafe: boolean;
+};
+
+export type SanityFaq = {
+  _key: string;
+  _type: "group";
+  title: string;
+  body: PortableTextBlock[];
+};
+
+export type SanityFaqs = {
+  groups: SanityFaq[];
+  _type: "module.accordion";
+};
+
+export type SanityMaterial = {
+  name: string;
+  attributes: SanityMaterialAttributes;
+  story: PortableTextBlock[];
+};
+
+export type SanityComposition = {
+  _key: string;
+  material: SanityMaterial;
+};
+
+export type SanityGuide = SanityPage;
+
+export type SanityGuideProducts = {
+  title: string;
+  slug: string;
+  images: SanityModuleImage[];
 };
