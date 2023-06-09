@@ -18,6 +18,16 @@ export default function OnboardingLayout(props: any) {
     window?.matchMedia('(prefers-color-scheme: dark)'),
   );
 
+  const styleConfig = {
+    isDarkMode,
+    backgroundColor: isDarkMode ? '#101112' : '#FFFFFF',
+    titleTextColor: isDarkMode ? '#FFFFFF' : '#101112',
+    contentTextColor: isDarkMode ? '#E6E8EC' : '#6E7683',
+    continueTextColor: isDarkMode ? '#9EA6B3' : '#8690A0',
+    buttonTextColor: isDarkMode ? '#FFFFFF' : '#101112',
+    buttonBackgroundColor: isDarkMode ? '#101112' : '#FFFFFF',
+  };
+
   useEffect(() => {
     const handleMediaEvent =
       (func: React.Dispatch<React.SetStateAction<boolean>>) =>
@@ -94,13 +104,11 @@ export default function OnboardingLayout(props: any) {
           disableOverlay={false}
           /*
           // @ts-ignore */
-          tooltipComponent={createWalkthrough(setStepIndex, isDarkMode)}
+          tooltipComponent={createWalkthrough(setStepIndex, styleConfig)}
           styles={{
             options: {
-              arrowColor: '#101112',
+              arrowColor: styleConfig.backgroundColor,
               overlayColor: 'rgba(11, 11, 12, 0.4)',
-              // primaryColor: '#000000',
-              // width: 900,
             },
           }}
           stepIndex={stepIndex}

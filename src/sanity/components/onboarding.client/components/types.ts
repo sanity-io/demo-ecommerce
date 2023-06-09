@@ -15,4 +15,9 @@ export type Steps = Step & {
 export type TooltipProps = TooltipRenderProps & {
   setIndex: (n: number) => void;
   step: Steps;
+  styleConfig: {
+    titleTextColor: string;
+    contentTextColor: string;
+    isDarkMode: boolean;
+  };
 };

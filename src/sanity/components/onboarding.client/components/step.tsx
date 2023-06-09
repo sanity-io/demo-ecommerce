@@ -16,6 +16,7 @@ export default function WalkthroughStep(props: TooltipProps) {
     chapterLength &&
     chapterLength > 0;
 
+  const {isDarkMode} = props.styleConfig;
   return spin ? (
     <div style={{margin: 'auto'}}>
       <SpinnerIcon />
@@ -27,7 +28,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          margin: '16px',
+          margin: '0 16px 16px 16px',
         }}
       >
         <span
@@ -37,7 +38,7 @@ export default function WalkthroughStep(props: TooltipProps) {
             textTransform: 'uppercase',
             fontWeight: 600,
             fontSize: '11px',
-            color: '#101112',
+            color: isDarkMode ? '#101112' : '#FFFFFF',
             letterSpacing: '0.5px',
             padding: '2px 4px',
           }}
@@ -55,7 +56,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontSize: '21px',
           lineHeight: '27px',
           letterSpacing: '0.5PX',
-          color: '#FFFFFF',
+          color: isDarkMode ? '#FFFFFF' : '#101112',
           marginBottom: '10px',
         }}
       >
@@ -68,6 +69,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontSize: '13px',
           lineHeight: '17px',
           marginBottom: '12px',
+          color: isDarkMode ? '#9EA6B3' : '#6E7683',
         }}
       >
         {props.step.content}
@@ -90,7 +92,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontWeight: 400,
           fontSize: '10px',
           lineHeight: '13px',
-          color: '#9EA6B3',
+          color: isDarkMode ? '#9EA6B3' : '#6E7683',
           alignSelf: 'flex-start',
           margin: '12px 0',
         }}
@@ -117,8 +119,8 @@ export default function WalkthroughStep(props: TooltipProps) {
       </div>
       <button
         style={{
-          color: '#101112',
-          background: '#FFFFFF',
+          color: isDarkMode ? '#101112' : '#FFFFFF',
+          background: isDarkMode ? '#FFFFFF' : '#101112',
           borderRadius: '3px',
           padding: '8px',
           width: '100%',

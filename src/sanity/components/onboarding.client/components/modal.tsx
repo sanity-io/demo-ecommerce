@@ -4,12 +4,17 @@ import {TooltipProps} from './types';
 import {CheckmarkIcon, RevertIcon, UploadIcon} from '@sanity/icons';
 
 export default function WalkthroughModal(props: TooltipProps) {
-  const {index, size} = props;
+  const {
+    index,
+    size,
+    styleConfig: {titleTextColor, contentTextColor, isDarkMode},
+  } = props;
   const isLastStep = index + 1 >= size;
   return (
     <>
       <header
         style={{
+          color: titleTextColor,
           fontSize: '27px',
           fontWeight: '700',
           lineHeight: '33px',
@@ -21,6 +26,7 @@ export default function WalkthroughModal(props: TooltipProps) {
       </header>
       <span
         style={{
+          color: contentTextColor,
           fontSize: '16px',
           fontWeight: '400',
           lineHeight: '21px',
@@ -41,21 +47,25 @@ export default function WalkthroughModal(props: TooltipProps) {
       >
         <Button
           completed={index > 2}
-          completedColor="#2276FC"
+          color="#2276FC"
           onClick={() => props.setIndex(1)}
           title="The Studio"
+          isDarkMode={isDarkMode}
         />
         <Button
           completed={index > 5}
-          completedColor="#F36458"
-          onClick={() => props.setIndex(2)}
+          color="#F36458"
+          onClick={() => props.setIndex(3)}
           title="The Sanity way"
+          isDarkMode={isDarkMode}
         />
         <Button
           completed={index >= 8}
-          completedColor="#43D675"
-          onClick={() => props.setIndex(3)}
+          // color="#43D675"
+          color="#3AB564"
+          onClick={() => props.setIndex(5)}
           title="Ecommerce use case"
+          isDarkMode={isDarkMode}
         />
         {isLastStep && (
           <button onClick={() => props.setIndex(0)}>
@@ -71,10 +81,19 @@ export default function WalkthroughModal(props: TooltipProps) {
         }}
       >
         <button
-          style={{color: isLastStep ? '#FFFFFF' : '#9EA6B3'}}
+          style={{
+            color: isLastStep
+              ? isDarkMode
+                ? '#FFFFFF'
+                : '#101112'
+              : isDarkMode
+              ? '#9EA6B3'
+              : '#6E7683',
+            cursor: 'pointer',
+          }}
           {...props.closeProps}
         >
-          {isLastStep ? 'Explore on your own' : 'Keep exploring'}
+          {isLastStep ? 'Keep exploring' : 'Explore on your own'}
         </button>
         {isLastStep ? (
           <span>
@@ -84,6 +103,7 @@ export default function WalkthroughModal(props: TooltipProps) {
                 border: '1px solid #F36458',
                 borderRadius: '3px',
                 margin: '0 .5em',
+                backgroundColor: '#101112',
               }}
               onClick={() => {
                 window.postMessage({studio: 'contact sales'});
@@ -94,8 +114,8 @@ export default function WalkthroughModal(props: TooltipProps) {
             <button
               style={{
                 padding: '.5em .8em',
-                color: '#000000',
-                background: '#FFFFFF',
+                color: isDarkMode ? '#000000' : '#FFFFFF',
+                backgroundColor: isDarkMode ? '#FFFFFF' : '#101112',
                 borderRadius: '3px',
                 margin: '0 .5em',
               }}
@@ -109,8 +129,8 @@ export default function WalkthroughModal(props: TooltipProps) {
         ) : (
           <button
             style={{
-              color: '#101112',
-              background: '#FFFFFF',
+              color: isDarkMode ? '#101112' : '#FFFFFF',
+              backgroundColor: isDarkMode ? '#FFFFFF' : '#101112',
               borderRadius: '3px',
               padding: '6px 10px',
             }}
@@ -129,12 +149,14 @@ function Button({
   onClick,
   title,
   completed,
-  completedColor,
+  color,
+  isDarkMode,
 }: {
   onClick: () => void;
   title: string;
   completed: boolean;
-  completedColor: string;
+  color: string;
+  isDarkMode: boolean;
 }) {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -143,59 +165,57 @@ function Button({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       style={{
-        /* Auto layout */
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '6px 10px',
         gap: '6px',
+        cursor: 'pointer',
 
         width: '258px',
         height: '33px',
-        background: '#111B29',
+        backgroundColor: isDarkMode ? '#1B1D20' : '#F2F3F5',
         borderRadius: '3px',
-        border: '2px solid #111B29',
+        border: `2px solid ${isDarkMode ? '#111B29' : '#F2F3F5'}`,
 
-        /* Inside auto layout */
         flex: 'none',
         order: 0,
         alignSelf: 'center',
         flexGrow: 0,
 
-        /* Font */
+        color: isDarkMode ? '#FFFFFF' : '#101112',
         fontStyle: 'normal',
         fontWeight: '500',
         fontSize: '13px',
         lineHeight: '17px',
         boxSizing: 'border-box',
-        ...(isHovering && {border: '2px solid #4E91FC'}),
+        ...(isHovering && {
+          backgroundColor: isDarkMode ? '#272A2E' : '#E6E8EC',
+          border: `2px solid ${isDarkMode ? '#272A2E' : '#E6E8EC'}`,
+        }),
       }}
       onClick={onClick}
     >
       {title}
       <CheckmarkIcon
         style={{
-          /* white */
           background: '#FFFFFF',
-          /* white */
+          color: '#FFFFFF',
           maxWidth: '15px',
           maxHeight: '15px',
-          mixBlendMode: 'screen',
-          opacity: 0.15,
+          mixBlendMode: isDarkMode ? 'screen' : 'inherit',
+          opacity: isDarkMode ? 0.15 : 1,
           transform: 'zoom(1.5)',
-
-          /* Inside auto layout */
           fontWeight: 'bold',
           flex: 'none',
           order: 3,
           flexGrow: 0,
-
           border: '2px solid #FFFFFF',
           borderRadius: '50%',
           ...(completed && {
-            background: completedColor,
-            borderColor: completedColor,
+            backgroundColor: color,
+            borderColor: color,
             opacity: 1,
           }),
         }}

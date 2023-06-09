@@ -4,8 +4,15 @@ import {TooltipProps} from './types';
 
 export default function createWalkthrough(
   setIndex: (n: number) => void,
-  isDarkMode: boolean,
+  styleConfig: {
+    isDarkMode: boolean;
+    backgroundColor: string;
+    titleTextColor: string;
+    contentTextColor: string;
+  },
 ) {
+  const {isDarkMode, backgroundColor} = styleConfig;
+
   return function (props: TooltipProps) {
     if (!props.step.type) {
       throw new Error('Missing step type');
@@ -28,7 +35,7 @@ export default function createWalkthrough(
           width: isModalMode ? '500px' : '315px',
           height: isModalMode ? '385px' : 'auto',
           color: '#FFFFFF',
-          background: '#101112',
+          background: backgroundColor,
           border: '1px solid rgba(255, 255, 255, 0.002)',
           borderRadius: '6px',
 
@@ -42,7 +49,7 @@ export default function createWalkthrough(
           textAlign: 'left',
         }}
       >
-        <Dialog {...props} setIndex={setIndex} />
+        <Dialog {...props} setIndex={setIndex} styleConfig={styleConfig} />
       </div>
     );
   };
