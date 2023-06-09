@@ -1,0 +1,145 @@
+import {Steps} from './components/types';
+import {BlueImg, RedImg, GreenImg} from './assets';
+
+export const steps: Steps[] = [
+  {
+    target: 'body',
+    placement: 'center',
+    content: null,
+    title: 'Welcome to a Sanity Studio',
+    subtitle:
+      'Super short about where we are and what this tour is (3 short steps)',
+    type: 'modal',
+  },
+  {
+    target: "[data-ui='Navbar'] [data-ui='Button']", // logo
+    chapter: 'The Studio',
+    themeColor: '#4E91FC',
+    chapterPosition: 1,
+    chapterLength: 3,
+    title: 'This is a Sanity Studio for a store called AKVA',
+    disableBeacon: true,
+    placement: 'bottom-start',
+    image: BlueImg,
+    content:
+      '[This is where their editors do stuff]\n[connected to content lake, through apis]',
+    nextUrl: '/studio/desk/home',
+    nextUrlTarget: "[data-testid='permission-check-banner']",
+    type: 'step',
+  },
+  {
+    target: "[data-testid='permission-check-banner']", // roles warning banner
+    chapter: 'The Studio',
+    themeColor: '#4E91FC',
+    chapterPosition: 2,
+    chapterLength: 3,
+    title: 'Read only demo',
+    disableBeacon: true,
+    placement: 'bottom',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: 'body',
+    chapter: 'The Studio',
+    themeColor: '#4E91FC',
+    chapterPosition: 3,
+    chapterLength: 3,
+    title: 'Create your own workspace',
+    disableBeacon: true,
+    placement: 'center',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: "[href='/studio/desk/guides']",
+    chapter: 'The Sanity Way',
+    themeColor: '#F36458',
+    chapterPosition: 1,
+    chapterLength: 3,
+    title: 'Documents and references',
+    disableBeacon: true,
+    placement: 'right',
+    type: 'step',
+    image: RedImg,
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    nextUrl: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
+    nextUrlTarget: "[data-testid='field-hero.content']",
+  },
+  {
+    target: "[data-testid='field-hero.content']",
+    chapter: 'The Sanity Way',
+    themeColor: '#F36458',
+    chapterPosition: 2,
+    chapterLength: 3,
+    title: 'Content as data',
+    disableBeacon: true,
+    placement: 'left-end',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: "[data-testid='field-hero.content']",
+    chapter: 'The Sanity Way',
+    themeColor: '#F36458',
+    chapterPosition: 3,
+    chapterLength: 3,
+    title: 'Rich commerce experience',
+    disableBeacon: true,
+    placement: 'left-end',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: "[data-testid='field-hero.content']",
+    chapter: 'Ecommerce use cases',
+    themeColor: '#43D675',
+    chapterPosition: 1,
+    chapterLength: 3,
+    image: GreenImg,
+    disableBeacon: true,
+    placement: 'left-end',
+    content: 'This another awesome feature!',
+    type: 'step',
+  },
+  {
+    target: "[data-testid='field-hero.content']",
+    chapter: 'Ecommerce use cases',
+    themeColor: '#43D675',
+    chapterPosition: 2,
+    chapterLength: 3,
+    title: 'Synced with Shopify',
+    disableBeacon: true,
+    placement: 'left-end',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: "[data-testid='field-hero.content']",
+    chapter: 'Ecommerce use cases',
+    themeColor: '#43D675',
+    chapterPosition: 3,
+    chapterLength: 3,
+    title: 'Live preview, side by side',
+    disableBeacon: true,
+    placement: 'left-end',
+    content:
+      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+    type: 'step',
+  },
+  {
+    target: 'body',
+    placement: 'center',
+    content: null,
+    title: 'That’s the tour!..',
+    subtitle:
+      '... but we haven’t even gotten to features like real time editing, presence, revision history, image hotspot, mobile, a11y, responsiveness, AI plugins – and so much more!',
+    type: 'modal',
+  },
+];
