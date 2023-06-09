@@ -58,6 +58,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-ui='Navbar'] [data-ui='Button']", // logo
       chapter: 'The Studio',
+      themeColor: '#4E91FC',
+      chapterPosition: 1,
+      chapterLength: 3,
       title: 'This is a Sanity Studio for a store called AKVA',
       disableBeacon: true,
       placement: 'bottom-start',
@@ -70,6 +73,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='permission-check-banner']", // roles warning banner
       chapter: 'The Studio',
+      themeColor: '#4E91FC',
+      chapterPosition: 2,
+      chapterLength: 3,
       title: 'Read only demo',
       disableBeacon: true,
       placement: 'bottom',
@@ -80,6 +86,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: 'body',
       chapter: 'The Studio',
+      themeColor: '#4E91FC',
+      chapterPosition: 3,
+      chapterLength: 3,
       title: 'Create your own workspace',
       disableBeacon: true,
       placement: 'center',
@@ -90,6 +99,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[href='/studio/desk/guides']",
       chapter: 'The Sanity Way',
+      themeColor: '#F36458',
+      chapterPosition: 1,
+      chapterLength: 3,
       title: 'Documents and references',
       disableBeacon: true,
       placement: 'right',
@@ -102,6 +114,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='field-hero.content']",
       chapter: 'The Sanity Way',
+      themeColor: '#F36458',
+      chapterPosition: 2,
+      chapterLength: 3,
       title: 'Content as data',
       disableBeacon: true,
       placement: 'left-end',
@@ -112,6 +127,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='field-hero.content']",
       chapter: 'The Sanity Way',
+      themeColor: '#F36458',
+      chapterPosition: 3,
+      chapterLength: 3,
       title: 'Rich commerce experience',
       disableBeacon: true,
       placement: 'left-end',
@@ -122,6 +140,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='field-hero.content']",
       chapter: 'Ecommerce use cases',
+      themeColor: '#43D675',
+      chapterPosition: 1,
+      chapterLength: 3,
       disableBeacon: true,
       placement: 'left-end',
       content: 'This another awesome feature!',
@@ -130,6 +151,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='field-hero.content']",
       chapter: 'Ecommerce use cases',
+      themeColor: '#43D675',
+      chapterPosition: 2,
+      chapterLength: 3,
       title: 'Synced with Shopify',
       disableBeacon: true,
       placement: 'left-end',
@@ -140,6 +164,9 @@ export default function OnboardingLayout(props: any) {
     {
       target: "[data-testid='field-hero.content']",
       chapter: 'Ecommerce use cases',
+      themeColor: '#43D675',
+      chapterPosition: 3,
+      chapterLength: 3,
       title: 'Live preview, side by side',
       disableBeacon: true,
       placement: 'left-end',

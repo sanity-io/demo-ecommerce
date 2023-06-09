@@ -5,6 +5,9 @@ export type Steps = Step & {
   chapter?: string;
   nextUrl?: string;
   nextUrlTarget?: string;
+  themeColor?: string;
+  chapterPosition?: number;
+  chapterLength?: number;
   type: 'step' | 'modal';
 };
 

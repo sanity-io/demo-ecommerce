@@ -8,6 +8,13 @@ import {ArrowRightIcon, CloseIcon} from '@sanity/icons';
 export default function WalkthroughStep(props: TooltipProps) {
   const [spin, setSpin] = useState(false);
   const router = useRouter();
+  const {themeColor, chapterPosition, chapterLength} = props.step;
+  const hasChapter =
+    themeColor &&
+    chapterPosition &&
+    chapterPosition > 0 &&
+    chapterLength &&
+    chapterLength > 0;
 
   return spin ? (
     <div style={{margin: 'auto'}}>
@@ -25,7 +32,7 @@ export default function WalkthroughStep(props: TooltipProps) {
       >
         <span
           style={{
-            background: '#4E91FC',
+            background: themeColor ?? '#4E91FC',
             borderRadius: '3px',
             textTransform: 'uppercase',
             fontWeight: 600,
@@ -88,30 +95,13 @@ export default function WalkthroughStep(props: TooltipProps) {
           marginBottom: '12px',
         }}
       >
-        <div
-          style={{
-            borderRadius: '1.5px',
-            height: '3px',
-            flex: 1,
-            background: '#4E91FC',
-          }}
-        />
-        <div
-          style={{
-            borderRadius: '1.5px',
-            height: '3px',
-            flex: 1,
-            background: '#17396F',
-          }}
-        />
-        <div
-          style={{
-            borderRadius: '1.5px',
-            height: '3px',
-            flex: 1,
-            background: '#17396F',
-          }}
-        />
+        {hasChapter &&
+          Array.from(Array(props.step.chapterLength), (_, i) =>
+            chapterPositionCrumbs(
+              themeColor,
+              i === (chapterPosition as number) - 1,
+            ),
+          )}
       </div>
       <button
         style={{
@@ -146,6 +136,20 @@ export default function WalkthroughStep(props: TooltipProps) {
         <ArrowRightIcon style={{fontSize: '1.5em', paddingBottom: '1px'}} />
       </button>
     </>
+  );
+}
+
+function chapterPositionCrumbs(color: string, selected: boolean) {
+  return (
+    <div
+      style={{
+        borderRadius: '1.5px',
+        height: '3px',
+        flex: 1,
+        background: color,
+        opacity: selected ? 1 : 0.4,
+      }}
+    />
   );
 }
 
