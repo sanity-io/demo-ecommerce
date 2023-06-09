@@ -18,6 +18,7 @@ export function SanityStudio(props: SanityStudioProps) {
     projectId,
     dataset,
     preview: {
+      domain: globalThis.location.origin,
       secret: previewSecret,
     },
     shopify: {
