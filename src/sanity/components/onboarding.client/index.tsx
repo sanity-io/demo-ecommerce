@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import Joyride, {CallBackProps, ACTIONS, STATUS, EVENTS} from 'react-joyride';
 import createWalkthrough from './steps';
 import {Steps} from './steps/types';
+import {BlueImg, RedImg, GreenImg} from './assets';
 
 export default function OnboardingLayout(props: any) {
   const [run, setRun] = useState(false);
@@ -64,6 +65,7 @@ export default function OnboardingLayout(props: any) {
       title: 'This is a Sanity Studio for a store called AKVA',
       disableBeacon: true,
       placement: 'bottom-start',
+      image: BlueImg,
       content:
         '[This is where their editors do stuff]\n[connected to content lake, through apis]',
       nextUrl: '/studio/desk/home',
@@ -106,6 +108,7 @@ export default function OnboardingLayout(props: any) {
       disableBeacon: true,
       placement: 'right',
       type: 'step',
+      image: RedImg,
       content:
         'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
       nextUrl: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
@@ -143,6 +146,7 @@ export default function OnboardingLayout(props: any) {
       themeColor: '#43D675',
       chapterPosition: 1,
       chapterLength: 3,
+      image: GreenImg,
       disableBeacon: true,
       placement: 'left-end',
       content: 'This another awesome feature!',

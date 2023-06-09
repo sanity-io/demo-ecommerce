@@ -6,6 +6,7 @@ export type Steps = Step & {
   nextUrl?: string;
   nextUrlTarget?: string;
   themeColor?: string;
+  image?: () => JSX.Element;
   chapterPosition?: number;
   chapterLength?: number;
   type: 'step' | 'modal';

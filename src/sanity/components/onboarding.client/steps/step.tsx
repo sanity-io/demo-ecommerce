@@ -67,11 +67,23 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontWeight: 400,
           fontSize: '13px',
           lineHeight: '17px',
-          marginBottom: '22px',
+          marginBottom: '12px',
         }}
       >
         {props.step.content}
       </p>
+      {typeof props.step.image === 'function' && (
+        <div
+          style={{
+            width: '100%',
+            resize: 'horizontal',
+            height: 'auto',
+            overflow: 'hidden',
+          }}
+        >
+          {props.step.image()}
+        </div>
+      )}
       <span
         style={{
           fontStyle: 'normal',
@@ -80,7 +92,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           lineHeight: '13px',
           color: '#9EA6B3',
           alignSelf: 'flex-start',
-          marginBottom: '6px',
+          margin: '12px 0',
         }}
       >
         Hit <strong>⏎ Enter</strong> to proceed
