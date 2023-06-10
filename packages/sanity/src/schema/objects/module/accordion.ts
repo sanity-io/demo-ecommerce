@@ -3,6 +3,7 @@ import {StackCompactIcon} from '@sanity/icons'
 // @ts-expect-error
 import pluralize from 'pluralize-esm'
 import {defineField} from 'sanity'
+
 import blocksToText from '../../../utils/blocksToText'
 
 export default defineField({

@@ -1,6 +1,7 @@
 // @ts-expect-error incompatibility with node16 resolution
 import {LinkIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+
 import {PAGE_REFERENCES} from '../../constants'
 import {getPriceRange} from '../../utils/getPriceRange'
 

@@ -1,8 +1,9 @@
-import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
-import DocumentsPane from 'sanity-plugin-documents-pane'
-import defineStructure from '../utils/defineStructure'
 // @ts-expect-error
 import {InfoOutlineIcon} from '@sanity/icons'
+import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
+import DocumentsPane from 'sanity-plugin-documents-pane'
+
+import defineStructure from '../utils/defineStructure'
 import {previewPane} from './preview'
 
 /**

@@ -3,11 +3,12 @@
  */
 
 import {ListItemBuilder, StructureResolver} from 'sanity/desk'
+
 import collections from './collections'
 import colorThemes from './colorThemes'
 import guides from './guides'
-import materials from './materials'
 import home from './home'
+import materials from './materials'
 import pages from './pages'
 import people from './people'
 import products from './products'

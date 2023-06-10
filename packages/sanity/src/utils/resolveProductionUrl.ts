@@ -1,4 +1,5 @@
 import type {ResolveProductionUrlContext, SanityDocumentLike, Slug} from 'sanity'
+
 import {ENVIRONMENT} from '../constants'
 
 type store = {

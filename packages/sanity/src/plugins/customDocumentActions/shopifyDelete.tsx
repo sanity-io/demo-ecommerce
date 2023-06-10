@@ -1,16 +1,17 @@
-import {useState} from 'react'
 // @ts-expect-error incompatibility with node16 resolution
 import {TrashIcon} from '@sanity/icons'
 import {Stack, Text, useToast} from '@sanity/ui'
+import {useState} from 'react'
 import {
-  type DocumentActionDescription,
   type DocumentActionConfirmDialogProps,
+  type DocumentActionDescription,
   useClient,
   useWorkspace,
 } from 'sanity'
 import {useRouter} from 'sanity/router'
-import type {ShopifyDocument, ShopifyDocumentActionProps} from './types'
+
 import {SANITY_API_VERSION} from '../../constants'
+import type {ShopifyDocument, ShopifyDocumentActionProps} from './types'
 
 export default (props: ShopifyDocumentActionProps): DocumentActionDescription | undefined => {
   const {

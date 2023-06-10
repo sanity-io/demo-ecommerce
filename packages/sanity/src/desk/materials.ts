@@ -1,8 +1,9 @@
-import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 // @ts-expect-error incompatibility with node16 resolution
 import {ComponentIcon} from '@sanity/icons'
-import defineStructure from '../utils/defineStructure'
+import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+
+import defineStructure from '../utils/defineStructure'
 
 /**
  * Show products where a material is used
