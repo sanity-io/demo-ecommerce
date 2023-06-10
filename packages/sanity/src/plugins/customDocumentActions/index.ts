@@ -4,10 +4,10 @@ import {
   DocumentActionsResolver,
   NewDocumentOptionsResolver,
 } from 'sanity'
-import shopifyDelete from './shopifyDelete'
-import shopifyLink from './shopifyLink'
 
 import {LOCKED_DOCUMENT_TYPES, SHOPIFY_DOCUMENT_TYPES} from '../../constants'
+import shopifyDelete from './shopifyDelete'
+import shopifyLink from './shopifyLink'
 
 export const resolveDocumentActions: DocumentActionsResolver = (prev, {schemaType}) => {
   if (LOCKED_DOCUMENT_TYPES.includes(schemaType)) {

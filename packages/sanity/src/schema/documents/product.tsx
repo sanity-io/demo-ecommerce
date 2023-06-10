@@ -2,10 +2,11 @@
 import {TagIcon} from '@sanity/icons'
 // @ts-expect-error
 import pluralize from 'pluralize-esm'
+import {defineField, defineType} from 'sanity'
+
 import ShopifyIcon from '../../components/icons/Shopify'
 import ProductHiddenInput from '../../components/inputs/ProductHidden'
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
-import {defineField, defineType} from 'sanity'
 import {getPriceRange} from '../../utils/getPriceRange'
 
 const GROUPS = [

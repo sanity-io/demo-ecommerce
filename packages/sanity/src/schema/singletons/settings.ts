@@ -1,6 +1,6 @@
 // @ts-expect-error incompatibility with node16 resolution
 import {CogIcon, PackageIcon} from '@sanity/icons'
-import {defineType, defineField} from 'sanity'
+import {defineField,defineType} from 'sanity'
 
 const TITLE = 'Settings'
 interface ProductOptions {

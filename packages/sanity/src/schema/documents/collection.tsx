@@ -1,12 +1,13 @@
 // @ts-expect-error incompatibility with node16 resolution
+import {getExtension} from '@sanity/asset-utils'
 import {PackageIcon} from '@sanity/icons'
 // @ts-expect-error
 import pluralize from 'pluralize-esm'
 import {defineField, defineType} from 'sanity'
-import CollectionHiddenInput from '../../components/inputs/CollectionHidden'
+
 import ShopifyIcon from '../../components/icons/Shopify'
+import CollectionHiddenInput from '../../components/inputs/CollectionHidden'
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
-import {getExtension} from '@sanity/asset-utils'
 
 const GROUPS = [
   {

@@ -3,6 +3,7 @@ import {TagIcon} from '@sanity/icons'
 // @ts-expect-error
 import pluralize from 'pluralize-esm'
 import {defineField} from 'sanity'
+
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
 import {SANITY_API_VERSION} from '../../constants'
 import {getPriceRange} from '../../utils/getPriceRange'

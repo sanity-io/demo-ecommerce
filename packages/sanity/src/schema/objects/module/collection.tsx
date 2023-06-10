@@ -1,6 +1,7 @@
 // @ts-expect-error incompatibility with node16 resolution
 import {PackageIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+
 import ShopifyDocumentStatus from '../../../components/media/ShopifyDocumentStatus'
 
 export default defineField({

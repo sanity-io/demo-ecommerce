@@ -1,4 +1,3 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {CloseIcon, ImageIcon, LinkRemovedIcon} from '@sanity/icons'
 import {forwardRef, useState} from 'react'
 
@@ -32,7 +31,6 @@ const ShopifyDocumentStatus = forwardRef<HTMLDivElement, Props>((props, ref) => 
       }}
     >
       {imageVisible && url ? (
-        // eslint-disable-next-line hydrogen/prefer-image-component
         <img
           onError={handleImageError}
           src={`${url}&width=400`}

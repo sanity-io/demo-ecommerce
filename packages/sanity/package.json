@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "sideEffects": true,
   "scripts": {
-    "lint": "eslint",
+    "lint": "eslint src",
     "format": "npx prettier --write . --ignore-path ../../.gitignore"
   },
   "dependencies": {

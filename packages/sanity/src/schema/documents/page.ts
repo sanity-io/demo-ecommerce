@@ -1,6 +1,7 @@
 // @ts-expect-error incompatibility with node16 resolution
 import {DocumentIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+
 import {validateSlug} from '../../utils/validateSlug'
 
 export default defineField({
