@@ -4,6 +4,7 @@
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "sideEffects": true,
   "scripts": {
     "lint": "eslint",
     "format": "npx prettier --write . --ignore-path ../../.gitignore"

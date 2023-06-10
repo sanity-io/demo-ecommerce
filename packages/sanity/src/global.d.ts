@@ -1,11 +1,15 @@
+import type { ENVIRONMENT } from "./constants"
+
 export declare global {
-  var env: {
-    preview: {
-      domain: string
-      secret: string
-    }
-    shopify: {
-      storeDomain: string
+  interface Window {
+    [ENVIRONMENT]: {
+      preview: {
+        domain?: string
+        secret: string
+      }
+      shopify: {
+        storeDomain: string
+      }
     }
   }
 }

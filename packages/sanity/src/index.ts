@@ -1,10 +1,11 @@
 import {colorInput} from '@sanity/color-input'
 import {visionTool} from '@sanity/vision'
-import {AssetSource, defineConfig} from 'sanity'
+import {AssetSource, defineConfig, type SingleWorkspace} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 
+import {ENVIRONMENT} from './constants'
 import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
@@ -15,14 +16,9 @@ import resolveProductionUrl from './utils/resolveProductionUrl'
  * Configuration options that will be passed in
  * from the environment or application
  */
-type SanityConfig = {
-  projectId: string
-  dataset: string
-  title?: string
-  basePath?: string
-  apiVersion?: string
+type SanityConfig = Pick<SingleWorkspace, 'projectId' | 'dataset' | 'title' | 'basePath'> & {
   preview: {
-    domain: string
+    domain?: string
     secret: string
   }
   shopify: {
@@ -38,8 +34,7 @@ type SanityConfig = {
 export function defineSanityConfig(config: SanityConfig) {
   const {title = 'AKVA', preview, shopify, ...rest} = config
 
-  // TODO: don't set on `global`
-  globalThis.env = {
+  window[ENVIRONMENT] = {
     preview,
     shopify,
   }
