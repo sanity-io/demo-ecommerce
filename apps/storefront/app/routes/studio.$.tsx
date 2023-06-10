@@ -36,7 +36,7 @@ const SanityStudio =
 export function loader({ context }: LoaderArgs) {
   return {
     projectId: context.env.SANITY_PROJECT_ID!,
-    dataset: context.env.SANITY_DATASET!,
+    dataset: context.env.SANITY_DATASET || "production",
     previewSecret: context.env.SANITY_PREVIEW_SECRET!,
     storeDomain: context.env.PUBLIC_STORE_DOMAIN!,
   };

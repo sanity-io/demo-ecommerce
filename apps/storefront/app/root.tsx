@@ -105,7 +105,7 @@ export async function loader({ context }: LoaderArgs) {
         )
       : undefined,
     sanityProjectID: context.env.SANITY_PROJECT_ID,
-    sanityDataset: context.env.SANITY_DATASET,
+    sanityDataset: context.env.SANITY_DATASET || "production",
     selectedLocale,
     storeDomain: context.storefront.getShopifyDomain(),
   });
