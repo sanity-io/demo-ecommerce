@@ -1,4 +1,5 @@
 import type {ResolveProductionUrlContext, SanityDocumentLike, Slug} from 'sanity'
+import { ENVIRONMENT } from '../constants'
 
 type store = {
   slug: Slug
@@ -14,7 +15,7 @@ export default async function resolveProductionUrl(
 }
 
 export const resolvePreviewUrl = (document: SanityDocumentLike) => {
-  const {domain, secret} = globalThis.env.preview
+  const {domain, secret} = window[ENVIRONMENT].preview
   const previewUrl = new URL('/api/preview', domain ?? 'http://localhost:3000')
 
   previewUrl.searchParams.append(`secret`, secret)
