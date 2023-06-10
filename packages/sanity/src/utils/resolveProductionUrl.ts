@@ -22,7 +22,7 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
   previewUrl.searchParams.append(`secret`, secret)
 
   let path = '/'
-  switch (document?.type) {
+  switch (document?._type) {
     case 'page': {
       const slug = (document?.slug as Slug)?.current
       path = slug == null ? '/' : `/pages/${slug}`
@@ -31,6 +31,11 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
     case 'product': {
       const slug = (document?.store as store)?.slug?.current
       path = slug == null ? '/' : `/products/${slug}`
+    }
+
+    case 'guide': {
+      const slug = (document?.slug as Slug)?.current
+      path = slug == null ? '/' : `/guides/${slug}`
     }
   }
 
