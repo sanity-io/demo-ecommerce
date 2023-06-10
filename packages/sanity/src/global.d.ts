@@ -1,4 +1,4 @@
-import type { ENVIRONMENT } from "./constants"
+import type {ENVIRONMENT} from './constants'
 
 export declare global {
   interface Window {
