@@ -25,3 +25,8 @@ export const PAGE_REFERENCES = [
 // API version to use when using the Sanity client within the studio
 // https://www.sanity.io/help/studio-client-specify-api-version
 export const SANITY_API_VERSION = '2022-10-25'
+
+/**
+ * Environment symbol to set on `window`
+ */
+export const ENVIRONMENT = Symbol("Sanity Environment")
