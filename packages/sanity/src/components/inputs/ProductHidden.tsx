@@ -1,8 +1,8 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {WarningOutlineIcon} from '@sanity/icons'
 import {Box, Card, Flex, Stack, Text} from '@sanity/ui'
 import {StringFieldProps, useFormValue} from 'sanity'
 
+import {ENVIRONMENT} from '../../constants'
 import {productUrl} from '../../utils/shopifyUrls'
 
 type Store = {
@@ -13,12 +13,13 @@ type Store = {
 
 export default function ProductHiddenInput(_: StringFieldProps) {
   const store: Store = useFormValue(['store']) as Store
+  const {storeDomain} = window[ENVIRONMENT].shopify
 
   let message
   if (!store) {
     return <></>
   } else {
-    const shopifyProductUrl = productUrl(store?.id)
+    const shopifyProductUrl = productUrl(storeDomain, store?.id)
     const isActive = store?.status === 'active'
     const isDeleted = store?.isDeleted
 

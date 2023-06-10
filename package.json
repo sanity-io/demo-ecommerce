@@ -12,6 +12,7 @@
     "lint": "turbo run lint",
     "lint:fix": "npm run lint -- -- --fix",
     "format": "turbo run format",
+    "typecheck": "turbo run typecheck",
     "prepare": "husky install"
   },
   "devDependencies": {

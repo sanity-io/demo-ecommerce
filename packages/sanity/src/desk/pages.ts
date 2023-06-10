@@ -1,4 +1,3 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {DocumentsIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 

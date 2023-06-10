@@ -1,4 +1,3 @@
-// @ts-expect-error
 import {InfoOutlineIcon} from '@sanity/icons'
 import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'

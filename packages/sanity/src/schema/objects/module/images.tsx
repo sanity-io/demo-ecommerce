@@ -1,6 +1,4 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {ImageIcon} from '@sanity/icons'
-// @ts-expect-error
 import pluralize from 'pluralize-esm'
 import {defineField} from 'sanity'
 

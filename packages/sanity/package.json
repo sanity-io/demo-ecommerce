@@ -7,7 +7,8 @@
   "sideEffects": true,
   "scripts": {
     "lint": "eslint src",
-    "format": "npx prettier --write . --ignore-path ../../.gitignore"
+    "format": "npx prettier --write . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@sanity/color-input": "^3.1.0",
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^2.0.1",
+    "@types/lodash.get": "^4.4.7",
+    "@types/slug": "^5.0.3",
     "eslint": "^8.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^2.8.7",

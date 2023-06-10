@@ -1,4 +1,3 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {WarningOutlineIcon} from '@sanity/icons'
 import {Box, Card, Flex, Stack, Text} from '@sanity/ui'
 
