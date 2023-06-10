@@ -2,6 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Lint (and fix) anything that changed in the last commit
+npx turbo run format --filter=[HEAD^1] --continue
 npx turbo run lint --filter=[HEAD^1] --continue -- --fix
 
 # After formatting and linting, only add back the original files
