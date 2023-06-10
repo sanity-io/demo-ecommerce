@@ -1,2 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
+
+# Lint (and fix) anything that changed in the last commit
+npx turbo run lint --filter=[HEAD^1] --continue -- --fix
+
+# After formatting and linting, only add back the original files
+# that were affected
+changedFilesList=$(git diff --diff-filter=d --cached --name-only);
+
+# Add any changed files to the commit
+git add $changedFilesList;
