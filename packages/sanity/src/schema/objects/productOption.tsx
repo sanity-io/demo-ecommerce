@@ -1,4 +1,3 @@
-// @ts-expect-error incompatibility with node16 resolution
 import {SunIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 

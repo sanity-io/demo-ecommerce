@@ -3,7 +3,7 @@
  *
  * Read more: https://www.sanity.io/docs/customization#f924645007e1
  */
-// @ts-expect-error incompatibility with node16 resolution
+
 import {LinkIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 
