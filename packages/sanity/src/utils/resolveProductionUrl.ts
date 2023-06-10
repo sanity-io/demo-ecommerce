@@ -21,23 +21,20 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
 
   previewUrl.searchParams.append(`secret`, secret)
 
-  if (document?._type === 'page') {
-    const slug = (document?.slug as Slug)?.current
-    const path = slug == null ? '/' : `/pages/${slug}`
+  let path = '/'
+  switch (document?.type) {
+    case 'page': {
+      const slug = (document?.slug as Slug)?.current
+      path = slug == null ? '/' : `/pages/${slug}`
+    }
 
-    previewUrl.searchParams.append('slug', path)
-
-    return previewUrl.toString()
+    case 'product': {
+      const slug = (document?.store as store)?.slug?.current
+      path = slug == null ? '/' : `/products/${slug}`
+    }
   }
 
-  if (document?._type === 'product') {
-    const slug = (document?.store as store)?.slug?.current
-    const path = slug == null ? '/' : `/products/${slug}`
+  previewUrl.searchParams.append('slug', path)
 
-    previewUrl.searchParams.append('slug', path)
-
-    return previewUrl.toString()
-  }
-
-  return ''
+  return previewUrl.toString()
 }
