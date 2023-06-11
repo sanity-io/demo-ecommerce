@@ -57,7 +57,7 @@ export const handle = {
 
 export const meta: V2_MetaFunction = () => [
   { charSet: "utf-8" },
-  { property: "content", content: "width=device-width,initial-scale=1" },
+  { name: "content", content: "width=device-width,initial-scale=1" },
 ];
 
 export async function loader({ context }: LoaderArgs) {
@@ -126,12 +126,12 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body key={`${locale.language}-${locale.country}`}>
+      <body>
         <Preview preview={preview} fallback={<PreviewLoading />}>
-          <Outlet />
+          <Outlet key={`${locale.language}-${locale.country}`} />
         </Preview>
         {/* TODO: scroll is janky */}
-        <ScrollRestoration nonce={nonce} />
+        {/* <ScrollRestoration nonce={nonce} /> */}
         <Scripts nonce={nonce} />
       </body>
     </html>
