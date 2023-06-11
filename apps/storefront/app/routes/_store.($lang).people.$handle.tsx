@@ -1,7 +1,8 @@
-import { Await, useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
+import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -54,36 +55,41 @@ export async function loader({ params, context }: LoaderArgs) {
 
 export default function Page() {
   const { page, gids } = useLoaderData<typeof loader>();
+  const { handle } = useParams();
 
   return (
-    <Suspense>
-      <Await resolve={gids}>
-        {/* Page hero */}
-        <PageHero fallbackTitle={page.name} />
-        {/* Body */}
-        {page.bio && (
-          <PortableText
-            blocks={page.bio}
-            centered
-            className={clsx(
-              "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-              "md:px-8"
+    <SanityPreview data={page} query={PERSON_QUERY} params={{ slug: handle }}>
+      {(page) => (
+        <Suspense>
+          <Await resolve={gids}>
+            {/* Page hero */}
+            <PageHero fallbackTitle={page?.name || ""} />
+            {/* Body */}
+            {page?.bio && (
+              <PortableText
+                blocks={page.bio}
+                centered
+                className={clsx(
+                  "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+                  "md:px-8"
+                )}
+              />
             )}
-          />
-        )}
 
-        {/* Products */}
-        {page.products && (
-          <div
-            className={clsx(
-              "mb-32 mt-8 px-4", //
-              "md:px-8"
+            {/* Products */}
+            {page?.products && (
+              <div
+                className={clsx(
+                  "mb-32 mt-8 px-4", //
+                  "md:px-8"
+                )}
+              >
+                <ModuleGrid items={page.products} />
+              </div>
             )}
-          >
-            <ModuleGrid items={page.products} />
-          </div>
-        )}
-      </Await>
-    </Suspense>
+          </Await>
+        </Suspense>
+      )}
+    </SanityPreview>
   );
 }
