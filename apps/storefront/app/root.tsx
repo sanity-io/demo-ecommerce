@@ -130,8 +130,7 @@ export default function App() {
         <Preview preview={preview} fallback={<PreviewLoading />}>
           <Outlet key={`${locale.language}-${locale.country}`} />
         </Preview>
-        {/* TODO: scroll is janky */}
-        {/* <ScrollRestoration nonce={nonce} /> */}
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
     </html>
