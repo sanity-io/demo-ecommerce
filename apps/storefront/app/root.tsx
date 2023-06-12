@@ -4,7 +4,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
+  // ScrollRestoration,
   useLoaderData,
   useMatches,
   useRouteError,
