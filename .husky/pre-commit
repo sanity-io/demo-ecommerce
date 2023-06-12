@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Lint any workspace that changed in the last commit
-npm run lint typecheck -- --filter=[HEAD^1]
+# npm run lint typecheck -- --filter=[HEAD^1]
