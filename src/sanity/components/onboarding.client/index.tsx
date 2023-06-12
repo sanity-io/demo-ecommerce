@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import Joyride, {CallBackProps, ACTIONS, STATUS, EVENTS} from 'react-joyride';
 import createWalkthrough from './components';
 import {steps} from './steps';
+import {lightModeStyles, darkModeStyles} from './styles';
 
 export default function OnboardingLayout(props: any) {
   const [run, setRun] = useState(false);
@@ -18,15 +19,7 @@ export default function OnboardingLayout(props: any) {
     window?.matchMedia('(prefers-color-scheme: dark)'),
   );
 
-  const styleConfig = {
-    isDarkMode,
-    backgroundColor: isDarkMode ? '#101112' : '#FFFFFF',
-    titleTextColor: isDarkMode ? '#FFFFFF' : '#101112',
-    contentTextColor: isDarkMode ? '#E6E8EC' : '#6E7683',
-    continueTextColor: isDarkMode ? '#9EA6B3' : '#8690A0',
-    buttonTextColor: isDarkMode ? '#FFFFFF' : '#101112',
-    buttonBackgroundColor: isDarkMode ? '#101112' : '#FFFFFF',
-  };
+  const styleConfig = isDarkMode ? darkModeStyles : lightModeStyles;
 
   useEffect(() => {
     const handleMediaEvent =
@@ -50,6 +43,7 @@ export default function OnboardingLayout(props: any) {
     const initialCheck = setTimeout(() => {
       setIsMinWidth(currentMinWidthRef?.matches ?? false);
       setIsMinHeight(currentMinHeightRef?.matches ?? false);
+      setIsDarkMode(currentDarkModRef?.matches ?? false);
       clearTimeout(initialCheck);
     }, 2000);
 
@@ -104,7 +98,11 @@ export default function OnboardingLayout(props: any) {
           disableOverlay={false}
           /*
           // @ts-ignore */
-          tooltipComponent={createWalkthrough(setStepIndex, styleConfig)}
+          tooltipComponent={createWalkthrough(
+            setStepIndex,
+            styleConfig,
+            isDarkMode,
+          )}
           styles={{
             options: {
               arrowColor: styleConfig.backgroundColor,

@@ -1,17 +1,14 @@
+import {Theme} from '../styles';
 import WalkthroughModal from './modal';
 import WalkthroughStep from './step';
 import {TooltipProps} from './types';
 
 export default function createWalkthrough(
   setIndex: (n: number) => void,
-  styleConfig: {
-    isDarkMode: boolean;
-    backgroundColor: string;
-    titleTextColor: string;
-    contentTextColor: string;
-  },
+  styleConfig: Theme,
+  isDarkMode: boolean,
 ) {
-  const {isDarkMode, backgroundColor} = styleConfig;
+  const {backgroundColor} = styleConfig;
 
   return function (props: TooltipProps) {
     if (!props.step.type) {
@@ -33,9 +30,8 @@ export default function createWalkthrough(
           justifyContent: isModalMode ? 'space-between' : 'flex-start',
           padding: '20px',
           width: isModalMode ? '500px' : '315px',
-          height: isModalMode ? '385px' : 'auto',
-          color: '#FFFFFF',
-          background: backgroundColor,
+          minHeight: isModalMode ? '385px' : 'auto',
+          backgroundColor,
           border: '1px solid rgba(255, 255, 255, 0.002)',
           borderRadius: '6px',
 
@@ -49,7 +45,12 @@ export default function createWalkthrough(
           textAlign: 'left',
         }}
       >
-        <Dialog {...props} setIndex={setIndex} styleConfig={styleConfig} />
+        <Dialog
+          {...props}
+          setIndex={setIndex}
+          styleConfig={styleConfig}
+          isDarkMode={isDarkMode}
+        />
       </div>
     );
   };

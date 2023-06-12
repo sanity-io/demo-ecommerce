@@ -7,14 +7,17 @@ export default function WalkthroughModal(props: TooltipProps) {
   const {
     index,
     size,
-    styleConfig: {titleTextColor, contentTextColor, isDarkMode},
+    styleConfig: {backgroundColor, titleColor, textColor, buttons, highlights},
+    isDarkMode,
   } = props;
   const isLastStep = index + 1 >= size;
+
   return (
     <>
       <header
         style={{
-          color: titleTextColor,
+          marginTop: '20px',
+          color: titleColor,
           fontSize: '27px',
           fontWeight: '700',
           lineHeight: '33px',
@@ -26,13 +29,14 @@ export default function WalkthroughModal(props: TooltipProps) {
       </header>
       <span
         style={{
-          color: contentTextColor,
+          color: textColor,
           fontSize: '16px',
           fontWeight: '400',
           lineHeight: '21px',
           letterSpacing: '0em',
           textAlign: 'center',
           width: '385px',
+          margin: '5px 0',
         }}
       >
         {props.step.subtitle}
@@ -42,33 +46,34 @@ export default function WalkthroughModal(props: TooltipProps) {
           display: 'flex',
           flexDirection: 'column',
           gap: '1em',
-          ...(isLastStep && {color: '#9EA6B3'}),
+          ...(isLastStep && {color: buttons.color}),
         }}
       >
-        <Button
-          completed={index > 2}
-          color="#2276FC"
-          onClick={() => props.setIndex(1)}
-          title="The Studio"
-          isDarkMode={isDarkMode}
-        />
-        <Button
-          completed={index > 5}
-          color="#F36458"
-          onClick={() => props.setIndex(3)}
-          title="The Sanity way"
-          isDarkMode={isDarkMode}
-        />
-        <Button
-          completed={index >= 8}
-          // color="#43D675"
-          color="#3AB564"
-          onClick={() => props.setIndex(5)}
-          title="Ecommerce use case"
-          isDarkMode={isDarkMode}
-        />
+        {highlights.map((highlight, buttonIndex) => {
+          // needs to be moved out elsewhere
+          const minimumStep = [2, 5, 7][buttonIndex];
+          const title = ['The Studio', 'The Sanity Way', 'Ecommerce use case'][
+            buttonIndex
+          ];
+          const skip = [1, 4, 7][buttonIndex];
+          return (
+            <Button
+              key={highlight['50']}
+              completed={index > minimumStep}
+              onClick={() => props.setIndex(skip)}
+              title={title}
+              color={highlight['400']}
+              buttonStateColors={buttons}
+              fontColor={titleColor}
+              isDarkMode={isDarkMode}
+            />
+          );
+        })}
         {isLastStep && (
-          <button onClick={() => props.setIndex(0)}>
+          <button
+            style={{marginBottom: '50px'}}
+            onClick={() => props.setIndex(0)}
+          >
             Retake Tour <RevertIcon />
           </button>
         )}
@@ -82,13 +87,7 @@ export default function WalkthroughModal(props: TooltipProps) {
       >
         <button
           style={{
-            color: isLastStep
-              ? isDarkMode
-                ? '#FFFFFF'
-                : '#101112'
-              : isDarkMode
-              ? '#9EA6B3'
-              : '#6E7683',
+            color: textColor,
             cursor: 'pointer',
           }}
           {...props.closeProps}
@@ -103,7 +102,8 @@ export default function WalkthroughModal(props: TooltipProps) {
                 border: '1px solid #F36458',
                 borderRadius: '3px',
                 margin: '0 .5em',
-                backgroundColor: '#101112',
+                backgroundColor,
+                color: titleColor,
               }}
               onClick={() => {
                 window.postMessage({studio: 'contact sales'});
@@ -114,8 +114,8 @@ export default function WalkthroughModal(props: TooltipProps) {
             <button
               style={{
                 padding: '.5em .8em',
-                color: isDarkMode ? '#000000' : '#FFFFFF',
-                backgroundColor: isDarkMode ? '#FFFFFF' : '#101112',
+                color: backgroundColor,
+                backgroundColor: titleColor,
                 borderRadius: '3px',
                 margin: '0 .5em',
               }}
@@ -129,8 +129,8 @@ export default function WalkthroughModal(props: TooltipProps) {
         ) : (
           <button
             style={{
-              color: isDarkMode ? '#101112' : '#FFFFFF',
-              backgroundColor: isDarkMode ? '#FFFFFF' : '#101112',
+              color: backgroundColor,
+              backgroundColor: titleColor,
               borderRadius: '3px',
               padding: '6px 10px',
             }}
@@ -150,13 +150,17 @@ function Button({
   title,
   completed,
   color,
+  fontColor,
   isDarkMode,
+  buttonStateColors,
 }: {
   onClick: () => void;
   title: string;
   completed: boolean;
   color: string;
+  fontColor: string;
   isDarkMode: boolean;
+  buttonStateColors: {background: string; color: string; hover: string};
 }) {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -175,24 +179,26 @@ function Button({
 
         width: '258px',
         height: '33px',
-        backgroundColor: isDarkMode ? '#1B1D20' : '#F2F3F5',
+        backgroundColor: buttonStateColors.background,
         borderRadius: '3px',
-        border: `2px solid ${isDarkMode ? '#111B29' : '#F2F3F5'}`,
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: buttonStateColors.background,
 
         flex: 'none',
         order: 0,
         alignSelf: 'center',
         flexGrow: 0,
 
-        color: isDarkMode ? '#FFFFFF' : '#101112',
+        color: completed ? buttonStateColors.color : fontColor,
         fontStyle: 'normal',
         fontWeight: '500',
         fontSize: '13px',
         lineHeight: '17px',
         boxSizing: 'border-box',
         ...(isHovering && {
-          backgroundColor: isDarkMode ? '#272A2E' : '#E6E8EC',
-          border: `2px solid ${isDarkMode ? '#272A2E' : '#E6E8EC'}`,
+          backgroundColor: buttonStateColors.hover,
+          borderColor: buttonStateColors.hover,
         }),
       }}
       onClick={onClick}
@@ -204,8 +210,8 @@ function Button({
           color: '#FFFFFF',
           maxWidth: '15px',
           maxHeight: '15px',
-          mixBlendMode: isDarkMode ? 'screen' : 'inherit',
-          opacity: isDarkMode ? 0.15 : 1,
+          // mixBlendMode: 'screen',
+          opacity: isDarkMode ? 1 : 0.15,
           transform: 'zoom(1.5)',
           fontWeight: 'bold',
           flex: 'none',

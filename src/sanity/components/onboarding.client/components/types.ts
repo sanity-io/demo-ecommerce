@@ -1,4 +1,5 @@
 import {TooltipRenderProps, Step} from 'react-joyride';
+import {Theme} from '../styles';
 
 export type Steps = Step & {
   subtitle?: string;
@@ -15,9 +16,6 @@ export type Steps = Step & {
 export type TooltipProps = TooltipRenderProps & {
   setIndex: (n: number) => void;
   step: Steps;
-  styleConfig: {
-    titleTextColor: string;
-    contentTextColor: string;
-    isDarkMode: boolean;
-  };
+  styleConfig: Theme;
+  isDarkMode: boolean;
 };
