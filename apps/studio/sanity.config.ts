@@ -9,5 +9,7 @@ export default defineSanityConfig({
   },
   shopify: {
     storeDomain: process.env.SANITY_STUDIO_SHOPIFY_STORE_DOMAIN!,
+    storefrontToken: process.env.SANITY_STUDIO_STOREFRONT_API_TOKEN,
+    apiVersion: process.env.SANITY_STUDIO_STOREFRONT_API_VERSION
   },
 })

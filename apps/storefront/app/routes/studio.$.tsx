@@ -39,6 +39,7 @@ export function loader({ context }: LoaderArgs) {
     dataset: context.env.SANITY_DATASET || "production",
     previewSecret: context.env.SANITY_PREVIEW_SECRET!,
     storeDomain: context.env.PUBLIC_STORE_DOMAIN!,
+    storefrontToken: context.env.PUBLIC_STOREFRONT_API_TOKEN!,
   };
 }
 

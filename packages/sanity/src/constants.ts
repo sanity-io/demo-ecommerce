@@ -1,3 +1,5 @@
+import {z} from 'zod'
+
 // Currency code (ISO 4217) to use when displaying prices in the studio
 // https://en.wikipedia.org/wiki/ISO_4217
 export const DEFAULT_CURRENCY_CODE = 'USD'
@@ -30,3 +32,15 @@ export const SANITY_API_VERSION = '2022-10-25'
  * Environment symbol to set on `window`
  */
 export const ENVIRONMENT = Symbol('Sanity Environment')
+
+export const environmentSchema = z.object({
+  preview: z.object({
+    domain: z.string().optional().default('http://localhost:3000'),
+    secret: z.string(),
+  }),
+  shopify: z.object({
+    storeDomain: z.string(),
+    apiVersion: z.string().optional().default('2023-04'),
+    storefrontToken: z.string(),
+  }),
+})

@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "sideEffects": true,
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint --ignore-path ../../.gitignore src",
     "format": "npx prettier --write . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
@@ -14,11 +14,14 @@
     "@sanity/color-input": "^3.1.0",
     "@sanity/ui": "^1.5.0",
     "@sanity/vision": "^3.0.0",
+    "@shopify/hydrogen-react": "^2023.4.3",
     "sanity-plugin-documents-pane": "^2.1.0",
     "sanity-plugin-hotspot-array": "^1.0.1",
     "sanity-plugin-iframe-pane": "^2.3.1",
     "sanity-plugin-media": "^2.0.5",
-    "slug": "^8.2.2"
+    "slug": "^8.2.2",
+    "swr": "^2.1.5",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^2.0.1",

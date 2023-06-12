@@ -9,10 +9,18 @@ type SanityStudioProps = Omit<StudioProps, "config"> &
   Pick<SourceOptions, "projectId" | "dataset"> & {
     previewSecret: string;
     storeDomain: string;
+    storefrontToken: string;
   };
 
 export function SanityStudio(props: SanityStudioProps) {
-  const { projectId, dataset, previewSecret, storeDomain, ...rest } = props;
+  const {
+    projectId,
+    dataset,
+    previewSecret,
+    storeDomain,
+    storefrontToken,
+    ...rest
+  } = props;
 
   const config = defineSanityConfig({
     projectId,
@@ -23,6 +31,7 @@ export function SanityStudio(props: SanityStudioProps) {
     },
     shopify: {
       storeDomain,
+      storefrontToken,
     },
   });
 

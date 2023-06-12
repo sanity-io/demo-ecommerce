@@ -5,7 +5,7 @@ import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 
-import {ENVIRONMENT} from './constants'
+import {ENVIRONMENT, environmentSchema} from './constants'
 import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
@@ -23,6 +23,8 @@ type SanityConfig = Pick<SingleWorkspace, 'projectId' | 'dataset' | 'title' | 'b
   }
   shopify: {
     storeDomain: string
+    apiVersion?: string
+    storefrontToken: string
   }
 }
 
@@ -34,10 +36,10 @@ type SanityConfig = Pick<SingleWorkspace, 'projectId' | 'dataset' | 'title' | 'b
 export function defineSanityConfig(config: SanityConfig) {
   const {title = 'AKVA', preview, shopify, ...rest} = config
 
-  window[ENVIRONMENT] = {
+  window[ENVIRONMENT] = environmentSchema.parse({
     preview,
     shopify,
-  }
+  })
 
   return defineConfig({
     ...rest,
