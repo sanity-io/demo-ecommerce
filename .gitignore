@@ -60,6 +60,7 @@ yalc.lock
 
 # Runtime cache
 .cache
+.sanity
 
 # output
 build
@@ -80,3 +81,4 @@ public/build
 
 # vercel
 .vercel
+.turbo
