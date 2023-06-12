@@ -1,6 +1,8 @@
 import type { UserViewComponent } from "sanity/desk";
 
-export function CollectionProducts(props: UserViewComponent){
+const CollectionProducts: UserViewComponent = (props) =>{
     console.log(props)
     return <></>
 }
+
+export default CollectionProducts
