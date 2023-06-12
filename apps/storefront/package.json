@@ -10,7 +10,7 @@
     "build": "shopify hydrogen build",
     "dev": "shopify hydrogen dev",
     "preview": "npm run build && vercel dev",
-    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx --ignore-path ../../.gitignore .",
+    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx --ignore-path ../../.gitignore --max-warnings 0 .",
     "format": "npx prettier --write . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
     "g": "shopify hydrogen generate"

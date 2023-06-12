@@ -10,7 +10,6 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "lint:fix": "npm run lint -- -- --fix",
     "format": "turbo run format",
     "typecheck": "turbo run typecheck",
     "prepare": "husky install"
