@@ -1,7 +1,13 @@
-import { Await, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Await,
+  useLoaderData,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
+import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -99,53 +105,67 @@ export default function Collection() {
   const { collection, page, gids } = useLoaderData<typeof loader>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
+  const { handle } = useParams();
 
   const products = (collection as any).products.nodes;
 
   return (
-    <ColorTheme value={page.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Hero */}
-          <CollectionHero
-            fallbackTitle={page.title}
-            hero={page.hero as SanityHeroHome}
-          />
+    <SanityPreview
+      data={page}
+      query={COLLECTION_PAGE_QUERY}
+      params={{ slug: handle }}
+    >
+      {(page) => (
+        <ColorTheme value={page?.colorTheme}>
+          <Suspense>
+            <Await resolve={gids}>
+              {/* Hero */}
+              <CollectionHero
+                fallbackTitle={page?.title || collection?.title}
+                hero={page?.hero as SanityHeroHome}
+              />
 
-          <div
-            className={clsx(
-              "mb-32 mt-8 px-4", //
-              "md:px-8"
-            )}
-          >
-            {products.length > 0 && (
               <div
                 className={clsx(
-                  "mb-8 flex justify-start", //
-                  "md:justify-end"
+                  "mb-32 mt-8 px-4", //
+                  "md:px-8"
                 )}
               >
-                <SortOrder key={page._id} initialSortOrder={page.sortOrder} />
-              </div>
-            )}
+                {products.length > 0 && (
+                  <div
+                    className={clsx(
+                      "mb-8 flex justify-start", //
+                      "md:justify-end"
+                    )}
+                  >
+                    <SortOrder
+                      key={page?._id}
+                      initialSortOrder={page?.sortOrder || collection.sortOrder}
+                    />
+                  </div>
+                )}
 
-            {/* No results */}
-            {products.length === 0 && (
-              <div className="mt-16 text-center text-lg text-darkGray">
-                No products.
-              </div>
-            )}
+                {/* No results */}
+                {products.length === 0 && (
+                  <div className="mt-16 text-center text-lg text-darkGray">
+                    No products.
+                  </div>
+                )}
 
-            <ProductGrid
-              collection={collection as any}
-              modules={page.modules}
-              url={`/collections/${(collection as any).handle}`}
-              key={`${(collection as any).handle}-${sort}`}
-            />
-          </div>
-        </Await>
-      </Suspense>
-    </ColorTheme>
+                {page?.modules && (
+                  <ProductGrid
+                    collection={collection as any}
+                    modules={page?.modules}
+                    url={`/collections/${(collection as any).handle}`}
+                    key={`${(collection as any).handle}-${sort}`}
+                  />
+                )}
+              </div>
+            </Await>
+          </Suspense>
+        </ColorTheme>
+      )}
+    </SanityPreview>
   );
 }
 
