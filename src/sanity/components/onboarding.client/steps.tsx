@@ -35,6 +35,10 @@ export const steps: Steps[] = [
     title: 'An extremely flexible tool',
     disableBeacon: true,
     placement: 'bottom',
+    externalLink: {
+      url: 'https://www.sanity.io/docs/customization',
+      text: 'Studio Customization',
+    },
     content:
       'On smaller scales, like this custom page themer. And on larger scales, creating efficient workflows for your content, team and business. ',
     type: 'step',
@@ -63,6 +67,10 @@ export const steps: Steps[] = [
     placement: 'right',
     type: 'step',
     image: RedImg,
+    externalLink: {
+      url: 'https://www.sanity.io/content-modeling/content-modeling-foundations',
+      text: 'Content Modeling Guide',
+    },
     content:
       'Don’t confine your thinking to pages or templates. Structure your content for what it is and how it’ll be used.',
     nextUrl: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
@@ -117,6 +125,10 @@ export const steps: Steps[] = [
     title: 'Sync with any third party',
     disableBeacon: true,
     placement: 'left-end',
+    externalLink: {
+      url: 'https://www.sanity.io/docs/sanity-connect-for-shopify',
+      text: 'Docs: Sanity Connect for Shopify',
+    },
     content:
       'Ecommerce platforms are great for running a  store, but leave the editorial experience to Sanity – and create an enticing storefront. ',
     type: 'step',

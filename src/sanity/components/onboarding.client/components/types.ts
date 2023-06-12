@@ -10,6 +10,7 @@ export type Steps = Step & {
   image?: () => JSX.Element;
   chapterPosition?: number;
   chapterLength?: number;
+  externalLink?: {url: string; text: string};
   type: 'step' | 'modal';
 };
 

@@ -3,12 +3,12 @@ import {useRouter} from 'sanity/router';
 import {TooltipProps} from './types';
 import SpinnerIcon from '../../../../components/icons/Spinner';
 // @ts-expect-error incompatibility with node16 resolution
-import {ArrowRightIcon, CloseIcon} from '@sanity/icons';
+import {ArrowRightIcon, CloseIcon, ArrowTopRightIcon} from '@sanity/icons';
 
 export default function WalkthroughStep(props: TooltipProps) {
   const [spin, setSpin] = useState(false);
   const router = useRouter();
-  const {themeColor, chapterPosition, chapterLength} = props.step;
+  const {themeColor, chapterPosition, chapterLength, externalLink} = props.step;
   const hasChapter =
     themeColor &&
     chapterPosition &&
@@ -74,6 +74,29 @@ export default function WalkthroughStep(props: TooltipProps) {
       >
         {props.step.content}
       </p>
+      {externalLink && (
+        <a
+          target="_blank"
+          href={`${externalLink.url}/?ref=ecommerce-walkthrough`}
+          rel="noreferrer"
+          style={{
+            alignSelf: 'flex-start',
+            color: titleColor,
+            fontStyle: 'semibold',
+            cursor: 'pointer',
+          }}
+        >
+          {externalLink.text}
+          <ArrowTopRightIcon
+            style={{
+              color: themeColor,
+              transform: 'scale(2.7)',
+              paddingLeft: '5px',
+              marginTop: '-2px',
+            }}
+          />
+        </a>
+      )}
       {typeof props.step.image === 'function' && (
         <div
           style={{
