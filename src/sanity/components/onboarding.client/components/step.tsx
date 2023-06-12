@@ -16,7 +16,7 @@ export default function WalkthroughStep(props: TooltipProps) {
     chapterLength &&
     chapterLength > 0;
 
-  const {isDarkMode} = props.styleConfig;
+  const {titleColor, textColor, backgroundColor} = props.styleConfig;
   return spin ? (
     <div style={{margin: 'auto'}}>
       <SpinnerIcon />
@@ -38,7 +38,7 @@ export default function WalkthroughStep(props: TooltipProps) {
             textTransform: 'uppercase',
             fontWeight: 600,
             fontSize: '11px',
-            color: isDarkMode ? '#101112' : '#FFFFFF',
+            color: titleColor,
             letterSpacing: '0.5px',
             padding: '2px 4px',
           }}
@@ -46,7 +46,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           {props.step.chapter}
         </span>
         <button {...props.closeProps}>
-          <CloseIcon style={{fontSize: '1.5em', color: '#8690A0'}} />
+          <CloseIcon style={{fontSize: '1.5em', color: textColor}} />
         </button>
       </span>
       <h2
@@ -56,7 +56,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontSize: '21px',
           lineHeight: '27px',
           letterSpacing: '0.5PX',
-          color: isDarkMode ? '#FFFFFF' : '#101112',
+          color: titleColor,
           marginBottom: '10px',
         }}
       >
@@ -69,7 +69,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontSize: '13px',
           lineHeight: '17px',
           marginBottom: '12px',
-          color: isDarkMode ? '#9EA6B3' : '#6E7683',
+          color: textColor,
         }}
       >
         {props.step.content}
@@ -92,7 +92,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontWeight: 400,
           fontSize: '10px',
           lineHeight: '13px',
-          color: isDarkMode ? '#9EA6B3' : '#6E7683',
+          color: textColor,
           alignSelf: 'flex-start',
           margin: '12px 0',
         }}
@@ -119,8 +119,8 @@ export default function WalkthroughStep(props: TooltipProps) {
       </div>
       <button
         style={{
-          color: isDarkMode ? '#101112' : '#FFFFFF',
-          background: isDarkMode ? '#FFFFFF' : '#101112',
+          color: backgroundColor,
+          background: titleColor,
           borderRadius: '3px',
           padding: '8px',
           width: '100%',
