@@ -7,8 +7,7 @@ export const steps: Steps[] = [
     placement: 'center',
     content: null,
     title: 'Welcome to a Sanity Studio',
-    subtitle:
-      'Super short about where we are and what this tour is (3 short steps)',
+    subtitle: 'This short tour in 3 steps will explain some basics',
     type: 'modal',
   },
   {
@@ -17,12 +16,12 @@ export const steps: Steps[] = [
     themeColor: '#4E91FC',
     chapterPosition: 1,
     chapterLength: 3,
-    title: 'This is a Sanity Studio for a store called AKVA',
+    title: 'The Sanity Studio is where content editing happens',
     disableBeacon: true,
     placement: 'bottom-start',
     image: BlueImg,
     content:
-      '[This is where their editors do stuff]\n[connected to content lake, through apis]',
+      'Every Sanity Studio is different. This is a Studio for a ecommerce store called AKVA. ',
     nextUrl: '/studio/desk/home',
     nextUrlTarget: "[data-testid='permission-check-banner']",
     type: 'step',
@@ -33,11 +32,11 @@ export const steps: Steps[] = [
     themeColor: '#4E91FC',
     chapterPosition: 2,
     chapterLength: 3,
-    title: 'Read only demo',
+    title: 'An extremely flexible tool',
     disableBeacon: true,
     placement: 'bottom',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'On smaller scales, like this custom page themer. And on larger scales, creating efficient workflows for your content, team and business. ',
     type: 'step',
   },
   {
@@ -46,11 +45,11 @@ export const steps: Steps[] = [
     themeColor: '#4E91FC',
     chapterPosition: 3,
     chapterLength: 3,
-    title: 'Create your own workspace',
+    title: 'Define roles and access',
     disableBeacon: true,
     placement: 'center',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Start simple and tailor team roles as you need.\nIn this Studio you currently have ‘read only’ access.',
     type: 'step',
   },
   {
@@ -59,13 +58,13 @@ export const steps: Steps[] = [
     themeColor: '#F36458',
     chapterPosition: 1,
     chapterLength: 3,
-    title: 'Documents and references',
+    title: 'Create your own content model',
     disableBeacon: true,
     placement: 'right',
     type: 'step',
     image: RedImg,
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Don’t confine your thinking to pages or templates. Structure your content for what it is and how it’ll be used.',
     nextUrl: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
     nextUrlTarget: "[data-testid='field-hero.content']",
   },
@@ -75,11 +74,11 @@ export const steps: Steps[] = [
     themeColor: '#F36458',
     chapterPosition: 2,
     chapterLength: 3,
-    title: 'Content as data',
+    title: 'Documents and references',
     disableBeacon: true,
     placement: 'left-end',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Documents can piece in other documents – then called a reference. References enables  reusable and up-to-date content at scale.',
     type: 'step',
   },
   {
@@ -88,11 +87,11 @@ export const steps: Steps[] = [
     themeColor: '#F36458',
     chapterPosition: 3,
     chapterLength: 3,
-    title: 'Rich commerce experience',
+    title: 'Content is data',
     disableBeacon: true,
     placement: 'left-end',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Treating content like data makes it easy to  access, combine, assemble and reassemble that data – across all your products and channels.',
     type: 'step',
   },
   {
@@ -101,10 +100,12 @@ export const steps: Steps[] = [
     themeColor: '#43D675',
     chapterPosition: 1,
     chapterLength: 3,
+    title: 'Shopping should be about exploration and serendipity',
     image: GreenImg,
     disableBeacon: true,
     placement: 'left-end',
-    content: 'This another awesome feature!',
+    content:
+      'Break out of stale ecommerce templates. Let visitors explore products through stories and rich interactive experiences.',
     type: 'step',
   },
   {
@@ -113,11 +114,11 @@ export const steps: Steps[] = [
     themeColor: '#43D675',
     chapterPosition: 2,
     chapterLength: 3,
-    title: 'Synced with Shopify',
+    title: 'Sync with any third party',
     disableBeacon: true,
     placement: 'left-end',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Ecommerce platforms are great for running a  store, but leave the editorial experience to Sanity – and create an enticing storefront. ',
     type: 'step',
   },
   {
@@ -130,16 +131,16 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'left-end',
     content:
-      'Every Studio is different. You can customize it however you want. That’s the power of Sanity, you can get it just the way you’d want',
+      'Remove abstractions and make and editing immediate, efficient and enjoyable',
     type: 'step',
   },
   {
     target: 'body',
     placement: 'center',
     content: null,
-    title: 'That’s the tour!..',
+    title: 'That’s the tour!.. ',
     subtitle:
-      '... but we haven’t even gotten to features like real time editing, presence, revision history, image hotspot, mobile, a11y, responsiveness, AI plugins – and so much more!',
+      '... and we haven’t even gotten to features like workspaces, real time editing, revision history, image cropping, mobile responsiveness, accessibility, AI plugins ... and so much more!',
     type: 'modal',
   },
 ];
