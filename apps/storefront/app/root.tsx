@@ -25,16 +25,10 @@ import {
   type LoaderArgs,
   type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
-import {
-  isPreviewModeEnabled,
-  Preview,
-  type PreviewData,
-} from "hydrogen-sanity";
 
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
-import { PreviewLoading } from "~/components/global/PreviewLoading";
 import { useAnalytics } from "~/hooks/useAnalytics";
 import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
@@ -67,16 +61,6 @@ export async function loader({ context }: LoaderArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const preview: PreviewData | undefined = isPreviewModeEnabled(
-    context.sanity.preview
-  )
-    ? {
-        projectId: context.sanity.preview.projectId,
-        dataset: context.sanity.preview.dataset,
-        token: context.sanity.preview.token,
-      }
-    : undefined;
-
   const [cartId, shop, layout] = await Promise.all([
     context.session.get("cartId"),
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
@@ -86,7 +70,6 @@ export async function loader({ context }: LoaderArgs) {
   const selectedLocale = context.storefront.i18n as I18nLocale;
 
   return defer({
-    preview,
     analytics: {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
@@ -112,7 +95,7 @@ export async function loader({ context }: LoaderArgs) {
 }
 
 export default function App() {
-  const { preview, ...data } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
@@ -127,9 +110,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Preview preview={preview} fallback={<PreviewLoading />}>
-          <Outlet key={`${locale.language}-${locale.country}`} />
-        </Preview>
+        <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
