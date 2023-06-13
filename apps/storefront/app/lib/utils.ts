@@ -1,4 +1,4 @@
-import { useAsyncValue, useMatches, useRevalidator } from "@remix-run/react";
+import { useMatches, useRevalidator } from "@remix-run/react";
 import { extractWithPath } from "@sanity/mutator";
 import type {
   Collection,
@@ -13,7 +13,7 @@ import {
 } from "@shopify/remix-oxygen";
 import { usePreviewContext } from "hydrogen-sanity";
 import pluralize from "pluralize-esm";
-import { useEffect, useMemo } from "react";
+import { useEffect, useRef } from "react";
 
 import { countries } from "~/data/countries";
 import type {
@@ -233,6 +233,8 @@ export function useGid<
   // the Storefront API
   useEffect(() => {
     if (isPreview && revalidator.state === "idle" && !gid && id) {
+      // eslint-disable-next-line no-console
+      console.log("Revalidating...");
       revalidator.revalidate();
     }
   }, [id, gid, isPreview, revalidator]);
@@ -241,29 +243,37 @@ export function useGid<
 }
 
 export function useGids() {
-  const gids = useAsyncValue();
-
-  // TODO: this doesnt' seem to actually memoize...
-  return useMemo(() => {
-    const byGid = new Map<
+  const matches = useMatches();
+  const byGid = useRef(
+    new Map<
       string,
       Product | Collection | ProductVariant | ProductVariant["image"]
-    >();
+    >()
+  );
 
-    if (!Array.isArray(gids)) {
-      return byGid;
-    }
+  // TODO: moved to an effect and hacky way to get products below :(
+  useEffect(() => {
+    const gids = [
+      ...(Array.isArray(matches[2]?.data?.gids?._data)
+        ? matches[2].data.gids._data
+        : []),
+      ...(Array.isArray(
+        matches[2]?.data?.recommended?._data?.productRecommendations
+      )
+        ? matches[2].data.recommended._data.productRecommendations
+        : []),
+    ];
 
     for (const gid of gids) {
-      if (byGid.has(gid.id)) {
+      if (byGid.current.has(gid.id)) {
         continue;
       }
 
-      byGid.set(gid.id, gid);
+      byGid.current.set(gid.id, gid);
     }
+  }, [matches]);
 
-    return byGid;
-  }, [gids]);
+  return byGid.current;
 }
 
 /**
