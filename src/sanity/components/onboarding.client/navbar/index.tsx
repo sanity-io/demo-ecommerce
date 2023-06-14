@@ -1,8 +1,21 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export default function Navbar(props: any) {
   const navbarRef = useRef<HTMLDivElement | null>(null);
   const element = useRef<HTMLDivElement | null>(null);
+
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const handleTourStep = (e: any) => {
+      setStep(e.detail.step);
+    };
+
+    window.addEventListener('tour-step', handleTourStep);
+    return () => {
+      window.removeEventListener('tour-step', handleTourStep);
+    };
+  }, []);
 
   useEffect(() => {
     // pretty brittle, but it works
@@ -36,7 +49,14 @@ export default function Navbar(props: any) {
           boxSizing: 'border-box',
         }}
       >
-        TEST
+        <button
+          onClick={() => {
+            window.dispatchEvent(new Event('continue-tour'));
+          }}
+        >
+          Continue
+        </button>
+        Step: {step}
       </div>
       {props.renderDefault(props)}
     </>

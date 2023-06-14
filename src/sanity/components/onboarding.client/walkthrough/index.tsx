@@ -47,10 +47,19 @@ export default function OnboardingLayout(props: any) {
       clearTimeout(initialCheck);
     }, 2000);
 
+    const continueTour = () => {
+      setRun(true);
+      setClosed(false);
+    };
+
+    window.addEventListener('continue-tour', continueTour);
+
     return () => {
       currentDarkModRef?.removeEventListener('change', handleDarkMode);
       currentMinWidthRef?.removeEventListener('change', handleMinWidth);
       currentMinHeightRef?.removeEventListener('change', handleMinHeight);
+
+      window.removeEventListener('continue-tour', continueTour);
     };
   }, []);
 
@@ -61,6 +70,12 @@ export default function OnboardingLayout(props: any) {
     }
   }, [isMinWidth, isMinHeight, closed]);
 
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent('tour-step', {detail: {step: stepIndex}}),
+    );
+  }, [stepIndex]);
+
   const handleJoyrideCallback = async (data: CallBackProps) => {
     const {action, index, status, type} = data;
     if (stepIndex !== index) {
@@ -68,12 +83,15 @@ export default function OnboardingLayout(props: any) {
       return;
     }
 
+    if (status === STATUS.FINISHED) {
+      setStepIndex(0);
+    }
+
     if (
       action === ACTIONS.CLOSE ||
       status === STATUS.FINISHED ||
       status === STATUS.SKIPPED
     ) {
-      setStepIndex(0);
       setRun(false);
       setClosed(true);
     } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
