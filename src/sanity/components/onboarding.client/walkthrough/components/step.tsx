@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useRouter} from 'sanity/router';
 import {TooltipProps} from './types';
-import SpinnerIcon from '../../../../components/icons/Spinner';
+import SpinnerIcon from '../../../../../components/icons/Spinner';
 // @ts-expect-error incompatibility with node16 resolution
 import {ArrowRightIcon, CloseIcon, ArrowTopRightIcon} from '@sanity/icons';
 

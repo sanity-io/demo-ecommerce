@@ -16,7 +16,8 @@ import {structure} from './src/sanity/desk';
 import {defaultDocumentNode} from './src/sanity/desk/preview';
 import resolveProductionUrl from './src/sanity/utils/resolveProductionUrl';
 import {SANITY_API_VERSION} from './src/sanity/constants';
-import OnboardingLayout from './src/sanity/components/onboarding.client';
+import OnboardingLayout from './src/sanity/components/onboarding.client/walkthrough';
+import Navbar from './src/sanity/components/onboarding.client/navbar';
 
 const BASE_PATH = '/studio';
 const devOnlyPlugins = [visionTool()];
@@ -70,6 +71,7 @@ export default defineConfig({
   studio: {
     components: {
       layout: OnboardingLayout,
+      navbar: Navbar,
     },
   },
 });
