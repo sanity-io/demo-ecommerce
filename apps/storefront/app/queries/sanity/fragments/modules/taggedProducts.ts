@@ -8,8 +8,7 @@ export const MODULE_TAGGED_PRODUCTS = groq`
   number,
   "products": *[
     _type == "product" && ^.tag in string::split(store.tags,',')
-    && !(_id in path("drafts.**"))
-  ] | order(_updatedAt desc) {
+  ] | order(_createdAt desc) {
     "productWithVariant": {
       ${PRODUCT_WITH_VARIANT_FIELDS}
     }
