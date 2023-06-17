@@ -14,7 +14,7 @@ export default defineField({
       title: 'Theme',
     },
     {
-      default: true,
+      // default: true,
       name: 'editorial',
       title: 'Editorial',
     },

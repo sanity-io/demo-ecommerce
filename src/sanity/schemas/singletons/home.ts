@@ -11,7 +11,7 @@ export default defineField({
   icon: HomeIcon,
   groups: [
     {
-      default: true,
+      // default: true,
       name: 'editorial',
       title: 'Editorial',
     },

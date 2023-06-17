@@ -14,7 +14,7 @@ const GROUPS = [
     title: 'Theme',
   },
   {
-    default: true,
+    // default: true,
     name: 'editorial',
     title: 'Editorial',
   },
