@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {TooltipProps} from './types';
 // @ts-expect-error incompatibility with node16 resolution
 import {CheckmarkIcon, RevertIcon, UploadIcon} from '@sanity/icons';
+import {useToast} from '@sanity/ui';
 
 export default function WalkthroughModal(props: TooltipProps) {
   const {
@@ -11,7 +12,7 @@ export default function WalkthroughModal(props: TooltipProps) {
     isDarkMode,
   } = props;
   const isLastStep = index + 1 >= size;
-
+  const toast = useToast();
   return (
     <>
       <header
@@ -106,7 +107,8 @@ export default function WalkthroughModal(props: TooltipProps) {
                 color: titleColor,
               }}
               onClick={() => {
-                window.postMessage({studio: 'contact sales'});
+                // window.postMessage({studio: 'contact sales'});
+                window.open('https://www.sanity.io/contact/sales', '_blank');
               }}
             >
               Contact Sales
@@ -120,7 +122,14 @@ export default function WalkthroughModal(props: TooltipProps) {
                 margin: '0 .5em',
               }}
               onClick={() => {
-                window.postMessage({studio: 'share'});
+                // window.postMessage({studio: 'share'});
+                navigator.clipboard.writeText(
+                  'https://sanity.io/demos/ecommerce',
+                );
+                toast.push({
+                  status: 'success',
+                  title: 'Link copied to clipboard!',
+                });
               }}
             >
               Share Demo <UploadIcon />
