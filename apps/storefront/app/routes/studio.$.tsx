@@ -3,7 +3,11 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import type { LinksFunction, LoaderArgs } from "@shopify/remix-oxygen";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  V2_MetaFunction,
+} from "@shopify/remix-oxygen";
 import { lazy, type ReactElement, Suspense } from "react";
 
 import { GenericError } from "~/components/global/GenericError";
@@ -32,6 +36,21 @@ const SanityStudio =
           default: m.SanityStudio,
         }))
       );
+
+export const meta: V2_MetaFunction = () => [
+  {
+    name: "viewport",
+    content: "width=device-width,initial-scale=1,viewport-fit=cover",
+  },
+  {
+    name: "referrer",
+    content: "same-origin",
+  },
+  {
+    name: "robots",
+    content: "noindex",
+  },
+];
 
 export function loader({ context }: LoaderArgs) {
   return {

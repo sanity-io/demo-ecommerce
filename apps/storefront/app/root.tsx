@@ -23,7 +23,6 @@ import {
   type AppLoadContext,
   defer,
   type LoaderArgs,
-  type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
 
 import { GenericError } from "~/components/global/GenericError";
@@ -48,11 +47,6 @@ const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
 export const handle = {
   seo,
 };
-
-export const meta: V2_MetaFunction = () => [
-  { charSet: "utf-8" },
-  { name: "viewport", content: "width=device-width,initial-scale=1" },
-];
 
 export async function loader({ context }: LoaderArgs) {
   const cache = context.storefront.CacheCustom({
@@ -105,6 +99,7 @@ export default function App() {
   return (
     <html lang={locale.language}>
       <head>
+        <meta charSet="utf-8" />
         <Seo />
         <Meta />
         <Links />

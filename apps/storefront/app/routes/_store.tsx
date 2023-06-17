@@ -3,6 +3,7 @@ import {
   json,
   type LinksFunction,
   type LoaderArgs,
+  type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
 import {
   isPreviewModeEnabled,
@@ -13,6 +14,13 @@ import {
 import { Layout } from "~/components/global/Layout";
 import { PreviewLoading } from "~/components/global/PreviewLoading";
 import stylesheet from "~/styles/tailwind.css";
+
+export const meta: V2_MetaFunction = () => [
+  {
+    name: "viewport",
+    content: "width=device-width,initial-scale=1",
+  },
+];
 
 export const links: LinksFunction = () => {
   return [
