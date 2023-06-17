@@ -6,6 +6,7 @@ import {lightModeStyles, darkModeStyles} from './styles';
 
 export default function OnboardingLayout(props: any) {
   const [run, setRun] = useState(false);
+  const [allowed, setAllowed] = useState(false);
   const [closed, setClosed] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -67,6 +68,7 @@ export default function OnboardingLayout(props: any) {
     if (!closed) {
       const matchesRequirements = true && isMinWidth && isMinHeight;
       setRun(matchesRequirements);
+      setAllowed(matchesRequirements);
     }
   }, [isMinWidth, isMinHeight, closed]);
 
@@ -75,6 +77,12 @@ export default function OnboardingLayout(props: any) {
       new CustomEvent('tour-step', {detail: {step: stepIndex}}),
     );
   }, [stepIndex]);
+
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent('tour-running', {detail: {run, closed, allowed}}),
+    );
+  }, [run, closed, allowed]);
 
   const handleJoyrideCallback = async (data: CallBackProps) => {
     const {action, index, status, type} = data;
