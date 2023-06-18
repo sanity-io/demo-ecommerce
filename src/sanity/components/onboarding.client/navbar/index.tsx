@@ -92,9 +92,33 @@ export default function Navbar(props: any) {
             ? 'Continue Tour'
             : 'Take the tour'}
         </button>
-        <CheckMark completed={step > 2} color="#4E91FC" />
-        <CheckMark completed={step > 5} color="#F36458" />
-        <CheckMark completed={step > 8} color="#43D675" />
+        <button
+          onClick={() =>
+            void window.dispatchEvent(
+              new CustomEvent('continue-tour', {detail: {step: 1}}),
+            )
+          }
+        >
+          <CheckMark completed={step > 2} color="#4E91FC" />
+        </button>
+        <button
+          onClick={() =>
+            void window.dispatchEvent(
+              new CustomEvent('continue-tour', {detail: {step: 4}}),
+            )
+          }
+        >
+          <CheckMark completed={step > 5} color="#F36458" />
+        </button>
+        <button
+          onClick={() =>
+            void window.dispatchEvent(
+              new CustomEvent('continue-tour', {detail: {step: 7}}),
+            )
+          }
+        >
+          <CheckMark completed={step > 8} color="#43D675" />
+        </button>
       </div>
       {props.renderDefault(props)}
     </>

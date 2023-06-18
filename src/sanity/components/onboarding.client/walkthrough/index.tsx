@@ -49,9 +49,12 @@ export default function OnboardingLayout(props: any) {
       clearTimeout(initialCheck);
     }, 2000);
 
-    const continueTour = () => {
+    const continueTour = (payload: any) => {
       setRun(true);
       setClosed(false);
+      if (payload?.detail?.step >= 0) {
+        setStepIndex(payload.detail.step);
+      }
     };
 
     window.addEventListener('continue-tour', continueTour);
