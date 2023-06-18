@@ -8,13 +8,14 @@ export default function OnboardingLayout(props: any) {
   const [run, setRun] = useState(false);
   const [allowed, setAllowed] = useState(false);
   const [closed, setClosed] = useState(false);
+  const [hide, setHide] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
 
   const [isMinWidth, setIsMinWidth] = useState(false);
   const [isMinHeight, setIsMinHeight] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const minWidthRef = useRef(window?.matchMedia('(min-width: 980px)'));
+  const minWidthRef = useRef(window?.matchMedia('(min-width: 1240px)'));
   const minHeightRef = useRef(window?.matchMedia('(min-height: 620px)'));
   const darkModeRef = useRef(
     window?.matchMedia('(prefers-color-scheme: dark)'),
@@ -117,7 +118,7 @@ export default function OnboardingLayout(props: any) {
           disableScrolling
           hideBackButton
           hideCloseButton
-          run={run}
+          run={run && !hide}
           showSkipButton={false}
           steps={steps}
           disableOverlayClose={true}
@@ -126,8 +127,11 @@ export default function OnboardingLayout(props: any) {
           // @ts-ignore */
           tooltipComponent={createWalkthrough(
             setStepIndex,
+            stepIndex,
+            steps,
             styleConfig,
             isDarkMode,
+            setHide,
           )}
           styles={{
             options: {

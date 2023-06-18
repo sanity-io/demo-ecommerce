@@ -1,16 +1,24 @@
+import {useRouter} from 'sanity/router';
 import {Theme} from '../styles';
 import WalkthroughModal from './modal';
 import WalkthroughStep from './step';
-import {TooltipProps} from './types';
+import {Steps, TooltipProps} from './types';
+import {useState} from 'react';
 
 export default function createWalkthrough(
   setIndex: (n: number) => void,
+  stepIndex: number,
+  steps: Steps[],
   styleConfig: Theme,
   isDarkMode: boolean,
+  shouldHide: (h: boolean) => void,
 ) {
   const {backgroundColor} = styleConfig;
 
   return function (props: TooltipProps) {
+    const [spin, setSpin] = useState(false);
+    const router = useRouter();
+
     if (!props.step.type) {
       throw new Error('Missing step type');
     }
@@ -47,6 +55,72 @@ export default function createWalkthrough(
       >
         <Dialog
           {...props}
+          nextStep={(componentProps: any, targetIndex?: number) => (e: any) => {
+            e?.preventDefault();
+            const nextStep = targetIndex ?? stepIndex + 1;
+            const nextTarget = steps[nextStep]?.target as string;
+            const nextUrl = steps[nextStep]?.url as string;
+            const currentUrl = window.location.pathname;
+            const isModalNext = steps[nextStep]?.type === 'modal';
+            const shouldHideWhileSpinning = steps[nextStep]?.hideWhileSpinning;
+            const afterLoad = steps[nextStep]?.afterLoad;
+
+            shouldHide(!!shouldHideWhileSpinning);
+            if (
+              nextTarget &&
+              nextUrl &&
+              (nextUrl !== currentUrl || isModalNext)
+            ) {
+              // setSpin(true);
+              // setShouldHideWhileSpinning(!!shouldHideWhileSpinning);
+              router.navigateUrl({path: nextUrl, replace: true});
+              Promise.resolve()
+                .then(() => new Promise((resolve) => setTimeout(resolve, 333)))
+                .then(() => afterLoad?.())
+                .then(() => waitForElem(nextTarget))
+                .then((elem) => {
+                  elem?.scrollIntoView({behavior: 'instant', block: 'center'});
+                  setSpin(false);
+                  setIndex(nextStep);
+                })
+                .finally(() => {
+                  shouldHide(false);
+                })
+                .catch(() => {
+                  componentProps.closeProps.onClick(e);
+                });
+              setSpin(true);
+            } else {
+              Promise.resolve()
+                .then(() => afterLoad?.())
+                .then(() => {
+                  const element = document.querySelector(nextTarget);
+                  if (
+                    element &&
+                    element?.getBoundingClientRect().bottom > window.innerHeight
+                  ) {
+                    element?.scrollIntoView({
+                      behavior: 'instant',
+                      block: 'center',
+                    });
+                    Promise.resolve()
+                      .then(
+                        () =>
+                          new Promise((resolve) => setTimeout(resolve, 333)),
+                      )
+                      .then(() => {
+                        setIndex(nextStep);
+                      });
+                  } else {
+                    setIndex(nextStep);
+                  }
+                })
+                .finally(() => {
+                  shouldHide(false);
+                });
+            }
+          }}
+          spin={spin}
           setIndex={setIndex}
           styleConfig={styleConfig}
           isDarkMode={isDarkMode}
@@ -54,4 +128,25 @@ export default function createWalkthrough(
       </div>
     );
   };
+}
+
+function waitForElem(selector: string) {
+  return new Promise((resolve: (n: Element | null) => void) => {
+    if (document.querySelector(selector)) {
+      return resolve(document.querySelector(selector));
+    }
+
+    const observer = new MutationObserver(() => {
+      const element = document.querySelector(selector);
+      if (element) {
+        observer.disconnect();
+        resolve(element);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
 }

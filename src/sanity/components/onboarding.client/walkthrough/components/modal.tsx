@@ -3,6 +3,7 @@ import {TooltipProps} from './types';
 // @ts-expect-error incompatibility with node16 resolution
 import {CheckmarkIcon, RevertIcon, UploadIcon} from '@sanity/icons';
 import {useToast} from '@sanity/ui';
+import SpinnerIcon from '../../../../../components/icons/Spinner';
 
 export default function WalkthroughModal(props: TooltipProps) {
   const {
@@ -10,9 +11,19 @@ export default function WalkthroughModal(props: TooltipProps) {
     size,
     styleConfig: {backgroundColor, titleColor, textColor, buttons, highlights},
     isDarkMode,
+    spin,
   } = props;
   const isLastStep = index + 1 >= size;
   const toast = useToast();
+
+  if (spin) {
+    return (
+      <div style={{margin: 'auto'}}>
+        <SpinnerIcon />
+      </div>
+    );
+  }
+
   return (
     <>
       <header
@@ -61,7 +72,7 @@ export default function WalkthroughModal(props: TooltipProps) {
             <Button
               key={highlight['50']}
               completed={index > minimumStep}
-              onClick={() => props.setIndex(skip)}
+              onClick={props.nextStep(props, skip)}
               title={title}
               color={highlight['400']}
               buttonStateColors={buttons}
@@ -73,7 +84,7 @@ export default function WalkthroughModal(props: TooltipProps) {
         {isLastStep && (
           <button
             style={{marginBottom: '50px'}}
-            onClick={() => props.setIndex(0)}
+            onClick={props.nextStep(props, 0)}
           >
             Retake Tour <RevertIcon />
           </button>
@@ -144,6 +155,7 @@ export default function WalkthroughModal(props: TooltipProps) {
               padding: '6px 10px',
             }}
             {...props.primaryProps}
+            onClick={props.nextStep(props)}
           >
             🪂 <span style={{padding: '0 0.4em'}}>Take the tour</span>
             <span style={{fontSize: '15px', verticalAlign: 'bottom'}}> →</span>
@@ -163,7 +175,7 @@ function Button({
   isDarkMode,
   buttonStateColors,
 }: {
-  onClick: () => void;
+  onClick: (e: any) => void;
   title: string;
   completed: boolean;
   color: string;
