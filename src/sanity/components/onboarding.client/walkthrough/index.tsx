@@ -136,7 +136,7 @@ export default function OnboardingLayout(props: any) {
           styles={{
             options: {
               arrowColor: styleConfig.backgroundColor,
-              overlayColor: 'rgba(11, 11, 12, 0.4)',
+              overlayColor: `rgba(11, 11, 11, ${isDarkMode ? 0.8 : 0.4})`,
             },
           }}
           stepIndex={stepIndex}
