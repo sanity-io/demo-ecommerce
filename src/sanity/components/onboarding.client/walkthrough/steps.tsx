@@ -117,7 +117,7 @@ export const steps: Steps[] = [
             )
             ?.click();
         })
-        .then(() => setTimeout(() => {}, 500))
+        .then(() => setTimeout(() => {}, 333))
         .then(() => {
           document
             .querySelector<HTMLButtonElement>(
@@ -154,7 +154,7 @@ export const steps: Steps[] = [
                 "[data-testid='field-hero.content'] button",
               )
               ?.click();
-            return new Promise((resolve) => setTimeout(resolve, 500));
+            return new Promise((resolve) => setTimeout(resolve, 333));
           }
         })
         .then(() => getTarget()?.click());

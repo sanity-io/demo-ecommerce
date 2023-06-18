@@ -92,6 +92,7 @@ export default function createWalkthrough(
               setSpin(true);
             } else {
               Promise.resolve()
+                .then(() => new Promise((resolve) => setTimeout(resolve, 333)))
                 .then(() => afterLoad?.())
                 .then(() => {
                   const element = document.querySelector(nextTarget);
