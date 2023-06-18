@@ -66,7 +66,8 @@ export default function Navbar(props: any) {
           paddingRight: '22px',
           margin: '0 18px',
           boxSizing: 'border-box',
-          width: '240px',
+          minWidth: '240px',
+          gap: '10px',
         }}
       >
         <button
@@ -82,6 +83,7 @@ export default function Navbar(props: any) {
             padding: '6px 12px',
             fontSize: '13px',
             lineHeight: '17px',
+            marginRight: '14px',
           }}
         >
           {!closed
@@ -119,6 +121,7 @@ export default function Navbar(props: any) {
         >
           <CheckMark completed={step > 8} color="#43D675" />
         </button>
+        <span style={{marginLeft: '14px'}}>{getSectionsCompleted(step)}</span>
       </div>
       {props.renderDefault(props)}
     </>
@@ -149,4 +152,10 @@ function CheckMark({completed, color}: {completed: boolean; color: string}) {
       }}
     />
   );
+}
+
+function getSectionsCompleted(step: number) {
+  const sections = step < 3 ? 0 : step < 6 ? 1 : step < 9 ? 2 : 3;
+  const stepCopy = sections === 1 ? 'step' : 'steps';
+  return `${sections}/3 ${stepCopy} completed`;
 }
