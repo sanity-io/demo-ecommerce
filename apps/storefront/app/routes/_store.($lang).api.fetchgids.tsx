@@ -36,7 +36,7 @@ export async function action({ params, context, request }: LoaderArgs) {
     );
 
   return json(
-    extract(`..[id?]`, [...productsAndCollections]) as (
+    extract(`..[id?]`, productsAndCollections) as (
       | Product
       | Collection
       | ProductVariant

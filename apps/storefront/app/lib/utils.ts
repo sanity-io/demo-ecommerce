@@ -210,7 +210,7 @@ export async function fetchGids({
       }
     );
 
-  return extract(`..[id?]`, [...productsAndCollections]) as (
+  return extract(`..[id?]`, productsAndCollections) as (
     | Product
     | Collection
     | ProductVariant
