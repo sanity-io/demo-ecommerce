@@ -15,11 +15,11 @@ type StorefrontPayload = {
 };
 
 export async function action({ params, context, request }: LoaderArgs) {
-  // const isPreview = isPreviewModeEnabled(context.sanity.preview);
+  const isPreview = isPreviewModeEnabled(context.sanity.preview);
 
-  // // if (!isPreview) {
-  // //   throw notFound();
-  // // }
+  if (!isPreview) {
+    throw notFound();
+  }
 
   validateLocale({ context, params });
   const formData = await request.formData();
