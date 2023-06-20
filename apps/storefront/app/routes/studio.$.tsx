@@ -8,7 +8,13 @@ import type {
   LoaderArgs,
   V2_MetaFunction,
 } from "@shopify/remix-oxygen";
-import { lazy, type ReactElement, Suspense } from "react";
+import {
+  lazy,
+  type ReactElement,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 
 import { GenericError } from "~/components/global/GenericError";
 import styles from "~/styles/studio.css";
@@ -76,11 +82,15 @@ export const links: LinksFunction = () => {
 
 export default function Studio() {
   const data = useLoaderData<typeof loader>();
+  const [, startTransition] = useTransition();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => startTransition(() => setHydrated(true)), []);
 
-  return (
-    <Suspense fallback={<SanityStudioFallback />}>
-      <SanityStudio basePath="/studio" {...data} />
-    </Suspense>
+  // Prevent hydration mismatch
+  return hydrated ? (
+    <SanityStudio basePath="/studio" {...data} />
+  ) : (
+    <SanityStudioFallback></SanityStudioFallback>
   );
 }
 
