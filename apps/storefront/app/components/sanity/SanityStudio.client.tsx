@@ -26,5 +26,9 @@ export function SanityStudio(props: SanityStudioProps) {
     },
   });
 
-  return <Studio {...rest} config={config} />;
+  return (
+    <div id="sanity">
+      <Studio {...rest} config={config} unstable_globalStyles />
+    </div>
+  );
 }
