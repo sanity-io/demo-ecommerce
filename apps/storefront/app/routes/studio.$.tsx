@@ -8,7 +8,8 @@ import type {
   LoaderArgs,
   V2_MetaFunction,
 } from "@shopify/remix-oxygen";
-import { lazy, type ReactElement, Suspense } from "react";
+import { lazy, type ReactElement } from "react";
+import { ClientOnly } from "remix-utils";
 
 import { GenericError } from "~/components/global/GenericError";
 import styles from "~/styles/studio.css";
@@ -78,9 +79,9 @@ export default function Studio() {
   const data = useLoaderData<typeof loader>();
 
   return (
-    <Suspense fallback={<SanityStudioFallback />}>
-      <SanityStudio basePath="/studio" {...data} />
-    </Suspense>
+    <ClientOnly fallback={<SanityStudioFallback />}>
+      {() => <SanityStudio basePath="/studio" {...data} />}
+    </ClientOnly>
   );
 }
 
