@@ -1,5 +1,8 @@
-#sanity {
+body {
   margin: 0;
+}
+
+#sanity {
   height: 100vh;
   max-height: 100dvh;
   overscroll-behavior: none;
