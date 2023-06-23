@@ -1,5 +1,5 @@
 import { useAsyncValue, useFetcher, useMatches } from "@remix-run/react";
-import { extractWithPath } from "@sanity/mutator";
+import { extract } from "@sanity/mutator";
 import type {
   Collection,
   Product,
@@ -26,10 +26,6 @@ import type {
 } from "~/lib/sanity";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
 import type { I18nLocale } from "~/types/shopify";
-
-/** @see https://github.com/sanity-io/sanity/pull/4461 */
-export const extract = (...args: Parameters<typeof extractWithPath>) =>
-  extractWithPath(...args).map(({ value }) => value);
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
   ...countries.default,

@@ -1,3 +1,4 @@
+import { extract } from "@sanity/mutator";
 import type {
   Collection,
   Product,
@@ -7,7 +8,6 @@ import { json, type LoaderArgs } from "@shopify/remix-oxygen";
 import { isPreviewModeEnabled } from "hydrogen-sanity";
 
 import { notFound, validateLocale } from "~/lib/utils";
-import { extract } from "~/lib/utils";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
 
 type StorefrontPayload = {
