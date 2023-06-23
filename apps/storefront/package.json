@@ -21,7 +21,7 @@
     "@portabletext/react": "^2.0.2",
     "@remix-run/react": "1.15.0",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/mutator": "^3.9.0",
+    "@sanity/mutator": "^3.12.2",
     "@sanity/types": "^3.9.0",
     "@shopify/cli": "3.45.1",
     "@shopify/cli-hydrogen": "^4.1.0",
