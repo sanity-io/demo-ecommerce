@@ -119,7 +119,10 @@ export default function WalkthroughModal(props: TooltipProps) {
               }}
               onClick={() => {
                 // window.postMessage({studio: 'contact sales'});
-                window.open('https://www.sanity.io/contact/sales', '_blank');
+                window.open(
+                  'https://www.sanity.io/contact/sales?ref=studio-ecommerce-demo-modal',
+                  '_blank',
+                );
               }}
             >
               Contact Sales
