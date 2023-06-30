@@ -43,8 +43,8 @@ export default function createWalkthrough(
           border: '1px solid rgba(255, 255, 255, 0.002)',
           borderRadius: '6px',
 
-          // fontFamily: 'SF Pro Text',
-          fontFamily: 'sans-serif',
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif',
           fontSize: '13px',
           fontStyle: 'normal',
           fontWeight: '500',

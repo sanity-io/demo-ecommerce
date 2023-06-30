@@ -68,6 +68,8 @@ export default function Navbar(props: any) {
           boxSizing: 'border-box',
           minWidth: '240px',
           gap: '10px',
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif',
         }}
       >
         <button
@@ -87,7 +89,7 @@ export default function Navbar(props: any) {
           }}
         >
           {!closed
-            ? 'Currently touring 🪂'
+            ? 'Currently touring'
             : !run && step > 9
             ? 'Revisit Tour'
             : step > 0

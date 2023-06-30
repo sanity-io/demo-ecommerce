@@ -157,7 +157,7 @@ export default function WalkthroughModal(props: TooltipProps) {
             {...props.primaryProps}
             onClick={props.nextStep(props)}
           >
-            🪂 <span style={{padding: '0 0.4em'}}>Take the tour</span>
+            <span style={{padding: '0 0.4em'}}>Take the tour</span>
             <span style={{fontSize: '15px', verticalAlign: 'bottom'}}> →</span>
           </button>
         )}
