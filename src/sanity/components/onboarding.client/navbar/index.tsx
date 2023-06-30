@@ -70,6 +70,7 @@ export default function Navbar(props: any) {
           gap: '10px',
           fontFamily:
             '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif',
+          letterSpacing: 0,
         }}
       >
         <button
@@ -85,11 +86,11 @@ export default function Navbar(props: any) {
             padding: '6px 12px',
             fontSize: '13px',
             lineHeight: '17px',
-            marginRight: '14px',
+            marginRight: '4px',
           }}
         >
           {!closed
-            ? 'Currently touring'
+            ? 'On the touring'
             : !run && step > 9
             ? 'Revisit Tour'
             : step > 0
@@ -123,7 +124,9 @@ export default function Navbar(props: any) {
         >
           <CheckMark completed={step > 8} color="#43D675" />
         </button>
-        <span style={{marginLeft: '14px'}}>{getSectionsCompleted(step)}</span>
+        <span style={{marginLeft: '4px', color: '#9EA6B3'}}>
+          {getSectionsCompleted(step)}
+        </span>
       </div>
       {props.renderDefault(props)}
     </>
