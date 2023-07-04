@@ -1,5 +1,5 @@
 import {Steps} from './components/types';
-import {BlueImg, RedImg, GreenImg} from './assets';
+import {BlueImg, RedImg, GreenImg, Roles} from './assets';
 
 export const steps: Steps[] = [
   {
@@ -52,6 +52,7 @@ export const steps: Steps[] = [
     chapterPosition: 3,
     chapterLength: 3,
     title: 'Define roles and access',
+    image: Roles,
     disableBeacon: true,
     placement: 'bottom-start',
     content:
