@@ -1,4 +1,4 @@
-export const BlueImg = () => (
+export const Code = () => (
   <svg
     width="290"
     height="160"

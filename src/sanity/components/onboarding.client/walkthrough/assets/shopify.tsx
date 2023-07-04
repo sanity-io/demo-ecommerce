@@ -1,4 +1,4 @@
-export const GreenImg = () => (
+export const Shopify = () => (
   <svg
     width="290"
     height="160"

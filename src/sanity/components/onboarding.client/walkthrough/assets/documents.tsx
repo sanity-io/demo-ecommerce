@@ -1,4 +1,4 @@
-export const RedImg = () => (
+export const Documents = () => (
   <svg
     width="290"
     height="160"

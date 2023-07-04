@@ -1,5 +1,5 @@
 import {Steps} from './components/types';
-import {BlueImg, RedImg, GreenImg, Roles} from './assets';
+import {Code, ContentModel, Documents, Refs, Roles, Shopify} from './assets';
 
 export const steps: Steps[] = [
   {
@@ -34,7 +34,7 @@ export const steps: Steps[] = [
     chapterLength: 3,
     title: 'Unlimited flexibility',
     disableBeacon: true,
-    image: BlueImg,
+    image: Code,
     placement: 'left',
     externalLink: {
       url: 'https://www.sanity.io/docs/customization',
@@ -67,6 +67,7 @@ export const steps: Steps[] = [
     chapterPosition: 1,
     chapterLength: 3,
     title: 'Create your own content model',
+    image: ContentModel,
     disableBeacon: true,
     placement: 'right-start',
     type: 'step',
@@ -87,7 +88,7 @@ export const steps: Steps[] = [
     title: 'Documents and references',
     disableBeacon: true,
     placement: 'left-end',
-    image: RedImg,
+    image: Documents,
     content:
       'Documents can piece in other documents – then called a reference. References enables  reusable and up-to-date content at scale.',
     type: 'step',
@@ -100,6 +101,7 @@ export const steps: Steps[] = [
     chapterPosition: 3,
     chapterLength: 3,
     title: 'Content is data',
+    image: Refs,
     disableBeacon: true,
     placement: 'left-start',
     content:
@@ -138,7 +140,7 @@ export const steps: Steps[] = [
     type: 'step',
   },
   {
-    target: "[data-testid='field-hero.content']",
+    target: "fieldset[data-level='2']",
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
     afterLoad: async () => {
       const getTarget = () =>
@@ -167,7 +169,7 @@ export const steps: Steps[] = [
     title: 'Sync with any third party',
     disableBeacon: true,
     placement: 'left',
-    image: GreenImg,
+    image: Shopify,
     externalLink: {
       url: 'https://www.sanity.io/docs/sanity-connect-for-shopify',
       text: 'Docs: Sanity Connect for Shopify',
