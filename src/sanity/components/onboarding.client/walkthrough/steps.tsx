@@ -113,6 +113,7 @@ export const steps: Steps[] = [
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
     afterLoad: async () =>
       Promise.resolve()
+        .then(() => setTimeout(() => {}, 500))
         .then(() => {
           document
             .querySelector<HTMLButtonElement>(

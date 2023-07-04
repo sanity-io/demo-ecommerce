@@ -66,6 +66,7 @@ export default function createWalkthrough(
             const afterLoad = steps[nextStep]?.afterLoad;
 
             shouldHide(!!shouldHideWhileSpinning);
+
             if (
               nextTarget &&
               nextUrl &&
@@ -88,6 +89,7 @@ export default function createWalkthrough(
                 })
                 .catch(() => {
                   componentProps.closeProps.onClick(e);
+                  setIndex(nextStep);
                 });
               setSpin(true);
             } else {
@@ -131,23 +133,30 @@ export default function createWalkthrough(
   };
 }
 
-function waitForElem(selector: string) {
-  return new Promise((resolve: (n: Element | null) => void) => {
-    if (document.querySelector(selector)) {
-      return resolve(document.querySelector(selector));
-    }
+function waitForElem(selector: string, timeout = 4000) {
+  return new Promise(
+    (resolve: (n: Element | null) => void, reject: () => void) => {
+      const timer = setTimeout(() => {
+        clearTimeout(timer);
+        reject();
+      }, timeout);
 
-    const observer = new MutationObserver(() => {
-      const element = document.querySelector(selector);
-      if (element) {
-        observer.disconnect();
-        resolve(element);
+      if (document.querySelector(selector)) {
+        return resolve(document.querySelector(selector));
       }
-    });
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-  });
+      const observer = new MutationObserver(() => {
+        const element = document.querySelector(selector);
+        if (element) {
+          observer.disconnect();
+          resolve(element);
+        }
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    },
+  );
 }
