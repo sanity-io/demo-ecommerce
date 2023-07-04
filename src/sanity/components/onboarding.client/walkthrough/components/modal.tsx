@@ -48,7 +48,7 @@ export default function WalkthroughModal(props: TooltipProps) {
           letterSpacing: '0em',
           textAlign: 'center',
           width: '385px',
-          margin: '5px 0',
+          margin: '20px 5px 30px 5px',
         }}
       >
         {props.step.subtitle}
@@ -82,10 +82,7 @@ export default function WalkthroughModal(props: TooltipProps) {
           );
         })}
         {isLastStep && (
-          <button
-            style={{marginBottom: '50px'}}
-            onClick={props.nextStep(props, 0)}
-          >
+          <button onClick={props.nextStep(props, 0)}>
             Retake Tour <RevertIcon />
           </button>
         )}
@@ -95,12 +92,14 @@ export default function WalkthroughModal(props: TooltipProps) {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
+          marginTop: '48px',
         }}
       >
         <button
           style={{
-            color: textColor,
+            color: '#9EA6B3',
             cursor: 'pointer',
+            padding: '6px',
           }}
           {...props.closeProps}
         >
@@ -115,7 +114,7 @@ export default function WalkthroughModal(props: TooltipProps) {
                 borderRadius: '3px',
                 margin: '0 .5em',
                 backgroundColor,
-                color: titleColor,
+                color: '#9EA6B3',
               }}
               onClick={() => {
                 // window.postMessage({studio: 'contact sales'});

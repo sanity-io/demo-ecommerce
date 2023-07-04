@@ -8,7 +8,7 @@ export const steps: Steps[] = [
     placement: 'center',
     content: null,
     title: 'Welcome to a Sanity Studio',
-    subtitle: 'This short tour in 3 steps will explain some basics',
+    subtitle: 'This 3 step tour will cover some basics',
     type: 'modal',
   },
   {
@@ -22,7 +22,7 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'bottom-start',
     content:
-      'Every Sanity Studio is different. This is a Studio for a ecommerce store called AKVA. ',
+      'Every Sanity Studio is different. This is a Studio for an ecommerce store called AKVA. ',
     type: 'step',
   },
   {
@@ -32,7 +32,7 @@ export const steps: Steps[] = [
     themeColor: '#4E91FC',
     chapterPosition: 2,
     chapterLength: 3,
-    title: 'An extremely flexible tool',
+    title: 'Unlimited flexibility',
     disableBeacon: true,
     image: BlueImg,
     placement: 'left',
@@ -41,7 +41,7 @@ export const steps: Steps[] = [
       text: 'Studio Customization',
     },
     content:
-      'On smaller scales, like this custom page themer. And on larger scales, creating efficient workflows for your content, team and business. ',
+      '... on smaller scales: like this custom page themer. And on larger scales: creating efficient workflows for your content, team and business',
     type: 'step',
   },
   {
@@ -106,7 +106,7 @@ export const steps: Steps[] = [
     type: 'step',
   },
   {
-    target: "[data-testid='document-panel-portal'] fieldset",
+    target: "[data-testid='document-panel-portal'] fieldset:nth-child(3)", // 2nd child
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
     afterLoad: async () =>
       Promise.resolve()

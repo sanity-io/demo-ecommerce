@@ -41,12 +41,13 @@ export default function WalkthroughStep(props: TooltipProps) {
             color: titleColor,
             letterSpacing: '0.5px',
             padding: '2px 4px',
+            alignItems: 'center',
           }}
         >
           {props.step.chapter}
         </span>
         <button {...props.closeProps}>
-          <CloseIcon style={{fontSize: '1.5em', color: textColor}} />
+          <CloseIcon style={{fontSize: '1.5em', color: '#9EA6B3'}} />
         </button>
       </span>
       <h2
@@ -58,6 +59,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           letterSpacing: '0.5PX',
           color: titleColor,
           marginBottom: '10px',
+          alignSelf: 'flex-start',
         }}
       >
         {props.step.title}
@@ -90,7 +92,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           <ArrowTopRightIcon
             style={{
               color: themeColor,
-              transform: 'scale(2.7)',
+              transform: 'scale(2.2)',
               paddingLeft: '5px',
               marginTop: '-2px',
             }}
@@ -104,6 +106,7 @@ export default function WalkthroughStep(props: TooltipProps) {
             resize: 'horizontal',
             height: 'auto',
             overflow: 'hidden',
+            marginTop: '10px',
           }}
         >
           {props.step.image()}
@@ -115,7 +118,7 @@ export default function WalkthroughStep(props: TooltipProps) {
           fontWeight: 400,
           fontSize: '10px',
           lineHeight: '13px',
-          color: textColor,
+          color: '#9EA6B3',
           alignSelf: 'flex-start',
           margin: '12px 0',
         }}
@@ -151,8 +154,7 @@ export default function WalkthroughStep(props: TooltipProps) {
         {...props.primaryProps}
         onClick={props.nextStep(props)}
       >
-        Next{' '}
-        <ArrowRightIcon style={{fontSize: '1.5em', paddingBottom: '1px'}} />
+        Next <ArrowRightIcon style={{fontSize: '12px', paddingBottom: '1px'}} />
       </button>
     </>
   );
