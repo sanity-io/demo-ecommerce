@@ -5,11 +5,7 @@ import {
   type LoaderArgs,
   type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
-import {
-  isPreviewModeEnabled,
-  Preview,
-  type PreviewData,
-} from "hydrogen-sanity";
+import { getPreview, PreviewProvider } from "hydrogen-sanity";
 
 import { Layout } from "~/components/global/Layout";
 import { PreviewLoading } from "~/components/global/PreviewLoading";
@@ -51,15 +47,7 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({ context }: LoaderArgs) {
-  const preview: PreviewData | undefined = isPreviewModeEnabled(
-    context.sanity.preview
-  )
-    ? {
-        projectId: context.sanity.preview.projectId,
-        dataset: context.sanity.preview.dataset,
-        token: context.sanity.preview.token,
-      }
-    : undefined;
+  const preview = getPreview(context);
 
   return json({
     preview,
@@ -70,10 +58,14 @@ export default function Store() {
   const { preview } = useLoaderData<typeof loader>();
 
   return (
-    <Preview preview={preview} fallback={<PreviewLoading />}>
+    <PreviewProvider
+      previewConfig={{ ...preview, resultSourceMap: true }}
+      fallback={<PreviewLoading />}
+      turboSourceMap={true}
+    >
       <Layout>
         <Outlet />
       </Layout>
-    </Preview>
+    </PreviewProvider>
   );
 }
