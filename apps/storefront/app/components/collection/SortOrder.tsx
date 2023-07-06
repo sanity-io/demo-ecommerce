@@ -13,7 +13,7 @@ import RadioIcon from "~/components/icons/Radio";
 import { SortParam } from "~/routes/_store.($lang).collections.$handle";
 
 type Props = {
-  initialSortOrder: string;
+  initialSortOrder: string | undefined;
 };
 
 type SortOption = {

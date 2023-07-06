@@ -1,6 +1,10 @@
 import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
+import {
+  defer,
+  type LoaderArgs,
+  type SerializeFrom,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -54,7 +58,7 @@ export async function loader({ params, context }: LoaderArgs) {
 }
 
 export default function Page() {
-  const { page, gids } = useLoaderData<typeof loader>();
+  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
   return (

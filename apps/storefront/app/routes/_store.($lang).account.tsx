@@ -18,6 +18,7 @@ import {
   json,
   type LoaderArgs,
   redirect,
+  type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { ReactNode } from "react";
@@ -90,7 +91,7 @@ export async function loader({ request, context, params }: LoaderArgs) {
 }
 
 export default function Authenticated() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<SerializeFrom<typeof loader>>();
   const outlet = useOutlet();
   const matches = useMatches();
 
