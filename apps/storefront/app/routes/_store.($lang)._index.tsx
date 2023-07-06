@@ -1,6 +1,10 @@
 import { Await, useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
+import {
+  defer,
+  type LoaderArgs,
+  type SerializeFrom,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -53,7 +57,7 @@ export async function loader({ context, params }: LoaderArgs) {
 }
 
 export default function Index() {
-  const { page, gids } = useLoaderData<typeof loader>();
+  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
 
   return (
     <SanityPreview data={page} query={HOME_PAGE_QUERY}>

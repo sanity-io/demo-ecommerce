@@ -5,7 +5,12 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
+import { Collection } from "@shopify/hydrogen/storefront-api-types";
+import {
+  defer,
+  type LoaderArgs,
+  type SerializeFrom,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -69,7 +74,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
       },
       cache,
     }),
-    context.storefront.query<{ collection: any }>(COLLECTION_QUERY, {
+    context.storefront.query<{ collection: Collection }>(COLLECTION_QUERY, {
       variables: {
         handle,
         cursor,
@@ -102,7 +107,8 @@ export async function loader({ params, context, request }: LoaderArgs) {
 }
 
 export default function Collection() {
-  const { collection, page, gids } = useLoaderData<typeof loader>();
+  const { collection, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
   const { handle } = useParams();
@@ -140,7 +146,7 @@ export default function Collection() {
                   >
                     <SortOrder
                       key={page?._id}
-                      initialSortOrder={page?.sortOrder || collection.sortOrder}
+                      initialSortOrder={page?.sortOrder}
                     />
                   </div>
                 )}
@@ -152,10 +158,10 @@ export default function Collection() {
                   </div>
                 )}
 
-                {page?.modules && (
+                {(page?.modules || products.length > 0) && (
                   <ProductGrid
                     collection={collection as any}
-                    modules={page?.modules}
+                    modules={page?.modules || []}
                     url={`/collections/${(collection as any).handle}`}
                     key={`${(collection as any).handle}-${sort}`}
                   />

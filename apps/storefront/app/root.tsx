@@ -23,6 +23,7 @@ import {
   type AppLoadContext,
   defer,
   type LoaderArgs,
+  type SerializeFrom,
 } from "@shopify/remix-oxygen";
 
 import { GenericError } from "~/components/global/GenericError";
@@ -89,7 +90,7 @@ export async function loader({ context }: LoaderArgs) {
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
