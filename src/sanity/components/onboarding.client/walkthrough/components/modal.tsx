@@ -132,6 +132,7 @@ export default function WalkthroughModal(props: TooltipProps) {
               style={{
                 padding: '.5em .8em',
                 color: backgroundColor,
+                border: `1px solid ${titleColor}`,
                 backgroundColor: titleColor,
                 borderRadius: '3px',
                 margin: '0 .5em',
