@@ -90,12 +90,12 @@ export default function Navbar(props: any) {
           }}
         >
           {!closed
-            ? 'On the touring'
+            ? 'Tour in progress'
             : !run && step > 9
-            ? 'Revisit Tour'
+            ? 'Retake tour'
             : step > 0
-            ? 'Continue Tour'
-            : 'Take the tour'}
+            ? 'Continue tour'
+            : 'Start the tour'}
         </button>
         <button
           onClick={() =>

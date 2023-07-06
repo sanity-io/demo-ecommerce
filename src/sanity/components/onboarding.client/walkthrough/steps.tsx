@@ -7,14 +7,14 @@ export const steps: Steps[] = [
     url: null,
     placement: 'center',
     content: null,
-    title: 'Welcome to a Sanity Studio',
-    subtitle: 'This 3 step tour will cover some basics',
+    title: 'Welcome to the Sanity demo',
+    subtitle: 'This three part tour will cover the basics of Sanity:',
     type: 'modal',
   },
   {
     target: "[data-ui='Navbar'] [data-ui='Button']", // logo
     url: null,
-    chapter: 'The Studio',
+    chapter: 'Sanity Studio',
     themeColor: '#4E91FC',
     chapterPosition: 1,
     chapterLength: 3,
@@ -22,13 +22,13 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'bottom-start',
     content:
-      'Every Sanity Studio is different. This is a Studio for an ecommerce store called AKVA. ',
+      'Every Sanity Studio is different. This is a Studio for an e-commerce store called AKVA.',
     type: 'step',
   },
   {
     target: 'form > [data-ui="Stack"] > [data-ui="Stack"]:nth-child(4)',
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
-    chapter: 'The Studio',
+    chapter: 'Sanity Studio',
     themeColor: '#4E91FC',
     chapterPosition: 2,
     chapterLength: 3,
@@ -37,51 +37,55 @@ export const steps: Steps[] = [
     image: Code,
     placement: 'left',
     externalLink: {
-      url: 'https://www.sanity.io/docs/customization',
-      text: 'Studio Customization',
+      url: 'https://www.sanity.io/studio',
+      text: 'Learn more about the Studio',
     },
     content:
-      '... on smaller scales: like this custom page themer. And on larger scales: creating efficient workflows for your content, team and business',
+      'Your Studio is completely customizable. You can customize everything from input components – like this one – to content workflows that fits your team or business.',
     type: 'step',
   },
   {
     target: "[data-testid='permission-check-banner']",
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
-    chapter: 'The Studio',
+    chapter: 'Sanity Studio',
     themeColor: '#4E91FC',
     chapterPosition: 3,
     chapterLength: 3,
-    title: 'Define roles and access',
+    title: 'Simple access management',
     image: Roles,
     disableBeacon: true,
     placement: 'bottom-start',
+    externalLink: {
+      url: 'https://www.sanity.io/docs/roles',
+      text: 'Learn more about roles and permissions',
+    },
     content:
-      'Start simple and tailor team roles as you need.\nIn this Studio you currently have ‘read only’ access.',
+      'Access can be tailored through both default and custom roles. In this Studio, you currently have the "Viewer" role, and can therefore not edit the content.',
     type: 'step',
   },
   {
     target: '[data-testid="pane-content"]',
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
-    chapter: 'The Sanity Way',
+    chapter: 'Content Modeling',
     themeColor: '#F36458',
     chapterPosition: 1,
     chapterLength: 3,
-    title: 'Create your own content model',
+    title: 'Content models without restrictions',
     image: ContentModel,
     disableBeacon: true,
     placement: 'right-start',
     type: 'step',
     externalLink: {
       url: 'https://www.sanity.io/content-modeling/content-modeling-foundations',
-      text: 'Content Modeling Guide',
+      text: 'Read our Content Modeling guide',
     },
     content:
-      'Don’t confine your thinking to pages or templates. Structure your content for what it is and how it’ll be used.',
+      'Sanity let’s you model your content exactly as how you want it. Don’t confine your thinking to pages or templates, and instead structure your content for how it’ll be used.',
   },
   {
     target: "[data-testid='field-hero.content']",
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63',
-    chapter: 'The Sanity Way',
+    chapter: 'Content Modeling',
     themeColor: '#F36458',
     chapterPosition: 2,
     chapterLength: 3,
@@ -90,13 +94,13 @@ export const steps: Steps[] = [
     placement: 'left-end',
     image: Documents,
     content:
-      'Documents can piece in other documents – then called a reference. References enables  reusable and up-to-date content at scale.',
+      'A document can reference other documents – in this example an image contains references to multiple products. References let’s you reuse and keep content up-to-date at scale.',
     type: 'step',
   },
   {
     target: "[data-ui='DialogCard']",
     url: '/studio/desk/pages;1051150e-042e-45a6-881a-49ca2759ea63%2Cinspect%3Don',
-    chapter: 'The Sanity Way',
+    chapter: 'Content Modeling',
     themeColor: '#F36458',
     chapterPosition: 3,
     chapterLength: 3,
@@ -105,7 +109,7 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'left-start',
     content:
-      'Treating content like data makes it easy to  access, combine, assemble and reassemble that data – across all your products and channels.',
+      'Treating content as data makes it easy to  access, combine, assemble and reassemble that data – across all your products and channels.',
     type: 'step',
   },
   {
@@ -129,15 +133,15 @@ export const steps: Steps[] = [
             )
             ?.click();
         }),
-    chapter: 'Ecommerce use cases',
+    chapter: 'Sanity for E-commerce',
     themeColor: '#43D675',
     chapterPosition: 1,
     chapterLength: 3,
-    title: 'Shopping should be about exploration and serendipity',
+    title: 'Enrich your products through storytelling',
     disableBeacon: true,
     placement: 'left-start',
     content:
-      'Break out of stale ecommerce templates. Let visitors explore products through stories and rich interactive experiences.',
+      'Break out of stale e-commerce templates. Let visitors explore products through stories and rich interactive experiences.',
     type: 'step',
   },
   {
@@ -163,7 +167,7 @@ export const steps: Steps[] = [
         })
         .then(() => getTarget()?.click());
     },
-    chapter: 'Ecommerce use cases',
+    chapter: 'Sanity for E-commerce',
     themeColor: '#43D675',
     chapterPosition: 2,
     chapterLength: 3,
@@ -172,11 +176,11 @@ export const steps: Steps[] = [
     placement: 'left',
     image: Shopify,
     externalLink: {
-      url: 'https://www.sanity.io/docs/sanity-connect-for-shopify',
-      text: 'Docs: Sanity Connect for Shopify',
+      url: 'https://www.sanity.io/shopify',
+      text: 'Learn more about Sanity + Shopify',
     },
     content:
-      'Ecommerce platforms are great for running a  store, but leave the editorial experience to Sanity – and create an enticing storefront. ',
+      'Natively sync product information to and from Shopify, with support for any other third party e-commerce platform through Sanity’s powerful APIs.',
     type: 'step',
   },
   {
@@ -192,15 +196,15 @@ export const steps: Steps[] = [
           ?.click();
       });
     },
-    chapter: 'Ecommerce use cases',
+    chapter: 'Sanity for E-commerce',
     themeColor: '#43D675',
     chapterPosition: 3,
     chapterLength: 3,
-    title: 'Live preview, side by side',
+    title: 'Live previews, side by side',
     disableBeacon: true,
     placement: 'left-start',
     content:
-      'Remove abstractions and make and editing immediate, efficient and enjoyable',
+      'See changes in real-time and gain increased confidence before you and your team hit the publish button.',
     type: 'step',
   },
   {
@@ -217,9 +221,9 @@ export const steps: Steps[] = [
     },
     placement: 'center',
     content: null,
-    title: 'That’s the tour!.. ',
+    title: 'That’s a wrap!',
     subtitle:
-      '... and we haven’t even gotten to features like workspaces, real time editing, revision history, image cropping, mobile responsiveness, accessibility, AI plugins ... and so much more!',
+      '... and we haven’t even showed you features like workspaces, real-time editing, revision history, image cropping, mobile responsiveness, accessibility, AI content assistants — and so much more!',
     type: 'modal',
   },
 ];

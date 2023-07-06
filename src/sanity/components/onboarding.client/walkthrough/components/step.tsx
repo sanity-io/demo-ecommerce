@@ -79,7 +79,7 @@ export default function WalkthroughStep(props: TooltipProps) {
       {externalLink && (
         <a
           target="_blank"
-          href={`${externalLink.url}/?ref=ecommerce-walkthrough`}
+          href={`${externalLink.url}?ref=studio-demo`}
           rel="noreferrer"
           style={{
             alignSelf: 'flex-start',

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {TooltipProps} from './types';
 // @ts-expect-error incompatibility with node16 resolution
-import {CheckmarkIcon, RevertIcon, UploadIcon} from '@sanity/icons';
+import {CheckmarkIcon, RevertIcon} from '@sanity/icons';
 import {useToast} from '@sanity/ui';
 import SpinnerIcon from '../../../../../components/icons/Spinner';
 
@@ -64,9 +64,11 @@ export default function WalkthroughModal(props: TooltipProps) {
         {highlights.map((highlight, buttonIndex) => {
           // needs to be moved out elsewhere
           const minimumStep = [2, 5, 7][buttonIndex];
-          const title = ['The Studio', 'The Sanity Way', 'Ecommerce use case'][
-            buttonIndex
-          ];
+          const title = [
+            '1. Sanity Studio',
+            '2. Content Modeling',
+            '3. Sanity for Ecommerce',
+          ][buttonIndex];
           const skip = [1, 4, 7][buttonIndex];
           return (
             <Button
@@ -83,7 +85,7 @@ export default function WalkthroughModal(props: TooltipProps) {
         })}
         {isLastStep && (
           <button onClick={props.nextStep(props, 0)}>
-            Retake Tour <RevertIcon />
+            Retake tour <RevertIcon />
           </button>
         )}
       </div>
@@ -110,21 +112,21 @@ export default function WalkthroughModal(props: TooltipProps) {
             <button
               style={{
                 padding: '.5em .8em',
-                border: '1px solid #F36458',
+                border: '1px solid #f9b1ab',
                 borderRadius: '3px',
                 margin: '0 .5em',
                 backgroundColor,
-                color: '#9EA6B3',
+                color: '#261514',
               }}
               onClick={() => {
                 // window.postMessage({studio: 'contact sales'});
                 window.open(
-                  'https://www.sanity.io/contact/sales?ref=studio-ecommerce-demo-modal',
+                  'https://www.sanity.io/contact/sales?ref=studio-demo-modal',
                   '_blank',
                 );
               }}
             >
-              Contact Sales
+              Contact sales
             </button>
             <button
               style={{
@@ -137,7 +139,7 @@ export default function WalkthroughModal(props: TooltipProps) {
               onClick={() => {
                 // window.postMessage({studio: 'share'});
                 navigator.clipboard.writeText(
-                  'https://sanity.io/demos/ecommerce',
+                  'https://www.sanity.io/demos/ecommerce?ref=share-demo',
                 );
                 toast.push({
                   status: 'success',
@@ -145,7 +147,7 @@ export default function WalkthroughModal(props: TooltipProps) {
                 });
               }}
             >
-              Share Demo <UploadIcon />
+              Share demo
             </button>
           </span>
         ) : (
@@ -159,7 +161,7 @@ export default function WalkthroughModal(props: TooltipProps) {
             {...props.primaryProps}
             onClick={props.nextStep(props)}
           >
-            <span style={{padding: '0 0.4em'}}>Take the tour</span>
+            <span style={{padding: '0 0.4em'}}>Start the tour</span>
             <span style={{fontSize: '15px', verticalAlign: 'bottom'}}> →</span>
           </button>
         )}
