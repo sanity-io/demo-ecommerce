@@ -81,6 +81,7 @@ export async function handler(
         dataset: env.SANITY_DATASET || "production",
         apiVersion: env.SANITY_API_VERSION || "2023-03-30",
         useCdn: process.env.NODE_ENV === "production",
+        perspective: "published",
       },
     });
 
