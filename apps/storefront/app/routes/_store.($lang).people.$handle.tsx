@@ -14,7 +14,7 @@ import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PERSON_QUERY } from "~/queries/sanity/person";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.seo?.title,
+  title: data?.page?.seo?.title || data?.page?.name,
   description: data?.page?.seo?.description,
   media: data?.page?.seo?.image,
 });
