@@ -5,11 +5,11 @@ import { PRODUCT_HOTSPOT } from "./productHotspot";
 
 export const PRODUCT_GUIDE = groq`*[
     _type == 'guide'
-    && references(^.productId)
+    && references(^._id)
     && (
-      ^.productId in hero.content[0].productHotspots[].productWithVariant.product._ref
+      ^._id in hero.content[0].productHotspots[].productWithVariant.product._ref
       ||
-      ^.productId in body[_type == "blockImages"].modules[].productHotspots[].productWithVariant.product._ref
+      ^._id in body[_type == "blockImages"].modules[].productHotspots[].productWithVariant.product._ref
     )
   ] {
     title,

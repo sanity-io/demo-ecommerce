@@ -1,15 +1,11 @@
 import groq from "groq";
 
-import { PERSON_PAGE, PERSON_PAGE_PRODUCTS } from "./fragments/pages/person";
+import { PERSON_PAGE } from "./fragments/pages/person";
 
 export const PERSON_QUERY = groq`
   *[
     _type == 'person'
     && slug.current == $slug
-  ] | order(_updatedAt desc)[0] {
+  ] | order(_updatedAt desc) {
     ${PERSON_PAGE}
-  } {
-    ...,
-    "products": ${PERSON_PAGE_PRODUCTS}
-  }
-`;
+  }[0]`;
