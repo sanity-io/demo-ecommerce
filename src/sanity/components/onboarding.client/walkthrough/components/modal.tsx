@@ -112,14 +112,13 @@ export default function WalkthroughModal(props: TooltipProps) {
             <button
               style={{
                 padding: '.5em .8em',
-                border: '1px solid #f9b1ab',
+                border: `1px solid ${isDarkMode ? '#f9b1ab' : '#F36458'}`,
                 borderRadius: '3px',
                 margin: '0 .5em',
                 backgroundColor,
-                color: '#261514',
+                color: titleColor,
               }}
               onClick={() => {
-                // window.postMessage({studio: 'contact sales'});
                 window.open(
                   'https://www.sanity.io/contact/sales?ref=studio-demo-modal',
                   '_blank',
@@ -138,7 +137,6 @@ export default function WalkthroughModal(props: TooltipProps) {
                 margin: '0 .5em',
               }}
               onClick={() => {
-                // window.postMessage({studio: 'share'});
                 navigator.clipboard.writeText(
                   'https://www.sanity.io/demos/ecommerce?ref=share-demo',
                 );
