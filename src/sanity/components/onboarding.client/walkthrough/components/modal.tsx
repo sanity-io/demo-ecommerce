@@ -67,7 +67,7 @@ export default function WalkthroughModal(props: TooltipProps) {
           const title = [
             '1. Sanity Studio',
             '2. Content Modeling',
-            '3. Sanity for Ecommerce',
+            '3. Sanity for E-commerce',
           ][buttonIndex];
           const skip = [1, 4, 7][buttonIndex];
           return (

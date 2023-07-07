@@ -8,7 +8,7 @@ export const steps: Steps[] = [
     placement: 'center',
     content: null,
     title: 'Welcome to the Sanity demo',
-    subtitle: 'This three part tour will cover the basics of Sanity:',
+    subtitle: 'This three-part tour will cover the basics of Sanity:',
     type: 'modal',
   },
   {
@@ -41,7 +41,7 @@ export const steps: Steps[] = [
       text: 'Learn more about the Studio',
     },
     content:
-      'Your Studio is completely customizable. You can customize everything from input components – like this one – to content workflows that fits your team or business.',
+      'Your Studio is completely customizable. You can customize everything from input components – like this one – to content workflows that fit your team or business.',
     type: 'step',
   },
   {
@@ -80,7 +80,7 @@ export const steps: Steps[] = [
       text: 'Read our Content Modeling guide',
     },
     content:
-      'Sanity let’s you model your content exactly as how you want it. Don’t confine your thinking to pages or templates, and instead structure your content for how it’ll be used.',
+      'Sanity lets you model your content exactly as how you want it. Don’t confine your thinking to pages or templates, and instead structure your content for how it’ll be used.',
   },
   {
     target: "[data-testid='field-hero.content']",
@@ -94,7 +94,7 @@ export const steps: Steps[] = [
     placement: 'left-end',
     image: Documents,
     content:
-      'A document can reference other documents – in this example an image contains references to multiple products. References let’s you reuse and keep content up-to-date at scale.',
+      'A document can reference other documents – in this example an image contains references to multiple products. References let you reuse and keep content up-to-date at scale.',
     type: 'step',
   },
   {
