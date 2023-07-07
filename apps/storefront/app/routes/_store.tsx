@@ -58,11 +58,7 @@ export default function Store() {
   const { preview } = useLoaderData<typeof loader>();
 
   return (
-    <PreviewProvider
-      previewConfig={{ ...preview, resultSourceMap: true }}
-      fallback={<PreviewLoading />}
-      turboSourceMap={true}
-    >
+    <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
       <Layout>
         <Outlet />
       </Layout>
