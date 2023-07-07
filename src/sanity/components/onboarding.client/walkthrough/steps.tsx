@@ -76,7 +76,7 @@ export const steps: Steps[] = [
     placement: 'right-start',
     type: 'step',
     externalLink: {
-      url: 'https://www.sanity.io/content-modeling/content-modeling-foundations',
+      url: 'https://www.sanity.io/content-modeling',
       text: 'Read our Content Modeling guide',
     },
     content:
