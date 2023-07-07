@@ -41,14 +41,14 @@ export default function ImageModule({ module }: Props) {
       {module.variant === "productHotspots" && (
         <>
           {module.productHotspots?.map((hotspot) => {
-            const storefrontProduct = gids.get(
-              hotspot?.product?.gid
-            ) as Product;
+            if (!hotspot?.product?.gid) {
+              return null;
+            }
 
             return (
               <ProductHotspot
                 key={hotspot._key}
-                storefrontProduct={storefrontProduct}
+                productGid={hotspot?.product?.gid}
                 variantGid={hotspot?.product?.variantGid}
                 x={hotspot.x}
                 y={hotspot.y}
