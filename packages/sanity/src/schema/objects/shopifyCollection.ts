@@ -7,6 +7,7 @@ export default defineField({
   options: {
     collapsed: false,
     collapsible: true,
+    aiWritingAssistance: {exclude: true},
   },
   readOnly: true,
   fieldsets: [
