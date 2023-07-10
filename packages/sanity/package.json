@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sanity/assist": "^1.0.9",
     "@sanity/color-input": "^3.1.0",
     "@sanity/ui": "^1.7.1",
     "@sanity/vision": "^3.14.1",

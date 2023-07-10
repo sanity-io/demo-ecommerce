@@ -1,3 +1,4 @@
+import { assist } from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, type SingleWorkspace} from 'sanity'
@@ -54,6 +55,7 @@ export function defineSanityConfig(config: SanityConfig) {
       customDocumentActions(),
       media(),
       visionTool(),
+      assist(),
     ],
 
     schema: {
