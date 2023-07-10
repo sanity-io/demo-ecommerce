@@ -55,10 +55,17 @@ export async function loader({ context }: LoaderArgs) {
 }
 
 export default function Store() {
-  const { preview } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
+  const preview = data.preview
+    ? { ...data.preview, resultSourceMap: true }
+    : data.preview;
 
   return (
-    <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
+    <PreviewProvider
+      previewConfig={preview}
+      fallback={<PreviewLoading />}
+      turboSourceMap={false}
+    >
       <Layout>
         <Outlet />
       </Layout>
