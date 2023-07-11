@@ -41,7 +41,7 @@ export const steps: Steps[] = [
       text: 'Learn more about the Studio',
     },
     content:
-      'Your Studio is completely customizable. You can customize everything from input components – like this one – to content workflows that fit your team or business.',
+      'Your Studio is completely customizable. You can customize everything from input components—like this one—to content workflows that fit your team or business.',
     type: 'step',
   },
   {
@@ -60,7 +60,7 @@ export const steps: Steps[] = [
       text: 'Learn more about roles and permissions',
     },
     content:
-      'Access can be tailored through both default and custom roles. In this Studio, you currently have the "Viewer" role, and can therefore not edit the content.',
+      'Access can be tailored through both default and custom roles. In this Studio, you currently have the Viewer role and can therefore not edit the content.',
     type: 'step',
   },
   {
@@ -80,7 +80,7 @@ export const steps: Steps[] = [
       text: 'Read our Content Modeling guide',
     },
     content:
-      'Sanity lets you model your content exactly as how you want it. Don’t confine your thinking to pages or templates, and instead structure your content for how it’ll be used.',
+      'With Sanity you can organize your content through content models to match your business. Rather than thinking in terms of pages or templates, think in terms of how it will be used.',
   },
   {
     target: "[data-testid='field-hero.content']",
@@ -94,7 +94,7 @@ export const steps: Steps[] = [
     placement: 'left-end',
     image: Documents,
     content:
-      'A document can reference other documents – in this example an image contains references to multiple products. References let you reuse and keep content up-to-date at scale.',
+      'A document can reference other documents—in this example an image contains references to multiple products. References let you reuse and keep content up-to-date at scale.',
     type: 'step',
   },
   {
@@ -109,7 +109,7 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'left-start',
     content:
-      'Treating content as data makes it easy to  access, combine, assemble and reassemble that data – across all your products and channels.',
+      'Treating content as data makes it easy to  access, combine, assemble and reassemble that data across all your products and channels.',
     type: 'step',
   },
   {
@@ -171,7 +171,7 @@ export const steps: Steps[] = [
     themeColor: '#43D675',
     chapterPosition: 2,
     chapterLength: 3,
-    title: 'Sync with any third party',
+    title: 'Sync with any third-party',
     disableBeacon: true,
     placement: 'left',
     image: Shopify,
@@ -180,7 +180,7 @@ export const steps: Steps[] = [
       text: 'Learn more about Sanity + Shopify',
     },
     content:
-      'Natively sync product information to and from Shopify, with support for any other third party e-commerce platform through Sanity’s powerful APIs.',
+      'Natively sync product information to and from Shopify, with support for any other third-party e-commerce platform through Sanity’s powerful APIs.',
     type: 'step',
   },
   {
@@ -204,7 +204,7 @@ export const steps: Steps[] = [
     disableBeacon: true,
     placement: 'left-start',
     content:
-      'See changes in real-time and gain increased confidence before you and your team hit the publish button.',
+      'See changes in real time and gain increased confidence before you and your team hit the Publish button.',
     type: 'step',
   },
   {
@@ -223,7 +223,7 @@ export const steps: Steps[] = [
     content: null,
     title: 'That’s a wrap!',
     subtitle:
-      '... and we haven’t even showed you features like workspaces, real-time editing, revision history, image cropping, mobile responsiveness, accessibility, AI content assistants — and so much more!',
+      '... and we haven’t even shown you features like Workspaces, real-time editing, revision history, image cropping, mobile responsiveness, accessibility, AI content assistants — and so much more!',
     type: 'modal',
   },
 ];
