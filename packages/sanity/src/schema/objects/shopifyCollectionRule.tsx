@@ -42,7 +42,4 @@ export default defineField({
       }
     },
   },
-  options: {
-    aiWritingAssistance: {exclude: true},
-  },
 })

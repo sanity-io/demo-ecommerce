@@ -9,7 +9,4 @@ export default defineField({
   components: {
     input: ProxyStringInput,
   },
-  options: {
-    aiWritingAssistance: {exclude: true},
-  },
 })

@@ -46,9 +46,6 @@ export default defineType({
         const isDeleted = parent?.store?.isDeleted
         return !isDeleted
       },
-      options: {
-        aiWritingAssistance: {exclude: true},
-      },
     }),
     // Title (proxy)
     defineField({

@@ -7,9 +7,9 @@ export default defineField({
   options: {
     collapsed: false,
     collapsible: true,
-    aiWritingAssistance: {exclude: true},
   },
-  readOnly: true,
+  // NOTE: allow AI assist to read
+  readOnly: false,
   fieldsets: [
     {
       name: 'status',

@@ -11,7 +11,7 @@ const GROUPS = [
   {
     name: 'editorial',
     title: 'Editorial',
-    default: true,
+    // default: true,
   },
   {
     name: 'shopifySync',
@@ -42,9 +42,6 @@ export default defineType({
         const isActive = parent?.store?.status === 'active'
         const isDeleted = parent?.store?.isDeleted
         return !parent?.store || (isActive && !isDeleted)
-      },
-      options: {
-        aiWritingAssistance: {exclude: true},
       },
     }),
     // Title (proxy)

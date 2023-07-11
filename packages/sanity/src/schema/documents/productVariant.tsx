@@ -73,7 +73,4 @@ export default defineType({
       }
     },
   },
-  options: {
-    aiWritingAssistance: {exclude: true},
-  },
 })
