@@ -29,7 +29,7 @@ import {
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
-import VisualEditing from "~/components/overlays/VisualEditing";
+// import VisualEditing from "~/components/overlays/VisualEditing";
 import { useAnalytics } from "~/hooks/useAnalytics";
 import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
@@ -94,7 +94,7 @@ export default function App() {
   const data = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
-  const hasVisualEditing = true;
+  // const hasVisualEditing = true;
   const nonce = useNonce();
 
   useAnalytics(hasUserConsent, locale);
@@ -108,7 +108,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {hasVisualEditing ? <VisualEditing /> : null}
+        {/* {hasVisualEditing ? <VisualEditing /> : null} */}
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />

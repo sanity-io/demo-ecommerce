@@ -1,6 +1,6 @@
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
-import { scheduledPublishing } from "@sanity/scheduled-publishing";
+import {scheduledPublishing} from "@sanity/scheduled-publishing";
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, type SingleWorkspace} from 'sanity'
 import {deskTool} from 'sanity/desk'
