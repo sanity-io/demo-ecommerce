@@ -25,6 +25,5 @@ module.exports = {
     v2_routeConvention: true,
     unstable_tailwind: true,
     unstable_postcss: true,
-    v2_dev: true,
   },
 };

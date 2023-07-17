@@ -10,7 +10,11 @@ import {
   createRequestHandler,
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
-import { createSanityClient, PreviewSession } from "hydrogen-sanity";
+import {
+  createSanityClient,
+  getPreview,
+  PreviewSession,
+} from "hydrogen-sanity";
 
 import { getLocaleFromRequest } from "~/lib/utils";
 
@@ -64,12 +68,14 @@ export async function handler(
       storefrontHeaders: getStorefrontHeaders(request),
     });
 
+    console.log({ previewSession: previewSession.has("projectId") });
+
     const sanity = createSanityClient({
       cache,
       waitUntil,
       // Optionally, pass session and token to enable live-preview
       preview:
-        env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
+        previewSession && env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
           ? {
               session: previewSession,
               token: env.SANITY_API_TOKEN,
@@ -82,6 +88,12 @@ export async function handler(
         apiVersion: env.SANITY_API_VERSION || "2023-03-30",
         useCdn: process.env.NODE_ENV === "production",
         perspective: "published",
+        // @ts-expect-error
+        studioUrl: "/studio",
+        // Visual editing should run in non-production environments in non-preview sessions
+        encodeSourceMap:
+          previewSession.has("projectId") &&
+          process.env.NODE_ENV !== "production",
       },
     });
 

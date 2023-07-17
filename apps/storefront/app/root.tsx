@@ -25,11 +25,12 @@ import {
   type LoaderArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
+import { getPreview } from "hydrogen-sanity";
+import { lazy } from "react";
 
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
-// import VisualEditing from "~/components/overlays/VisualEditing";
 import { useAnalytics } from "~/hooks/useAnalytics";
 import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
@@ -37,6 +38,8 @@ import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import type { I18nLocale } from "~/types/shopify";
+
+const VisualEditing = lazy(() => import("~/components/overlays/VisualEditing"));
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.layout?.seo?.title,
@@ -51,6 +54,8 @@ export const handle = {
 };
 
 export async function loader({ context }: LoaderArgs) {
+  const preview = getPreview(context);
+
   const cache = context.storefront.CacheCustom({
     mode: "public",
     maxAge: 60,
@@ -87,6 +92,10 @@ export async function loader({ context }: LoaderArgs) {
     sanityDataset: context.env.SANITY_DATASET || "production",
     selectedLocale,
     storeDomain: context.storefront.getShopifyDomain(),
+    ENV: {
+      NODE_ENV: process.env.NODE_ENV,
+    },
+    preview,
   });
 }
 
@@ -94,8 +103,10 @@ export default function App() {
   const data = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
-  // const hasVisualEditing = true;
   const nonce = useNonce();
+
+  // Visual editing should run in non-production environments in non-preview sessions
+  const hasVisualEditing = !data.preview && data.ENV.NODE_ENV !== "production";
 
   useAnalytics(hasUserConsent, locale);
 
@@ -108,10 +119,10 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {/* {hasVisualEditing ? <VisualEditing /> : null} */}
+        {hasVisualEditing ? <VisualEditing /> : null}
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
-        <Scripts nonce={nonce} />
+        {/* <Scripts nonce={nonce} /> */}
       </body>
     </html>
   );
