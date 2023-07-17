@@ -106,7 +106,10 @@ export default function App() {
   const nonce = useNonce();
 
   // Visual editing should run in non-production environments in non-preview sessions
-  const hasVisualEditing = !data.preview && data.ENV.NODE_ENV !== "production";
+  const hasVisualEditing =
+    !data.preview &&
+    data.ENV.NODE_ENV !== "production" &&
+    typeof document !== "undefined";
 
   useAnalytics(hasUserConsent, locale);
 
@@ -122,7 +125,7 @@ export default function App() {
         {hasVisualEditing ? <VisualEditing /> : null}
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
-        {/* <Scripts nonce={nonce} /> */}
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
