@@ -66,7 +66,8 @@ export async function handler(
 
     // Visual editing should run in non-production environments in non-preview sessions
     const hasVisualEditing =
-      !previewSession.has("projectId") && process.env.NODE_ENV !== "production";
+      process.env.NODE_ENV !== "production" ||
+      process.env.VERCEL_ENV === "preview";
 
     const sanity = createSanityClient({
       cache,
