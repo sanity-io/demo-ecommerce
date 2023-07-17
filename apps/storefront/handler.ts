@@ -74,9 +74,7 @@ export async function handler(
       waitUntil,
       // Optionally, pass session and token to enable live-preview
       preview:
-        previewSession.has("projectId") &&
-        env.SANITY_PREVIEW_SECRET &&
-        env.SANITY_API_TOKEN
+        env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
           ? {
               session: previewSession,
               token: env.SANITY_API_TOKEN,
