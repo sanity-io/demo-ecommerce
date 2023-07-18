@@ -39,13 +39,10 @@ export const action: ActionFunction = async ({ request, context }) => {
  */
 export const loader: LoaderFunction = async function ({ request, context }) {
   const { env, sanity } = context;
-  console.log(`SESSION`, sanity.preview?.session);
+
   if (!sanity.preview?.session) {
     return notFound();
   }
-
-  const projectId = sanity.preview.session.has("projectId");
-  console.log({ projectId });
 
   const { searchParams } = new URL(request.url);
 
