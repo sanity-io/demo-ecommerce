@@ -11,36 +11,36 @@ export default defineType({
   title: TITLE,
   type: 'document',
   icon: CogIcon,
-  groups: [
-    {
-      default: true,
-      name: 'navigation',
-      title: 'Navigation',
-    },
-    {
-      name: 'productOptions',
-      title: 'Product options',
-    },
-    {
-      name: 'sharedText',
-      title: 'Shared text',
-    },
-    {
-      name: 'notFoundPage',
-      title: '404 page',
-    },
-    {
-      name: 'seo',
-      title: 'SEO',
-    },
-  ],
+  // groups: [
+  //   {
+  //     default: true,
+  //     name: 'navigation',
+  //     title: 'Navigation',
+  //   },
+  //   {
+  //     name: 'productOptions',
+  //     title: 'Product options',
+  //   },
+  //   {
+  //     name: 'sharedText',
+  //     title: 'Shared text',
+  //   },
+  //   {
+  //     name: 'notFoundPage',
+  //     title: '404 page',
+  //   },
+  //   {
+  //     name: 'seo',
+  //     title: 'SEO',
+  //   },
+  // ],
   fields: [
     // Menu
     defineField({
       name: 'menu',
       title: 'Menu',
       type: 'object',
-      group: 'navigation',
+      // group: 'navigation',
       options: {
         collapsed: false,
         collapsible: true,
@@ -99,7 +99,7 @@ export default defineType({
       name: 'footer',
       title: 'Footer',
       type: 'object',
-      group: 'navigation',
+      // group: 'navigation',
       options: {
         collapsed: false,
         collapsible: true,
@@ -156,7 +156,7 @@ export default defineType({
       name: 'customProductOptions',
       title: 'Custom product options',
       type: 'array',
-      group: 'productOptions',
+      // group: 'productOptions',
       of: [
         {
           name: 'customProductOption.color',
@@ -183,19 +183,19 @@ export default defineType({
     defineField({
       name: 'deliveryAndReturns',
       type: 'simpleBlockContent',
-      group: 'sharedText',
+      // group: 'sharedText',
     }),
     defineField({
       name: 'deliverySummary',
       type: 'string',
       description: 'Displayed on PDP alongside add to cart button',
-      group: 'sharedText',
+      // group: 'sharedText',
     }),
     defineField({
       name: 'environmentallyFriendly',
       type: 'string',
       description: 'Displayed on PDP alongside add to cart button',
-      group: 'sharedText',
+      // group: 'sharedText',
       initialValue: 'Environmentally friendly',
     }),
     // Not found page
@@ -203,7 +203,7 @@ export default defineType({
       name: 'notFoundPage',
       title: '404 page',
       type: 'object',
-      group: 'notFoundPage',
+      // group: 'notFoundPage',
       fields: [
         defineField({
           name: 'title',
@@ -244,7 +244,7 @@ export default defineType({
       name: 'seo',
       title: 'SEO',
       type: 'object',
-      group: 'seo',
+      // group: 'seo',
       description: 'Defaults for every page',
       options: {
         collapsed: false,
