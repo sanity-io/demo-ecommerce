@@ -2,6 +2,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
 import {
   flattenConnection,
+  getSelectedProductOptions,
   type SeoConfig,
   type SeoHandleFunction,
   ShopifyAnalyticsProduct,
@@ -11,10 +12,9 @@ import type {
   MediaImage,
   Product,
   ProductVariant,
-  SelectedOptionInput,
 } from "@shopify/hydrogen/storefront-api-types";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
+import { defer, type LoaderArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -32,6 +32,7 @@ import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
 import {
   PRODUCT_QUERY,
   RECOMMENDED_PRODUCTS_QUERY,
+  VARIANTS_QUERY,
 } from "~/queries/shopify/product";
 
 const seo: SeoHandleFunction = ({ data }) => {
@@ -68,13 +69,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
   const { handle } = params;
   invariant(handle, "Missing handle param, check route filename");
 
-  const searchParams = new URL(request.url).searchParams;
-  const selectedOptions: SelectedOptionInput[] = [];
-
-  // set selected options from the query string
-  searchParams.forEach((value, name) => {
-    selectedOptions.push({ name, value });
-  });
+  const selectedOptions = getSelectedProductOptions(request);
 
   const cache = context.storefront.CacheCustom({
     mode: "public",
@@ -104,8 +99,20 @@ export async function loader({ params, context, request }: LoaderArgs) {
     throw notFound();
   }
 
+  if (!product.selectedVariant) {
+    return redirectToFirstVariant({ product, request });
+  }
+
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
+
+  // In order to show which variants are available in the UI, we need to query
+  // all of them. We defer this query so that it doesn't block the page.
+  const variants = context.storefront.query(VARIANTS_QUERY, {
+    variables: {
+      handle,
+    },
+  });
 
   // Get recommended products from Shopify
   const recommended = context.storefront.query<{
@@ -116,8 +123,8 @@ export async function loader({ params, context, request }: LoaderArgs) {
     },
   });
 
-  const selectedVariant =
-    product.selectedVariant ?? product?.variants?.nodes[0];
+  const firstVariant = product.variants.nodes[0];
+  const selectedVariant = product.selectedVariant ?? firstVariant;
 
   const productAnalytics: ShopifyAnalyticsProduct = {
     productGid: product.id,
@@ -131,6 +138,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
   return defer({
     page,
     product,
+    variants,
     gids,
     selectedVariant,
     recommended,
@@ -143,9 +151,35 @@ export async function loader({ params, context, request }: LoaderArgs) {
   });
 }
 
+function redirectToFirstVariant({
+  product,
+  request,
+}: {
+  product: Product;
+  request: Request;
+}) {
+  const searchParams = new URLSearchParams(new URL(request.url).search);
+  const firstVariant = product!.variants.nodes[0];
+  for (const option of firstVariant.selectedOptions) {
+    searchParams.set(option.name, option.value);
+  }
+
+  throw redirect(
+    `/products/${product!.handle}?${searchParams.toString()}`,
+    302
+  );
+}
+
 export default function ProductHandle() {
-  const { page, product, selectedVariant, analytics, recommended, gids } =
-    useLoaderData();
+  const {
+    page,
+    product,
+    variants,
+    selectedVariant,
+    analytics,
+    recommended,
+    gids,
+  } = useLoaderData();
   const { handle } = useParams();
 
   return (
@@ -157,12 +191,33 @@ export default function ProductHandle() {
       {(page) => (
         <ColorTheme value={page.colorTheme}>
           <div className="relative w-full">
-            <ProductDetails
-              selectedVariant={selectedVariant}
-              sanityProduct={page}
-              storefrontProduct={product}
-              analytics={analytics}
-            />
+            <Suspense
+              fallback={
+                <ProductDetails
+                  selectedVariant={selectedVariant}
+                  sanityProduct={page}
+                  storefrontProduct={product}
+                  storefrontVariants={[]}
+                  analytics={analytics}
+                />
+              }
+            >
+              <Await
+                errorElement="There was a problem loading related products"
+                resolve={variants}
+              >
+                {(resp) => (
+                  <ProductDetails
+                    selectedVariant={selectedVariant}
+                    sanityProduct={page}
+                    storefrontProduct={product}
+                    storefrontVariants={resp.product?.variants.nodes || []}
+                    analytics={analytics}
+                  />
+                )}
+              </Await>
+            </Suspense>
+
             <Suspense>
               <Await resolve={gids}>
                 {/* Body */}
