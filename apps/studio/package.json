@@ -16,7 +16,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@demo-ecommerce/sanity": "*",
+    "@demo-ecommerce/sanity": "file:../../packages/sanity",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
