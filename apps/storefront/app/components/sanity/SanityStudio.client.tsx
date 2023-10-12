@@ -28,7 +28,7 @@ export function SanityStudio(props: SanityStudioProps) {
 
   return (
     <div id="sanity">
-      <Studio {...rest} config={config} unstable_globalStyles />
+      <Studio {...rest} config={config} unstable_noAuthBoundary={true} unstable_globalStyles />
     </div>
   );
 }
