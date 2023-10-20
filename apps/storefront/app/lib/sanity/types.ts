@@ -13,6 +13,16 @@ export interface SanityAssetImage extends Image {
   width: number;
 }
 
+export type SanityLayout = {
+  seo: SanitySeo;
+  menuLinks?: SanityMenuLink[];
+  footer?: {
+    links?: SanityLink[];
+    text?: PortableTextBlock[];
+  };
+  notFoundPage?: SanityNotFoundPage;
+};
+
 export type SanityCollection = {
   _id: string;
   colorTheme: SanityColorTheme;

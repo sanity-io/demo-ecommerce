@@ -44,6 +44,7 @@ import heroCollection from './objects/hero/collection'
 import heroHome from './objects/hero/home'
 import heroPage from './objects/hero/page'
 import imageWithProductHotspots from './objects/imageWithProductHotspots'
+import label from './objects/label'
 import linkExternal from './objects/linkExternal'
 import linkInternal from './objects/linkInternal'
 import moduleAccordion from './objects/module/accordion'
@@ -76,6 +77,7 @@ const objects = [
   customProductOptionSize,
   faqs,
   imageWithProductHotspots,
+  label,
   linkExternal,
   linkInternal,
   heroCollection,

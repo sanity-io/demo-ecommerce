@@ -19,10 +19,12 @@ export const countries: Localizations = {
     label: "UK (GBP £)",
     currency: "GBP",
   },
-  "/en-no": {
-    language: "EN",
+  "/no-no": {
+    language: "NO",
     country: "NO",
     label: "Norway (NOK kr)",
     currency: "NOK",
   },
 };
+
+export const baseLanguage = countries.default.language.toLowerCase();

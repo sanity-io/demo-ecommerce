@@ -1,12 +1,13 @@
 import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 
 import { defaultButtonStyles } from "~/components/elements/Button";
+import { Label } from "~/components/global/Label";
 import { Link } from "~/components/Link";
 
 type ButtonMode = "default" | "inline";
 
 export default function BuyNowButton({
-  children = "Buy now",
+  children = <Label _key="cart.buyNow" />,
   lines,
   mode = "default",
   ...props

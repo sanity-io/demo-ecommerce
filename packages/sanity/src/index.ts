@@ -1,11 +1,15 @@
 import {colorInput} from '@sanity/color-input'
+import {documentInternationalization} from '@sanity/document-internationalization'
+import {languageFilter} from '@sanity/language-filter'
 import {visionTool} from '@sanity/vision'
-import {AssetSource, defineConfig, type SingleWorkspace} from 'sanity'
+import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
+import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 
-import {ENVIRONMENT} from './constants'
+import Navbar from './components/studio/Navbar'
+import {ENVIRONMENT, LANGUAGES} from './constants'
 import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
@@ -54,6 +58,40 @@ export function defineSanityConfig(config: SanityConfig) {
       customDocumentActions(),
       media(),
       visionTool(),
+      // documentInternationalization({
+      //   supportedLanguages: LANGUAGES,
+      //   schemaTypes: ['material'],
+      // }),
+      internationalizedArray({
+        languages: LANGUAGES,
+        defaultLanguages: ['en'],
+        fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent'],
+        buttonLocations: ['unstable__fieldAction'],
+      }),
+      languageFilter({
+        supportedLanguages: LANGUAGES,
+        documentTypes: ['material', 'product', 'person'],
+        filterField: (enclosingType, member, selectedLanguageIds) => {
+          // Filter internationalized arrays
+          if (
+            enclosingType.jsonType === 'object' &&
+            enclosingType.name.startsWith('internationalizedArray') &&
+            'kind' in member
+          ) {
+            const language = isKeyedObject(member.field.path[1]) ? member.field.path[1]._key : null
+
+            return language ? selectedLanguageIds.includes(language) : false
+          }
+
+          // Filter internationalized objects
+          // `localeString` must be registered as a custom schema type
+          if (enclosingType.jsonType === 'object' && enclosingType.name.startsWith('locale')) {
+            return selectedLanguageIds.includes(member.name)
+          }
+
+          return true
+        },
+      }),
     ],
 
     schema: {
@@ -74,6 +112,12 @@ export function defineSanityConfig(config: SanityConfig) {
         assetSources: (previousAssetSources: AssetSource[]) => {
           return previousAssetSources.filter((assetSource) => assetSource === mediaAssetSource)
         },
+      },
+    },
+
+    studio: {
+      components: {
+        navbar: Navbar,
       },
     },
   })

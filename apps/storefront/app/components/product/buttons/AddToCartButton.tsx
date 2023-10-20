@@ -3,13 +3,14 @@ import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 import { twMerge } from "tailwind-merge";
 
 import { defaultButtonStyles } from "~/components/elements/Button";
+import { Label } from "~/components/global/Label";
 import SpinnerIcon from "~/components/icons/Spinner";
 import { CartAction } from "~/types/shopify";
 
 type FormMode = "default" | "inline";
 
 export default function AddToCartButton({
-  children = "Add to cart",
+  children = <Label _key="cart.addToCart" />,
   lines,
   analytics,
   mode = "default",
@@ -63,7 +64,7 @@ export default function AddToCartButton({
 }
 
 export function AddToCartLink({
-  children = "Add to cart",
+  children = <Label _key="cart.addToCart" />,
   lines,
   analytics,
   mode = "default",

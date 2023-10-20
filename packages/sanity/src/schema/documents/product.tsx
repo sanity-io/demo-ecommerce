@@ -69,7 +69,7 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
@@ -91,7 +91,7 @@ export default defineType({
       name: 'faqs',
       title: 'FAQs',
       description: 'Shown in addition to any material FAQs',
-      type: 'faqs',
+      type: 'internationalizedArrayFaqs',
       group: 'editorial',
     }),
     defineField({

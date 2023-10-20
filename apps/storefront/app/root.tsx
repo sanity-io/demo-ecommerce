@@ -37,6 +37,9 @@ import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import type { I18nLocale } from "~/types/shopify";
 
+import { baseLanguage } from "./data/countries";
+import { SanityLayout } from "./lib/sanity";
+
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.layout?.seo?.title,
   titleTemplate: `%s${
@@ -59,7 +62,14 @@ export async function loader({ context }: LoaderArgs) {
   const [cartId, shop, layout] = await Promise.all([
     context.session.get("cartId"),
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    context.sanity.query<any>({ query: LAYOUT_QUERY, cache }),
+    context.sanity.query<SanityLayout>({
+      query: LAYOUT_QUERY,
+      cache,
+      params: {
+        language: context.storefront.i18n.language.toLowerCase(),
+        baseLanguage,
+      },
+    }),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
@@ -173,13 +183,14 @@ export function ErrorBoundary({ error }: { error: Error }) {
 }
 
 const SHOP_QUERY = `#graphql
-  query layout {
-    shop {
-      id
-      name
-      description
+  query layout($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+      shop {
+        id
+        name
+        description
+      }
     }
-  }
 `;
 
 async function getCart({ storefront }: AppLoadContext, cartId: string) {

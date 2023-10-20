@@ -25,6 +25,10 @@ export const LAYOUT_QUERY = groq`
         ${COLOR_THEME}
       },
       title
+    },
+    labels[] {
+      key,
+      "text": coalesce(text[_key == $language][0].value, text[_key == $baseLanguage][0].value),
     }
   }
 `;

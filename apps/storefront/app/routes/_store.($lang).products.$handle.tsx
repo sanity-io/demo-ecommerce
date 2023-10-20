@@ -20,11 +20,13 @@ import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
+import { Label } from "~/components/global/Label";
 import AccordionBlock from "~/components/portableText/blocks/Accordion";
 import PortableText from "~/components/portableText/PortableText";
 import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
+import { baseLanguage } from "~/data/countries";
 import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -64,6 +66,7 @@ export const handle = {
 
 export async function loader({ params, context, request }: LoaderArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing handle param, check route filename");
@@ -87,6 +90,8 @@ export async function loader({ params, context, request }: LoaderArgs) {
       query: PRODUCT_PAGE_QUERY,
       params: {
         slug: params.handle,
+        language,
+        baseLanguage,
       },
       cache,
     }),
@@ -129,6 +134,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
   };
 
   return defer({
+    language,
     page,
     product,
     gids,
@@ -144,15 +150,22 @@ export async function loader({ params, context, request }: LoaderArgs) {
 }
 
 export default function ProductHandle() {
-  const { page, product, selectedVariant, analytics, recommended, gids } =
-    useLoaderData();
+  const {
+    language,
+    page,
+    product,
+    selectedVariant,
+    analytics,
+    recommended,
+    gids,
+  } = useLoaderData();
   const { handle } = useParams();
 
   return (
     <SanityPreview
       data={page}
       query={PRODUCT_PAGE_QUERY}
-      params={{ slug: handle }}
+      params={{ slug: handle, language, baseLanguage }}
     >
       {(page) => (
         <ColorTheme value={page.colorTheme}>
@@ -242,7 +255,7 @@ const SanityProductShipping = ({ blocks }: { blocks: PortableTextBlock[] }) => {
           "mb-6 mt-16 text-xl font-bold"
         )}
       >
-        Shipping &amp; Returns
+        <Label _key="shipping.shippingReturns" />
       </h2>
       <PortableText blocks={blocks} />
     </>
@@ -258,7 +271,7 @@ const SanityProductFaqs = ({ faqs }: { faqs: SanityFaqs }) => {
           "-mb-6 mt-16 text-xl font-bold"
         )}
       >
-        FAQs
+        <Label _key="faqs.title" />
       </h2>
       <AccordionBlock value={faqs} />
     </>

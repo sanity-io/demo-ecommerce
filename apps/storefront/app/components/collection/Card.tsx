@@ -1,7 +1,9 @@
+import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 
 import { Link } from "~/components/Link";
 import type { SanityCollection } from "~/lib/sanity";
+import { useGid } from "~/lib/utils";
 
 type Props = {
   collection: SanityCollection;
@@ -9,7 +11,10 @@ type Props = {
 };
 
 export default function CollectionCard({ collection, onClick }: Props) {
-  if (!collection.slug) {
+  const collectionGid = collection?.gid;
+  const storefrontCollection = useGid<Collection>(collectionGid);
+
+  if (!collection?.slug) {
     return null;
   }
 
@@ -43,7 +48,7 @@ export default function CollectionCard({ collection, onClick }: Props) {
             collection.vector ? "text-white" : "text-darkGray"
           )}
         >
-          {collection.title}
+          {storefrontCollection?.title || collection.title}
         </div>
       </div>
     </Link>

@@ -12,7 +12,7 @@ export const CREATOR = groq`
     image {
       ${IMAGE}
     },
-    bio[]{
+    "bio": coalesce(bio[_key == $language][0].value, bio[_key == $baseLanguage][0].value)[] {
       ...,
       markDefs[] {
         ${MARK_DEFS}

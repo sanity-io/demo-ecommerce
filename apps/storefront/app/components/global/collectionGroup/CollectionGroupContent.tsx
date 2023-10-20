@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useMatches } from "@remix-run/react";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import { useCallback, useEffect } from "react";
@@ -20,6 +20,9 @@ export default function CollectionGroupContent({
   collectionGroup,
   onClose,
 }: Props) {
+  const [root] = useMatches();
+  const selectedLocale = root.data?.selectedLocale;
+
   const fetcher = useFetcher();
   const { collection: collectionData } = (fetcher.data ?? {}) as {
     collection: Collection;
@@ -31,9 +34,12 @@ export default function CollectionGroupContent({
   });
 
   useEffect(() => {
+    const apiUrl = `${selectedLocale && `${selectedLocale.pathPrefix}`}/api${
+      collection?.slug
+    }?count=4`;
     if (!inView || fetcher.data || fetcher.state === "loading") return;
-    fetcher.load(`/api${collection?.slug}?count=4`);
-  }, [inView, fetcher, collection?.slug]);
+    fetcher.load(apiUrl);
+  }, [inView, fetcher, collection?.slug, selectedLocale]);
 
   const products = collectionData?.products.nodes;
 

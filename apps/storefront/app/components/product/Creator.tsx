@@ -6,6 +6,8 @@ import PortableText from "~/components/portableText/PortableText";
 import type { SanityCreator } from "~/lib/sanity";
 import type { ProductWithNodes } from "~/types/shopify";
 
+import { Label } from "../global/Label";
+
 type Props = {
   product: ProductWithNodes;
   creator: SanityCreator;
@@ -44,10 +46,9 @@ export default function Creator({ product, creator }: Props) {
             </div>
             {creator.role && (
               <div className="tracking-tight mb-2 text-xl text-purple-600">
-                {`${creator.role.charAt(0).toUpperCase()}${creator.role.slice(
-                  1
-                )}`}{" "}
-                of the {product.title}
+                <Label _key={`person.${creator.role}`} />
+                {" // "}
+                {product.title}
               </div>
             )}
             <PortableText className="text-sm" blocks={creator.person.bio} />
@@ -56,7 +57,12 @@ export default function Creator({ product, creator }: Props) {
         <Link to={creator.person.slug}>
           <div className="flex aspect-square items-center overflow-hidden rounded bg-purple-600 hover:bg-purple-800">
             <div className="tracking-tight block items-center p-5 text-lg font-medium text-white xl:w-10/12">
-              Check out all of {creator.person.name.split(" ")[0]}&apos;s work
+              <Label
+                _key="person.checkOutWork"
+                replacements={{
+                  "{name}": creator.person.name.split(" ")[0],
+                }}
+              />
             </div>
           </div>
         </Link>

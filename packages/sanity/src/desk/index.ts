@@ -40,6 +40,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'product',
   'productVariant',
   'settings',
+  'translation.metadata',
 ]
 
 export const structure: StructureResolver = (S, context) =>

@@ -6,6 +6,8 @@ import ProductModule from "~/components/modules/Product";
 import PortableText from "~/components/portableText/PortableText";
 import { SanityComposition, SanityProductPage } from "~/lib/sanity";
 
+import { Label } from "../global/Label";
+
 type Props = {
   compositionStories: SanityComposition[];
   page: SanityProductPage;
@@ -33,7 +35,9 @@ export default function Composition({ compositionStories, page }: Props) {
 
       <div className="col-span-2 grid aspect-square">
         <div className="mt-auto">
-          <h2>Made from...</h2>
+          <h2>
+            <Label _key="product.madeFrom" />
+          </h2>
           {compositionStories.map((composition) => (
             <div className="mb-8 last:mb-0" key={composition._key}>
               <h3 className="mb-2 text-xl font-bold text-purple-600">

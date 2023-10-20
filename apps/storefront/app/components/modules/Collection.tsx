@@ -71,7 +71,7 @@ export default function CollectionModule({ module }: Props) {
             collection.vector ? "text-white" : "text-offBlack"
           )}
         >
-          {collection.title}
+          {storefrontCollection.title}
         </div>
         <Button className="pointer-events-none relative mt-6 bg-white text-offBlack hover:opacity-50">
           Shop collection

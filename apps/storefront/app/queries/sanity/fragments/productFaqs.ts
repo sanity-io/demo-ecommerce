@@ -6,7 +6,7 @@ export const PRODUCT_FAQS = groq`
   "faqs": {
     "groups": array::compact(
       [
-        ...faqs[] {
+        ...coalesce(faqs[_key == $language][0].value, faqs[_key == $baseLanguage][0].value)[] {
           _key,
           "title": question,
           "body": answer[] {
@@ -17,7 +17,7 @@ export const PRODUCT_FAQS = groq`
           }
         },
         ...composition[]->{
-          faqs[] {
+          "faqs": coalesce(faqs[_key == $language][0].value, faqs[_key == $baseLanguage][0].value)[] {
             _key,
             "title": question,
             "body": answer[] {

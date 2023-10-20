@@ -182,21 +182,16 @@ export default defineType({
     // Shared text
     defineField({
       name: 'deliveryAndReturns',
-      type: 'simpleBlockContent',
+      type: 'internationalizedArraySimpleBlockContent',
       group: 'sharedText',
     }),
+    // Labels
     defineField({
-      name: 'deliverySummary',
-      type: 'string',
-      description: 'Displayed on PDP alongside add to cart button',
+      name: 'labels',
+      title: 'Labels',
+      type: 'array',
       group: 'sharedText',
-    }),
-    defineField({
-      name: 'environmentallyFriendly',
-      type: 'string',
-      description: 'Displayed on PDP alongside add to cart button',
-      group: 'sharedText',
-      initialValue: 'Environmentally friendly',
+      of: [{type: 'label'}],
     }),
     // Not found page
     defineField({
