@@ -8,6 +8,7 @@ import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 
+import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
 import {structure} from './desk'
@@ -118,6 +119,7 @@ export function defineSanityConfig(config: SanityConfig) {
     studio: {
       components: {
         navbar: Navbar,
+        logo: Logo,
       },
     },
   })
