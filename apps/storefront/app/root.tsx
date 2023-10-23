@@ -22,8 +22,10 @@ import type {
 import {
   type AppLoadContext,
   defer,
+  type LinksFunction,
   type LoaderArgs,
   type SerializeFrom,
+  type V2_MetaFunction,
 } from "@shopify/remix-oxygen";
 
 import { GenericError } from "~/components/global/GenericError";
@@ -35,10 +37,46 @@ import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
+import stylesheet from "~/styles/tailwind.css";
 import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
 import { SanityLayout } from "./lib/sanity";
+
+export const meta: V2_MetaFunction = () => [
+  {
+    name: "viewport",
+    content: "width=device-width,initial-scale=1",
+  },
+];
+
+export const links: LinksFunction = () => {
+  return [
+    { rel: "stylesheet", href: stylesheet },
+    {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap",
+      rel: "stylesheet",
+    },
+    {
+      rel: "preconnect",
+      href: "https://cdn.shopify.com",
+    },
+    {
+      rel: "preconnect",
+      href: "https://shop.app",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+      crossOrigin: "anonymous",
+    },
+  ];
+};
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.layout?.seo?.title,
