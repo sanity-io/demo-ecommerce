@@ -1,7 +1,7 @@
 import {DocumentIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 
-import {validateSlug} from '../../utils/validateSlug'
+import {isUniqueOtherThanLanguage, validateSlug} from '../../utils/validateSlug'
 
 export default defineField({
   name: 'page',
@@ -35,7 +35,7 @@ export default defineField({
     defineField({
       name: 'slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
       // @ts-ignore - TODO - fix this TS error
       validation: validateSlug,
     }),

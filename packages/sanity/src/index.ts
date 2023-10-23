@@ -59,19 +59,19 @@ export function defineSanityConfig(config: SanityConfig) {
       customDocumentActions(),
       media(),
       visionTool(),
-      // documentInternationalization({
-      //   supportedLanguages: LANGUAGES,
-      //   schemaTypes: ['material'],
-      // }),
+      documentInternationalization({
+        supportedLanguages: LANGUAGES,
+        schemaTypes: ['guide'],
+      }),
       internationalizedArray({
         languages: LANGUAGES,
         defaultLanguages: ['en'],
-        fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent'],
+        fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent', 'hero.collection'],
         buttonLocations: ['unstable__fieldAction'],
       }),
       languageFilter({
         supportedLanguages: LANGUAGES,
-        documentTypes: ['material', 'product', 'person'],
+        documentTypes: ['collection', 'material', 'product', 'person'],
         filterField: (enclosingType, member, selectedLanguageIds) => {
           // Filter internationalized arrays
           if (
@@ -97,6 +97,22 @@ export function defineSanityConfig(config: SanityConfig) {
 
     schema: {
       types,
+      templates: (prev) => {
+        const prevFiltered = prev.filter((template) => template.id !== 'lesson')
+
+        return [
+          ...prevFiltered,
+          {
+            id: 'guide-language',
+            title: 'Guide with Language',
+            schemaType: 'guide',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+        ].filter((template) => !['guide'].includes(template.id))
+      },
     },
 
     document: {

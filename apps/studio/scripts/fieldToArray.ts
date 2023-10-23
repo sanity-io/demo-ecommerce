@@ -13,8 +13,8 @@ const client = getCliClient({apiVersion: '2023-06-30'})
 // 2. Modify this "TYPE" and "FIELD_NAME" variables
 // to match the data you need to change
 
-const TYPE = `settings`
-const FIELD_NAME = `deliveryAndReturns`
+const TYPE = `collection`
+const FIELD_NAME = `hero`
 
 // 3. Run this script with:
 // `sanity exec ./migrations/fieldToArray.ts --with-user-token`

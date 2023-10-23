@@ -29,6 +29,7 @@ export const handle = {
 
 export async function loader({ params, context }: LoaderArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing page handle");
@@ -43,6 +44,7 @@ export async function loader({ params, context }: LoaderArgs) {
     query: GUIDE_QUERY,
     params: {
       slug: handle,
+      language,
     },
     cache,
   });
@@ -54,15 +56,20 @@ export async function loader({ params, context }: LoaderArgs) {
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
-  return defer({ page, gids });
+  return defer({ language, page, gids });
 }
 
 export default function Page() {
-  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
+  const { language, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
   return (
-    <SanityPreview data={page} query={GUIDE_QUERY} params={{ slug: handle }}>
+    <SanityPreview
+      data={page}
+      query={GUIDE_QUERY}
+      params={{ slug: handle, language }}
+    >
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
           <Suspense>

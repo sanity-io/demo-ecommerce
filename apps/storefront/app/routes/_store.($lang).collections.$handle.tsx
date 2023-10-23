@@ -19,6 +19,7 @@ import invariant from "tiny-invariant";
 import ProductGrid from "~/components/collection/ProductGrid";
 import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
+import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
@@ -49,6 +50,7 @@ const PAGINATION_SIZE = 12;
 
 export async function loader({ params, context, request }: LoaderArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   const searchParams = new URL(request.url).searchParams;
@@ -71,6 +73,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
       query: COLLECTION_PAGE_QUERY,
       params: {
         slug: params.handle,
+        language,
       },
       cache,
     }),
@@ -94,6 +97,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
   const gids = fetchGids({ page, context });
 
   return defer({
+    language,
     page,
     collection,
     gids,
@@ -107,7 +111,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
 }
 
 export default function Collection() {
-  const { collection, page, gids } =
+  const { language, collection, page, gids } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
@@ -119,7 +123,7 @@ export default function Collection() {
     <SanityPreview
       data={page}
       query={COLLECTION_PAGE_QUERY}
-      params={{ slug: handle }}
+      params={{ slug: handle, language }}
     >
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
@@ -127,7 +131,7 @@ export default function Collection() {
             <Await resolve={gids}>
               {/* Hero */}
               <CollectionHero
-                fallbackTitle={page?.title || collection?.title}
+                fallbackTitle={collection?.title}
                 hero={page?.hero as SanityHeroHome}
               />
 
@@ -154,7 +158,7 @@ export default function Collection() {
                 {/* No results */}
                 {products.length === 0 && (
                   <div className="mt-16 text-center text-lg text-darkGray">
-                    No products.
+                    <Label _key="collection.noResults" />
                   </div>
                 )}
 

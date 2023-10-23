@@ -11,6 +11,7 @@ export const PRODUCT_GUIDE = groq`*[
       ||
       ^._id in body[_type == "blockImages"].modules[].productHotspots[].productWithVariant.product._ref
     )
+    && language == $language
   ] {
     title,
     "slug": "/guides/" + slug.current,

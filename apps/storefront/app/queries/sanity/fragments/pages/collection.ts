@@ -11,12 +11,14 @@ export const COLLECTION_PAGE = groq`
     ${COLOR_THEME}
   },
   (showHero == true) => {
-    hero {
+    "hero": hero[_key == $language][0].value {
       ${HERO_COLLECTION}
     },
   },
-  modules[] {
-    ${MODULES}
+  ($language == "en") => {
+    modules[] {
+      ${MODULES}
+    },
   },
   ${SEO_SHOPIFY},
   "slug": store.slug.current,
