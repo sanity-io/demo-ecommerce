@@ -9,6 +9,8 @@ import clsx from "clsx";
 import ProductForm from "~/components/product/Form";
 import type { SanityProductPage } from "~/lib/sanity";
 
+import { Label } from "../global/Label";
+
 type Props = {
   sanityProduct: SanityProductPage;
   storefrontProduct: Product;
@@ -68,13 +70,15 @@ export default function ProductWidget({
       {/* Sold out */}
       {!availableForSale && (
         <div className="mb-3 text-xs font-bold uppercase text-darkGray">
-          Sold out
+          <Label _key="product.soldOut" />
         </div>
       )}
 
       {/* Sale */}
       {availableForSale && selectedVariant?.compareAtPrice && (
-        <div className="mb-3 text-xs font-bold uppercase text-red">Sale</div>
+        <div className="mb-3 text-xs font-bold uppercase text-red">
+          <Label _key="product.sale" />
+        </div>
       )}
 
       {/* Title */}

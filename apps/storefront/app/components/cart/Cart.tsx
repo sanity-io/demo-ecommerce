@@ -25,6 +25,8 @@ import SpinnerIcon from "~/components/icons/Spinner";
 import { Link } from "~/components/Link";
 import { CartAction } from "~/types/shopify";
 
+import { Label } from "../global/Label";
+
 export function CartLineItems({
   linesObj,
 }: {
@@ -227,7 +229,7 @@ export function CartSummary({ cost }: { cost: CartCost }) {
           role="row"
         >
           <span className="text-darkGray" role="rowheader">
-            Subtotal
+            <Label _key="cart.subtotal" />
           </span>
           <span role="cell" className="text-right font-bold">
             {cost?.subtotalAmount?.amount ? (
@@ -243,10 +245,10 @@ export function CartSummary({ cost }: { cost: CartCost }) {
           className="flex justify-between border-t border-gray p-4"
         >
           <span className="text-darkGray" role="rowheader">
-            Shipping
+            <Label _key="cart.shipping" />
           </span>
           <span role="cell" className="font-bold uppercase">
-            Calculated at checkout
+            <Label _key="cart.calculatedAtCheckout" />
           </span>
         </div>
       </div>
@@ -277,7 +279,7 @@ export function CartActions({ cart }: { cart: Cart }) {
         to={cart.checkoutUrl}
         className={clsx([defaultButtonStyles(), "w-1/2"])}
       >
-        Checkout
+        <Label _key="cart.checkout" />
       </Button>
     </div>
   );

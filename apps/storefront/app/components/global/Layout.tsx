@@ -4,6 +4,8 @@ import Footer from "~/components/global/Footer";
 import Header from "~/components/global/Header";
 import { PreviewBanner } from "~/components/preview/PreviewBanner";
 
+import { Label } from "./Label";
+
 type LayoutProps = {
   backgroundColor?: string;
   children: React.ReactNode;
@@ -19,7 +21,7 @@ export function Layout({ backgroundColor, children }: LayoutProps) {
           href="#mainContent"
           className="sr-only p-4 focus:not-sr-only focus:block"
         >
-          Skip to content
+          <Label _key="global.skipToContent" />
         </a>
       </div>
 
