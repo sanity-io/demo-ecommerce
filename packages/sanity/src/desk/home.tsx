@@ -1,7 +1,7 @@
 import {HomeIcon} from '@sanity/icons'
-import {Text} from '@sanity/ui'
 import {ListItemBuilder} from 'sanity/desk'
 
+import TranslatedDoc from '../components/media/TranslatedDoc'
 import {LANGUAGES} from '../constants'
 import defineStructure from '../utils/defineStructure'
 
@@ -18,7 +18,7 @@ export default defineStructure<ListItemBuilder>((S) =>
           ...LANGUAGES.map((language) =>
             S.documentListItem()
               .schemaType(`home`)
-              .icon(() => <Text size={4}>{language.icon}</Text>)
+              .icon(() => <TranslatedDoc icon={<HomeIcon />} languageIcon={language.icon} />)
               .id(`home-${language.id}`)
               .title(`Home (${language.id.toLocaleUpperCase()})`)
           ),

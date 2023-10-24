@@ -1,16 +1,9 @@
 import {CogIcon} from '@sanity/icons'
-import {Text} from '@sanity/ui'
 import {ListItemBuilder} from 'sanity/desk'
 
+import TranslatedDoc from '../components/media/TranslatedDoc'
 import {LANGUAGES} from '../constants'
 import defineStructure from '../utils/defineStructure'
-
-// export default defineStructure<ListItemBuilder>((S) =>
-//   S.listItem()
-//     .title('Settings')
-//     .schemaType('settings')
-//     .child(S.editor().title('Settings').schemaType('settings').documentId('settings'))
-// )
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -25,7 +18,7 @@ export default defineStructure<ListItemBuilder>((S) =>
           ...LANGUAGES.map((language) =>
             S.documentListItem()
               .schemaType(`settings`)
-              .icon(() => <Text size={4}>{language.icon}</Text>)
+              .icon(() => <TranslatedDoc icon={<CogIcon />} languageIcon={language.icon} />)
               .id(`settings-${language.id}`)
               .title(`Settings (${language.id.toLocaleUpperCase()})`)
           ),
