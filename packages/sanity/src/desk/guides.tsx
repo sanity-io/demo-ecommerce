@@ -1,7 +1,7 @@
 import {EarthGlobeIcon} from '@sanity/icons'
-import {Text} from '@sanity/ui'
 import {ListItemBuilder} from 'sanity/desk'
 
+import TranslatedDoc from '../components/media/TranslatedDoc'
 import {LANGUAGES, SANITY_API_VERSION} from '../constants'
 import defineStructure from '../utils/defineStructure'
 
@@ -18,7 +18,7 @@ export default defineStructure<ListItemBuilder>((S) =>
             S.listItem()
               .title(`Guides (${language.id.toLocaleUpperCase()})`)
               .schemaType('guide')
-              .icon(() => <Text size={4}>{language.icon}</Text>)
+              .icon(() => <TranslatedDoc icon={<EarthGlobeIcon />} languageIcon={language.icon} />)
               .child(
                 S.documentList()
                   .id(language.id)
