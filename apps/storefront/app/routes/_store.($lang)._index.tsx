@@ -28,6 +28,7 @@ export const handle = {
 
 export async function loader({ context, params }: LoaderArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const cache = context.storefront.CacheCustom({
     mode: "public",
@@ -37,6 +38,9 @@ export async function loader({ context, params }: LoaderArgs) {
 
   const page = await context.sanity.query<SanityHomePage>({
     query: HOME_PAGE_QUERY,
+    params: {
+      language,
+    },
     cache,
   });
 
@@ -48,6 +52,7 @@ export async function loader({ context, params }: LoaderArgs) {
   const gids = fetchGids({ page, context });
 
   return defer({
+    language,
     page,
     gids,
     analytics: {
@@ -57,10 +62,11 @@ export async function loader({ context, params }: LoaderArgs) {
 }
 
 export default function Index() {
-  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
+  const { language, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
 
   return (
-    <SanityPreview data={page} query={HOME_PAGE_QUERY}>
+    <SanityPreview data={page} query={HOME_PAGE_QUERY} params={{ language }}>
       {(page) => (
         <Suspense>
           <Await resolve={gids}>

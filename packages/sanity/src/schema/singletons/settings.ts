@@ -22,10 +22,6 @@ export default defineType({
       title: 'Product options',
     },
     {
-      name: 'sharedText',
-      title: 'Shared text',
-    },
-    {
       name: 'notFoundPage',
       title: '404 page',
     },
@@ -179,20 +175,6 @@ export default defineType({
           return true
         }),
     }),
-    // Shared text
-    defineField({
-      name: 'deliveryAndReturns',
-      type: 'internationalizedArraySimpleBlockContent',
-      group: 'sharedText',
-    }),
-    // Labels
-    defineField({
-      name: 'labels',
-      title: 'Labels',
-      type: 'array',
-      group: 'sharedText',
-      of: [{type: 'label'}],
-    }),
     // Not found page
     defineField({
       name: 'notFoundPage',
@@ -262,6 +244,12 @@ export default defineType({
         }),
       ],
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: true,
     }),
   ],
   preview: {

@@ -12,6 +12,7 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
+import { baseLanguage } from "~/data/countries";
 import type { SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -29,6 +30,7 @@ export const handle = {
 
 export async function loader({ params, context }: LoaderArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing page handle");
@@ -43,6 +45,8 @@ export async function loader({ params, context }: LoaderArgs) {
     query: PAGE_QUERY,
     params: {
       slug: handle,
+      language,
+      baseLanguage,
     },
     cache,
   });
@@ -54,15 +58,20 @@ export async function loader({ params, context }: LoaderArgs) {
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
-  return defer({ page, gids });
+  return defer({ language, page, gids });
 }
 
 export default function Page() {
-  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
+  const { language, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
   return (
-    <SanityPreview data={page} query={PAGE_QUERY} params={{ slug: handle }}>
+    <SanityPreview
+      data={page}
+      query={PAGE_QUERY}
+      params={{ slug: handle, language, baseLanguage }}
+    >
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
           <Suspense>

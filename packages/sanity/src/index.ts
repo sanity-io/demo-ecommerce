@@ -56,12 +56,12 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       colorInput(),
       imageHotspotArrayPlugin(),
-      customDocumentActions(),
+      // customDocumentActions(),
       media(),
       visionTool(),
       documentInternationalization({
         supportedLanguages: LANGUAGES,
-        schemaTypes: ['guide'],
+        schemaTypes: ['guide', 'page'],
       }),
       internationalizedArray({
         languages: LANGUAGES,
@@ -111,7 +111,16 @@ export function defineSanityConfig(config: SanityConfig) {
               language: params.language,
             }),
           },
-        ].filter((template) => !['guide'].includes(template.id))
+          {
+            id: 'page-language',
+            title: 'Page with Language',
+            schemaType: 'page',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+        ].filter((template) => !['guide', 'page', 'translation.metadata'].includes(template.id))
       },
     },
 

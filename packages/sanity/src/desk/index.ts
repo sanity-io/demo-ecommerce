@@ -4,6 +4,7 @@
 
 import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 
+import sharedText from '../schema/singletons/sharedText'
 import collections from './collections'
 import colorThemes from './colorThemes'
 import guides from './guides'
@@ -40,6 +41,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'product',
   'productVariant',
   'settings',
+  'sharedText',
   'translation.metadata',
 ]
 

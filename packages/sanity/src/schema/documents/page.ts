@@ -78,19 +78,27 @@ export default defineField({
       type: 'seo.page',
       group: 'seo',
     }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: true,
+    }),
   ],
   preview: {
     select: {
       active: 'active',
       seoImage: 'seo.image',
       title: 'title',
+      language: 'language',
     },
     prepare(selection) {
-      const {seoImage, title} = selection
+      const {seoImage, title, language} = selection
 
       return {
         media: seoImage,
         title,
+        subtitle: language?.toUpperCase(),
       }
     },
   },

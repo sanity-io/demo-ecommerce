@@ -26,8 +26,9 @@ const documents = [collection, colorTheme, guide, material, page, product, produ
 // Singleton document types
 import home from './singletons/home'
 import settings from './singletons/settings'
+import sharedText from './singletons/sharedText'
 
-const singletons = [home, settings]
+const singletons = [home, settings, sharedText]
 
 // Block content
 import body from './blocks/body'

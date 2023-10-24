@@ -5,7 +5,7 @@ import { LINKS } from "./fragments/links";
 import { PORTABLE_TEXT } from "./fragments/portableText/portableText";
 
 export const LAYOUT_QUERY = groq`
-  *[_type == 'settings'] | order(_updatedAt desc) [0] {
+  *[_type == 'settings' && _id == 'settings-' + $language] | order(_updatedAt desc) [0] {
     seo,
     "menuLinks": menu.links[] {
       ${LINKS}
@@ -26,9 +26,11 @@ export const LAYOUT_QUERY = groq`
       },
       title
     },
-    labels[] {
-      key,
-      "text": coalesce(text[_key == $language][0].value, text[_key == $baseLanguage][0].value),
-    }
+    "labels": *[_type == 'sharedText' && _id == 'sharedText'][0] {
+      labels[] {
+        key,
+        "text": coalesce(text[_key == $language][0].value, text[_key == $baseLanguage][0].value),
+      }
+    }.labels
   }
 `;

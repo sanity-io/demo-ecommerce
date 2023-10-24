@@ -40,7 +40,7 @@ export default defineField({
       type: 'array',
       of: [
         {
-          name: 'color',
+          name: 'customProductOption.colorObject',
           title: 'Color',
           type: 'object',
           fields: [
