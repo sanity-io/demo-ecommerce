@@ -32,6 +32,6 @@ export const SANITY_API_VERSION = '2022-10-25'
 export const ENVIRONMENT = Symbol('Sanity Environment')
 
 export const LANGUAGES = [
-  {id: 'en', title: 'English', icon: '🇬🇧'},
-  {id: 'no', title: 'Norwegian', icon: '🇳🇴'},
+  {id: 'en', title: 'English', icon: '🇬🇧', previewUrl: ''},
+  {id: 'no', title: 'Norwegian', icon: '🇳🇴', previewUrl: 'no-no'},
 ]
