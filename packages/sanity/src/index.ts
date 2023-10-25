@@ -56,7 +56,7 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       colorInput(),
       imageHotspotArrayPlugin(),
-      // customDocumentActions(),
+      customDocumentActions(),
       media(),
       visionTool(),
       documentInternationalization({
