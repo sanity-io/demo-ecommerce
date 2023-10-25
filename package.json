@@ -20,7 +20,7 @@
     "@commitlint/config-conventional": "^17.6.5",
     "@turbo/gen": "^1.9.7",
     "husky": "^8.0.0",
-    "turbo": "^1.10.2",
+    "turbo": "^1.10.16",
     "vercel": "^30.2.1"
   },
   "packageManager": "npm@9.5.1"
