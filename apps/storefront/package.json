@@ -7,7 +7,7 @@
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "scripts": {
-    "build": "shopify hydrogen build",
+    "build": "shopify hydrogen build --no-lockfile-check",
     "dev": "shopify hydrogen dev",
     "preview": "npm run build && vercel dev",
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx --ignore-path ../../.gitignore --max-warnings 0 .",
