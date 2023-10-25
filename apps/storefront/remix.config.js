@@ -4,7 +4,7 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: ["**/.*"],
-  watchPaths: ["./public", "../../packages/sanity/src"],
+  watchPaths: ["./public", "../../packages/sanity/src", "./.env"],
   server: isProduction ? "./server.vercel.ts" : "./server.ts",
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:
@@ -19,11 +19,13 @@ module.exports = {
   serverPlatform: "neutral",
   serverMinify: isProduction,
   future: {
+    v2_dev: true,
     v2_errorBoundary: true,
     v2_meta: true,
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
-    unstable_tailwind: true,
-    unstable_postcss: true,
+    v2_headers: true,
   },
+  tailwind: true,
+  postcss: true,
 };

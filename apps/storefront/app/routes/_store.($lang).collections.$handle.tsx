@@ -5,7 +5,7 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
-import { Collection } from "@shopify/hydrogen/storefront-api-types";
+import { type Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
 import {
   defer,
   type LoaderArgs,
@@ -77,7 +77,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
       },
       cache,
     }),
-    context.storefront.query<{ collection: Collection }>(COLLECTION_QUERY, {
+    context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
       variables: {
         handle,
         cursor,
