@@ -1,6 +1,7 @@
 import {
   isRouteErrorResponse,
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -152,6 +153,7 @@ export default function App() {
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload />
       </body>
     </html>
   );
@@ -209,6 +211,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
           )}
         </Layout>
         <Scripts nonce={nonce} />
+        <LiveReload />
       </body>
     </html>
   );
