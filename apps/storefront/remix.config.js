@@ -1,11 +1,12 @@
 const isProduction = process.env.NODE_ENV === "production";
+const isVercelEnvironment = process.env.VERCEL && process.env.VERCEL_ENV;
 
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: ["**/.*"],
   watchPaths: ["./public", "../../packages/sanity/src"],
-  server: isProduction ? "./server.vercel.ts" : "./server.ts",
+  server: isVercelEnvironment ? "./server.vercel.ts" : "./server.ts",
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:
    */
