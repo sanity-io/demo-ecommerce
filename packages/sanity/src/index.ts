@@ -15,6 +15,8 @@ import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
+import {composerTool} from '@sanity/composer'
+import {locate} from './location'
 
 /**
  * Configuration options that will be passed in
@@ -52,6 +54,10 @@ export function defineSanityConfig(config: SanityConfig) {
       deskTool({
         structure,
         defaultDocumentNode,
+      }),
+      composerTool({
+        previewUrl: preview.domain ?? 'http://localhost:3000',
+        locate,
       }),
       colorInput(),
       imageHotspotArrayPlugin(),

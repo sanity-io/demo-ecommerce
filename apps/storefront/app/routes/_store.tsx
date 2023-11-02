@@ -4,23 +4,42 @@ import { getPreview, PreviewProvider } from "hydrogen-sanity";
 
 import { Layout } from "~/components/global/Layout";
 import { PreviewLoading } from "~/components/global/PreviewLoading";
+import { VisualEditing } from "~/components/sanity/VisualEditing";
 
 export async function loader({ context }: LoaderFunctionArgs) {
   const preview = getPreview(context);
+  const client = context.sanity.client.config();
+  const { projectId, dataset } = client;
+
+  const sanityEnv = {
+    projectId,
+    dataset,
+    studioUrl: "/studio",
+    client,
+  };
 
   return json({
     preview,
+    sanityEnv,
   });
 }
 
 export default function Store() {
-  const { preview } = useLoaderData<typeof loader>();
+  const { preview, sanityEnv } = useLoaderData<typeof loader>();
 
   return (
-    <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
-      <Layout>
-        <Outlet />
-      </Layout>
-    </PreviewProvider>
+    <>
+      <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </PreviewProvider>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.SANITY_ENV = ${JSON.stringify(sanityEnv)}`,
+        }}
+      />
+      <VisualEditing studioUrl={sanityEnv.studioUrl} />
+    </>
   );
 }

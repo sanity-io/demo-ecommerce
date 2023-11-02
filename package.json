@@ -30,6 +30,8 @@
     "@shopify/hydrogen": "2023.10.0",
     "@shopify/remix-oxygen": "^2.0.0",
     "@sanity/preview-kit": "^3.2.6",
-    "@sanity/client": "^6.7.0"
+    "@sanity/client": "^6.7.0",
+    "sanity": "3.18.2-pink-lizard.36",
+    "styled-components": "6.1.0"
   }
 }
