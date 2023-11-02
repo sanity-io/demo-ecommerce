@@ -1,5 +1,5 @@
 import { QueryParams } from "@sanity/client";
-import { wrapData } from "@sanity/csm";
+import { wrapData } from "@sanity/react-loader/jsx";
 import {
   createQueryStore,
   type QueryStoreState,
