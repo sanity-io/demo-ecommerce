@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@sanity/color-input": "^3.1.0",
-    "@sanity/composer": "file:../visual-editing-packages/composer/artifact/sanity-composer-0.4.4-pink-lizard.tgz",
     "@sanity/document-internationalization": "^2.0.2",
     "@sanity/language-filter": "^3.2.1",
+    "@sanity/presentation": "0.5.1-pink-lizard",
     "@sanity/ui": "^1.8.3",
-    "@sanity/vision": "3.18.2-pink-lizard.36",
+    "@sanity/vision": "3.18.2-pink-lizard.172",
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
     "sanity-plugin-iframe-pane": "^2.6.0",
@@ -36,7 +36,7 @@
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "3.18.2-pink-lizard.36"
+    "sanity": "3.18.2-pink-lizard.172"
   },
   "prettier": {
     "semi": false,
