@@ -54,6 +54,7 @@ yalc.lock
 
 # Output of 'npm pack'
 *.tgz
+!packages/visual-editing-packages/**/*.tgz
 
 # Yarn Integrity file
 .yarn-integrity
