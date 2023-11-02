@@ -1,10 +1,10 @@
 import { QueryParams } from "@sanity/client";
-import { wrapData } from "@sanity/react-loader/jsx";
 import {
   createQueryStore,
   type QueryStoreState,
   type UseQueryOptions,
 } from "@sanity/react-loader";
+import { wrapData } from "@sanity/react-loader/jsx";
 import { useMemo } from "react";
 
 import { useSanityEnvironment } from "./useSanityEnvironment";

@@ -24,8 +24,8 @@ import {
   defer,
   type LinksFunction,
   type LoaderFunctionArgs,
-  type SerializeFrom,
   type MetaFunction,
+  type SerializeFrom,
 } from "@shopify/remix-oxygen";
 
 import { GenericError } from "~/components/global/GenericError";

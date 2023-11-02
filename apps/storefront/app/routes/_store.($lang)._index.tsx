@@ -1,4 +1,5 @@
 import { Await, useLoaderData } from "@remix-run/react";
+import { sanity } from "@sanity/react-loader/jsx";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
@@ -6,12 +7,15 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
-import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
+import {
+  type SanityHeroHome,
+  type SanityHomePage,
+  useQuery,
+} from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
@@ -28,6 +32,7 @@ export const handle = {
 
 export async function loader({ context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
+
   const language = context.storefront.i18n.language.toLowerCase();
 
   const cache = context.storefront.CacheCustom({
@@ -62,25 +67,36 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
-  const { language, page, gids } =
+  const { gids, language, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
+  const {
+    data: page,
+    rawData: rawPage,
+    error,
+    loading,
+  } = useQuery<typeof loaderData.page>(
+    HOME_PAGE_QUERY,
+    { language },
+    {
+      initialData: loaderData.page,
+    }
+  );
+
+  if (error) throw error;
+  if (loading) return <section>Loading...</section>;
 
   return (
-    <SanityPreview data={page} query={HOME_PAGE_QUERY} params={{ language }}>
-      {(page) => (
-        <Suspense>
-          <Await resolve={gids}>
-            {/* Page hero */}
-            {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+    <Suspense>
+      <Await resolve={gids}>
+        {/* Page hero */}
+        {page?.hero && <HomeHero hero={rawPage.hero as SanityHeroHome} />}
 
-            {page?.modules && (
-              <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-                <ModuleGrid items={page.modules} />
-              </div>
-            )}
-          </Await>
-        </Suspense>
-      )}
-    </SanityPreview>
+        {page?.modules && (
+          <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
+            <ModuleGrid items={rawPage.modules} />
+          </div>
+        )}
+      </Await>
+    </Suspense>
   );
 }
