@@ -14,7 +14,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const sanityEnv = {
     projectId,
     dataset,
-    studioUrl: "/studio",
+    studioUrl: "http://localhost:3333",
     client,
   };
 
