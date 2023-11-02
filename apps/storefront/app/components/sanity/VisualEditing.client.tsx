@@ -2,7 +2,8 @@ import { useLocation, useNavigate } from "@remix-run/react";
 import { enableOverlays, type HistoryUpdate } from "@sanity/overlays";
 import { useEffect, useRef } from "react";
 
-import { useLiveMode } from "~/lib/sanity";
+import { useLiveMode, useQuery } from "~/lib/sanity";
+import { useQueryStore } from "~/lib/sanity/useQueryStore";
 
 export type VisualEditingProps = { studioUrl: string };
 
@@ -46,6 +47,7 @@ export default function VisualEditing(props: VisualEditingProps) {
     }
   }, [location.hash, location.pathname, location.search]);
 
+  const { useLiveMode } = useQueryStore();
   useLiveMode();
 
   return null;

@@ -1,5 +1,4 @@
 import { Await, useLoaderData } from "@remix-run/react";
-import { sanity } from "@sanity/react-loader/jsx";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,

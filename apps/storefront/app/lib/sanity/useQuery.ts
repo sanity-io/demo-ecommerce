@@ -1,35 +1,10 @@
 import { QueryParams } from "@sanity/client";
-import {
-  createQueryStore,
-  type QueryStoreState,
-  type UseQueryOptions,
-} from "@sanity/react-loader";
+import { type UseQueryOptions } from "@sanity/react-loader";
 import { wrapData } from "@sanity/react-loader/jsx";
 import { useMemo } from "react";
 
+import { useQueryStore } from "./useQueryStore";
 import { useSanityEnvironment } from "./useSanityEnvironment";
-
-function useQueryStore() {
-  const sanity = useSanityEnvironment();
-
-  if (!sanity) {
-    return {
-      useQuery: (): QueryStoreState<any, any> => ({
-        loading: true,
-        error: undefined,
-        data: undefined,
-        sourceMap: undefined,
-      }),
-      useLiveMode: () => {},
-    };
-  }
-
-  const { client, studioUrl } = sanity;
-  return createQueryStore({
-    client,
-    studioUrl,
-  });
-}
 
 export function useQuery<Response>(
   query: string,
