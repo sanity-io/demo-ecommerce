@@ -13,7 +13,6 @@ import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
 import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
-import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
 

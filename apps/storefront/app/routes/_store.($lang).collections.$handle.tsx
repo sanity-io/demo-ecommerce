@@ -8,7 +8,7 @@ import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { Collection } from "@shopify/hydrogen/storefront-api-types";
 import {
   defer,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
@@ -48,7 +48,7 @@ export type SortParam =
 
 const PAGINATION_SIZE = 12;
 
-export async function loader({ params, context, request }: LoaderArgs) {
+export async function loader({ params, context, request }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
@@ -110,7 +110,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
   });
 }
 
-export default function Collection() {
+export default function CollectionPage() {
   const { language, collection, page, gids } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();

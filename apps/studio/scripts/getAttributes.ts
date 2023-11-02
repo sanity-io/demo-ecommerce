@@ -65,6 +65,8 @@ function writeFile(array: string[]) {
   const fs = require('fs')
   const {v4: uuidGenerator} = require('uuid')
   const file = `./${uuidGenerator()}.txt`
-  fs.writeFile(file, array.join('\n'), () => {})
+  fs.writeFile(file, array.join('\n'), () => {
+    return
+  })
   return file
 }

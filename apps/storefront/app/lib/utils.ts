@@ -9,7 +9,7 @@ import type {
 import {
   type AppLoadContext,
   json,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
 } from "@shopify/remix-oxygen";
 import { usePreviewContext } from "hydrogen-sanity";
 import pluralize from "pluralize-esm";
@@ -61,8 +61,8 @@ export function validateLocale({
   params,
   context,
 }: {
-  context: LoaderArgs["context"];
-  params: LoaderArgs["params"];
+  context: LoaderFunctionArgs["context"];
+  params: LoaderFunctionArgs["params"];
 }) {
   const { language, country } = context.storefront.i18n;
   if (

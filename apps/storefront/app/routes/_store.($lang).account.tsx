@@ -16,7 +16,7 @@ import {
   type AppLoadContext,
   defer,
   json,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   redirect,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
@@ -48,7 +48,7 @@ export const handle = {
   isPublic: true,
 };
 
-export async function loader({ request, context, params }: LoaderArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   const { pathname } = new URL(request.url);
   const lang = params.lang;
   const customerAccessToken = await context.session.get("customerAccessToken");

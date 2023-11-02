@@ -12,26 +12,26 @@
   },
   "dependencies": {
     "@sanity/color-input": "^3.1.0",
-    "@sanity/document-internationalization": "^2.0.1",
+    "@sanity/document-internationalization": "^2.0.2",
     "@sanity/language-filter": "^3.2.1",
-    "@sanity/ui": "^1.7.1",
-    "@sanity/vision": "^3.14.1",
-    "sanity-plugin-documents-pane": "^2.1.0",
+    "@sanity/ui": "^1.8.3",
+    "@sanity/vision": "^3.19.0",
+    "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
-    "sanity-plugin-iframe-pane": "^2.3.1",
+    "sanity-plugin-iframe-pane": "^2.6.0",
     "sanity-plugin-internationalized-array": "^1.10.3",
-    "sanity-plugin-media": "^2.2.0",
-    "slug": "^8.2.2"
+    "sanity-plugin-media": "^2.2.4",
+    "slug": "^8.2.3"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^2.0.1",
-    "@types/lodash.get": "^4.4.7",
-    "@types/slug": "^5.0.3",
-    "eslint": "^8.6.0",
+    "@sanity/eslint-config-studio": "^3.0.1",
+    "@types/lodash.get": "^4.4.8",
+    "@types/slug": "^5.0.6",
+    "eslint": "^8.52.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^2.8.7",
+    "prettier": "^3.0.3",
     "react": "^18",
-    "typescript": "^4"
+    "typescript": "^5"
   },
   "peerDependencies": {
     "react": "^18",

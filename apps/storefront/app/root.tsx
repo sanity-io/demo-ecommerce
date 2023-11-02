@@ -23,9 +23,9 @@ import {
   type AppLoadContext,
   defer,
   type LinksFunction,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type SerializeFrom,
-  type V2_MetaFunction,
+  type MetaFunction,
 } from "@shopify/remix-oxygen";
 
 import { GenericError } from "~/components/global/GenericError";
@@ -43,7 +43,7 @@ import type { I18nLocale } from "~/types/shopify";
 import { baseLanguage } from "./data/countries";
 import { SanityLayout } from "./lib/sanity";
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   {
     name: "viewport",
     content: "width=device-width,initial-scale=1",
@@ -90,7 +90,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context }: LoaderArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   const cache = context.storefront.CacheCustom({
     mode: "public",
     maxAge: 60,
