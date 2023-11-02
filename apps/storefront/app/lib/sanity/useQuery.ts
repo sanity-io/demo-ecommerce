@@ -16,6 +16,9 @@ function useQueryStore() {
     return {
       useQuery: (): QueryStoreState<any, any> => ({
         loading: true,
+        error: undefined,
+        data: undefined,
+        sourceMap: undefined,
       }),
       useLiveMode: () => {},
     };
