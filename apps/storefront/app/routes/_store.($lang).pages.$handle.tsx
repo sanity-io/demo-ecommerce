@@ -13,7 +13,7 @@ import invariant from "tiny-invariant";
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
 import { baseLanguage } from "~/data/countries";
-import type { SanityPage } from "~/lib/sanity";
+import { useQuery, type SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
@@ -62,37 +62,41 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
 }
 
 export default function Page() {
-  const { language, page, gids } =
+  const { language, gids, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
+  const {
+    data: page,
+    rawData: rawPage,
+    loading,
+    error,
+  } = useQuery<typeof loaderData.page>(
+    PAGE_QUERY,
+    { slug: handle, language, baseLanguage },
+    { initialData: loaderData.page }
+  );
+  if (error) throw error;
+  if (loading) return <section>Loading...</section>;
 
   return (
-    <SanityPreview
-      data={page}
-      query={PAGE_QUERY}
-      params={{ slug: handle, language, baseLanguage }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Page hero */}
-              <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
-              {/* Body */}
-              {page?.body && (
-                <PortableText
-                  blocks={page.body}
-                  centered
-                  className={clsx(
-                    "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                    "md:px-8"
-                  )}
-                />
+    <ColorTheme value={rawPage?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
+          {/* Body */}
+          {rawPage?.body && (
+            <PortableText
+              blocks={rawPage.body}
+              centered
+              className={clsx(
+                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+                "md:px-8"
               )}
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            />
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }

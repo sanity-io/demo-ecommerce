@@ -1,3 +1,4 @@
+import { unwrapData } from "@sanity/react-loader/jsx";
 import CalloutModule from "~/components/modules/Callout";
 import CallToActionModule from "~/components/modules/CallToAction";
 import CollectionModule from "~/components/modules/Collection";
@@ -12,7 +13,7 @@ type Props = {
 };
 
 export default function Module({ imageAspectClassName, module }: Props) {
-  switch (module._type) {
+  switch (unwrapData(module)._type) {
     case "module.callout":
       return <CalloutModule module={module} />;
     case "module.callToAction":

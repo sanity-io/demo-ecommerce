@@ -1,6 +1,6 @@
 import { useMatches } from "@remix-run/react";
 import clsx from "clsx";
-
+import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import Button from "~/components/elements/Button";
 import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
@@ -13,14 +13,16 @@ type Props = {
 };
 
 export default function ImageModule({ module }: Props) {
-  if (!module.image) {
+  const unwrappedModule = unwrapData(module);
+  if (!unwrappedModule.image) {
     return null;
   }
 
   return (
     <div className="relative">
-      {module.variant === "callToAction" && module.callToAction?.link ? (
-        <Link className="group" link={module.callToAction.link}>
+      {unwrappedModule.variant === "callToAction" &&
+      unwrappedModule.callToAction?.link ? (
+        <Link className="group" link={unwrappedModule.callToAction.link}>
           <ImageContent module={module} />
         </Link>
       ) : (
@@ -28,15 +30,15 @@ export default function ImageModule({ module }: Props) {
       )}
 
       {/* Caption */}
-      {module.variant === "caption" && module.caption && (
+      {unwrappedModule.variant === "caption" && unwrappedModule.caption && (
         <div className="mt-2 max-w-[35rem] text-sm leading-caption text-darkGray">
-          {module.caption}
+          {unwrappedModule.caption}
         </div>
       )}
       {/* Product hotspots */}
-      {module.variant === "productHotspots" && (
+      {unwrappedModule.variant === "productHotspots" && (
         <>
-          {module.productHotspots?.map((hotspot) => {
+          {unwrappedModule.productHotspots?.map((hotspot) => {
             if (!hotspot?.product?.gid) {
               return null;
             }
@@ -54,9 +56,9 @@ export default function ImageModule({ module }: Props) {
         </>
       )}
       {/* Product tags */}
-      {module.variant === "productTags" && (
+      {unwrappedModule.variant === "productTags" && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.productTags?.map((tag) => {
+          {unwrappedModule.productTags?.map((tag) => {
             if (!tag?.gid) {
               return null;
             }
@@ -76,7 +78,7 @@ export default function ImageModule({ module }: Props) {
 }
 
 const ImageContent = ({ module }: Props) => {
-  const image = module.image;
+  const image = unwrappedModule.image;
   const [root] = useMatches();
   const { sanityDataset, sanityProjectID } = root.data;
 
@@ -98,7 +100,7 @@ const ImageContent = ({ module }: Props) => {
       />
 
       {/* Call to action */}
-      {module.variant === "callToAction" && (
+      {unwrappedModule.variant === "callToAction" && (
         <div
           className={clsx(
             "absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out",
@@ -114,15 +116,15 @@ const ImageContent = ({ module }: Props) => {
                 "xl:text-3xl"
               )}
             >
-              {module.callToAction?.title}
+              {unwrappedModule.callToAction?.title}
             </div>
 
             {/* Button */}
-            {module.callToAction?.link && (
+            {unwrappedModule.callToAction?.link && (
               <Button
                 className={clsx("pointer-events-none bg-white text-offBlack")}
               >
-                {module.callToAction.title}
+                {unwrappedModule.callToAction.title}
               </Button>
             )}
           </div>

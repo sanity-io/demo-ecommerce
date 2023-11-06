@@ -1,5 +1,5 @@
 import clsx from "clsx";
-
+import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import Module from "~/components/modules/Module";
 import ProductCard from "~/components/product/Card";
 import type { SanityModule } from "~/lib/sanity";
@@ -94,8 +94,9 @@ type Props = {
 
 export default function ModuleGrid({ items }: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
+    <sanity.ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
+        console.log({ item });
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];
         const productWidth = CLASSES.width[productLayout.width];
@@ -105,8 +106,8 @@ export default function ModuleGrid({ items }: Props) {
           productLayout.offsetY ? "md:mt-[5vw]" : "mt-0",
         ]);
 
-        if (isModule(item)) {
-          const isProductModule = item._type === "module.product";
+        if (isModule(unwrapData(item))) {
+          const isProductModule = unwrapData(item)._type === "module.product";
 
           // Render modules
           return (
@@ -116,11 +117,11 @@ export default function ModuleGrid({ items }: Props) {
                 isProductModule
                   ? productLayoutClasses
                   : "items-center justify-center",
-                FULL_WIDTH_MODULE_TYPES.includes(item._type)
+                FULL_WIDTH_MODULE_TYPES.includes(unwrapData(item)._type)
                   ? "md:col-span-2"
                   : "md:col-span-1",
               ])}
-              key={item._key}
+              key={unwrapData(item)._key}
             >
               <div className={clsx(isProductModule ? productWidth : "w-full")}>
                 <Module
@@ -133,7 +134,7 @@ export default function ModuleGrid({ items }: Props) {
         } else {
           // Render product cards
           return (
-            <li className={productLayoutClasses} key={item.id}>
+            <li className={productLayoutClasses} key={unwrapData(item).id}>
               <div className={productWidth}>
                 <ProductCard
                   imageAspectClassName={productImageAspect}
@@ -144,7 +145,7 @@ export default function ModuleGrid({ items }: Props) {
           );
         }
       })}
-    </ul>
+    </sanity.ul>
   );
 }
 

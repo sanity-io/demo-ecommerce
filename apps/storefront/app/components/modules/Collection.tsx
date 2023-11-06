@@ -1,7 +1,7 @@
 import { Image } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
-
+import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import type { SanityModuleCollection } from "~/lib/sanity";
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function CollectionModule({ module }: Props) {
-  const collection = module?.collection;
+  const collection = unwrapData(module)?.collection;
   const collectionGid = collection?.gid;
   const storefrontCollection = useGid<Collection>(collectionGid);
 

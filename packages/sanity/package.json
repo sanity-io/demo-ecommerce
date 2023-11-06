@@ -14,9 +14,10 @@
     "@sanity/color-input": "^3.1.0",
     "@sanity/document-internationalization": "^2.0.2",
     "@sanity/language-filter": "^3.2.1",
-    "@sanity/presentation": "0.5.2-pink-lizard",
+    "@sanity/presentation": "^0.5.3-pink-lizard",
     "@sanity/ui": "^1.8.3",
-    "@sanity/vision": "3.18.2-pink-lizard.172",
+    "@sanity/vision": "^3.18.2-pink-lizard.172",
+    "rxjs": "^7.8.1",
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
     "sanity-plugin-iframe-pane": "^2.6.0",
@@ -36,7 +37,7 @@
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "3.18.2-pink-lizard.172"
+    "sanity": "^3.18.2-pink-lizard.172"
   },
   "prettier": {
     "semi": false,

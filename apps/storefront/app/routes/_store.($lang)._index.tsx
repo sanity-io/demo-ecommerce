@@ -88,11 +88,11 @@ export default function Index() {
     <Suspense>
       <Await resolve={gids}>
         {/* Page hero */}
-        {page?.hero && <HomeHero hero={rawPage.hero as SanityHeroHome} />}
+        {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
         {page?.modules && (
           <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-            <ModuleGrid items={rawPage.modules} />
+            <ModuleGrid items={page.modules} />
           </div>
         )}
       </Await>

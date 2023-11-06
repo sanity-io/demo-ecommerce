@@ -1,6 +1,6 @@
 import { useMatches } from "@remix-run/react";
 import clsx from "clsx";
-
+import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
 import ProductHero from "~/components/product/ProductHero";
@@ -19,8 +19,9 @@ export default function CallToActionModule({ module }: Props) {
     <div
       className={clsx(
         "flex gap-5 md:gap-[5vw]", //
-        module.layout === "left" && "flex-col md:flex-row",
-        module.layout === "right" && "flex-col-reverse md:flex-row-reverse"
+        unwrapData(module).layout === "left" && "flex-col md:flex-row",
+        unwrapData(module).layout === "right" &&
+          "flex-col-reverse md:flex-row-reverse"
       )}
     >
       <div className="relative aspect-[864/485] grow">
@@ -34,18 +35,20 @@ export default function CallToActionModule({ module }: Props) {
         )}
       >
         {/* Title */}
-        <div
+        <sanity.div
           className={clsx(
             "text-xl font-bold", //
             "md:text-2xl"
           )}
         >
           {module.title}
-        </div>
+        </sanity.div>
 
         {/* Body */}
         {module.body && (
-          <div className="mt-4 leading-paragraph">{module.body}</div>
+          <sanity.div className="mt-4 leading-paragraph">
+            {module.body}
+          </sanity.div>
         )}
 
         {/* Link */}
@@ -53,9 +56,9 @@ export default function CallToActionModule({ module }: Props) {
           <div className="mt-4">
             <Link
               className="font-bold underline hover:no-underline"
-              link={module.link}
+              link={unwrapData(module.link)}
             >
-              {module.link.title}
+              {unwrapData(module.link.title)}
             </Link>
           </div>
         )}

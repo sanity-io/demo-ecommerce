@@ -14,10 +14,10 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const sanityEnv = {
     projectId,
     dataset,
-    studioUrl: "http://localhost:3333",
+    studioUrl: "http://localhost:3000/studio",
     client,
   };
-
+  console.log("Heads up, studioUrl is: ", sanityEnv.studioUrl);
   return json({
     preview,
     sanityEnv,
