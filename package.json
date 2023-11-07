@@ -12,8 +12,7 @@
     "lint": "turbo run lint",
     "lint:fix": "npm run lint -- -- --fix",
     "format": "turbo run format",
-    "typecheck": "turbo run typecheck",
-    "prepare": "husky install"
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
@@ -30,8 +29,21 @@
     "@shopify/hydrogen": "2023.10.0",
     "@shopify/remix-oxygen": "^2.0.0",
     "@sanity/preview-kit": "^3.2.6",
-    "@sanity/client": "6.7.1-pink-lizard.0",
-    "sanity": "3.18.2-pink-lizard.172",
+    "@sanity/client": "6.8.0-pink-lizard.4",
+    "@sanity/color-input": "^3.1.0",
+    "@sanity/document-internationalization": "^2.0.2",
+    "@sanity/language-filter": "^3.2.1",
+    "@sanity/presentation": "0.5.3-pink-lizard",
+    "@sanity/ui": "^1.8.3",
+    "@sanity/vision": "3.19.2-pink-lizard.19",
+    "rxjs": "^7.8.1",
+    "sanity-plugin-documents-pane": "^2.1.2",
+    "sanity-plugin-hotspot-array": "^1.0.1",
+    "sanity-plugin-iframe-pane": "^2.6.0",
+    "sanity-plugin-internationalized-array": "^1.10.3",
+    "sanity-plugin-media": "^2.2.4",
+    "sanity": "3.19.2-pink-lizard.19",
+    "slug": "^8.2.3",
     "styled-components": "6.1.0"
   }
 }
