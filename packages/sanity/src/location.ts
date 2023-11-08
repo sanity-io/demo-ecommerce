@@ -1,5 +1,5 @@
 import type {DocumentLocationResolver, DocumentLocationsState} from '@sanity/presentation'
-import {map, Observable} from 'rxjs'
+import {map} from 'rxjs'
 
 const firstSegmentBasedOnType = {
   product: '/products/',

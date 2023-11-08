@@ -1,8 +1,10 @@
+import { encodeSanityNodeData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import Module from "~/components/modules/Module";
 import ProductCard from "~/components/product/Card";
 import type { SanityModule } from "~/lib/sanity";
+import { dataAttribute } from "~/lib/sanity/dataAttribute";
 import type { ProductWithNodes } from "~/types/shopify";
 
 // Sanity modules to render in full width (across all grid columns)
@@ -112,6 +114,11 @@ export default function ModuleGrid({ items }: Props) {
           // Render modules
           return (
             <li
+              data-sanity={dataAttribute({
+                id: "home-en",
+                type: "home",
+                path: `modules[_key=="${(item as any)._key}"]`,
+              })}
               className={clsx([
                 "flex overflow-hidden",
                 isProductModule

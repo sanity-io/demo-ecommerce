@@ -15,7 +15,6 @@ type Props = PortableTextMarkComponentProps & {
 
 export const ProductAnnotation = ({ children, value }: Props) => {
   const { productWithVariant } = value;
-  console.log({ value });
 
   const productGid = productWithVariant?.gid;
   const productVariantGid = productWithVariant?.variantGid;

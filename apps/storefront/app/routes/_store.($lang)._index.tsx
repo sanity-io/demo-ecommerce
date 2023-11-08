@@ -77,8 +77,6 @@ export default function Index() {
 
   if (error) throw error;
 
-  console.log({ page, initial, loading, error });
-
   return (
     <Suspense>
       <Await resolve={gids}>
