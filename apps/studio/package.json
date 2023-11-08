@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
-    "@types/styled-components": "^5.1.29",
-    "@types/yargs": "^17.0.29",
-    "eslint": "^8.52.0",
+    "@types/styled-components": "^5.1.30",
+    "@types/yargs": "^17.0.31",
+    "eslint": "^8.53.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"

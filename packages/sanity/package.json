@@ -27,17 +27,17 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
-    "@types/lodash.get": "^4.4.8",
-    "@types/slug": "^5.0.6",
-    "eslint": "^8.52.0",
+    "@types/lodash.get": "^4.4.9",
+    "@types/slug": "^5.0.7",
+    "eslint": "^8.53.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^3.0.3",
-    "react": "^18",
-    "typescript": "^5"
+    "react": "^18.2.0",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "3.19.2-pink-lizard.19"
+    "sanity": "3.19.2"
   },
   "prettier": {
     "semi": false,
