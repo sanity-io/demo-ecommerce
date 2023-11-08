@@ -9,7 +9,7 @@ export type VisualEditingProps = { studioUrl: string };
 export default function VisualEditing(props: VisualEditingProps) {
   const { studioUrl } = props;
 
-  console.log("Heads up, studioUrl is: ", studioUrl);
+  console.log("Heads up, allowStudioOrigin is: ", studioUrl);
 
   const navigateRemix = useNavigate();
   const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
