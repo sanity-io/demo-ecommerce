@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 
-import ImageModule from "~/components/modules/Image";
+import { ImageModule } from "~/components/modules/Image";
 import type { SanityModuleImages } from "~/lib/sanity";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   value: PortableTextBlock & SanityModuleImages;
 };
 
-export default function ImagesBlock({ centered, value }: Props) {
+export function ImagesBlock({ centered, value }: Props) {
   if (!Array.isArray(value.modules)) {
     return null;
   }

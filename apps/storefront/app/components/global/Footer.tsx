@@ -4,7 +4,7 @@ import clsx from "clsx";
 import SanityFooter from "~/components/global/SanityFooter";
 import LogoIcon from "~/components/icons/Logo";
 import { Link } from "~/components/Link";
-import PortableText from "~/components/portableText/PortableText";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import type { SanityLink } from "~/lib/sanity";
 
 /**
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
         {footer?.text && (
-          <PortableText
+          <CustomPortableText
             blocks={footer.text}
             className={clsx(
               "text-xs", //

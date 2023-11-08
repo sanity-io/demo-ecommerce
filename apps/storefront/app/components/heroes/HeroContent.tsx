@@ -1,5 +1,6 @@
-import { useMemo } from "react";
 import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+import { useMemo } from "react";
+
 import ImageWithProductHotspots from "~/components/media/ImageWithProductHotspots";
 import ProductHero from "~/components/product/ProductHero";
 import type {
@@ -37,8 +38,8 @@ export default function HeroContent({ content }: Props) {
   }, [content]);
 
   return (
-    <sanity.div className="relative flex w-full place-content-center overflow-hidden rounded-md bg-lightGray">
+    <div className="relative flex w-full place-content-center overflow-hidden rounded-md bg-lightGray">
       {heroContent}
-    </sanity.div>
+    </div>
   );
 }

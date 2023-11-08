@@ -9,7 +9,7 @@ type Props = {
   value: PortableTextBlock & SanityModuleCallout;
 };
 
-export default function CalloutBlock({ centered, value }: Props) {
+export function CalloutBlock({ centered, value }: Props) {
   return (
     <div
       className={clsx(

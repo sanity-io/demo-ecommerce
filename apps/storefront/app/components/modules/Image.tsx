@@ -1,6 +1,7 @@
 import { useMatches } from "@remix-run/react";
+import { unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+
 import Button from "~/components/elements/Button";
 import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
@@ -12,9 +13,9 @@ type Props = {
   module: SanityModuleImage;
 };
 
-export default function ImageModule({ module }: Props) {
-  const unwrappedModule = unwrapData(module);
-  if (!unwrappedModule.image) {
+export function ImageModule({ module }: Props) {
+  const unwrappedModule = module;
+  if (!unwrappedModule?.image) {
     return null;
   }
 
@@ -22,7 +23,7 @@ export default function ImageModule({ module }: Props) {
     <div className="relative">
       {unwrappedModule.variant === "callToAction" &&
       unwrappedModule.callToAction?.link ? (
-        <Link className="group" link={unwrappedModule.callToAction.link}>
+        <Link className="group" link={unwrapData(module)?.callToAction.link}>
           <ImageContent module={module} />
         </Link>
       ) : (
@@ -78,6 +79,10 @@ export default function ImageModule({ module }: Props) {
 }
 
 const ImageContent = ({ module }: Props) => {
+  const unwrappedModule = module;
+  if (!unwrappedModule?.image) {
+    return null;
+  }
   const image = unwrappedModule.image;
   const [root] = useMatches();
   const { sanityDataset, sanityProjectID } = root.data;

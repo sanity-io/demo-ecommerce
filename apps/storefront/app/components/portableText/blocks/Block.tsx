@@ -7,7 +7,7 @@ type Props = {
   value: PortableTextBlock;
 };
 
-export default function Block({ children, value }: Props) {
+export function Block({ children, value }: Props) {
   if (value.style === "h2") {
     return (
       <h2

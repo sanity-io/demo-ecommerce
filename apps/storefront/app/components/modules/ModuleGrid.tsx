@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+import clsx from "clsx";
+
 import Module from "~/components/modules/Module";
 import ProductCard from "~/components/product/Card";
 import type { SanityModule } from "~/lib/sanity";
@@ -94,9 +95,9 @@ type Props = {
 
 export default function ModuleGrid({ items }: Props) {
   return (
-    <sanity.ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
-        console.log({ item });
+        //console.log({ item });
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];
         const productWidth = CLASSES.width[productLayout.width];
@@ -145,7 +146,7 @@ export default function ModuleGrid({ items }: Props) {
           );
         }
       })}
-    </sanity.ul>
+    </ul>
   );
 }
 

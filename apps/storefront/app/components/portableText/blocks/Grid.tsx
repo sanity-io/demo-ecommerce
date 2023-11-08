@@ -3,14 +3,14 @@ import { useMatches } from "@remix-run/react";
 import clsx from "clsx";
 
 import SanityImage from "~/components/media/SanityImage";
-import PortableText from "~/components/portableText/PortableText";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import type { SanityModuleGrid } from "~/lib/sanity";
 
 type Props = {
   value: PortableTextBlock & SanityModuleGrid;
 };
 
-export default function GridBlock({ value }: Props) {
+export function GridBlock({ value }: Props) {
   const [root] = useMatches();
   const { sanityDataset, sanityProjectID } = root.data;
 
@@ -43,8 +43,9 @@ export default function GridBlock({ value }: Props) {
             )}
           </div>
           <div className="space-y-1">
-            <div className="text-md font-bold">{item.title}</div>
-            <PortableText className="text-sm" blocks={item.body} />
+            {/* @TODO: Fix this */}
+            {/* <div className="font-bold text-md">{item.title}</div> */}
+            <CustomPortableText className="text-sm" blocks={item.body} />
           </div>
         </div>
       ))}

@@ -7,7 +7,7 @@ type Props = {
   value: SanityModuleInstagram;
 };
 
-export default function InstagramBlock({ value }: Props) {
+export function InstagramBlock({ value }: Props) {
   if (!value) {
     return null;
   }

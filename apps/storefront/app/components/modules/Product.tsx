@@ -19,8 +19,10 @@ export default function ProductModule({
   const productGid = module?.productWithVariant?.gid;
   const productVariantGid = module?.productWithVariant?.variantGid;
   const storefrontProduct = useGid<Product>(productGid);
+  console.log({ storefrontProduct });
 
   if (!storefrontProduct) {
+    console.warn('Product not found for gid: "' + productGid + '"');
     return null;
   }
 

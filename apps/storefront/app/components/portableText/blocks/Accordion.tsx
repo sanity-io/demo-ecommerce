@@ -3,14 +3,14 @@ import clsx from "clsx";
 
 import MinusIcon from "~/components/icons/Minus";
 import PlusIcon from "~/components/icons/Plus";
-import PortableText from "~/components/portableText/PortableText";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import type { SanityModuleAccordion } from "~/lib/sanity";
 
 type Props = {
   value: SanityModuleAccordion;
 };
 
-export default function AccordionBlock({ value }: Props) {
+export function AccordionBlock({ value }: Props) {
   return (
     <div
       className={clsx(
@@ -34,7 +34,7 @@ export default function AccordionBlock({ value }: Props) {
                 </div>
               </Disclosure.Button>
               <Disclosure.Panel className="pb-4 text-md">
-                <PortableText blocks={group.body} />
+                <CustomPortableText blocks={group.body} />
               </Disclosure.Panel>
             </div>
           )}

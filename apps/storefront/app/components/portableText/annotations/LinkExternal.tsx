@@ -8,7 +8,7 @@ type Props = PortableTextMarkComponentProps & {
   };
 };
 
-const LinkExternalAnnotation = ({ children, value }: Props) => {
+export const LinkExternalAnnotation = ({ children, value }: Props) => {
   if (!value?.url) {
     return <>{children}</>;
   }
@@ -27,5 +27,3 @@ const LinkExternalAnnotation = ({ children, value }: Props) => {
     </a>
   );
 };
-
-export default LinkExternalAnnotation;

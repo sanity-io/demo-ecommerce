@@ -2,7 +2,7 @@ import { useMatches } from "@remix-run/react";
 
 import { Link } from "~/components/Link";
 import SanityImage from "~/components/media/SanityImage";
-import PortableText from "~/components/portableText/PortableText";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import type { SanityCreator } from "~/lib/sanity";
 import type { ProductWithNodes } from "~/types/shopify";
 
@@ -51,7 +51,10 @@ export default function Creator({ product, creator }: Props) {
                 {product.title}
               </div>
             )}
-            <PortableText className="text-sm" blocks={creator.person.bio} />
+            <CustomPortableText
+              className="text-sm"
+              blocks={creator.person.bio}
+            />
           </div>
         </div>
         <Link to={creator.person.slug}>

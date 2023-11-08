@@ -9,7 +9,7 @@ type Props = PortableTextMarkComponentProps & {
   };
 };
 
-export default function LinkInternalAnnotation({ children, value }: Props) {
+export function LinkInternalAnnotation({ children, value }: Props) {
   if (!value?.slug) {
     return null;
   }

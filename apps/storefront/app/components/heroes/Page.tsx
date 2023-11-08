@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+import clsx from "clsx";
+
 import HeroContent from "~/components/heroes/HeroContent";
 import type { SanityHeroPage } from "~/lib/sanity";
 import { useColorTheme } from "~/lib/theme";
@@ -9,20 +10,20 @@ type Props = {
   hero?: SanityHeroPage;
 };
 
-export default function PageHero({ fallbackTitle, hero }: Props) {
+export function PageHero({ fallbackTitle, hero }: Props) {
   const colorTheme = useColorTheme();
 
   if (!hero) {
-    debugger;
+    //debugger;
     return (
-      <sanity.h1
+      <h1
         className={clsx(
           "mx-auto max-w-[60rem] px-4 pb-8 pt-34 text-center text-3xl",
           "md:px-8 md:text-4xl"
         )}
       >
-        {unwrapData(fallbackTitle)}
-      </sanity.h1>
+        {!fallbackTitle?.path && fallbackTitle}
+      </h1>
     );
   }
 
@@ -43,14 +44,14 @@ export default function PageHero({ fallbackTitle, hero }: Props) {
           )}
           style={{ color: colorTheme?.text || "black" }}
         >
-          {unwrapData(hero.title)}
+          {hero.title}
         </h1>
       )}
 
       {/* Hero content */}
       {hero.content && (
         <div className="mt-8">
-          <HeroContent content={unwrapData(hero.content)} />
+          <HeroContent content={hero.content} />
         </div>
       )}
     </div>

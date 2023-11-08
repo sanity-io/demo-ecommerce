@@ -24,7 +24,7 @@ type Props = {
   storefrontProduct: ProductWithNodes;
 };
 
-export default function ProductInlineLink({
+export function ProductInlineLink({
   children,
   variantGid,
   linkAction,

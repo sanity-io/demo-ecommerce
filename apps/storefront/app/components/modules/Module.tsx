@@ -1,8 +1,9 @@
 import { unwrapData } from "@sanity/react-loader/jsx";
+
 import CalloutModule from "~/components/modules/Callout";
 import CallToActionModule from "~/components/modules/CallToAction";
 import CollectionModule from "~/components/modules/Collection";
-import ImageModule from "~/components/modules/Image";
+import { ImageModule } from "~/components/modules/Image";
 import InstagramModule from "~/components/modules/Instagram";
 import ProductModule from "~/components/modules/Product";
 import type { SanityModule } from "~/lib/sanity";

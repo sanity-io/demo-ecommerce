@@ -2,7 +2,7 @@ import { Link } from "~/components/Link";
 import { SanityGuideProducts } from "~/lib/sanity";
 
 import { Label } from "../global/Label";
-import Image from "../modules/Image";
+import { ImageModule } from "../modules/Image";
 
 export default function Guide({
   productGuide,
@@ -13,12 +13,14 @@ export default function Guide({
     <div className="mb-10 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
       <div className="col-span-2">
         <div className="overflow-hidden rounded">
-          {productGuide.images[2] && <Image module={productGuide.images[2]} />}
+          {productGuide.images[2] && (
+            <ImageModule module={productGuide.images[2]} />
+          )}
         </div>
       </div>
       <div className="col-span-2">
         <div className="overflow-hidden rounded">
-          <Image module={productGuide.images[1]} />
+          <ImageModule module={productGuide.images[1]} />
         </div>
       </div>
       <div className="col-span-2 grid auto-rows-min grid-cols-2 gap-3">
@@ -34,7 +36,7 @@ export default function Guide({
           </div>
         </Link>
         <div className="col-span-2 rounded">
-          <Image module={productGuide.images[0]} />
+          <ImageModule module={productGuide.images[0]} />
         </div>
       </div>
     </div>

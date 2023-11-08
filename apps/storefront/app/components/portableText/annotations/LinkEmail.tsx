@@ -7,7 +7,7 @@ type Props = PortableTextMarkComponentProps & {
   };
 };
 
-const LinkEmailAnnotation = ({ children, value }: Props) => {
+export const LinkEmailAnnotation = ({ children, value }: Props) => {
   if (!value?.email) {
     return null;
   }
@@ -24,5 +24,3 @@ const LinkEmailAnnotation = ({ children, value }: Props) => {
     </a>
   );
 };
-
-export default LinkEmailAnnotation;

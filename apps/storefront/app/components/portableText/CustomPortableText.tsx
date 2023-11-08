@@ -6,18 +6,18 @@ import { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 import { useMemo } from "react";
 
-import LinkEmailAnnotation from "~/components/portableText/annotations/LinkEmail";
-import LinkExternalAnnotation from "~/components/portableText/annotations/LinkExternal";
-import LinkInternalAnnotation from "~/components/portableText/annotations/LinkInternal";
-import ProductAnnotation from "~/components/portableText/annotations/Product";
-import AccordionBlock from "~/components/portableText/blocks/Accordion";
-import Block from "~/components/portableText/blocks/Block";
-import CalloutBlock from "~/components/portableText/blocks/Callout";
-import GridBlock from "~/components/portableText/blocks/Grid";
-import ImagesBlock from "~/components/portableText/blocks/Images";
-import InstagramBlock from "~/components/portableText/blocks/Instagram";
-import ProductsBlock from "~/components/portableText/blocks/Products";
-import TaggedProductsBlock from "~/components/portableText/blocks/TaggedProducts";
+import { LinkEmailAnnotation } from "~/components/portableText/annotations/LinkEmail";
+import { LinkExternalAnnotation } from "~/components/portableText/annotations/LinkExternal";
+import { LinkInternalAnnotation } from "~/components/portableText/annotations/LinkInternal";
+import { ProductAnnotation } from "~/components/portableText/annotations/Product";
+import { AccordionBlock } from "~/components/portableText/blocks/Accordion";
+import { Block } from "~/components/portableText/blocks/Block";
+import { CalloutBlock } from "~/components/portableText/blocks/Callout";
+import { GridBlock } from "~/components/portableText/blocks/Grid";
+import { ImagesBlock } from "~/components/portableText/blocks/Images";
+import { InstagramBlock } from "~/components/portableText/blocks/Instagram";
+import { ProductsBlock } from "~/components/portableText/blocks/Products";
+import { TaggedProductsBlock } from "~/components/portableText/blocks/TaggedProducts";
 
 const SHARED_LIST_CLASSES = clsx(
   "first:mt-0 last:mb-0", //
@@ -30,7 +30,7 @@ type Props = {
   centered?: boolean;
 };
 
-export default function PortableText({ blocks, centered, className }: Props) {
+export function CustomPortableText({ blocks, centered, className }: Props) {
   const components: PortableTextComponents = {
     list: {
       bullet: ({ children }) => (

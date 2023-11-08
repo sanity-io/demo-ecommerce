@@ -1,10 +1,10 @@
-import clsx from "clsx";
 import {
+  encodeSanityNodeData,
   sanity,
   unwrapData,
-  encodeSanityNodeData,
   wrapData,
 } from "@sanity/react-loader/jsx";
+import clsx from "clsx";
 
 import LinkButton from "~/components/elements/LinkButton";
 import HeroContent from "~/components/heroes/HeroContent";
@@ -15,7 +15,6 @@ type Props = {
 };
 
 export default function HomeHero({ hero }: Props) {
-  console.log(encodeSanityNodeData(hero.title));
   return (
     <div
       className={clsx(

@@ -1,7 +1,8 @@
+import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import { Image } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import type { SanityModuleCollection } from "~/lib/sanity";
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export default function CollectionModule({ module }: Props) {
-  const collection = unwrapData(module)?.collection;
+  const collection = module?.collection;
   const collectionGid = collection?.gid;
   const storefrontCollection = useGid<Collection>(collectionGid);
 
@@ -25,7 +26,7 @@ export default function CollectionModule({ module }: Props) {
   return (
     <Link
       className="group relative flex aspect-[4/3] h-full w-full flex-col items-center justify-center md:aspect-square"
-      to={collection.slug}
+      to={unwrapData(collection)?.slug}
     >
       <div className="relative flex h-full w-full flex-col items-center justify-center">
         {/* Vector artwork */}

@@ -1,7 +1,7 @@
 import type { PortableTextMarkComponentProps } from "@portabletext/react";
 import type { Product } from "@shopify/hydrogen/storefront-api-types";
 
-import ProductInlineLink from "~/components/portableText/annotations/ProductInlineLink";
+import { ProductInlineLink } from "~/components/portableText/annotations/ProductInlineLink";
 import type { SanityProductWithVariant } from "~/lib/sanity";
 import { useGid } from "~/lib/utils";
 
@@ -13,8 +13,9 @@ type Props = PortableTextMarkComponentProps & {
   };
 };
 
-const ProductAnnotation = ({ children, value }: Props) => {
+export const ProductAnnotation = ({ children, value }: Props) => {
   const { productWithVariant } = value;
+  console.log({ value });
 
   const productGid = productWithVariant?.gid;
   const productVariantGid = productWithVariant?.variantGid;
@@ -35,5 +36,3 @@ const ProductAnnotation = ({ children, value }: Props) => {
     </ProductInlineLink>
   );
 };
-
-export default ProductAnnotation;

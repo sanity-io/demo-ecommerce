@@ -8,7 +8,7 @@ type Props = {
   value: PortableTextBlock & SanityModuleTaggedProducts;
 };
 
-export default function TaggedProductsBlock({ value }: Props) {
+export function TaggedProductsBlock({ value }: Props) {
   if (!Array.isArray(value?.products)) {
     return null;
   }

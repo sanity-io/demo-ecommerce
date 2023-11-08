@@ -3,7 +3,7 @@ import groq from "groq";
 
 import { Skeleton } from "~/components/global/Skeleton";
 import ProductModule from "~/components/modules/Product";
-import PortableText from "~/components/portableText/PortableText";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import { SanityComposition, SanityProductPage } from "~/lib/sanity";
 
 import { Label } from "../global/Label";
@@ -50,7 +50,7 @@ export default function Composition({ compositionStories, page }: Props) {
                     {page?.sharedText?.environmentallyFriendly}
                   </div>
                 )}
-              <PortableText blocks={composition.material.story} />
+              <CustomPortableText blocks={composition.material.story} />
             </div>
           ))}
         </div>

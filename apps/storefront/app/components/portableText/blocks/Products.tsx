@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from "@portabletext/types";
+import { unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import ProductModule from "~/components/modules/Product";
@@ -8,7 +9,7 @@ type Props = {
   value: PortableTextBlock & SanityModuleProducts;
 };
 
-export default function ProductsBlock({ value }: Props) {
+export function ProductsBlock({ value }: Props) {
   if (!Array.isArray(value?.modules)) {
     return null;
   }

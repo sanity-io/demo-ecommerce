@@ -1,6 +1,11 @@
 import { useMatches } from "@remix-run/react";
+import {
+  encodeSanityNodeData,
+  sanity,
+  unwrapData,
+} from "@sanity/react-loader/jsx";
 import clsx from "clsx";
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+
 import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
 import ProductHero from "~/components/product/ProductHero";
@@ -79,15 +84,16 @@ function ModuleContent({
     case "image": {
       return (
         <SanityImage
+          data-sanity={encodeSanityNodeData(content?.crop)}
           alt={content?.altText}
-          crop={content?.crop}
+          crop={unwrapData(content)?.crop}
           dataset={sanityDataset}
-          hotspot={content?.hotspot}
+          hotspot={unwrapData(content)?.hotspot}
           layout="fill"
           objectFit="cover"
           projectId={sanityProjectID}
           sizes="100vw"
-          src={content?.asset?._ref}
+          src={unwrapData(content)?.asset?._ref}
         />
       );
     }
