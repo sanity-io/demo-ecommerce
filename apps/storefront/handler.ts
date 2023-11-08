@@ -73,7 +73,7 @@ export async function handler(
       perspective: "published",
       stega: {
         enabled: true,
-        studioUrl: "http://localhost:3000/studio",
+        studioUrl: "/studio",
       },
     });
 

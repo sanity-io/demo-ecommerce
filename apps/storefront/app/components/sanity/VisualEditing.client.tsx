@@ -17,7 +17,7 @@ export default function VisualEditing(props: VisualEditingProps) {
 
   useEffect(() => {
     const disable = enableOverlays({
-      studioUrl,
+      allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
           navigateComposerRef.current = navigate;
@@ -48,7 +48,7 @@ export default function VisualEditing(props: VisualEditingProps) {
   }, [location.hash, location.pathname, location.search]);
 
   const { useLiveMode } = useQueryStore();
-  useLiveMode();
+  useLiveMode({ allowStudioOrigin: studioUrl });
 
   return null;
 }
