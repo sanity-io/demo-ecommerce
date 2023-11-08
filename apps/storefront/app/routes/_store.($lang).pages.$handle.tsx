@@ -6,14 +6,13 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
-import PageHero from "~/components/heroes/Page";
-import PortableText from "~/components/portableText/PortableText";
+import { PageHero } from "~/components/heroes/Page";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import { baseLanguage } from "~/data/countries";
-import { useQuery, type SanityPage } from "~/lib/sanity";
+import { type SanityPage, useQuery } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
@@ -41,16 +40,11 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.query<SanityPage>({
-    query: PAGE_QUERY,
-    params: {
-      slug: handle,
-      language,
-      baseLanguage,
-    },
-    cache,
+  const page = await context.sanity.fetch<SanityPage>(PAGE_QUERY, {
+    slug: handle,
+    language,
+    baseLanguage,
   });
-
   if (!page) {
     throw notFound();
   }
@@ -73,20 +67,23 @@ export default function Page() {
   } = useQuery<typeof loaderData.page>(
     PAGE_QUERY,
     { slug: handle, language, baseLanguage },
-    { initialData: loaderData.page }
+    {
+      initialData: loaderData.page,
+    }
   );
   if (error) throw error;
-  if (loading) return <section>Loading...</section>;
-
+  if (loading) return <div className="text-xxl text-center">Loading...</div>;
+  console.log({ page, rawPage, loaderData });
   return (
     <ColorTheme value={rawPage?.colorTheme}>
       <Suspense>
         <Await resolve={gids}>
           {/* Page hero */}
+
           <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
           {/* Body */}
           {rawPage?.body && (
-            <PortableText
+            <CustomPortableText
               blocks={rawPage.body}
               centered
               className={clsx(

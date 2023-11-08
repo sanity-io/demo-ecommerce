@@ -8,7 +8,7 @@ import { VisualEditing } from "~/components/sanity/VisualEditing";
 
 export async function loader({ context }: LoaderFunctionArgs) {
   const preview = getPreview(context);
-  const client = context.sanity.client.config();
+  const client = context.sanity.config();
   const { projectId, dataset } = client;
 
   const sanityEnv = {

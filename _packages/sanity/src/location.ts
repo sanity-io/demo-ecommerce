@@ -8,7 +8,7 @@ const firstSegmentBasedOnType = {
 }
 
 export const locate: DocumentLocationResolver = (params, context) => {
-  console.log({params, context})
+  //console.log({params, context})
   const {type, id} = params
   const {documentStore} = context
   if (type == 'home') {
@@ -26,14 +26,14 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         } satisfies DocumentLocationsState
-      }),
+      })
     )
   }
   if (type == 'product') {
     const docs$ = documentStore.listenQuery(
       `*[references($id)]`,
       {id},
-      {perspective: 'previewDrafts'},
+      {perspective: 'previewDrafts'}
     )
 
     return docs$.pipe(
@@ -46,7 +46,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
             href: `${firstSegmentBasedOnType[doc._type]}${doc.store?.slug.current || ''}`,
           })),
         } satisfies DocumentLocationsState
-      }),
+      })
     )
   }
 

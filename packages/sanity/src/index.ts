@@ -51,13 +51,21 @@ export function defineSanityConfig(config: SanityConfig) {
     title,
 
     plugins: [
-      deskTool({
-        structure,
-        defaultDocumentNode,
-      }),
       presentationTool({
+        title: 'AKVA Storefront',
+        name: 'storefront',
         previewUrl: preview.domain ?? 'http://localhost:3000',
         locate,
+      }),
+      presentationTool({
+        title: 'AKVA Kiosk',
+        previewUrl: preview.domain ?? 'http://localhost:3000',
+        locate,
+      }),
+      deskTool({
+        title: 'Structure',
+        structure,
+        defaultDocumentNode,
       }),
       colorInput(),
       imageHotspotArrayPlugin(),

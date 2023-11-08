@@ -21,8 +21,8 @@ import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import { Label } from "~/components/global/Label";
-import AccordionBlock from "~/components/portableText/blocks/Accordion";
-import PortableText from "~/components/portableText/PortableText";
+import { AccordionBlock } from "~/components/portableText/blocks/Accordion";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
@@ -86,14 +86,10 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   });
 
   const [page, { product }] = await Promise.all([
-    context.sanity.query<SanityProductPage>({
-      query: PRODUCT_PAGE_QUERY,
-      params: {
-        slug: params.handle,
-        language,
-        baseLanguage,
-      },
-      cache,
+    context.sanity.fetch<SanityProductPage>(PRODUCT_PAGE_QUERY, {
+      slug: params.handle,
+      language,
+      baseLanguage,
     }),
     context.storefront.query<{
       product: Product & { selectedVariant?: ProductVariant };
@@ -162,87 +158,79 @@ export default function ProductHandle() {
   const { handle } = useParams();
 
   return (
-    <SanityPreview
-      data={page}
-      query={PRODUCT_PAGE_QUERY}
-      params={{ slug: handle, language, baseLanguage }}
-    >
-      {(page) => (
-        <ColorTheme value={page.colorTheme}>
-          <div className="relative w-full">
-            <ProductDetails
-              selectedVariant={selectedVariant}
-              sanityProduct={page}
-              storefrontProduct={product}
-              analytics={analytics}
-            />
-            <Suspense>
-              <Await resolve={gids}>
-                {/* Body */}
-                {page?.body && (
-                  <div
-                    className={clsx(
-                      "w-full", //
-                      "lg:w-[calc(100%-315px)]",
-                      "mb-10 mt-8 p-5"
-                    )}
-                  >
-                    <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                      <div className="hidden xl:block" />
-                      <div className="col-span-6 xl:col-span-5">
-                        <PortableText blocks={page.body} />
-                      </div>
-                    </div>
-                  </div>
+    <ColorTheme value={page.colorTheme}>
+      <div className="relative w-full">
+        <ProductDetails
+          selectedVariant={selectedVariant}
+          sanityProduct={page}
+          storefrontProduct={product}
+          analytics={analytics}
+        />
+        <Suspense>
+          <Await resolve={gids}>
+            {/* Body */}
+            {page?.body && (
+              <div
+                className={clsx(
+                  "w-full", //
+                  "lg:w-[calc(100%-315px)]",
+                  "mb-10 mt-8 p-5"
                 )}
-
-                {/* Magazine */}
-                <Magazine page={page} product={product} />
-
-                {/* Shipping info and FAQs */}
-                <div
-                  className={clsx(
-                    "w-full", //
-                    "lg:w-[calc(100%-315px)]",
-                    "mb-10 mt-8 p-5"
-                  )}
-                >
-                  <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                    <div className="hidden aspect-square xl:block" />
-                    <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-                      {page?.sharedText?.deliveryAndReturns && (
-                        <SanityProductShipping
-                          blocks={page?.sharedText?.deliveryAndReturns}
-                        />
-                      )}
-                    </div>
-                    <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                      {page?.faqs?.groups.length > 0 && (
-                        <SanityProductFaqs faqs={page.faqs} />
-                      )}
-                    </div>
+              >
+                <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                  <div className="hidden xl:block" />
+                  <div className="col-span-6 xl:col-span-5">
+                    <CustomPortableText blocks={page.body} />
                   </div>
                 </div>
-              </Await>
-            </Suspense>
-          </div>
+              </div>
+            )}
 
-          {/* Related products */}
-          <Suspense>
-            <Await
-              errorElement="There was a problem loading related products"
-              resolve={recommended}
-            >
-              {(products) => (
-                <RelatedProducts
-                  relatedProducts={products.productRecommendations}
-                />
+            {/* Magazine */}
+            <Magazine page={page} product={product} />
+
+            {/* Shipping info and FAQs */}
+            <div
+              className={clsx(
+                "w-full", //
+                "lg:w-[calc(100%-315px)]",
+                "mb-10 mt-8 p-5"
               )}
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            >
+              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                <div className="hidden aspect-square xl:block" />
+                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                  {page?.sharedText?.deliveryAndReturns && (
+                    <SanityProductShipping
+                      blocks={page?.sharedText?.deliveryAndReturns}
+                    />
+                  )}
+                </div>
+                <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                  {page?.faqs?.groups.length > 0 && (
+                    <SanityProductFaqs faqs={page.faqs} />
+                  )}
+                </div>
+              </div>
+            </div>
+          </Await>
+        </Suspense>
+      </div>
+
+      {/* Related products */}
+      <Suspense>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <RelatedProducts
+              relatedProducts={products.productRecommendations}
+            />
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }
 
@@ -257,7 +245,7 @@ const SanityProductShipping = ({ blocks }: { blocks: PortableTextBlock[] }) => {
       >
         <Label _key="shipping.shippingReturns" />
       </h2>
-      <PortableText blocks={blocks} />
+      <CustomPortableText blocks={blocks} />
     </>
   );
 };

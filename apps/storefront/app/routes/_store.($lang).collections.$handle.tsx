@@ -69,13 +69,9 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   });
 
   const [page, { collection }] = await Promise.all([
-    context.sanity.query<SanityCollectionPage>({
-      query: COLLECTION_PAGE_QUERY,
-      params: {
-        slug: params.handle,
-        language,
-      },
-      cache,
+    context.sanity.fetch<SanityCollectionPage>(COLLECTION_PAGE_QUERY, {
+      slug: params.handle,
+      language,
     }),
     context.storefront.query<{ collection: Collection }>(COLLECTION_QUERY, {
       variables: {

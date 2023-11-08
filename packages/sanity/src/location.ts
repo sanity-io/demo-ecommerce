@@ -38,7 +38,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
 
     return docs$.pipe(
       map((docs) => {
-        console.log({docs})
+        //console.log({docs})
         const href = id == 'home-en' ? '/' : `/no-no`
         return {
           locations: docs.map((doc: any) => ({

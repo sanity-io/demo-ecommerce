@@ -100,13 +100,9 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const [cartId, shop, layout] = await Promise.all([
     context.session.get("cartId"),
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    context.sanity.query<SanityLayout>({
-      query: LAYOUT_QUERY,
-      cache,
-      params: {
-        language: context.storefront.i18n.language.toLowerCase(),
-        baseLanguage,
-      },
+    context.sanity.fetch<SanityLayout>(LAYOUT_QUERY, {
+      language: context.storefront.i18n.language.toLowerCase(),
+      baseLanguage,
     }),
   ]);
 

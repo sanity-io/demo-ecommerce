@@ -1,5 +1,6 @@
 // Virtual entry point for the app
 import * as remixBuild from "@remix-run/dev/server-build";
+import { createClient as createSanityClient } from "@sanity/client/stega";
 import { createStorefrontClient, storefrontRedirect } from "@shopify/hydrogen";
 import {
   createCookieSessionStorage,
@@ -10,7 +11,7 @@ import {
   createRequestHandler,
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
-import { createSanityClient, PreviewSession } from "hydrogen-sanity";
+import { PreviewSession } from "hydrogen-sanity";
 
 import { getLocaleFromRequest } from "~/lib/utils";
 
@@ -65,23 +66,14 @@ export async function handler(
     });
 
     const sanity = createSanityClient({
-      cache,
-      waitUntil,
-      // Optionally, pass session and token to enable live-preview
-      preview:
-        env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
-          ? {
-              session: previewSession,
-              token: env.SANITY_API_TOKEN,
-            }
-          : undefined,
-      // Pass configuration options for Sanity client
-      config: {
-        projectId: env.SANITY_PROJECT_ID,
-        dataset: env.SANITY_DATASET || "production",
-        apiVersion: env.SANITY_API_VERSION || "2023-03-30",
-        useCdn: process.env.NODE_ENV === "production",
-        perspective: "published",
+      projectId: env.SANITY_PROJECT_ID,
+      dataset: env.SANITY_DATASET || "production",
+      apiVersion: env.SANITY_API_VERSION || "2023-03-30",
+      useCdn: process.env.NODE_ENV === "production",
+      perspective: "published",
+      stega: {
+        enabled: true,
+        studioUrl: "http://localhost:3000/studio",
       },
     });
 

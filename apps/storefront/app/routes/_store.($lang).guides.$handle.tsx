@@ -10,8 +10,8 @@ import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
-import PageHero from "~/components/heroes/Page";
-import PortableText from "~/components/portableText/PortableText";
+import { PageHero } from "~/components/heroes/Page";
+import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import type { SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -40,13 +40,9 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.query<SanityPage>({
-    query: GUIDE_QUERY,
-    params: {
-      slug: handle,
-      language,
-    },
-    cache,
+  const page = await context.sanity.fetch<SanityPage>(GUIDE_QUERY, {
+    slug: handle,
+    language,
   });
 
   if (!page) {
@@ -78,7 +74,7 @@ export default function Page() {
               <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
               {/* Body */}
               {page?.body && (
-                <PortableText
+                <CustomPortableText
                   blocks={page.body}
                   centered
                   className={clsx(
