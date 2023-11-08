@@ -48,7 +48,6 @@ export function useQueryStore() {
         }
       : createQueryStore({
           client: sanity.client,
-          studioUrl: sanity.studioUrl,
         })
   );
 

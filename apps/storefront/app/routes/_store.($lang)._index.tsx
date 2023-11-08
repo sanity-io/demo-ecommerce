@@ -69,13 +69,7 @@ export default function Index() {
     rawData: rawPage,
     error,
     loading,
-  } = useQuery<typeof loaderData.page>(
-    HOME_PAGE_QUERY,
-    { language },
-    {
-      initialData: loaderData.page,
-    }
-  );
+  } = useQuery<typeof loaderData.page>(HOME_PAGE_QUERY, { language });
 
   if (error) throw error;
   if (loading) return <section>Loading...</section>;

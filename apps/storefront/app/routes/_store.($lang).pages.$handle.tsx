@@ -64,13 +64,11 @@ export default function Page() {
     rawData: rawPage,
     loading,
     error,
-  } = useQuery<typeof loaderData.page>(
-    PAGE_QUERY,
-    { slug: handle, language, baseLanguage },
-    {
-      initialData: loaderData.page,
-    }
-  );
+  } = useQuery<typeof loaderData.page>(PAGE_QUERY, {
+    slug: handle,
+    language,
+    baseLanguage,
+  });
   if (error) throw error;
   if (loading) return <div className="text-xxl text-center">Loading...</div>;
   console.log({ page, rawPage, loaderData });
