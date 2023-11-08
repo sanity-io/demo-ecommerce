@@ -18,7 +18,7 @@ export default function VisualEditing(props: VisualEditingProps) {
 
   useEffect(() => {
     const disable = enableOverlays({
-      allowStudioOrigin: studioUrl,
+      allowStudioOrigin: window.location.origin,
       history: {
         subscribe: (navigate) => {
           navigateComposerRef.current = navigate;
@@ -51,7 +51,10 @@ export default function VisualEditing(props: VisualEditingProps) {
   const [client] = useState(() => sanity?.client);
 
   useLiveMode({
-    allowStudioOrigin: studioUrl,
+    allowStudioOrigin:
+      typeof window === "undefined"
+        ? "http://localhost:3000"
+        : window.location.origin,
     client,
     onConnect: useCallback(() => {
       console.log("LiveMode is connected");
