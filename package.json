@@ -29,7 +29,7 @@
     "@shopify/hydrogen": "2023.10.0",
     "@shopify/remix-oxygen": "^2.0.0",
     "@sanity/preview-kit": "^3.2.6",
-    "@sanity/client": "6.8.0-pink-lizard.8",
+    "@sanity/client": "6.8.0-pink-lizard.9",
     "@sanity/color-input": "^3.1.0",
     "@sanity/document-internationalization": "^2.0.2",
     "@sanity/overlays": "2.2.1-pink-lizard",
