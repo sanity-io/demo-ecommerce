@@ -84,7 +84,8 @@ export default function Index() {
   } as any);
 
   if (error) throw error;
-  if (loading) return <section>Loading...</section>;
+
+  console.log({ page, initial, loading, error });
 
   return (
     <Suspense>

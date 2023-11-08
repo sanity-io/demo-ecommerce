@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import { enableOverlays, type HistoryUpdate } from "@sanity/overlays";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useLiveMode, useSanityEnvironment } from "~/lib/sanity";
 
@@ -48,16 +48,17 @@ export default function VisualEditing(props: VisualEditingProps) {
     }
   }, [location.hash, location.pathname, location.search]);
   const sanity = useSanityEnvironment();
+  const [client] = useState(() => sanity?.client);
 
   useLiveMode({
     allowStudioOrigin: studioUrl,
-    client: sanity!.client,
-    onConnect: () => {
+    client,
+    onConnect: useCallback(() => {
       console.log("LiveMode is connected");
-    },
-    onDisconnect: () => {
+    }, []),
+    onDisconnect: useCallback(() => {
       console.log("LiveMode is disconnected");
-    },
+    }, []),
   });
 
   return null;
