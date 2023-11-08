@@ -1,5 +1,4 @@
 import type { PortableTextBlock } from "@portabletext/types";
-import { unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import ProductModule from "~/components/modules/Product";

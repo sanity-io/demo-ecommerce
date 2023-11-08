@@ -1,4 +1,3 @@
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import Module from "~/components/modules/Module";
@@ -107,8 +106,8 @@ export default function ModuleGrid({ items }: Props) {
           productLayout.offsetY ? "md:mt-[5vw]" : "mt-0",
         ]);
 
-        if (isModule(unwrapData(item))) {
-          const isProductModule = unwrapData(item)._type === "module.product";
+        if (isModule(item)) {
+          const isProductModule = item._type === "module.product";
 
           // Render modules
           return (
@@ -118,11 +117,11 @@ export default function ModuleGrid({ items }: Props) {
                 isProductModule
                   ? productLayoutClasses
                   : "items-center justify-center",
-                FULL_WIDTH_MODULE_TYPES.includes(unwrapData(item)._type)
+                FULL_WIDTH_MODULE_TYPES.includes(item._type)
                   ? "md:col-span-2"
                   : "md:col-span-1",
               ])}
-              key={unwrapData(item)._key}
+              key={item._key}
             >
               <div className={clsx(isProductModule ? productWidth : "w-full")}>
                 <Module
@@ -135,7 +134,7 @@ export default function ModuleGrid({ items }: Props) {
         } else {
           // Render product cards
           return (
-            <li className={productLayoutClasses} key={unwrapData(item).id}>
+            <li className={productLayoutClasses} key={item.id}>
               <div className={productWidth}>
                 <ProductCard
                   imageAspectClassName={productImageAspect}

@@ -1,4 +1,3 @@
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import { Image } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
@@ -26,7 +25,7 @@ export default function CollectionModule({ module }: Props) {
   return (
     <Link
       className="group relative flex aspect-[4/3] h-full w-full flex-col items-center justify-center md:aspect-square"
-      to={unwrapData(collection)?.slug}
+      to={collection?.slug}
     >
       <div className="relative flex h-full w-full flex-col items-center justify-center">
         {/* Vector artwork */}

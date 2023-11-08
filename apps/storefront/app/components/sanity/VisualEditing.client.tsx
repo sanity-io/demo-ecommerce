@@ -10,6 +10,8 @@ export type VisualEditingProps = { studioUrl: string };
 export default function VisualEditing(props: VisualEditingProps) {
   const { studioUrl } = props;
 
+  console.log("Heads up, studioUrl is: ", studioUrl);
+
   const navigateRemix = useNavigate();
   const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
     null
@@ -48,7 +50,15 @@ export default function VisualEditing(props: VisualEditingProps) {
   }, [location.hash, location.pathname, location.search]);
 
   const { useLiveMode } = useQueryStore();
-  useLiveMode({ allowStudioOrigin: studioUrl });
+  useLiveMode({
+    allowStudioOrigin: studioUrl,
+    onConnect: () => {
+      console.log("LiveMode is connected");
+    },
+    onDisconnect: () => {
+      console.log("LiveMode is disconnected");
+    },
+  });
 
   return null;
 }

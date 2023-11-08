@@ -1,4 +1,3 @@
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import HeroContent from "~/components/heroes/HeroContent";

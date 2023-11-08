@@ -1,5 +1,4 @@
 import { useMatches } from "@remix-run/react";
-import { unwrapData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import Button from "~/components/elements/Button";
@@ -23,7 +22,7 @@ export function ImageModule({ module }: Props) {
     <div className="relative">
       {unwrappedModule.variant === "callToAction" &&
       unwrappedModule.callToAction?.link ? (
-        <Link className="group" link={unwrapData(module)?.callToAction.link}>
+        <Link className="group" link={module?.callToAction.link}>
           <ImageContent module={module} />
         </Link>
       ) : (

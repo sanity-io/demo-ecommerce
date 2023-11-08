@@ -1,9 +1,3 @@
-import {
-  encodeSanityNodeData,
-  sanity,
-  unwrapData,
-  wrapData,
-} from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import LinkButton from "~/components/elements/LinkButton";
@@ -24,33 +18,28 @@ export default function HomeHero({ hero }: Props) {
     >
       {/* Title */}
       {hero.title && (
-        <sanity.h1
+        <h1
           className={clsx(
             "mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl",
             "md:text-5xl"
           )}
         >
           {hero.title}
-        </sanity.h1>
+        </h1>
       )}
 
       {/* Link */}
-      {hero.link && (
-        <span data-sanity={wrapData(hero.link)}>
-          <LinkButton link={unwrapData(hero.link)} />
-        </span>
-      )}
+      {hero.link && <LinkButton link={hero.link} />}
 
       {/* Hero content */}
       {hero.content && (
         <div
-          data-sanity={encodeSanityNodeData(hero.content)}
           className={clsx(
             "mt-6 w-full", //
             "md:mt-12"
           )}
         >
-          <HeroContent content={unwrapData(hero.content)} />
+          <HeroContent content={hero.content} />
         </div>
       )}
     </div>

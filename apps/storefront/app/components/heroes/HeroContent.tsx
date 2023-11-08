@@ -1,4 +1,3 @@
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
 import { useMemo } from "react";
 
 import ImageWithProductHotspots from "~/components/media/ImageWithProductHotspots";

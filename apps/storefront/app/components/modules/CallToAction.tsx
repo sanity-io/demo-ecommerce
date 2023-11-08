@@ -1,9 +1,4 @@
 import { useMatches } from "@remix-run/react";
-import {
-  encodeSanityNodeData,
-  sanity,
-  unwrapData,
-} from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
 import Link from "~/components/elements/Link";
@@ -24,9 +19,8 @@ export default function CallToActionModule({ module }: Props) {
     <div
       className={clsx(
         "flex gap-5 md:gap-[5vw]", //
-        unwrapData(module).layout === "left" && "flex-col md:flex-row",
-        unwrapData(module).layout === "right" &&
-          "flex-col-reverse md:flex-row-reverse"
+        module.layout === "left" && "flex-col md:flex-row",
+        module.layout === "right" && "flex-col-reverse md:flex-row-reverse"
       )}
     >
       <div className="relative aspect-[864/485] grow">
@@ -40,20 +34,18 @@ export default function CallToActionModule({ module }: Props) {
         )}
       >
         {/* Title */}
-        <sanity.div
+        <div
           className={clsx(
             "text-xl font-bold", //
             "md:text-2xl"
           )}
         >
           {module.title}
-        </sanity.div>
+        </div>
 
         {/* Body */}
         {module.body && (
-          <sanity.div className="mt-4 leading-paragraph">
-            {module.body}
-          </sanity.div>
+          <div className="mt-4 leading-paragraph">{module.body}</div>
         )}
 
         {/* Link */}
@@ -61,9 +53,9 @@ export default function CallToActionModule({ module }: Props) {
           <div className="mt-4">
             <Link
               className="font-bold underline hover:no-underline"
-              link={unwrapData(module.link)}
+              link={module.link}
             >
-              {unwrapData(module.link.title)}
+              {module.link.title}
             </Link>
           </div>
         )}
@@ -84,16 +76,15 @@ function ModuleContent({
     case "image": {
       return (
         <SanityImage
-          data-sanity={encodeSanityNodeData(content?.crop)}
           alt={content?.altText}
-          crop={unwrapData(content)?.crop}
+          crop={content?.crop}
           dataset={sanityDataset}
-          hotspot={unwrapData(content)?.hotspot}
+          hotspot={content?.hotspot}
           layout="fill"
           objectFit="cover"
           projectId={sanityProjectID}
           sizes="100vw"
-          src={unwrapData(content)?.asset?._ref}
+          src={content?.asset?._ref}
         />
       );
     }

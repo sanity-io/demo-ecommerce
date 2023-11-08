@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { sanity, unwrapData } from "@sanity/react-loader/jsx";
+
 import LinkButton from "~/components/elements/LinkButton";
 import type { SanityModuleCallout } from "~/lib/sanity";
 import { useColorTheme } from "~/lib/theme";
@@ -17,22 +17,19 @@ export default function CalloutModule({ module }: Props) {
       style={{ color: colorTheme?.text }}
     >
       {/* Text */}
-      <sanity.div
+      <div
         className={clsx(
           "max-w-[60rem] text-2xl", //
           "md:text-4xl"
         )}
       >
         {module.text}
-      </sanity.div>
+      </div>
 
       {/* Link */}
       {module.link && (
         <div className="mt-4">
-          <LinkButton
-            backgroundColor={colorTheme?.text}
-            link={unwrapData(module.link)}
-          />
+          <LinkButton backgroundColor={colorTheme?.text} link={module.link} />
         </div>
       )}
     </div>
