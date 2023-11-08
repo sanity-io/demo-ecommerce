@@ -23,7 +23,7 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/mutator": "^3.19.0",
     "@sanity/overlays": "2.2.1-pink-lizard",
-    "@sanity/react-loader": "0.7.0-pink-lizard",
+    "@sanity/react-loader": "0.7.2-pink-lizard",
     "@sanity/types": "^3.19.0",
     "@shopify/hydrogen": "2023.10.1",
     "@shopify/remix-oxygen": "^2.0.0",
