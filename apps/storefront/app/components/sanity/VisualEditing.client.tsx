@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "@remix-run/react";
 import { enableOverlays, type HistoryUpdate } from "@sanity/overlays";
 import { useEffect, useRef } from "react";
 
-import { useLiveMode } from "~/lib/sanity";
+import { useLiveMode, useSanityEnvironment } from "~/lib/sanity";
 
 export type VisualEditingProps = { studioUrl: string };
 
@@ -47,9 +47,11 @@ export default function VisualEditing(props: VisualEditingProps) {
       });
     }
   }, [location.hash, location.pathname, location.search]);
+  const sanity = useSanityEnvironment();
 
   useLiveMode({
     allowStudioOrigin: studioUrl,
+    client: sanity!.client,
     onConnect: () => {
       console.log("LiveMode is connected");
     },
