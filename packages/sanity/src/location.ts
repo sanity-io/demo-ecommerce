@@ -39,6 +39,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     return docs$.pipe(
       map((docs) => {
         //console.log({docs})
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const href = id == 'home-en' ? '/' : `/no-no`
         return {
           locations: docs.map((doc: any) => ({
