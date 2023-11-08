@@ -7,6 +7,7 @@ import {
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
+import { vercelStegaSplit } from "@vercel/stega";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
@@ -19,11 +20,18 @@ import {
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
+// @TODO move into loaders or `@sanity/client/stega`
+function cleanStega(input: string): string {
+  const { cleaned } = vercelStegaSplit(input);
+  return cleaned;
+}
+
 const seo: SeoHandleFunction = ({ data }) => ({
-  title: data?.page?.seo?.title || "Sanity x Hydrogen",
-  description:
+  title: cleanStega(data?.page?.seo?.title || "Sanity x Hydrogen"),
+  description: cleanStega(
     data?.page?.seo?.description ||
-    "A custom storefront powered by Hydrogen and Sanity",
+      "A custom storefront powered by Hydrogen and Sanity"
+  ),
 });
 
 export const handle = {

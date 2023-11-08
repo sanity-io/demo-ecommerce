@@ -16,6 +16,7 @@ import { PreviewSession } from "hydrogen-sanity";
 import { setServerClient } from "~/lib/sanity/useQueryStore";
 import { getLocaleFromRequest } from "~/lib/utils";
 
+let sanitySetup = false;
 export async function handler(
   request: Request,
   env: Env,
@@ -80,7 +81,10 @@ export async function handler(
     /**
      * Set the loader server client
      */
-    setServerClient(sanity);
+    if (!sanitySetup) {
+      setServerClient(sanity);
+      sanitySetup = true;
+    }
 
     /**
      * Create a Remix request handler and pass
