@@ -13,6 +13,7 @@ import {
 } from "@shopify/remix-oxygen";
 import { PreviewSession } from "hydrogen-sanity";
 
+import { setServerClient } from "~/lib/sanity/useQueryStore";
 import { getLocaleFromRequest } from "~/lib/utils";
 
 export async function handler(
@@ -76,6 +77,10 @@ export async function handler(
         studioUrl: "/studio",
       },
     });
+    /**
+     * Set the loader server client
+     */
+    setServerClient(sanity);
 
     /**
      * Create a Remix request handler and pass

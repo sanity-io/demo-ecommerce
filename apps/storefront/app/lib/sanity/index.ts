@@ -1,3 +1,3 @@
 export * from "./types";
-export * from "./useQuery";
+export * from "./useQueryStore";
 export * from "./useSanityEnvironment";

@@ -12,7 +12,7 @@ import invariant from "tiny-invariant";
 import { PageHero } from "~/components/heroes/Page";
 import { CustomPortableText } from "~/components/portableText/CustomPortableText";
 import { baseLanguage } from "~/data/countries";
-import { type SanityPage, useQuery } from "~/lib/sanity";
+import { query, type SanityPage, useQuery } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
@@ -40,11 +40,12 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.fetch<SanityPage>(PAGE_QUERY, {
+  const initial = await query<SanityPage>(PAGE_QUERY, {
     slug: handle,
     language,
     baseLanguage,
   });
+  const { data: page } = initial;
   if (!page) {
     throw notFound();
   }
@@ -52,37 +53,40 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
-  return defer({ language, page, gids });
+  return defer({ language, initial, page, gids });
 }
 
 export default function Page() {
-  const { language, gids, ...loaderData } =
+  const { language, gids, initial, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
   const {
     data: page,
-    rawData: rawPage,
     loading,
     error,
-  } = useQuery<typeof loaderData.page>(PAGE_QUERY, {
-    slug: handle,
-    language,
-    baseLanguage,
-  });
+  } = useQuery<typeof initial.data>(
+    PAGE_QUERY,
+    {
+      slug: handle,
+      language,
+      baseLanguage,
+    },
+    { initial } as any
+  );
   if (error) throw error;
   if (loading) return <div className="text-xxl text-center">Loading...</div>;
-  console.log({ page, rawPage, loaderData });
+  console.log({ page, loaderData });
   return (
-    <ColorTheme value={rawPage?.colorTheme}>
+    <ColorTheme value={page?.colorTheme}>
       <Suspense>
         <Await resolve={gids}>
           {/* Page hero */}
 
           <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
           {/* Body */}
-          {rawPage?.body && (
+          {page?.body && (
             <CustomPortableText
-              blocks={rawPage.body}
+              blocks={page.body}
               centered
               className={clsx(
                 "mx-auto max-w-[660px] px-4 pb-24 pt-8", //

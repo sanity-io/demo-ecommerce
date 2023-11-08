@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
 import {
+  query,
   type SanityHeroHome,
   type SanityHomePage,
   useQuery,
@@ -40,9 +41,10 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.fetch<SanityHomePage>(HOME_PAGE_QUERY, {
+  const initial = await query<SanityHomePage>(HOME_PAGE_QUERY, {
     language,
   });
+  const { data: page } = initial;
 
   if (!page) {
     throw notFound();
@@ -55,6 +57,7 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
     language,
     page,
     gids,
+    initial,
     analytics: {
       pageType: AnalyticsPageType.home,
     },
@@ -62,14 +65,15 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
-  const { gids, language, ...loaderData } =
+  const { gids, language, initial, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const {
     data: page,
-    rawData: rawPage,
     error,
     loading,
-  } = useQuery<typeof loaderData.page>(HOME_PAGE_QUERY, { language });
+  } = useQuery<typeof loaderData.page>(HOME_PAGE_QUERY, { language }, {
+    initial,
+  } as any);
 
   if (error) throw error;
   if (loading) return <section>Loading...</section>;
