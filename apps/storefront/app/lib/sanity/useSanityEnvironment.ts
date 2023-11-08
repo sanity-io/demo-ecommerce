@@ -1,4 +1,6 @@
 import { createClient } from "@sanity/client/stega";
+
+import { stegaFilter } from "./useQueryStore";
 export function useSanityEnvironment() {
   if (typeof document === "undefined") {
     return null;
@@ -16,6 +18,7 @@ export function useSanityEnvironment() {
       stega: {
         enabled: true,
         studioUrl,
+        filter: stegaFilter,
         logger: console,
       },
     }),

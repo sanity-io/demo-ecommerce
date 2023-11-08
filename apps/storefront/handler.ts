@@ -13,7 +13,7 @@ import {
 } from "@shopify/remix-oxygen";
 import { PreviewSession } from "hydrogen-sanity";
 
-import { setServerClient } from "~/lib/sanity/useQueryStore";
+import { setServerClient, stegaFilter } from "~/lib/sanity/useQueryStore";
 import { getLocaleFromRequest } from "~/lib/utils";
 
 let sanitySetup = false;
@@ -76,6 +76,8 @@ export async function handler(
       stega: {
         enabled: true,
         studioUrl: "/studio",
+        filter: stegaFilter,
+        // logger: console,
       },
     });
     /**
