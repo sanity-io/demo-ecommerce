@@ -1,6 +1,37 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": ["main", "feature/add-composer-v2"],
   "extends": [
     "local>sanity-io/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "matchDepNames": [
+        "@sanity/block-tools",
+        "@sanity/cli",
+        "@sanity/client",
+        "@sanity/diff",
+        "@sanity/export",
+        "@sanity/import-cli",
+        "@sanity/import",
+        "@sanity/mutator",
+        "@sanity/overlays",
+        "@sanity/portable-text-editor",
+        "@sanity/presentation",
+        "@sanity/react-loader",
+        "@sanity/schema",
+        "@sanity/types",
+        "@sanity/util",
+        "@sanity/vision",
+        "create-sanity",
+        "groq",
+        "sanity"
+      ],
+      "followTag": "pink-lizard",
+      "schedule": ["at any time"],
+      "rangeStrategy": "pin",
+      "groupSlug": "pink-lizard",
+      "semanticCommitType": "fix"
+    }
   ]
 }
