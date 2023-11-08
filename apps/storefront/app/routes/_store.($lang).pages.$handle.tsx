@@ -74,7 +74,9 @@ export default function Page() {
     { initial } as any
   );
   if (error) throw error;
-  console.log({ page, loaderData, loading, initial });
+
+  if (loading) return <div className="text-xxl text-center">Loading...</div>;
+
   return (
     <ColorTheme value={page?.colorTheme}>
       <Suspense>
