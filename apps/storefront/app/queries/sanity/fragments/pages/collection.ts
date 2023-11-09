@@ -7,6 +7,7 @@ import { SEO_SHOPIFY } from "../seoShopify";
 
 export const COLLECTION_PAGE = groq`
   _id,
+  _type,
   colorTheme->{
     ${COLOR_THEME}
   },

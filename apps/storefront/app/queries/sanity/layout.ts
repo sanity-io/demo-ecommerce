@@ -6,6 +6,8 @@ import { PORTABLE_TEXT } from "./fragments/portableText/portableText";
 
 export const LAYOUT_QUERY = groq`
   *[_type == 'settings' && _id == 'settings-' + $language] | order(_updatedAt desc) [0] {
+    _id,
+    _type,
     seo,
     "menuLinks": menu.links[] {
       ${LINKS}
@@ -19,6 +21,8 @@ export const LAYOUT_QUERY = groq`
       },
     },
     notFoundPage {
+      _id,
+      _type,
       body,
       "collectionGid": collection->store.gid,
       colorTheme->{

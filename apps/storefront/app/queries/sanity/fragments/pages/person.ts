@@ -5,6 +5,8 @@ import { PRODUCT_WITH_VARIANT_FIELDS } from "../productWithVariantFields";
 import { SEO } from "../seo";
 
 export const PERSON_PAGE = groq`
+  _id,
+  _type,
   name,
   image,
   "bio": bio[_key == $language][0].value[] {

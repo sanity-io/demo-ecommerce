@@ -1,3 +1,4 @@
+import { useMatch, useMatches } from "@remix-run/react";
 import { encodeSanityNodeData } from "@sanity/react-loader/jsx";
 import clsx from "clsx";
 
@@ -95,10 +96,13 @@ type Props = {
 };
 
 export default function ModuleGrid({ items }: Props) {
+  const matches = useMatches();
+  const routeData = matches.at(-1);
+  console.log(routeData);
+
   return (
     <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
-        //console.log({ item });
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];
         const productWidth = CLASSES.width[productLayout.width];
@@ -114,6 +118,11 @@ export default function ModuleGrid({ items }: Props) {
           // Render modules
           return (
             <li
+              /* data-sanity={dataAttribute({
+                id: routeData?.data?.page._id,
+                type: routeData?.data?.page._type,
+                path: `modules[_key=="${item._key}"]`,
+              })} */
               className={clsx([
                 "flex overflow-hidden",
                 isProductModule
@@ -136,7 +145,15 @@ export default function ModuleGrid({ items }: Props) {
         } else {
           // Render product cards
           return (
-            <li className={productLayoutClasses} key={item.id}>
+            <li
+              /*  data-sanity={dataAttribute({
+                id: routeData?.data?.page._id,
+                type: routeData?.data?.page._type,
+                path: `modules[_key=="${item._key}"]`,
+              })} */
+              className={productLayoutClasses}
+              key={item.id}
+            >
               <div className={productWidth}>
                 <ProductCard
                   imageAspectClassName={productImageAspect}

@@ -5,6 +5,8 @@ import { MODULES } from "../modules";
 import { SEO } from "../seo";
 
 export const HOME_PAGE = groq`
+  _id,
+  _type,
   hero {
     ${HERO_HOME}
   },

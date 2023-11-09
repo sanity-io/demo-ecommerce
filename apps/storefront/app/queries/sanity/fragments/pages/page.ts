@@ -6,6 +6,8 @@ import { PORTABLE_TEXT } from "../portableText/portableText";
 import { SEO } from "../seo";
 
 export const PAGE = groq`
+  _id,
+  _type,
   body[]{
     ${PORTABLE_TEXT}
   },
