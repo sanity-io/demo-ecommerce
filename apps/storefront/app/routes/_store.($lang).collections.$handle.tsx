@@ -21,7 +21,13 @@ import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
-import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
+import {
+  query,
+  type SanityCollectionPage,
+  type SanityHeroHome,
+  useQuery,
+} from "~/lib/sanity";
+import { dataAttribute } from "~/lib/sanity/dataAttribute";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
@@ -68,8 +74,8 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const [page, { collection }] = await Promise.all([
-    context.sanity.fetch<SanityCollectionPage>(COLLECTION_PAGE_QUERY, {
+  const [initial, { collection }] = await Promise.all([
+    query<SanityCollectionPage>(COLLECTION_PAGE_QUERY, {
       slug: params.handle,
       language,
     }),
@@ -83,6 +89,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       },
     }),
   ]);
+  const { data: page } = initial;
 
   // Handle 404s
   if (!page || !collection) {
@@ -95,6 +102,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   return defer({
     language,
     page,
+    initial,
     collection,
     gids,
     sortKey,
@@ -107,71 +115,72 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 }
 
 export default function CollectionPage() {
-  const { language, collection, page, gids } =
+  const { language, collection, initial, gids, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
   const { handle } = useParams();
 
+  const {
+    data: page,
+    error,
+    loading,
+  } = useQuery<typeof loaderData.page>(
+    COLLECTION_PAGE_QUERY,
+    { slug: handle, language },
+    {
+      initial,
+    } as any
+  );
+
   const products = (collection as any).products.nodes;
 
   return (
-    <SanityPreview
-      data={page}
-      query={COLLECTION_PAGE_QUERY}
-      params={{ slug: handle, language }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Hero */}
-              <CollectionHero
-                fallbackTitle={collection?.title}
-                hero={page?.hero as SanityHeroHome}
-              />
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Hero */}
+          <CollectionHero
+            fallbackTitle={collection?.title}
+            hero={page?.hero as SanityHeroHome}
+          />
 
+          <div
+            className={clsx(
+              "mb-32 mt-8 px-4", //
+              "md:px-8"
+            )}
+          >
+            {products.length > 0 && (
               <div
                 className={clsx(
-                  "mb-32 mt-8 px-4", //
-                  "md:px-8"
+                  "mb-8 flex justify-start", //
+                  "md:justify-end"
                 )}
               >
-                {products.length > 0 && (
-                  <div
-                    className={clsx(
-                      "mb-8 flex justify-start", //
-                      "md:justify-end"
-                    )}
-                  >
-                    <SortOrder
-                      key={page?._id}
-                      initialSortOrder={page?.sortOrder}
-                    />
-                  </div>
-                )}
-
-                {/* No results */}
-                {products.length === 0 && (
-                  <div className="mt-16 text-center text-lg text-darkGray">
-                    <Label _key="collection.noResults" />
-                  </div>
-                )}
-
-                {(page?.modules || products.length > 0) && (
-                  <ProductGrid
-                    collection={collection as any}
-                    modules={page?.modules || []}
-                    url={`/collections/${(collection as any).handle}`}
-                    key={`${(collection as any).handle}-${sort}`}
-                  />
-                )}
+                <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
               </div>
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            )}
+
+            {/* No results */}
+            {products.length === 0 && (
+              <div className="mt-16 text-center text-lg text-darkGray">
+                <Label _key="collection.noResults" />
+              </div>
+            )}
+
+            {(page?.modules || products.length > 0) && (
+              <ProductGrid
+                collection={collection as any}
+                modules={page?.modules || []}
+                url={`/collections/${(collection as any).handle}`}
+                key={`${(collection as any).handle}-${sort}`}
+              />
+            )}
+          </div>
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }
 

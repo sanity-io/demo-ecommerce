@@ -8,6 +8,7 @@ import {
 import clsx from "clsx";
 import { Suspense } from "react";
 
+import { PreviewLoading } from "~/components/global/PreviewLoading";
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
 import {

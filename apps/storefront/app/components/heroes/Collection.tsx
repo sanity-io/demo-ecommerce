@@ -7,9 +7,10 @@ import { useColorTheme } from "~/lib/theme";
 type Props = {
   fallbackTitle: string;
   hero?: SanityHeroCollection;
+  slug: string;
 };
 
-export default function CollectionHero({ fallbackTitle, hero }: Props) {
+export default function CollectionHero({ fallbackTitle, hero, slug }: Props) {
   const colorTheme = useColorTheme();
 
   if (!hero) {
@@ -64,7 +65,7 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
             "md:mt-12"
           )}
         >
-          <HeroContent content={hero.content} />
+          <HeroContent content={hero.content} slug={slug} />
         </div>
       )}
     </div>

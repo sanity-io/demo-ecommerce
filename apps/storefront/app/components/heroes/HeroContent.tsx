@@ -1,3 +1,4 @@
+import { useRouteLoaderData } from "@remix-run/react";
 import { useMemo } from "react";
 
 import ImageWithProductHotspots from "~/components/media/ImageWithProductHotspots";
@@ -6,9 +7,11 @@ import type {
   SanityImageWithProductHotspots,
   SanityProductWithVariant,
 } from "~/lib/sanity";
+import { dataAttribute } from "~/lib/sanity/dataAttribute";
 
 type Props = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
+  slug: string;
 };
 
 export default function HeroContent({ content }: Props) {

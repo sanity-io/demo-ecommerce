@@ -114,11 +114,6 @@ export default function ModuleGrid({ items }: Props) {
           // Render modules
           return (
             <li
-              data-sanity={dataAttribute({
-                id: "home-en",
-                type: "home",
-                path: `modules[_key=="${(item as any)._key}"]`,
-              })}
               className={clsx([
                 "flex overflow-hidden",
                 isProductModule

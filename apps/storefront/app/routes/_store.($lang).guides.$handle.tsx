@@ -6,16 +6,17 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import { PageHero } from "~/components/heroes/Page";
 import { CustomPortableText } from "~/components/portableText/CustomPortableText";
-import type { SanityPage } from "~/lib/sanity";
+import { baseLanguage } from "~/data/countries";
+import { query, type SanityPage, useQuery } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { GUIDE_QUERY } from "~/queries/sanity/guide";
+import { PAGE_QUERY } from "~/queries/sanity/page";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.seo?.title,
@@ -40,10 +41,12 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.fetch<SanityPage>(GUIDE_QUERY, {
+  const initial = await query<SanityPage>(GUIDE_QUERY, {
     slug: handle,
     language,
+    baseLanguage,
   });
+  const { data: page } = initial;
 
   if (!page) {
     throw notFound();
@@ -52,41 +55,48 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
-  return defer({ language, page, gids });
+  return defer({ language, baseLanguage, initial, page, gids });
 }
 
 export default function Page() {
-  const { language, page, gids } =
+  const { language, baseLanguage, initial, gids, ...loaderData } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
+  const {
+    data: page,
+    loading,
+    error,
+  } = useQuery<typeof initial.data>(
+    GUIDE_QUERY,
+    {
+      slug: handle,
+      language,
+      baseLanguage,
+    },
+    { initial } as any
+  );
+
+  if (error) throw error;
 
   return (
-    <SanityPreview
-      data={page}
-      query={GUIDE_QUERY}
-      params={{ slug: handle, language }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Page hero */}
-              <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
-              {/* Body */}
-              {page?.body && (
-                <CustomPortableText
-                  blocks={page.body}
-                  centered
-                  className={clsx(
-                    "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                    "md:px-8"
-                  )}
-                />
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
+          {/* Body */}
+          {page?.body && (
+            <CustomPortableText
+              blocks={page.body}
+              centered
+              className={clsx(
+                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+                "md:px-8"
               )}
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            />
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }

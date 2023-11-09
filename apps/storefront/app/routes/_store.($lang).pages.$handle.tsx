@@ -75,8 +75,6 @@ export default function Page() {
   );
   if (error) throw error;
 
-  if (loading) return <div className="text-xxl text-center">Loading...</div>;
-
   return (
     <ColorTheme value={page?.colorTheme}>
       <Suspense>

@@ -2,13 +2,15 @@ import type {DocumentLocationResolver, DocumentLocationsState} from '@sanity/pre
 import {map} from 'rxjs'
 
 const firstSegmentBasedOnType = {
-  product: '/products/',
-  page: '/page/',
   collection: '/collections/',
+  guide: '/guides/',
+  home: '/',
+  page: '/pages/',
+  product: '/products/',
 }
 
 export const locate: DocumentLocationResolver = (params, context) => {
-  console.log({params, context})
+  //console.log({params, context})
   const {type, id} = params
   const {documentStore} = context
   if (type == 'home') {
@@ -38,14 +40,19 @@ export const locate: DocumentLocationResolver = (params, context) => {
 
     return docs$.pipe(
       map((docs) => {
-        //console.log({docs})
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const href = id == 'home-en' ? '/' : `/no-no`
         return {
-          locations: docs.map((doc: any) => ({
-            title: doc.seo?.title || doc.store.title || 'No title',
-            href: `${firstSegmentBasedOnType[doc._type]}${doc.store?.slug.current || ''}`,
-          })),
+          locations: docs.map((doc: any) => {
+            const title = doc.seo?.title || doc?.title || doc?.store?.title || 'No title'
+            // @ts-expect-error
+            const href = `${firstSegmentBasedOnType[doc._type]}${
+              doc?.slug?.current || doc.store?.slug?.current || ''
+            }`
+
+            return {
+              title,
+              href,
+            }
+          }),
         } satisfies DocumentLocationsState
       }),
     )
