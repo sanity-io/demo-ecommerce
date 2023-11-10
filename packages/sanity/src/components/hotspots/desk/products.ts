@@ -2,7 +2,7 @@ import {InfoOutlineIcon} from '@sanity/icons'
 import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 
-import defineStructure from '../utils/defineStructure'
+import defineStructure from '../../../utils/defineStructure'
 import {previewPane} from './preview'
 
 /**
@@ -52,7 +52,7 @@ export default defineStructure<ListItemBuilder>((S) =>
           S.list()
             .title('Product')
             .canHandleIntent(
-              (intentName, params) => intentName === 'edit' && params.type === 'product'
+              (intentName, params) => intentName === 'edit' && params.type === 'product',
             )
             .items([
               S.listItem()
@@ -64,7 +64,7 @@ export default defineStructure<ListItemBuilder>((S) =>
                   S.document()
                     .schemaType('product')
                     .documentId(id)
-                    .views([S.view.form(), previewPane(S), guidesPane(S)])
+                    .views([S.view.form(), previewPane(S), guidesPane(S)]),
                 ),
               // Product variants
               S.listItem()
@@ -78,17 +78,17 @@ export default defineStructure<ListItemBuilder>((S) =>
                       `
                       _type == "productVariant"
                       && store.productId == $productId
-                    `
+                    `,
                     )
                     .params({
                       productId: Number(id.replace('shopifyProduct-', '')),
                     })
                     .canHandleIntent(
                       (intentName, params) =>
-                        intentName === 'edit' && params.type === 'productVariant'
-                    )
+                        intentName === 'edit' && params.type === 'productVariant',
+                    ),
                 ),
-            ])
-        )
-    )
+            ]),
+        ),
+    ),
 )

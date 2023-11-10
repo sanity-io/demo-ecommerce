@@ -1,9 +1,9 @@
 import {EarthGlobeIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 
-import TranslatedDoc from '../components/media/TranslatedDoc'
-import {LANGUAGES, SANITY_API_VERSION} from '../constants'
-import defineStructure from '../utils/defineStructure'
+import {LANGUAGES, SANITY_API_VERSION} from '../../../constants'
+import defineStructure from '../../../utils/defineStructure'
+import TranslatedDoc from '../../media/TranslatedDoc'
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -44,8 +44,8 @@ export default defineStructure<ListItemBuilder>((S) =>
 
                     const languageValue = params?.template?.split(`-`).pop()
                     return languageValue === language.id
-                  })
-              )
+                  }),
+              ),
           ),
           S.divider(),
           S.listItem()
@@ -60,9 +60,9 @@ export default defineStructure<ListItemBuilder>((S) =>
                 .apiVersion(SANITY_API_VERSION)
                 .filter('_type == "guide"')
                 .canHandleIntent(
-                  (intentName, params) => intentName === 'edit' || params.template === `guide`
-                )
+                  (intentName, params) => intentName === 'edit' || params.template === `guide`,
+                ),
             ),
-        ])
-    )
+        ]),
+    ),
 )

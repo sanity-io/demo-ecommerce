@@ -1,7 +1,7 @@
 import {DefaultDocumentNodeResolver, StructureBuilder} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
-import {resolvePreviewUrl} from '../utils/resolveProductionUrl'
+import {resolvePreviewUrl} from '../../../utils/resolveProductionUrl'
 
 const PREVIEW_TYPES = ['page', 'product', 'home', 'guide', 'collection', 'person']
 

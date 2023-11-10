@@ -1,5 +1,5 @@
 import type {DocumentLocationResolver, DocumentLocationsState} from '@sanity/presentation'
-import {map, Observable} from 'rxjs'
+import {map} from 'rxjs'
 
 const firstSegmentBasedOnType = {
   product: '/products/',
@@ -7,7 +7,7 @@ const firstSegmentBasedOnType = {
   collection: '/collections/',
 }
 
-export const locate: DocumentLocationResolver = (params, context) => {
+export const locate: DocumentLocationResolver = (params: any, context: any) => {
   //console.log({params, context})
   const {type, id} = params
   const {documentStore} = context
@@ -15,7 +15,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     const doc$ = documentStore.listenQuery(`*[_id == $id]`, {id}, {perspective: 'previewDrafts'})
 
     return doc$.pipe(
-      map((doc) => {
+      map((doc: any) => {
         // @todo: Make this dynamic using the same language logic as the storefront router
         const href = id == 'home-en' ? '/' : `/no-no`
         return {
@@ -37,9 +37,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     )
 
     return docs$.pipe(
-      map((docs) => {
-        console.log({docs})
-        const href = id == 'home-en' ? '/' : `/no-no`
+      map((docs: any) => {
         return {
           locations: docs.map((doc: any) => ({
             title: doc.seo?.title || doc.store.title || 'No title',

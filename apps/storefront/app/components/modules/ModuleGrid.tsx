@@ -96,10 +96,6 @@ type Props = {
 };
 
 export default function ModuleGrid({ items }: Props) {
-  const matches = useMatches();
-  const routeData = matches.at(-1);
-  console.log(routeData);
-
   return (
     <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {

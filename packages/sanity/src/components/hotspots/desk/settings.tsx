@@ -1,9 +1,9 @@
 import {CogIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 
-import TranslatedDoc from '../components/media/TranslatedDoc'
-import {LANGUAGES} from '../constants'
-import defineStructure from '../utils/defineStructure'
+import {LANGUAGES} from '../../../constants'
+import defineStructure from '../../../utils/defineStructure'
+import TranslatedDoc from '../../media/TranslatedDoc'
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -20,18 +20,18 @@ export default defineStructure<ListItemBuilder>((S) =>
               .schemaType(`settings`)
               .icon(() => <TranslatedDoc icon={<CogIcon />} languageIcon={language.icon} />)
               .id(`settings-${language.id}`)
-              .title(`Settings (${language.id.toLocaleUpperCase()})`)
+              .title(`Settings (${language.id.toLocaleUpperCase()})`),
           ),
           S.divider(),
           S.listItem()
             .title('Shared Text')
             .schemaType('sharedText')
             .child(
-              S.editor().title('Shared Text').schemaType('sharedText').documentId('sharedText')
+              S.editor().title('Shared Text').schemaType('sharedText').documentId('sharedText'),
             ),
         ])
         .canHandleIntent(
-          (intentName, params) => intentName === 'edit' && params.id.startsWith('home')
-        )
-    )
+          (intentName, params) => intentName === 'edit' && params.id.startsWith('home'),
+        ),
+    ),
 )

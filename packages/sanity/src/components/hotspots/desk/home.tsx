@@ -1,9 +1,9 @@
 import {HomeIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 
-import TranslatedDoc from '../components/media/TranslatedDoc'
-import {LANGUAGES} from '../constants'
-import defineStructure from '../utils/defineStructure'
+import {LANGUAGES} from '../../../constants'
+import defineStructure from '../../../utils/defineStructure'
+import TranslatedDoc from '../../media/TranslatedDoc'
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -20,11 +20,11 @@ export default defineStructure<ListItemBuilder>((S) =>
               .schemaType(`home`)
               .icon(() => <TranslatedDoc icon={<HomeIcon />} languageIcon={language.icon} />)
               .id(`home-${language.id}`)
-              .title(`Home (${language.id.toLocaleUpperCase()})`)
+              .title(`Home (${language.id.toLocaleUpperCase()})`),
           ),
         ])
         .canHandleIntent(
-          (intentName, params) => intentName === 'edit' && params.id.startsWith('home')
-        )
-    )
+          (intentName, params) => intentName === 'edit' && params.id.startsWith('home'),
+        ),
+    ),
 )

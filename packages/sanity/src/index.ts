@@ -9,11 +9,11 @@ import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 
+import {structure} from './components/hotspots/desk'
+import {defaultDocumentNode} from './components/hotspots/desk/preview'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
-import {structure} from './desk'
-import {defaultDocumentNode} from './desk/preview'
 import {locate} from './location'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
@@ -54,14 +54,14 @@ export function defineSanityConfig(config: SanityConfig) {
       presentationTool({
         title: 'AKVA Storefront',
         name: 'storefront',
-        previewUrl: preview.domain ?? 'http://localhost:3000',
+        previewUrl: preview.domain + '?preview=true' ?? 'http://localhost:3000',
         locate,
       }),
-      presentationTool({
+      /* presentationTool({
         title: 'AKVA Kiosk',
         previewUrl: preview.domain ?? 'http://localhost:3000',
         //locate,
-      }),
+      }), */
       deskTool({
         title: 'Structure',
         structure,
@@ -156,7 +156,7 @@ export function defineSanityConfig(config: SanityConfig) {
 
     studio: {
       components: {
-        navbar: Navbar,
+        //navbar: Navbar,
         logo: Logo,
       },
     },

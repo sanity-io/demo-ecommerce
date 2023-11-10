@@ -9,6 +9,7 @@ export default defineField({
   title: 'Grid',
   type: 'object',
   icon: ThLargeIcon,
+
   fields: [
     // Items
     {
