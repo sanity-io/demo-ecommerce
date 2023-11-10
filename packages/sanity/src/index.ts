@@ -54,7 +54,7 @@ export function defineSanityConfig(config: SanityConfig) {
       presentationTool({
         title: 'AKVA Storefront',
         name: 'storefront',
-        previewUrl: preview.domain + '?preview=true' ?? 'http://localhost:3000',
+        previewUrl: preview.domain ?? 'http://localhost:3000',
         locate,
       }),
       /* presentationTool({
