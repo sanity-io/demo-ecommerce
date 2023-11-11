@@ -15,7 +15,7 @@
     "@sanity/color-input": "^3.1.0",
     "@sanity/document-internationalization": "^2.0.2",
     "@sanity/language-filter": "^3.2.1",
-    "@sanity/presentation": "0.11.0-pink-lizard",
+    "@sanity/presentation": "0.12.1-pink-lizard",
     "@sanity/ui": "^1.8.3",
     "@sanity/vision": "3.19.3-pink-lizard.18",
     "rxjs": "^7.8.1",
