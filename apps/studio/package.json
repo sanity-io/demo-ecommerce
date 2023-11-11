@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
+    "@sanity/cli": "3.19.3-pink-lizard.18",
     "@types/styled-components": "^5.1.29",
     "@types/yargs": "^17.0.29",
     "eslint": "^8.52.0",
