@@ -31,7 +31,7 @@ export default function ImageWithProductHotspots({ content }: Props) {
       })}
 
       <SanityImage
-        alt={content?.image?.altText}
+        alt={content?.image?.altText || content?.image?.alt}
         crop={content?.image?.crop}
         dataset={sanityDataset}
         hotspot={content?.image?.hotspot}

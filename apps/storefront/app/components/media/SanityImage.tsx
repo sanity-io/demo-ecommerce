@@ -68,6 +68,8 @@ export default function SanityImage(props) {
   const {
     // blurDataURL,
     crop,
+    altText,
+    alt,
     dataset,
     height,
     hotspot,
@@ -136,11 +138,12 @@ export default function SanityImage(props) {
   urlDefault = urlDefault.url();
 
   return (
-    // eslint-disable-next-line hydrogen/prefer-image-component, jsx-a11y/alt-text
+    // eslint-disable-next-line hydrogen/prefer-image-component
     <img
       {...rest}
       decoding="async"
       // src={blurDataURL}
+      alt={altText || alt}
       sizes={srcSetSizes}
       src={urlDefault}
       srcSet={srcSet}

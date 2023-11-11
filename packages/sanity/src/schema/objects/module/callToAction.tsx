@@ -70,7 +70,15 @@ export default defineField({
         {
           icon: ImageIcon,
           type: 'image',
-          options: {hotspot: true},
+          options: {hotspot: true, captionField: 'alt'},
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              description: 'Important for SEO and accessiblity.',
+            }),
+          ],
         },
         {
           name: 'productWithVariant',

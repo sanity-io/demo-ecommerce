@@ -11,9 +11,17 @@ export default defineField({
     defineField({
       name: 'image',
       title: 'Image',
-      options: {hotspot: true},
+      options: {hotspot: true, captionField: 'alt'},
       type: 'image',
       validation: (Rule) => Rule.required(),
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessiblity.',
+        }),
+      ],
     }),
     defineField({
       name: 'showHotspots',

@@ -1,3 +1,4 @@
+import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {languageFilter} from '@sanity/language-filter'
@@ -12,7 +13,7 @@ import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {structure} from './components/hotspots/desk'
 import {defaultDocumentNode} from './components/hotspots/desk/preview'
 import Logo from './components/studio/Logo'
-import Navbar from './components/studio/Navbar'
+//import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
 import {locate} from './location'
 import {types} from './schema'
@@ -82,6 +83,7 @@ export function defineSanityConfig(config: SanityConfig) {
         fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent', 'hero.collection'],
         buttonLocations: ['unstable__fieldAction'],
       }),
+      assist(),
       languageFilter({
         supportedLanguages: LANGUAGES,
         documentTypes: ['collection', 'material', 'product', 'person'],

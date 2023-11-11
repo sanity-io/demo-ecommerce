@@ -15,15 +15,13 @@ type Props = {
 };
 
 export function ImageModule({ module }: Props) {
-  const unwrappedModule = module;
-  if (!unwrappedModule?.image) {
+  if (!module?.image) {
     return null;
   }
 
   return (
     <div className="relative">
-      {unwrappedModule.variant === "callToAction" &&
-      unwrappedModule.callToAction?.link ? (
+      {module.variant === "callToAction" && module.callToAction?.link ? (
         <Link className="group" link={module?.callToAction.link}>
           <ImageContent module={module} />
         </Link>
@@ -32,15 +30,15 @@ export function ImageModule({ module }: Props) {
       )}
 
       {/* Caption */}
-      {unwrappedModule.variant === "caption" && unwrappedModule.caption && (
+      {module.variant === "caption" && module.caption && (
         <div className="mt-2 max-w-[35rem] text-sm leading-caption text-darkGray">
-          {unwrappedModule.caption}
+          {module.caption}
         </div>
       )}
       {/* Product hotspots */}
-      {unwrappedModule.variant === "productHotspots" && (
+      {module.variant === "productHotspots" && (
         <>
-          {unwrappedModule.productHotspots?.map((hotspot) => {
+          {module.productHotspots?.map((hotspot) => {
             if (!hotspot?.product?.gid) {
               return null;
             }
@@ -58,9 +56,9 @@ export function ImageModule({ module }: Props) {
         </>
       )}
       {/* Product tags */}
-      {unwrappedModule.variant === "productTags" && (
+      {module.variant === "productTags" && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {unwrappedModule.productTags?.map((tag) => {
+          {module.productTags?.map((tag) => {
             if (!tag?.gid) {
               return null;
             }
@@ -80,12 +78,11 @@ export function ImageModule({ module }: Props) {
 }
 
 const ImageContent = ({ module }: Props) => {
-  const unwrappedModule = module;
   const [root]: any = useMatches();
-  if (!unwrappedModule?.image) {
+  if (!module?.image) {
     return null;
   }
-  const image = unwrappedModule.image;
+  const image = module.image;
 
   const { sanityDataset, sanityProjectID } = root.data;
 
@@ -97,6 +94,7 @@ const ImageContent = ({ module }: Props) => {
       )}
     >
       <SanityImage
+        alt={image?.altText ?? image?.alt}
         crop={image?.crop}
         dataset={sanityDataset}
         hotspot={image?.hotspot}
@@ -107,7 +105,7 @@ const ImageContent = ({ module }: Props) => {
       />
 
       {/* Call to action */}
-      {unwrappedModule.variant === "callToAction" && (
+      {module.variant === "callToAction" && (
         <div
           className={clsx(
             "absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out",
@@ -123,15 +121,15 @@ const ImageContent = ({ module }: Props) => {
                 "xl:text-3xl"
               )}
             >
-              {unwrappedModule.callToAction?.title}
+              {module.callToAction?.title}
             </div>
 
             {/* Button */}
-            {unwrappedModule.callToAction?.link && (
+            {module.callToAction?.link && (
               <Button
                 className={clsx("pointer-events-none bg-white text-offBlack")}
               >
-                {unwrappedModule.callToAction.title}
+                {module.callToAction.title}
               </Button>
             )}
           </div>
