@@ -7,6 +7,7 @@ const firstSegmentBasedOnType = {
   home: '/',
   page: '/pages/',
   product: '/products/',
+  person: '/people/',
 }
 
 export const locate: DocumentLocationResolver = (params, context) => {
@@ -31,7 +32,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
       }),
     )
   }
-  if (type == 'product') {
+  if (type == 'product' || type == 'person') {
     const docs$ = documentStore.listenQuery(
       `*[references($id)]`,
       {id},
@@ -41,18 +42,21 @@ export const locate: DocumentLocationResolver = (params, context) => {
     return docs$.pipe(
       map((docs) => {
         return {
-          locations: docs.map((doc: any) => {
-            const title = doc.seo?.title || doc?.title || doc?.store?.title || 'No title'
-            // @ts-expect-error
-            const href = `${firstSegmentBasedOnType[doc._type]}${
-              doc?.slug?.current || doc.store?.slug?.current || ''
-            }`
+          locations: docs
+            .map((doc: any) => {
+              const title =
+                doc.seo?.title || doc?.title || doc?.store?.title || doc?.name || 'No title'
+              // @ts-expect-error
+              const href = `${firstSegmentBasedOnType[doc._type]}${
+                doc?.slug?.current || doc.store?.slug?.current || ''
+              }`
 
-            return {
-              title,
-              href,
-            }
-          }),
+              return {
+                title,
+                href,
+              }
+            })
+            .filter(({href, title}: any) => href && title),
         } satisfies DocumentLocationsState
       }),
     )
