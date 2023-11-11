@@ -16,7 +16,6 @@ import type {
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
 import { defer, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -27,7 +26,12 @@ import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
 import { baseLanguage } from "~/data/countries";
-import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
+import {
+  query,
+  type SanityFaqs,
+  type SanityProductPage,
+  useQuery,
+} from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
@@ -85,8 +89,8 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const [page, { product }] = await Promise.all([
-    context.sanity.fetch<SanityProductPage>(PRODUCT_PAGE_QUERY, {
+  const [initial, { product }] = await Promise.all([
+    query<SanityProductPage>(PRODUCT_PAGE_QUERY, {
       slug: params.handle,
       language,
       baseLanguage,
@@ -100,7 +104,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       },
     }),
   ]);
-
+  const { data: page } = initial;
   if (!page || !product?.id) {
     throw notFound();
   }
@@ -132,6 +136,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   return defer({
     language,
     page,
+    initial,
     product,
     gids,
     selectedVariant,
@@ -148,7 +153,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 export default function ProductHandle() {
   const {
     language,
-    page,
+    initial,
     product,
     selectedVariant,
     analytics,
@@ -156,6 +161,23 @@ export default function ProductHandle() {
     gids,
   } = useLoaderData();
   const { handle } = useParams();
+  const {
+    data: page,
+    error,
+    loading,
+  } = useQuery<typeof initial.page>(
+    PRODUCT_PAGE_QUERY,
+    {
+      language,
+      slug: handle,
+      baseLanguage,
+    },
+    {
+      initial,
+    } as any
+  );
+
+  if (error) throw error;
 
   return (
     <ColorTheme value={page.colorTheme}>

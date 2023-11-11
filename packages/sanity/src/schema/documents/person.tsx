@@ -41,6 +41,15 @@ export default defineField({
       name: 'image',
       type: 'image',
       group: 'editorial',
+      options: {hotspot: true, captionField: 'alt'},
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessiblity.',
+        }),
+      ],
     }),
     // Biography
     defineField({
