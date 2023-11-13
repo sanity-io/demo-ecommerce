@@ -33,7 +33,6 @@ export const locate: DocumentLocationResolver = (params, context) => {
     )
   }
   if (type == 'page') {
-    console.log(params)
     const docs$ = documentStore.listenQuery(
       `*[references($id) || _id == $id]`,
       {id},
@@ -45,6 +44,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
         return {
           locations: docs
             .map((doc: any) => {
+              console.log(doc, firstSegmentBasedOnType[doc._type])
               const title =
                 doc.seo?.title || doc?.title || doc?.store?.title || doc?.name || 'No title'
               // @ts-expect-error
@@ -57,7 +57,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
                 href,
               }
             })
-            .filter(({href, title}: any) => href && title),
+            .filter(({href, title}: any) => (href && title) || href != 'undefined'),
         } satisfies DocumentLocationsState
       }),
     )
