@@ -3,6 +3,7 @@
  * the Studio and its configuration in the client
  */
 import { defineSanityConfig } from "@demo-ecommerce/sanity";
+import { useState } from "react";
 import { type SourceOptions, Studio, type StudioProps } from "sanity";
 
 type SanityStudioProps = Omit<StudioProps, "config"> &
@@ -14,17 +15,19 @@ type SanityStudioProps = Omit<StudioProps, "config"> &
 export function SanityStudio(props: SanityStudioProps) {
   const { projectId, dataset, previewSecret, storeDomain, ...rest } = props;
 
-  const config = defineSanityConfig({
-    projectId,
-    dataset,
-    preview: {
-      domain: globalThis.location.origin,
-      secret: previewSecret,
-    },
-    shopify: {
-      storeDomain,
-    },
-  });
+  const [config] = useState(() =>
+    defineSanityConfig({
+      projectId,
+      dataset,
+      preview: {
+        domain: globalThis.location.origin,
+        secret: previewSecret,
+      },
+      shopify: {
+        storeDomain,
+      },
+    })
+  );
 
   return (
     <div id="sanity">
