@@ -63,7 +63,7 @@ export function defineSanityConfig(config: SanityConfig) {
         title: 'AKVA Kiosk',
         // previewUrl: preview.domain ?? 'http://localhost:3000',
         previewUrl: typeof document === 'undefined' ? 'http://localhost:3000' : location.origin,
-        //locate,
+        locate,
       }),
       deskTool({
         title: 'Structure',

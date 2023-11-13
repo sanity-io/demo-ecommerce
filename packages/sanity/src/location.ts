@@ -32,6 +32,37 @@ export const locate: DocumentLocationResolver = (params, context) => {
       }),
     )
   }
+  if (type == 'page') {
+    console.log(params)
+    const docs$ = documentStore.listenQuery(
+      `*[references($id) || _id == $id]`,
+      {id},
+      {perspective: 'previewDrafts'},
+    )
+
+    return docs$.pipe(
+      map((docs) => {
+        return {
+          locations: docs
+            .map((doc: any) => {
+              const title =
+                doc.seo?.title || doc?.title || doc?.store?.title || doc?.name || 'No title'
+              // @ts-expect-error
+              const href = `${firstSegmentBasedOnType[doc._type]}${
+                doc?.slug?.current || doc.store?.slug?.current || ''
+              }`
+
+              return {
+                title,
+                href,
+              }
+            })
+            .filter(({href, title}: any) => href && title),
+        } satisfies DocumentLocationsState
+      }),
+    )
+  }
+
   if (type == 'product' || type == 'person') {
     const docs$ = documentStore.listenQuery(
       `*[references($id)]`,
