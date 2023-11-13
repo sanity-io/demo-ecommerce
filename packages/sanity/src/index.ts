@@ -58,11 +58,11 @@ export function defineSanityConfig(config: SanityConfig) {
         previewUrl: preview.domain ?? 'http://localhost:3000',
         locate,
       }),
-      /* presentationTool({
+      presentationTool({
         title: 'AKVA Kiosk',
         previewUrl: preview.domain ?? 'http://localhost:3000',
         //locate,
-      }), */
+      }),
       deskTool({
         title: 'Structure',
         structure,
