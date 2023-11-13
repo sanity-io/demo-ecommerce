@@ -32,7 +32,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
       }),
     )
   }
-  if (type == 'page') {
+  /* if (type == 'page') {
     const docs$ = documentStore.listenQuery(
       `*[references($id) || _id == $id]`,
       {id},
@@ -61,7 +61,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
         } satisfies DocumentLocationsState
       }),
     )
-  }
+  } */
 
   if (type == 'product' || type == 'person') {
     const docs$ = documentStore.listenQuery(
