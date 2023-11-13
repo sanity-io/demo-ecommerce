@@ -38,9 +38,9 @@
     "sanity": "3.19.3-pink-lizard.21",
     "styled-components": "6.1.1",
     "@sanity/preview-kit": "^3.2.6",
-    "@sanity/presentation": "0.12.3-pink-lizard",
-    "@sanity/overlays": "2.3.2-pink-lizard",
-    "@sanity/react-loader": "0.9.2-pink-lizard"
+    "@sanity/presentation": "0.12.4-pink-lizard",
+    "@sanity/overlays": "2.3.3-pink-lizard",
+    "@sanity/react-loader": "0.10.0-pink-lizard"
   },
   "pnpm": {
     "overrides": {
