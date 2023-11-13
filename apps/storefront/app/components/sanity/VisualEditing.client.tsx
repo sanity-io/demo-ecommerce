@@ -38,7 +38,7 @@ export default function VisualEditing(props: VisualEditingProps) {
       },
     });
     return () => disable();
-  }, [navigateRemix, studioUrl]);
+  }, [navigateRemix]);
 
   const location = useLocation();
   useEffect(() => {
@@ -55,12 +55,6 @@ export default function VisualEditing(props: VisualEditingProps) {
   useLiveMode({
     allowStudioOrigin,
     client,
-    onConnect: useCallback(() => {
-      console.log("LiveMode is connected");
-    }, []),
-    onDisconnect: useCallback(() => {
-      console.log("LiveMode is disconnected");
-    }, []),
   });
 
   return null;

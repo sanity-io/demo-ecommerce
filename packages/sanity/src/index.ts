@@ -56,13 +56,13 @@ export function defineSanityConfig(config: SanityConfig) {
         title: 'AKVA Storefront',
         name: 'storefront',
         // previewUrl: preview.domain ?? 'http://localhost:3000',
-        previewUrl: '/',
+        previewUrl: typeof document === 'undefined' ? 'http://localhost:3000' : location.href,
         locate,
       }),
       presentationTool({
         title: 'AKVA Kiosk',
         // previewUrl: preview.domain ?? 'http://localhost:3000',
-        previewUrl: '/'
+        previewUrl: typeof document === 'undefined' ? 'http://localhost:3000' : location.href,
         //locate,
       }),
       deskTool({
