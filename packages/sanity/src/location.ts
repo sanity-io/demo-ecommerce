@@ -32,36 +32,28 @@ export const locate: DocumentLocationResolver = (params, context) => {
       }),
     )
   }
-  /* if (type == 'page') {
-    const docs$ = documentStore.listenQuery(
-      `*[references($id) || _id == $id]`,
+  if (type == 'page') {
+    const doc$ = documentStore.listenQuery(
+      `*[_id == $id || _id == "drafts." + $id][0]`,
       {id},
       {perspective: 'previewDrafts'},
     )
 
-    return docs$.pipe(
-      map((docs) => {
+    return doc$.pipe(
+      map((doc) => {
+        // @todo: Make this dynamic using the same language logic as the storefront router
+        const href = doc?.slug.current
         return {
-          locations: docs
-            .map((doc: any) => {
-              console.log(doc, firstSegmentBasedOnType[doc._type])
-              const title =
-                doc.seo?.title || doc?.title || doc?.store?.title || doc?.name || 'No title'
-              // @ts-expect-error
-              const href = `${firstSegmentBasedOnType[doc._type]}${
-                doc?.slug?.current || doc.store?.slug?.current || ''
-              }`
-
-              return {
-                title,
-                href,
-              }
-            })
-            .filter(({href, title}: any) => (href && title) || href != 'undefined'),
+          locations: [
+            {
+              title: doc?.title || doc?.hero?.title || doc.seo?.title,
+              href,
+            },
+          ],
         } satisfies DocumentLocationsState
       }),
     )
-  } */
+  }
 
   if (type == 'product' || type == 'person') {
     const docs$ = documentStore.listenQuery(
