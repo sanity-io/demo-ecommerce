@@ -16,7 +16,7 @@
     "g": "shopify hydrogen generate"
   },
   "dependencies": {
-    "@demo-ecommerce/sanity": "file:../../packages/sanity",
+    "@demo-ecommerce/sanity": "workspace:*",
     "@headlessui/react": "^1.7.17",
     "@portabletext/react": "^3.0.11",
     "@remix-run/react": "^2.2.0",

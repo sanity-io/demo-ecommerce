@@ -16,7 +16,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@demo-ecommerce/sanity": "file:../../packages/sanity",
+    "@demo-ecommerce/sanity": "workspace:*",
     "@sanity/presentation": "0.12.1-pink-lizard",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
