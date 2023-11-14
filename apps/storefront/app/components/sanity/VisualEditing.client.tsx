@@ -1,5 +1,9 @@
 import { useLocation, useNavigate } from "@remix-run/react";
-import { enableOverlays, type HistoryUpdate } from "@sanity/overlays";
+import {
+  enableOverlays,
+  HistoryAdapterNavigate,
+  type HistoryUpdate,
+} from "@sanity/overlays";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useLiveMode, useSanityEnvironment } from "~/lib/sanity";
@@ -14,41 +18,45 @@ export default function VisualEditing(props: VisualEditingProps) {
   const allowStudioOrigin = "/"; // A relative URL is resoled to the current one, it's the same effect as same-origin
 
   const navigateRemix = useNavigate();
-  const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
-    null
-  );
+  const navigateRemixRef = useRef(navigateRemix);
+  const [navigate, setNavigate] = useState<
+    HistoryAdapterNavigate | undefined
+  >();
 
+  useEffect(() => {
+    navigateRemixRef.current = navigateRemix;
+  }, [navigateRemix]);
   useEffect(() => {
     const disable = enableOverlays({
       allowStudioOrigin,
       history: {
         subscribe: (navigate) => {
-          navigateComposerRef.current = navigate;
-          return () => {
-            navigateComposerRef.current = null;
-          };
+          setNavigate(() => navigate);
+          return () => setNavigate(undefined);
         },
         update: (update) => {
           if (update.type === "push" || update.type === "replace") {
-            navigateRemix(update.url, { replace: update.type === "replace" });
+            navigateRemixRef.current(update.url, {
+              replace: update.type === "replace",
+            });
           } else if (update.type === "pop") {
-            navigateRemix(-1);
+            navigateRemixRef.current(-1);
           }
         },
       },
     });
     return () => disable();
-  }, [navigateRemix]);
+  }, []);
 
   const location = useLocation();
   useEffect(() => {
-    if (navigateComposerRef.current) {
-      navigateComposerRef.current({
+    if (navigate) {
+      navigate({
         type: "push",
         url: `${location.pathname}${location.search}${location.hash}`,
       });
     }
-  }, [location.hash, location.pathname, location.search]);
+  }, [location.hash, location.pathname, location.search, navigate]);
   const sanity = useSanityEnvironment();
   const [client] = useState(() => sanity?.client);
 
