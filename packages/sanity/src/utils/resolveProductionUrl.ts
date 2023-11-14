@@ -59,7 +59,7 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
     const language = LANGUAGES.find(({id}) => id === document.language)
 
     if (language?.previewUrl) {
-      path = `/${language.previewUrl}` + path
+      path = `/${language.previewUrl}${path}`
     }
   }
 

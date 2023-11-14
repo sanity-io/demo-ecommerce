@@ -1,4 +1,4 @@
-import {Rule, Slug, type SlugValidationContext} from 'sanity'
+import {getIdPair, Rule, Slug, type SlugValidationContext} from 'sanity'
 import slug from 'slug'
 
 const MAX_LENGTH = 96
@@ -27,10 +27,10 @@ export async function isUniqueOtherThanLanguage(slug: string, context: SlugValid
     return true
   }
   const client = getClient({apiVersion: '2023-04-24'})
-  const id = document._id.replace(/^drafts\./, '')
+  const {draftId, publishedId} = getIdPair(document._id)
   const params = {
-    draft: `drafts.${id}`,
-    published: id,
+    draft: draftId,
+    published: publishedId,
     language: document.language,
     slug,
   }

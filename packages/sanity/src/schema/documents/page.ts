@@ -36,7 +36,7 @@ export default defineField({
       name: 'slug',
       type: 'slug',
       options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
-      // @ts-ignore - TODO - fix this TS error
+      // @ts-expect-error - TODO - fix this TS error
       validation: validateSlug,
     }),
     // Color theme
