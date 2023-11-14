@@ -12,11 +12,6 @@ import { forwardRef } from "react";
 import Tooltip from "~/components/elements/Tooltip";
 import type { SanityCustomProductOption } from "~/lib/sanity";
 
-// Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-interface OptionWithTranslation extends ProductOption {
-  englishName?: string;
-}
-
 export default function ProductOptions({
   product,
   variants,
@@ -24,22 +19,12 @@ export default function ProductOptions({
   selectedVariant,
   customProductOptions,
 }: {
-  product: Product & {
-    // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-    translatedOptions?: OptionWithTranslation[];
-  };
+  product: Product;
   variants: ProductVariant[];
   options: ProductOption[];
   selectedVariant: ProductVariant;
   customProductOptions?: SanityCustomProductOption[];
 }) {
-  // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-  if (product?.translatedOptions) {
-    product?.translatedOptions.map((option, index) => {
-      option.englishName = options[index].name;
-    });
-  }
-
   return (
     <div className="grid gap-4">
       {/* Each option will show a label and option value <Links> */}
@@ -49,19 +34,6 @@ export default function ProductOptions({
         variants={variants}
       >
         {({ option }) => {
-          // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-          let translatedOption: OptionWithTranslation | undefined;
-          if (product?.translatedOptions) {
-            translatedOption = product.translatedOptions.find(
-              (translatedOption) => translatedOption.englishName === option.name
-            );
-
-            if (translatedOption) {
-              option.name = translatedOption?.name;
-            }
-          }
-          let valuesIndex = 0;
-
           // Check if current product has a valid custom option type.
           // If so, render a custom option component.
           const customProductOption = customProductOptions?.find(
@@ -76,12 +48,6 @@ export default function ProductOptions({
               <div className="flex flex-wrap items-center gap-1">
                 {option.values.map(({ value, to, isActive, isAvailable }) => {
                   const id = `option-${option.name}-${value}`;
-
-                  // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-                  if (translatedOption) {
-                    value = translatedOption.values[valuesIndex];
-                    valuesIndex++;
-                  }
 
                   switch (customProductOption?._type) {
                     case "customProductOption.color": {

@@ -81,7 +81,7 @@ export async function loader({ params, context, request }: LoaderArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const [page, { product }, { product: englishProduct }] = await Promise.all([
+  const [page, { product }] = await Promise.all([
     context.sanity.query<SanityProductPage>({
       query: PRODUCT_PAGE_QUERY,
       params: {
@@ -102,28 +102,10 @@ export async function loader({ params, context, request }: LoaderArgs) {
         selectedOptions,
       },
     }),
-    // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-    context.storefront.query<{
-      product: Product & { selectedVariant?: ProductVariant };
-    }>(PRODUCT_QUERY, {
-      variables: {
-        handle,
-        selectedOptions,
-        language: "EN",
-      },
-    }),
   ]);
 
   if (!page || !product?.id) {
     throw notFound();
-  }
-
-  // Added as a workaround for https://github.com/Shopify/hydrogen/issues/1419
-  if (language != "en") {
-    product.selectedVariant = englishProduct?.selectedVariant;
-    product.variants = englishProduct?.variants;
-    product.translatedOptions = product?.options;
-    product.options = englishProduct?.options;
   }
 
   if (!product.selectedVariant) {
@@ -187,11 +169,13 @@ function redirectToFirstVariant({
   request: Request;
 }) {
   const url = new URL(request.url);
-  const searchParams = new URLSearchParams(url.search);
+  const searchParams = new URLSearchParams();
   const firstVariant = product!.variants.nodes[0];
   for (const option of firstVariant.selectedOptions) {
     searchParams.set(option.name, option.value);
   }
+
+  console.log(`${url.pathname}?${searchParams.toString()}`);
 
   throw redirect(`${url.pathname}?${searchParams.toString()}`, 302);
 }
