@@ -1,9 +1,8 @@
-import { useMatches } from "@remix-run/react";
-
 import { Link } from "~/components/Link";
 import SanityImage from "~/components/media/SanityImage";
 import PortableText from "~/components/portableText/PortableText";
 import type { SanityCreator } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 import type { ProductWithNodes } from "~/types/shopify";
 
 import { Label } from "../global/Label";
@@ -14,8 +13,7 @@ type Props = {
 };
 
 export default function Creator({ product, creator }: Props) {
-  const [root] = useMatches();
-  const { sanityDataset, sanityProjectID } = root.data;
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   return (
     <div className="mb-10 grid grid-cols-3 gap-3 lg:grid-cols-6">
@@ -56,7 +54,7 @@ export default function Creator({ product, creator }: Props) {
         </div>
         <Link to={creator.person.slug}>
           <div className="flex aspect-square items-center overflow-hidden rounded bg-purple-600 hover:bg-purple-800">
-            <div className="tracking-tight block items-center p-5 text-lg font-medium text-white xl:w-10/12">
+            <div className="tracking-tight xl:w-10/12 block items-center p-5 text-lg font-medium text-white">
               <Label
                 _key="person.checkOutWork"
                 replacements={{

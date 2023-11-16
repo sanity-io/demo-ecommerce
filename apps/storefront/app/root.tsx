@@ -159,20 +159,30 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+export const useRootLoaderData = () => {
   const [root] = useMatches();
+  return root?.data as SerializeFrom<typeof loader>;
+};
+
+export function ErrorBoundary({ error }: { error: Error }) {
   const nonce = useNonce();
 
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
+  const rootData = useRootLoaderData();
+
   const {
     selectedLocale: locale,
     layout,
     notFoundCollection,
-  } = root.data
-    ? root.data
-    : { selectedLocale: DEFAULT_LOCALE, layout: null, notFoundCollection: {} };
+  } = rootData
+    ? rootData
+    : {
+        selectedLocale: DEFAULT_LOCALE,
+        layout: null,
+        notFoundCollection: undefined,
+      };
   const { notFoundPage } = layout || {};
 
   let title = "Error";

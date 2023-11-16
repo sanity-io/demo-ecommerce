@@ -15,7 +15,7 @@ import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
-const seo: SeoHandleFunction = ({ data }) => ({
+const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.seo?.title || "Sanity x Hydrogen",
   description:
     data?.page?.seo?.description ||

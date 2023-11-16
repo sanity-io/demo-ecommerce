@@ -1,4 +1,4 @@
-import { useFetcher, useMatches } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import { useCallback, useEffect } from "react";
@@ -8,6 +8,7 @@ import CollectionCard from "~/components/collection/Card";
 import CloseIcon from "~/components/icons/Close";
 import ProductPill, { PillSkeleton } from "~/components/product/Pill";
 import type { SanityCollection, SanityCollectionGroup } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   collection?: SanityCollection;
@@ -20,8 +21,7 @@ export default function CollectionGroupContent({
   collectionGroup,
   onClose,
 }: Props) {
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale;
+  const { selectedLocale } = useRootLoaderData();
 
   const fetcher = useFetcher();
   const { collection: collectionData } = (fetcher.data ?? {}) as {

@@ -12,7 +12,7 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
-import type { SanityPage } from "~/lib/sanity";
+import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { GUIDE_QUERY } from "~/queries/sanity/guide";
@@ -75,7 +75,10 @@ export default function Page() {
           <Suspense>
             <Await resolve={gids}>
               {/* Page hero */}
-              <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
+              <PageHero
+                fallbackTitle={page?.title || ""}
+                hero={page?.hero as SanityHeroPage}
+              />
               {/* Body */}
               {page?.body && (
                 <PortableText

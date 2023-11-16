@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
+import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   flattenConnection,
   getSelectedProductOptions,
@@ -42,7 +43,7 @@ import {
   VARIANTS_QUERY,
 } from "~/queries/shopify/product";
 
-const seo: SeoHandleFunction = ({ data }) => {
+const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(
     (media) => media.mediaContentType === "IMAGE"
   ) as MediaImage | undefined;
@@ -128,9 +129,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   });
 
   // Get recommended products from Shopify
-  const recommended = context.storefront.query<{
-    product: Product & { selectedVariant?: ProductVariant };
-  }>(RECOMMENDED_PRODUCTS_QUERY, {
+  const recommended = context.storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
     variables: {
       productId: product.id,
     },
@@ -179,8 +178,6 @@ function redirectToFirstVariant({
     searchParams.set(option.name, option.value);
   }
 
-  console.log(`${url.pathname}?${searchParams.toString()}`);
-
   throw redirect(`${url.pathname}?${searchParams.toString()}`, 302);
 }
 
@@ -194,7 +191,7 @@ export default function ProductHandle() {
     analytics,
     recommended,
     gids,
-  } = useLoaderData();
+  } = useLoaderData<typeof loader>();
   const { handle } = useParams();
 
   return (
@@ -204,16 +201,16 @@ export default function ProductHandle() {
       params={{ slug: handle, language, baseLanguage }}
     >
       {(page) => (
-        <ColorTheme value={page.colorTheme}>
+        <ColorTheme value={page?.colorTheme}>
           <div className="relative w-full">
             <Suspense
               fallback={
                 <ProductDetails
                   selectedVariant={selectedVariant}
-                  sanityProduct={page}
+                  sanityProduct={page as SanityProductPage}
                   storefrontProduct={product}
                   storefrontVariants={[]}
-                  analytics={analytics}
+                  analytics={analytics as ShopifyAnalyticsPayload}
                 />
               }
             >
@@ -224,10 +221,10 @@ export default function ProductHandle() {
                 {(resp) => (
                   <ProductDetails
                     selectedVariant={selectedVariant}
-                    sanityProduct={page}
+                    sanityProduct={page as SanityProductPage}
                     storefrontProduct={product}
                     storefrontVariants={resp.product?.variants.nodes || []}
-                    analytics={analytics}
+                    analytics={analytics as ShopifyAnalyticsPayload}
                   />
                 )}
               </Await>
@@ -254,7 +251,7 @@ export default function ProductHandle() {
                 )}
 
                 {/* Magazine */}
-                <Magazine page={page} product={product} />
+                <Magazine page={page as SanityProductPage} product={product} />
 
                 {/* Shipping info and FAQs */}
                 <div
@@ -274,7 +271,7 @@ export default function ProductHandle() {
                       )}
                     </div>
                     <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                      {page?.faqs?.groups.length > 0 && (
+                      {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
                         <SanityProductFaqs faqs={page.faqs} />
                       )}
                     </div>

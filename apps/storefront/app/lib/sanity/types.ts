@@ -13,6 +13,11 @@ export interface SanityAssetImage extends Image {
   width: number;
 }
 
+export type SanityLabel = {
+  key: string;
+  text: string;
+};
+
 export type SanityLayout = {
   seo: SanitySeo;
   menuLinks?: SanityMenuLink[];
@@ -21,6 +26,7 @@ export type SanityLayout = {
     text?: PortableTextBlock[];
   };
   notFoundPage?: SanityNotFoundPage;
+  labels?: SanityLabel[];
 };
 
 export type SanityCollection = {

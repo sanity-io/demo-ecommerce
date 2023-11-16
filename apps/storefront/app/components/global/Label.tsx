@@ -1,4 +1,4 @@
-import { useMatches } from "@remix-run/react";
+import { useRootLoaderData } from "~/root";
 
 type props = {
   _key: string;
@@ -7,14 +7,14 @@ type props = {
 
 export function Label(props: props) {
   const { _key, replacements } = props;
-  const [root] = useMatches();
-  const labels = root?.data?.layout?.labels || [];
+  const { layout } = useRootLoaderData();
+  const labels = layout?.labels || [];
 
   let label = labels.find(({ key }: { key: string }) => key === _key)?.text;
 
   if (label && replacements) {
     Object.keys(replacements).forEach((key) => {
-      label = label.replaceAll(key, replacements[key]);
+      label = label?.replaceAll(key, replacements[key]);
     });
   }
 

@@ -18,7 +18,7 @@ import invariant from "tiny-invariant";
 import { Link } from "~/components/Link";
 import { notFound, statusMessage } from "~/lib/utils";
 
-export const seo: SeoHandleFunction = ({ data }) => ({
+export const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: `Order ${data?.order?.name}`,
 });
 

@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { useFetcher, useLocation, useMatches } from "@remix-run/react";
+import { useFetcher, useLocation } from "@remix-run/react";
 import { CartForm } from "@shopify/hydrogen";
 import clsx from "clsx";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import { ChevronDownIcon } from "~/components/icons/ChevronDown";
 import RadioIcon from "~/components/icons/Radio";
 import { countries } from "~/data/countries";
 import { DEFAULT_LOCALE } from "~/lib/utils";
+import { useRootLoaderData } from "~/root";
 import type { Locale } from "~/types/shopify";
 
 type Props = {
@@ -20,10 +21,9 @@ export function CountrySelector({ align = "center" }: Props) {
 
   const [listboxOpen, setListboxOpen] = useState(false);
 
-  const fetcherLocaleLabel = fetcher?.formData?.get("label");
+  const fetcherLocaleLabel = fetcher?.formData?.get("label") as string;
 
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale ?? DEFAULT_LOCALE;
+  const selectedLocale = useRootLoaderData()?.selectedLocale ?? DEFAULT_LOCALE;
   const selectedLocalePrefix = `${selectedLocale?.language}-${selectedLocale?.country}`;
   const { pathname, search } = useLocation();
   const pathWithoutLocale = `${pathname.replace(

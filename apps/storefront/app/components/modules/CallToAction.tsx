@@ -1,4 +1,3 @@
-import { useMatches } from "@remix-run/react";
 import clsx from "clsx";
 
 import Link from "~/components/elements/Link";
@@ -9,6 +8,7 @@ import type {
   SanityModuleCallToAction,
   SanityProductWithVariant,
 } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   module: SanityModuleCallToAction;
@@ -18,7 +18,7 @@ export default function CallToActionModule({ module }: Props) {
   return (
     <div
       className={clsx(
-        "flex gap-5 md:gap-[5vw]", //
+        "md:gap-[5vw] flex gap-5", //
         module.layout === "left" && "flex-col md:flex-row",
         module.layout === "right" && "flex-col-reverse md:flex-row-reverse"
       )}
@@ -69,8 +69,7 @@ function ModuleContent({
 }: {
   content: SanityAssetImage | SanityProductWithVariant;
 }) {
-  const [root] = useMatches();
-  const { sanityDataset, sanityProjectID } = root.data;
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   switch (content?._type) {
     case "image": {

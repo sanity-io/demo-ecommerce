@@ -20,6 +20,7 @@ export default function (request: Request): Promise<Response> {
 
   const executionContext: ExecutionContext = {
     waitUntil: () => Promise.resolve(),
+    // @ts-expect-error
     passThroughOnException: () => {},
   };
 

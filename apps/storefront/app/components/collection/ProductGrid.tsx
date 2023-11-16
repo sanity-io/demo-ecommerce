@@ -59,7 +59,7 @@ export default function ProductGrid({
 
   useEffect(() => {
     if (!fetcher.data) return;
-    const { collection } = fetcher.data;
+    const { collection } = fetcher.data as { collection: Collection };
 
     setItems((prev) => [...prev, ...collection.products.nodes]);
     setNextPage(collection.products.pageInfo.hasNextPage);
