@@ -139,7 +139,7 @@ export default function App() {
   const hasUserConsent = true;
   const nonce = useNonce();
 
-  useAnalytics(hasUserConsent, locale);
+  useAnalytics(hasUserConsent);
 
   return (
     <html lang={locale.language}>
