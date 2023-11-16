@@ -15,7 +15,11 @@ import type {
   ProductVariant,
 } from "@shopify/hydrogen/storefront-api-types";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import { defer, type LoaderArgs, redirect } from "@shopify/remix-oxygen";
+import {
+  defer,
+  type LoaderFunctionArgs,
+  redirect,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
@@ -66,7 +70,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({ params, context, request }: LoaderArgs) {
+export async function loader({ params, context, request }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 

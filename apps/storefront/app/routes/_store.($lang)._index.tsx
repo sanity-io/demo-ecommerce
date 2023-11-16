@@ -2,7 +2,7 @@ import { Await, useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
@@ -26,7 +26,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context, params }: LoaderArgs) {
+export async function loader({ context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
