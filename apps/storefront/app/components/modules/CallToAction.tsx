@@ -18,7 +18,7 @@ export default function CallToActionModule({ module }: Props) {
   return (
     <div
       className={clsx(
-        "md:gap-[5vw] flex gap-5", //
+        "flex gap-5 md:gap-[5vw]", //
         module.layout === "left" && "flex-col md:flex-row",
         module.layout === "right" && "flex-col-reverse md:flex-row-reverse"
       )}

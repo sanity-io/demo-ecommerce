@@ -67,7 +67,7 @@ export default function Footer() {
           <div
             className={clsx(
               "my-16 w-full max-w-[22rem] columns-2 gap-x-8 self-start text-md font-bold",
-              "md:max-w-[27rem] md:my-0"
+              "md:my-0 md:max-w-[27rem]"
             )}
           >
             {renderLinks}

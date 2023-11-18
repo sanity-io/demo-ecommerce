@@ -54,7 +54,7 @@ export default function Creator({ product, creator }: Props) {
         </div>
         <Link to={creator.person.slug}>
           <div className="flex aspect-square items-center overflow-hidden rounded bg-purple-600 hover:bg-purple-800">
-            <div className="tracking-tight xl:w-10/12 block items-center p-5 text-lg font-medium text-white">
+            <div className="tracking-tight block items-center p-5 text-lg font-medium text-white xl:w-10/12">
               <Label
                 _key="person.checkOutWork"
                 replacements={{
