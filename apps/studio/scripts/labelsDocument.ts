@@ -1,11 +1,11 @@
-import type {PatchBuilder, PatchOperations, Transaction} from '@sanity/client'
-import type {SanityDocumentLike} from 'sanity'
+// import type {PatchBuilder, PatchOperations, Transaction} from '@sanity/client'
+// import type {SanityDocumentLike} from 'sanity'
 import {getCliClient} from 'sanity/cli'
 
-type Patch = {
-  id: string
-  patch: PatchBuilder | PatchOperations
-}
+// type Patch = {
+//   id: string
+//   patch: PatchBuilder | PatchOperations
+// }
 
 // This will use the client configured in ./sanity.cli.ts
 const client = getCliClient()
