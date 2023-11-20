@@ -15,6 +15,7 @@ import {
   type SeoHandleFunction,
   ShopifySalesChannel,
 } from "@shopify/hydrogen";
+import { useNonce } from "@shopify/hydrogen";
 import type { Collection, Shop } from "@shopify/hydrogen/storefront-api-types";
 import {
   defer,
@@ -28,7 +29,6 @@ import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
 import { useAnalytics } from "~/hooks/useAnalytics";
-import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
@@ -153,7 +153,7 @@ export default function App() {
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
-        <LiveReload />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
@@ -220,8 +220,9 @@ export function ErrorBoundary({ error }: { error: Error }) {
             <GenericError error={error instanceof Error ? error : undefined} />
           )}
         </Layout>
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
-        <LiveReload />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
