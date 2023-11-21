@@ -16,7 +16,7 @@ import {
   createRequestHandler,
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
-import { createSanityClient, PreviewSession } from "hydrogen-sanity";
+import { createSanityClient } from "hydrogen-sanity";
 
 import { getLocaleFromRequest } from "~/lib/utils";
 
@@ -34,11 +34,25 @@ export async function handler(
     }
 
     const waitUntil = (p: Promise<any>) => executionContext.waitUntil(p);
+    const secrets = [env.SESSION_SECRET];
     // eslint-disable-next-line prefer-const
     let [cache, session, previewSession] = await Promise.all([
       caches?.open("hydrogen"),
-      HydrogenSession.init(request, [env.SESSION_SECRET]),
-      PreviewSession.init(request, [env.SESSION_SECRET]),
+      HydrogenSession.init(request, secrets),
+      (async function createPreviewSession() {
+        const storage = createCookieSessionStorage({
+          cookie: {
+            name: "__preview",
+            httpOnly: true,
+            sameSite: true,
+            secrets,
+          },
+        });
+
+        const session = await storage.getSession(request.headers.get("Cookie"));
+
+        return new HydrogenSession(storage, session);
+      })(),
     ]);
 
     // shim `Cache` when deployed in an environment that
@@ -163,6 +177,10 @@ class HydrogenSession {
 
   get(key: string) {
     return this.session.get(key);
+  }
+
+  has(key: string) {
+    return this.session.has(key);
   }
 
   destroy() {
