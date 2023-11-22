@@ -27,7 +27,7 @@ export default async function handleRequest(
     styleSrc: [`'self'`, `'unsafe-inline'`, "https://fonts.googleapis.com"],
     scriptSrc: [`'self'`, "www.instagram.com"],
     fontSrc: [`'self'`, "https://fonts.gstatic.com"],
-    frameAncestors: [`'self'`, ...(isDev ? ["http://localhost:3333"] : [])],
+    frameAncestors: [`'self'`],
     frameSrc: [`'self'`, "https://www.instagram.com"],
     connectSrc: [
       `'self'`,
@@ -57,7 +57,9 @@ export default async function handleRequest(
   }
 
   responseHeaders.set("Content-Type", "text/html");
-  responseHeaders.set("Content-Security-Policy", header);
+  if (!isDev) {
+    responseHeaders.set("Content-Security-Policy", header);
+  }
 
   return new Response(body, {
     headers: responseHeaders,
