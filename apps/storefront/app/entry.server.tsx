@@ -9,12 +9,12 @@ export default async function handleRequest(
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  context: AppLoadContext
+  loadContext: AppLoadContext
 ) {
-  const { SANITY_PROJECT_ID: projectId } = context.env;
-  const isDev = process.env.NODE_ENV === "development";
+  const { SANITY_PROJECT_ID: projectId } = loadContext.env;
 
   /**
+   * Apply a content security policy with nonce, and only apply in production
    * @see https://shopify.dev/docs/api/hydrogen/2023-10/utilities/createcontentsecuritypolicy
    */
   const { nonce, header, NonceProvider } = createContentSecurityPolicy({
@@ -37,6 +37,10 @@ export default async function handleRequest(
     ],
   });
 
+  if (process.env.NODE_ENV === "production") {
+    responseHeaders.set("Content-Security-Policy", header);
+  }
+
   const body = await renderToReadableStream(
     <NonceProvider>
       <RemixServer context={remixContext} url={request.url} />
@@ -57,9 +61,6 @@ export default async function handleRequest(
   }
 
   responseHeaders.set("Content-Type", "text/html");
-  if (!isDev) {
-    responseHeaders.set("Content-Security-Policy", header);
-  }
 
   return new Response(body, {
     headers: responseHeaders,
