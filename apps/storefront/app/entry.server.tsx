@@ -12,6 +12,8 @@ export default async function handleRequest(
   context: AppLoadContext
 ) {
   const { SANITY_PROJECT_ID: projectId } = context.env;
+  const isDev = process.env.NODE_ENV === "development";
+
   /**
    * @see https://shopify.dev/docs/api/hydrogen/2023-10/utilities/createcontentsecuritypolicy
    */
@@ -25,7 +27,7 @@ export default async function handleRequest(
     styleSrc: [`'self'`, `'unsafe-inline'`, "https://fonts.googleapis.com"],
     scriptSrc: [`'self'`, "www.instagram.com"],
     fontSrc: [`'self'`, "https://fonts.gstatic.com"],
-    frameAncestors: [`'self'`],
+    frameAncestors: [`'self'`, ...(isDev ? ["http://localhost:3333"] : [])],
     frameSrc: [`'self'`, "https://www.instagram.com"],
     connectSrc: [
       `'self'`,
