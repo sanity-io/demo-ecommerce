@@ -1,6 +1,7 @@
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {languageFilter} from '@sanity/language-filter'
+import {presentationTool} from '@sanity/presentation'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
 import {deskTool} from 'sanity/desk'
@@ -13,6 +14,7 @@ import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
 import {structure} from './desk'
 import {defaultDocumentNode} from './desk/preview'
+import {locate} from './location'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
@@ -60,6 +62,10 @@ export function defineSanityConfig(config: SanityConfig) {
       deskTool({
         structure,
         defaultDocumentNode,
+      }),
+      presentationTool({
+        previewUrl: preview.domain ?? window.location.origin,
+        locate,
       }),
       colorInput(),
       imageHotspotArrayPlugin(),
