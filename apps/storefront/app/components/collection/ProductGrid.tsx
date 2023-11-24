@@ -9,6 +9,8 @@ import ModuleGrid from "~/components/modules/ModuleGrid";
 import type { SanityModule } from "~/lib/sanity";
 import { combineProductsAndModules } from "~/lib/utils";
 
+import { Label } from "../global/Label";
+
 export default function ProductGrid({
   collection,
   modules,
@@ -57,7 +59,7 @@ export default function ProductGrid({
 
   useEffect(() => {
     if (!fetcher.data) return;
-    const { collection } = fetcher.data;
+    const { collection } = fetcher.data as { collection: Collection };
 
     setItems((prev) => [...prev, ...collection.products.nodes]);
     setNextPage(collection.products.pageInfo.hasNextPage);
@@ -77,7 +79,7 @@ export default function ProductGrid({
               disabled={fetcher.state !== "idle"}
               onClick={fetchMoreProducts}
             >
-              Load more
+              <Label _key="global.loadMore" />
             </Button>
           )}
         </div>

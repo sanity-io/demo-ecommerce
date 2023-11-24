@@ -18,10 +18,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
-    "@turbo/gen": "^1.9.7",
-    "husky": "^8.0.0",
-    "turbo": "^1.10.2",
-    "vercel": "^30.2.1"
+    "@turbo/gen": "^1.10.16",
+    "husky": "^8.0.3",
+    "turbo": "^1.10.16",
+    "vercel": "^32.5.3"
   },
-  "packageManager": "npm@9.5.1"
+  "packageManager": "npm@10.2.3"
 }

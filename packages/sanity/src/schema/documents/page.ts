@@ -1,7 +1,7 @@
 import {DocumentIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 
-import {validateSlug} from '../../utils/validateSlug'
+import {isUniqueOtherThanLanguage, validateSlug} from '../../utils/validateSlug'
 
 export default defineField({
   name: 'page',
@@ -35,8 +35,8 @@ export default defineField({
     defineField({
       name: 'slug',
       type: 'slug',
-      options: {source: 'title'},
-      // @ts-ignore - TODO - fix this TS error
+      options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
+      // @ts-expect-error - TODO - fix this TS error
       validation: validateSlug,
     }),
     // Color theme
@@ -78,19 +78,27 @@ export default defineField({
       type: 'seo.page',
       group: 'seo',
     }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: true,
+    }),
   ],
   preview: {
     select: {
       active: 'active',
       seoImage: 'seo.image',
       title: 'title',
+      language: 'language',
     },
     prepare(selection) {
-      const {seoImage, title} = selection
+      const {seoImage, title, language} = selection
 
       return {
         media: seoImage,
         title,
+        subtitle: language?.toUpperCase(),
       }
     },
   },

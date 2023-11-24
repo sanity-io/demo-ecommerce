@@ -1,6 +1,6 @@
 import type {ResolveProductionUrlContext, SanityDocumentLike, Slug} from 'sanity'
 
-import {ENVIRONMENT} from '../constants'
+import {ENVIRONMENT, LANGUAGES} from '../constants'
 
 type store = {
   slug: Slug
@@ -22,6 +22,7 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
   previewUrl.searchParams.append(`secret`, secret)
 
   let path = '/'
+
   switch (document?._type) {
     case 'page': {
       const slug = (document?.slug as Slug)?.current
@@ -51,6 +52,14 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
       const slug = (document?.slug as Slug)?.current
       path = slug == null ? '/' : `/people/${slug}`
       break
+    }
+  }
+
+  if (document?.language) {
+    const language = LANGUAGES.find(({id}) => id === document.language)
+
+    if (language?.previewUrl) {
+      path = `/${language.previewUrl}${path}`
     }
   }
 

@@ -7,6 +7,8 @@ import { Link } from "~/components/Link";
 import type { SanityModuleCollection } from "~/lib/sanity";
 import { useGid } from "~/lib/utils";
 
+import { Label } from "../global/Label";
+
 type Props = {
   module?: SanityModuleCollection;
 };
@@ -71,10 +73,10 @@ export default function CollectionModule({ module }: Props) {
             collection.vector ? "text-white" : "text-offBlack"
           )}
         >
-          {collection.title}
+          {storefrontCollection.title}
         </div>
         <Button className="pointer-events-none relative mt-6 bg-white text-offBlack hover:opacity-50">
-          Shop collection
+          <Label _key="collection.shopCollection" />
         </Button>
       </div>
     </Link>

@@ -16,7 +16,7 @@ import {
   type AppLoadContext,
   defer,
   json,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   redirect,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
@@ -48,7 +48,7 @@ export const handle = {
   isPublic: true,
 };
 
-export async function loader({ request, context, params }: LoaderArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   const { pathname } = new URL(request.url);
   const lang = params.lang;
   const customerAccessToken = await context.session.get("customerAccessToken");
@@ -97,7 +97,8 @@ export default function Authenticated() {
 
   // routes that export handle { renderInModal: true }
   const renderOutletInModal = matches.some((match) => {
-    return match?.handle?.renderInModal;
+    const handle = match?.handle as { renderInModal?: boolean };
+    return handle?.renderInModal;
   });
 
   // Public routes
@@ -109,10 +110,14 @@ export default function Authenticated() {
   if (outlet) {
     if (renderOutletInModal) {
       const modalSeo = matches.map((match) => {
-        if (typeof match.handle?.seo === "function") {
-          return match.handle.seo(match);
+        const handle = match?.handle as { seo?: SeoHandleFunction };
+
+        if (typeof handle?.seo === "function") {
+          return handle.seo(
+            match as unknown as Parameters<SeoHandleFunction>[0]
+          );
         }
-        return match?.handle?.seo || "";
+        return handle?.seo;
       });
 
       const modalTitle = modalSeo.length
@@ -121,7 +126,7 @@ export default function Authenticated() {
 
       return (
         <>
-          <Modal title={modalTitle} cancelLink="/account">
+          <Modal title={modalTitle || ""} cancelLink="/account">
             <Outlet context={{ customer: data.customer }} />
           </Modal>
           <Account {...(data as Account)} />

@@ -8,6 +8,7 @@ import CollectionCard from "~/components/collection/Card";
 import CloseIcon from "~/components/icons/Close";
 import ProductPill, { PillSkeleton } from "~/components/product/Pill";
 import type { SanityCollection, SanityCollectionGroup } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   collection?: SanityCollection;
@@ -20,6 +21,8 @@ export default function CollectionGroupContent({
   collectionGroup,
   onClose,
 }: Props) {
+  const { selectedLocale } = useRootLoaderData();
+
   const fetcher = useFetcher();
   const { collection: collectionData } = (fetcher.data ?? {}) as {
     collection: Collection;
@@ -31,9 +34,12 @@ export default function CollectionGroupContent({
   });
 
   useEffect(() => {
+    const apiUrl = `${selectedLocale && `${selectedLocale.pathPrefix}`}/api${
+      collection?.slug
+    }?count=4`;
     if (!inView || fetcher.data || fetcher.state === "loading") return;
-    fetcher.load(`/api${collection?.slug}?count=4`);
-  }, [inView, fetcher, collection?.slug]);
+    fetcher.load(apiUrl);
+  }, [inView, fetcher, collection?.slug, selectedLocale]);
 
   const products = collectionData?.products.nodes;
 

@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { ReactNode, useMemo } from "react";
 
 import Tooltip from "~/components/elements/Tooltip";
+import { Label } from "~/components/global/Label";
 import CartIcon from "~/components/icons/Cart";
 import CreditCardIcon from "~/components/icons/CreditCard";
 import SpinnerIcon from "~/components/icons/Spinner";
@@ -119,16 +120,19 @@ function ProductInlineLinkContent({
     [children, colorTheme?.background]
   );
 
+  const addToCartString = Label({ _key: "cart.addToCart" });
+  const buyNowString = Label({ _key: "cart.buyNow" });
+
   return (
     <Tippy
       interactive={linkAction === "link"}
       placement="top"
       render={() => {
         if (linkAction === "addToCart") {
-          return <Tooltip label={`Add to cart: ${title}`} tone="dark" />;
+          return <Tooltip label={`${addToCartString}: ${title}`} tone="dark" />;
         }
         if (linkAction === "buyNow") {
-          return <Tooltip label={`Buy now: ${title}`} tone="dark" />;
+          return <Tooltip label={`${buyNowString}: ${title}`} tone="dark" />;
         }
         if (linkAction === "link") {
           return (

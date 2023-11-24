@@ -1,19 +1,24 @@
 import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 import { defaultButtonStyles } from "~/components/elements/Button";
+import { Label } from "~/components/global/Label";
 import { Link } from "~/components/Link";
 
 type ButtonMode = "default" | "inline";
 
 export default function BuyNowButton({
-  children = "Buy now",
+  children = <Label _key="cart.buyNow" />,
   lines,
   mode = "default",
+  buttonClassName,
   ...props
 }: {
   children?: React.ReactNode;
   lines: CartLineInput[];
   mode?: ButtonMode;
+  buttonClassName?: string;
   [key: string]: any;
 }) {
   const to = lines
@@ -28,7 +33,12 @@ export default function BuyNowButton({
   return (
     <Link
       to={`/cart/${to}`}
-      className={mode == "default" ? defaultButtonStyles() : ""}
+      className={clsx([
+        mode == "default"
+          ? twMerge(defaultButtonStyles(), buttonClassName)
+          : buttonClassName,
+        props.disabled ? "pointer-events-none bg-opacity-100 opacity-20" : "",
+      ])}
       {...props}
     >
       {children}

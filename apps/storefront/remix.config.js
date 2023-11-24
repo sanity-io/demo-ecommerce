@@ -5,7 +5,7 @@ const isVercelEnvironment = process.env.VERCEL && process.env.VERCEL_ENV;
 module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: ["**/.*"],
-  watchPaths: ["./public", "../../packages/sanity/src"],
+  watchPaths: ["./public", "../../packages/sanity/src", "./.env"],
   server: isVercelEnvironment ? "./server.vercel.ts" : "./server.ts",
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:
@@ -19,12 +19,6 @@ module.exports = {
   serverModuleFormat: "esm",
   serverPlatform: "neutral",
   serverMinify: isProduction,
-  future: {
-    v2_errorBoundary: true,
-    v2_meta: true,
-    v2_normalizeFormMethod: true,
-    v2_routeConvention: true,
-    unstable_tailwind: true,
-    unstable_postcss: true,
-  },
+  tailwind: true,
+  postcss: true,
 };

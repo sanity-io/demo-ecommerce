@@ -22,10 +22,6 @@ export default defineType({
       title: 'Product options',
     },
     {
-      name: 'sharedText',
-      title: 'Shared text',
-    },
-    {
       name: 'notFoundPage',
       title: '404 page',
     },
@@ -179,25 +175,6 @@ export default defineType({
           return true
         }),
     }),
-    // Shared text
-    defineField({
-      name: 'deliveryAndReturns',
-      type: 'simpleBlockContent',
-      group: 'sharedText',
-    }),
-    defineField({
-      name: 'deliverySummary',
-      type: 'string',
-      description: 'Displayed on PDP alongside add to cart button',
-      group: 'sharedText',
-    }),
-    defineField({
-      name: 'environmentallyFriendly',
-      type: 'string',
-      description: 'Displayed on PDP alongside add to cart button',
-      group: 'sharedText',
-      initialValue: 'Environmentally friendly',
-    }),
     // Not found page
     defineField({
       name: 'notFoundPage',
@@ -267,6 +244,12 @@ export default defineType({
         }),
       ],
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: true,
     }),
   ],
   preview: {

@@ -1,7 +1,9 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
+import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   flattenConnection,
+  getSelectedProductOptions,
   type SeoConfig,
   type SeoHandleFunction,
   ShopifyAnalyticsProduct,
@@ -10,21 +12,27 @@ import type {
   MediaConnection,
   MediaImage,
   Product,
+  ProductOption,
   ProductVariant,
-  SelectedOptionInput,
 } from "@shopify/hydrogen/storefront-api-types";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import { defer, type LoaderArgs } from "@shopify/remix-oxygen";
+import {
+  defer,
+  type LoaderFunctionArgs,
+  redirect,
+} from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
+import { Label } from "~/components/global/Label";
 import AccordionBlock from "~/components/portableText/blocks/Accordion";
 import PortableText from "~/components/portableText/PortableText";
 import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
+import { baseLanguage } from "~/data/countries";
 import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -32,9 +40,10 @@ import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
 import {
   PRODUCT_QUERY,
   RECOMMENDED_PRODUCTS_QUERY,
+  VARIANTS_QUERY,
 } from "~/queries/shopify/product";
 
-const seo: SeoHandleFunction = ({ data }) => {
+const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(
     (media) => media.mediaContentType === "IMAGE"
   ) as MediaImage | undefined;
@@ -62,19 +71,14 @@ export const handle = {
   seo,
 };
 
-export async function loader({ params, context, request }: LoaderArgs) {
+export async function loader({ params, context, request }: LoaderFunctionArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing handle param, check route filename");
 
-  const searchParams = new URL(request.url).searchParams;
-  const selectedOptions: SelectedOptionInput[] = [];
-
-  // set selected options from the query string
-  searchParams.forEach((value, name) => {
-    selectedOptions.push({ name, value });
-  });
+  const selectedOptions = getSelectedProductOptions(request);
 
   const cache = context.storefront.CacheCustom({
     mode: "public",
@@ -87,11 +91,16 @@ export async function loader({ params, context, request }: LoaderArgs) {
       query: PRODUCT_PAGE_QUERY,
       params: {
         slug: params.handle,
+        language,
+        baseLanguage,
       },
       cache,
     }),
     context.storefront.query<{
-      product: Product & { selectedVariant?: ProductVariant };
+      product: Product & {
+        selectedVariant?: ProductVariant;
+        translatedOptions?: ProductOption[];
+      };
     }>(PRODUCT_QUERY, {
       variables: {
         handle,
@@ -104,20 +113,30 @@ export async function loader({ params, context, request }: LoaderArgs) {
     throw notFound();
   }
 
+  if (!product.selectedVariant) {
+    return redirectToFirstVariant({ product, request });
+  }
+
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
+  // In order to show which variants are available in the UI, we need to query
+  // all of them. We defer this query so that it doesn't block the page.
+  const variants = context.storefront.query(VARIANTS_QUERY, {
+    variables: {
+      handle,
+    },
+  });
+
   // Get recommended products from Shopify
-  const recommended = context.storefront.query<{
-    product: Product & { selectedVariant?: ProductVariant };
-  }>(RECOMMENDED_PRODUCTS_QUERY, {
+  const recommended = context.storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
     variables: {
       productId: product.id,
     },
   });
 
-  const selectedVariant =
-    product.selectedVariant ?? product?.variants?.nodes[0];
+  const firstVariant = product.variants.nodes[0];
+  const selectedVariant = product.selectedVariant ?? firstVariant;
 
   const productAnalytics: ShopifyAnalyticsProduct = {
     productGid: product.id,
@@ -129,8 +148,10 @@ export async function loader({ params, context, request }: LoaderArgs) {
   };
 
   return defer({
+    language,
     page,
     product,
+    variants,
     gids,
     selectedVariant,
     recommended,
@@ -143,26 +164,72 @@ export async function loader({ params, context, request }: LoaderArgs) {
   });
 }
 
+function redirectToFirstVariant({
+  product,
+  request,
+}: {
+  product: Product;
+  request: Request;
+}) {
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams();
+  const firstVariant = product!.variants.nodes[0];
+  for (const option of firstVariant.selectedOptions) {
+    searchParams.set(option.name, option.value);
+  }
+
+  throw redirect(`${url.pathname}?${searchParams.toString()}`, 302);
+}
+
 export default function ProductHandle() {
-  const { page, product, selectedVariant, analytics, recommended, gids } =
-    useLoaderData();
+  const {
+    language,
+    page,
+    product,
+    variants,
+    selectedVariant,
+    analytics,
+    recommended,
+    gids,
+  } = useLoaderData<typeof loader>();
   const { handle } = useParams();
 
   return (
     <SanityPreview
       data={page}
       query={PRODUCT_PAGE_QUERY}
-      params={{ slug: handle }}
+      params={{ slug: handle, language, baseLanguage }}
     >
       {(page) => (
-        <ColorTheme value={page.colorTheme}>
+        <ColorTheme value={page?.colorTheme}>
           <div className="relative w-full">
-            <ProductDetails
-              selectedVariant={selectedVariant}
-              sanityProduct={page}
-              storefrontProduct={product}
-              analytics={analytics}
-            />
+            <Suspense
+              fallback={
+                <ProductDetails
+                  selectedVariant={selectedVariant}
+                  sanityProduct={page as SanityProductPage}
+                  storefrontProduct={product}
+                  storefrontVariants={[]}
+                  analytics={analytics as ShopifyAnalyticsPayload}
+                />
+              }
+            >
+              <Await
+                errorElement="There was a problem loading related products"
+                resolve={variants}
+              >
+                {(resp) => (
+                  <ProductDetails
+                    selectedVariant={selectedVariant}
+                    sanityProduct={page as SanityProductPage}
+                    storefrontProduct={product}
+                    storefrontVariants={resp.product?.variants.nodes || []}
+                    analytics={analytics as ShopifyAnalyticsPayload}
+                  />
+                )}
+              </Await>
+            </Suspense>
+
             <Suspense>
               <Await resolve={gids}>
                 {/* Body */}
@@ -184,7 +251,7 @@ export default function ProductHandle() {
                 )}
 
                 {/* Magazine */}
-                <Magazine page={page} product={product} />
+                <Magazine page={page as SanityProductPage} product={product} />
 
                 {/* Shipping info and FAQs */}
                 <div
@@ -204,7 +271,7 @@ export default function ProductHandle() {
                       )}
                     </div>
                     <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                      {page?.faqs?.groups.length > 0 && (
+                      {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
                         <SanityProductFaqs faqs={page.faqs} />
                       )}
                     </div>
@@ -242,7 +309,7 @@ const SanityProductShipping = ({ blocks }: { blocks: PortableTextBlock[] }) => {
           "mb-6 mt-16 text-xl font-bold"
         )}
       >
-        Shipping &amp; Returns
+        <Label _key="shipping.shippingReturns" />
       </h2>
       <PortableText blocks={blocks} />
     </>
@@ -258,7 +325,7 @@ const SanityProductFaqs = ({ faqs }: { faqs: SanityFaqs }) => {
           "-mb-6 mt-16 text-xl font-bold"
         )}
       >
-        FAQs
+        <Label _key="faqs.title" />
       </h2>
       <AccordionBlock value={faqs} />
     </>

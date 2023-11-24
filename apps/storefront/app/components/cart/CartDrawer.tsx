@@ -12,6 +12,8 @@ import {
 import Button from "~/components/elements/Button";
 import CloseIcon from "~/components/icons/Close";
 
+import { Label } from "../global/Label";
+
 /**
  * A Drawer component that opens on user click.
  * @param open - Boolean state. If `true`, then the drawer opens.
@@ -124,7 +126,7 @@ function CartHeader({
       )}
     >
       <div className="text-xl font-bold leading-none">
-        Cart {numLines > 0 && `(${numLines})`}
+        <Label _key="cart.title" /> {numLines > 0 && `(${numLines})`}
       </div>
       <button type="button" onClick={onClose}>
         <CloseIcon />
@@ -151,10 +153,10 @@ function CartEmpty({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-col px-8 pt-6">
       <p className="mb-4 text-lg font-bold">
-        There&rsquo;s nothing in here...yet.
+        <Label _key="cart.empty" />
       </p>
       <Button onClick={onClose} type="button">
-        Continue Shopping
+        <Label _key="cart.continueShopping" />
       </Button>
     </div>
   );

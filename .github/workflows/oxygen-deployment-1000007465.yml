@@ -19,7 +19,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/Hydrogen'
+          node-version: 'lts/hydrogen'
           check-latest: true
 
       - name: Cache node modules

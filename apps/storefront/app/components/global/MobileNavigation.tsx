@@ -8,6 +8,8 @@ import MenuIcon from "~/components/icons/Menu";
 import { Link } from "~/components/Link";
 import type { SanityMenuLink } from "~/lib/sanity";
 
+import { Label } from "./Label";
+
 type Props = {
   menuLinks: SanityMenuLink[];
 };
@@ -159,7 +161,9 @@ export default function MobileNavigation({ menuLinks }: Props) {
                     onClick={handleClose}
                     to="/account"
                   >
-                    <span className="mr-2">Account</span>
+                    <span className="mr-2">
+                      <Label _key="global.account" />
+                    </span>
                   </Link>
                   <div className="-ml-2">
                     <CountrySelector align="left" />

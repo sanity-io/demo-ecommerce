@@ -12,6 +12,8 @@ import {
 } from "~/lib/utils";
 import type { ProductWithNodes } from "~/types/shopify";
 
+import { Label } from "../global/Label";
+
 type Props = {
   imageAspectClassName?: string;
   storefrontProduct: ProductWithNodes;
@@ -105,7 +107,7 @@ export default function ProductCard({
                 totalValue: parseFloat(productAnalytics.price),
               }}
             >
-              Quick add
+              <Label _key="cart.quickAdd" />
             </AddToCartButton>
           </div>
         )}

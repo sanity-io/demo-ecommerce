@@ -46,7 +46,7 @@ export default defineField({
     defineField({
       name: 'bio',
       title: 'Biography',
-      type: 'simpleBlockContent',
+      type: 'internationalizedArraySimpleBlockContent',
       group: 'editorial',
     }),
     // SEO

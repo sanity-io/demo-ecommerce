@@ -1,8 +1,11 @@
+import { useMatches } from "@remix-run/react";
 import clsx from "clsx";
 
 import ProductCard from "~/components/product/Card";
 import { useColorTheme } from "~/lib/theme";
 import type { ProductWithNodes } from "~/types/shopify";
+
+import { Label } from "../global/Label";
 
 type Props = {
   relatedProducts: ProductWithNodes[];
@@ -26,7 +29,7 @@ export default function RelatedProducts({ relatedProducts }: Props) {
           "md:text-xl"
         )}
       >
-        Related products
+        <Label _key="products.relatedProducts" />
       </h3>
       <div
         className={clsx(

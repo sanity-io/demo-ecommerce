@@ -1,6 +1,7 @@
 import {
   isRouteErrorResponse,
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -14,15 +15,13 @@ import {
   type SeoHandleFunction,
   ShopifySalesChannel,
 } from "@shopify/hydrogen";
-import type {
-  Cart,
-  Collection,
-  Shop,
-} from "@shopify/hydrogen/storefront-api-types";
+import { useNonce } from "@shopify/hydrogen";
+import type { Collection, Shop } from "@shopify/hydrogen/storefront-api-types";
 import {
-  type AppLoadContext,
   defer,
-  type LoaderArgs,
+  type LinksFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 
@@ -30,12 +29,49 @@ import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
 import { useAnalytics } from "~/hooks/useAnalytics";
-import { useNonce } from "~/lib/nonce";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
-import { CART_QUERY } from "~/queries/shopify/cart";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
+import stylesheet from "~/styles/tailwind.css";
 import type { I18nLocale } from "~/types/shopify";
+
+import { baseLanguage } from "./data/countries";
+import { SanityLayout } from "./lib/sanity";
+
+export const meta: MetaFunction = () => [
+  {
+    name: "viewport",
+    content: "width=device-width,initial-scale=1",
+  },
+];
+
+export const links: LinksFunction = () => {
+  return [
+    { rel: "stylesheet", href: stylesheet },
+    {
+      href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap",
+      rel: "stylesheet",
+    },
+    {
+      rel: "preconnect",
+      href: "https://cdn.shopify.com",
+    },
+    {
+      rel: "preconnect",
+      href: "https://shop.app",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+      crossOrigin: "anonymous",
+    },
+  ];
+};
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.layout?.seo?.title,
@@ -49,17 +85,25 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context }: LoaderArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
+  const { cart } = context;
+
   const cache = context.storefront.CacheCustom({
     mode: "public",
     maxAge: 60,
     staleWhileRevalidate: 60,
   });
 
-  const [cartId, shop, layout] = await Promise.all([
-    context.session.get("cartId"),
+  const [shop, layout] = await Promise.all([
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    context.sanity.query<any>({ query: LAYOUT_QUERY, cache }),
+    context.sanity.query<SanityLayout>({
+      query: LAYOUT_QUERY,
+      cache,
+      params: {
+        language: context.storefront.i18n.language.toLowerCase(),
+        baseLanguage,
+      },
+    }),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
@@ -69,7 +113,7 @@ export async function loader({ context }: LoaderArgs) {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
     },
-    cart: cartId ? getCart(context, cartId) : undefined,
+    cart: cart.get(),
     layout,
     notFoundCollection: layout?.notFoundPage?.collectionGid
       ? context.storefront.query<{ collection: Collection }>(
@@ -95,7 +139,7 @@ export default function App() {
   const hasUserConsent = true;
   const nonce = useNonce();
 
-  useAnalytics(hasUserConsent, locale);
+  useAnalytics(hasUserConsent);
 
   return (
     <html lang={locale.language}>
@@ -109,25 +153,36 @@ export default function App() {
         <Outlet key={`${locale.language}-${locale.country}`} />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+export const useRootLoaderData = () => {
   const [root] = useMatches();
+  return root?.data as SerializeFrom<typeof loader>;
+};
+
+export function ErrorBoundary({ error }: { error: Error }) {
   const nonce = useNonce();
 
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
+  const rootData = useRootLoaderData();
+
   const {
     selectedLocale: locale,
     layout,
     notFoundCollection,
-  } = root.data
-    ? root.data
-    : { selectedLocale: DEFAULT_LOCALE, layout: null, notFoundCollection: {} };
+  } = rootData
+    ? rootData
+    : {
+        selectedLocale: DEFAULT_LOCALE,
+        layout: null,
+        notFoundCollection: undefined,
+      };
   const { notFoundPage } = layout || {};
 
   let title = "Error";
@@ -139,7 +194,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>{title}</title>
         <Meta />
         <Links />
@@ -166,35 +220,21 @@ export function ErrorBoundary({ error }: { error: Error }) {
             <GenericError error={error instanceof Error ? error : undefined} />
           )}
         </Layout>
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
 }
 
 const SHOP_QUERY = `#graphql
-  query layout {
-    shop {
-      id
-      name
-      description
+  query layout($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+      shop {
+        id
+        name
+        description
+      }
     }
-  }
 `;
-
-async function getCart({ storefront }: AppLoadContext, cartId: string) {
-  if (!storefront) {
-    throw new Error("missing storefront client in cart query");
-  }
-
-  const { cart } = await storefront.query<{ cart?: Cart }>(CART_QUERY, {
-    variables: {
-      cartId,
-      country: storefront.i18n.country,
-      language: storefront.i18n.language,
-    },
-    cache: storefront.CacheNone(),
-  });
-
-  return cart;
-}

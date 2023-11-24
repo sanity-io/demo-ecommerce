@@ -14,7 +14,7 @@ import { SHARED_TEXT } from "../sharedText";
 export const PRODUCT_PAGE = groq`
   _id,
   "available": !store.isDeleted && store.status == 'active',
-  body[]{
+  "body": coalesce(body[_key == $language][0].value, body[_key == $baseLanguage][0].value)[] {
     ${PORTABLE_TEXT}
   },
   colorTheme->{
@@ -29,7 +29,7 @@ export const PRODUCT_PAGE = groq`
   ${PRODUCT_FAQS},
   "guide": ${PRODUCT_GUIDE},
   "materialUpsells": ${MATERIAL_UPSELLS},
-  "customProductOptions": *[_type == 'settings'][0].customProductOptions[title in ^.store.options[].name] {
+  "customProductOptions": *[_type == 'settings' && _id == 'settings-' + $language][0].customProductOptions[] {
     ${CUSTOM_PRODUCT_OPTIONS}
   },
   "gid": store.gid,

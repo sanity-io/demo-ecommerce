@@ -49,13 +49,22 @@ export default defineField({
       type: 'seo.home',
       group: 'seo',
     }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: true,
+    }),
   ],
   preview: {
-    prepare() {
+    select: {
+      language: 'language',
+    },
+    prepare({language}) {
       return {
         // media: icon,
-        subtitle: 'Index',
         title: TITLE,
+        subtitle: language.toUpperCase(),
       }
     },
   },

@@ -30,3 +30,8 @@ export const SANITY_API_VERSION = '2022-10-25'
  * Environment symbol to set on `window`
  */
 export const ENVIRONMENT = Symbol('Sanity Environment')
+
+export const LANGUAGES = [
+  {id: 'en', title: 'English', icon: '🇬🇧', previewUrl: ''},
+  {id: 'no', title: 'Norwegian', icon: '🇳🇴', previewUrl: 'no-no'},
+]

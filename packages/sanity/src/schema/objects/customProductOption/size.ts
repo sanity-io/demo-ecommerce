@@ -26,7 +26,7 @@ export default defineField({
       type: 'array',
       of: [
         {
-          name: 'size',
+          name: 'customProductOption.sizeObject',
           title: 'Size',
           type: 'object',
           fields: [

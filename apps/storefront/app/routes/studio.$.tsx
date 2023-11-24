@@ -5,8 +5,8 @@ import {
 } from "@remix-run/react";
 import type {
   LinksFunction,
-  LoaderArgs,
-  V2_MetaFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
 } from "@shopify/remix-oxygen";
 import {
   lazy,
@@ -43,7 +43,7 @@ const SanityStudio =
         }))
       );
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   {
     name: "viewport",
     content: "width=device-width,initial-scale=1,viewport-fit=cover",
@@ -58,7 +58,7 @@ export const meta: V2_MetaFunction = () => [
   },
 ];
 
-export function loader({ context }: LoaderArgs) {
+export function loader({ context }: LoaderFunctionArgs) {
   return {
     projectId: context.env.SANITY_PROJECT_ID!,
     dataset: context.env.SANITY_DATASET || "production",

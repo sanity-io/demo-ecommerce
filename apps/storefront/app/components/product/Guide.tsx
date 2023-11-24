@@ -1,6 +1,7 @@
 import { Link } from "~/components/Link";
 import { SanityGuideProducts } from "~/lib/sanity";
 
+import { Label } from "../global/Label";
 import Image from "../modules/Image";
 
 export default function Guide({
@@ -26,7 +27,9 @@ export default function Guide({
           className="col-span-1 flex overflow-hidden rounded bg-darkGray p-5 text-white hover:bg-lightGray hover:text-darkGray"
         >
           <div className="leading-paragraph">
-            <h2 className="lg-text-lg">Guide</h2>
+            <h2 className="lg-text-lg">
+              <Label _key="guide.title" />
+            </h2>
             <p className="text-lg lg:text-xl">{productGuide.title}</p>
           </div>
         </Link>

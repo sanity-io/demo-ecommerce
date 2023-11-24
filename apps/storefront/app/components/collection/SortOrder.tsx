@@ -12,12 +12,14 @@ import { ChevronDownIcon } from "~/components/icons/ChevronDown";
 import RadioIcon from "~/components/icons/Radio";
 import { SortParam } from "~/routes/_store.($lang).collections.$handle";
 
+import { Label } from "../global/Label";
+
 type Props = {
   initialSortOrder: string | undefined;
 };
 
 type SortOption = {
-  label: string;
+  labelKey: string;
   key: SortParam;
   sortKey?: string;
   reverse?: boolean;
@@ -25,43 +27,43 @@ type SortOption = {
 
 export const SORT_OPTIONS: SortOption[] = [
   {
-    label: "Featured",
+    labelKey: "collection.sortFeatured",
     key: "featured",
     sortKey: "MANUAL",
     reverse: false,
   },
   {
-    label: "Price (low to high)",
+    labelKey: "collection.sortPriceAsc",
     key: "price-low-high",
     sortKey: "PRICE",
     reverse: false,
   },
   {
-    label: "Price (high to low)",
+    labelKey: "collection.sortPriceDesc",
     key: "price-high-low",
     sortKey: "PRICE",
     reverse: true,
   },
   {
-    label: "Title (A to Z)",
+    labelKey: "collection.sortTitleAsc",
     key: "title-a-z",
     sortKey: "TITLE",
     reverse: false,
   },
   {
-    label: "Title (Z to A)",
+    labelKey: "collection.sortTitleDesc",
     key: "title-z-a",
     sortKey: "TITLE",
     reverse: true,
   },
   {
-    label: "Best Selling",
+    labelKey: "collection.sortBestSelling",
     key: "best-selling",
     sortKey: "BEST_SELLING",
     reverse: undefined,
   },
   {
-    label: "New Arrivals",
+    labelKey: "collection.sortNewArrivals",
     key: "newest",
     sortKey: "CREATED",
     reverse: false,
@@ -96,7 +98,13 @@ export default function SortOrder({ initialSortOrder }: Props) {
             <div className="relative inline-flex">
               <Menu.Button className="select">
                 <span className="mr-2">
-                  Sort by{activeItem && `: ${activeItem?.label}`}
+                  Sort by
+                  {activeItem && (
+                    <>
+                      {": "}
+                      <Label _key={activeItem.labelKey} />
+                    </>
+                  )}
                 </span>
                 <ChevronDownIcon className={open ? "rotate-180" : "rotate-0"} />
               </Menu.Button>
@@ -111,7 +119,7 @@ export default function SortOrder({ initialSortOrder }: Props) {
                     {sortOptions.map((item) => {
                       const isSelected = item.key === activeItem?.key;
                       return (
-                        <Menu.Item key={item.label}>
+                        <Menu.Item key={item.labelKey}>
                           {({ active }: { active: boolean }) => (
                             <Link
                               to={getSortLink(item.key, params, location)}
@@ -121,7 +129,9 @@ export default function SortOrder({ initialSortOrder }: Props) {
                               ])}
                               preventScrollReset
                             >
-                              <span className="mr-8">{item.label}</span>
+                              <span className="mr-8">
+                                <Label _key={item.labelKey} />
+                              </span>
                               <RadioIcon
                                 checked={isSelected}
                                 hovered={active}

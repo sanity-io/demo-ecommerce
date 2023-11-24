@@ -105,7 +105,7 @@ export default defineType({
     defineField({
       name: 'hero',
       title: 'Hero',
-      type: 'hero.collection',
+      type: 'internationalizedArrayHero.collection',
       hidden: ({document}) => !document?.showHero,
       group: 'editorial',
     }),
@@ -114,7 +114,12 @@ export default defineType({
       name: 'modules',
       title: 'Modules',
       type: 'array',
-      description: 'Editorial modules to associate with this collection',
+      description: (
+        <>
+          Editorial modules to associate with this collection.{' '}
+          <em>Only shown on the English site</em>
+        </>
+      ),
       of: [
         {type: 'module.callout'},
         {type: 'module.callToAction'},

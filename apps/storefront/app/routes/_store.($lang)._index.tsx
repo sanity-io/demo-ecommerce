@@ -2,7 +2,7 @@ import { Await, useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
@@ -15,7 +15,7 @@ import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
-const seo: SeoHandleFunction = ({ data }) => ({
+const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.seo?.title || "Sanity x Hydrogen",
   description:
     data?.page?.seo?.description ||
@@ -26,8 +26,9 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context, params }: LoaderArgs) {
+export async function loader({ context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const cache = context.storefront.CacheCustom({
     mode: "public",
@@ -37,6 +38,9 @@ export async function loader({ context, params }: LoaderArgs) {
 
   const page = await context.sanity.query<SanityHomePage>({
     query: HOME_PAGE_QUERY,
+    params: {
+      language,
+    },
     cache,
   });
 
@@ -48,6 +52,7 @@ export async function loader({ context, params }: LoaderArgs) {
   const gids = fetchGids({ page, context });
 
   return defer({
+    language,
     page,
     gids,
     analytics: {
@@ -57,10 +62,11 @@ export async function loader({ context, params }: LoaderArgs) {
 }
 
 export default function Index() {
-  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
+  const { language, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
 
   return (
-    <SanityPreview data={page} query={HOME_PAGE_QUERY}>
+    <SanityPreview data={page} query={HOME_PAGE_QUERY} params={{ language }}>
       {(page) => (
         <Suspense>
           <Await resolve={gids}>

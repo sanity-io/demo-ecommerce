@@ -10,7 +10,7 @@ import type {
   Order,
   OrderLineItem,
 } from "@shopify/hydrogen/storefront-api-types";
-import { json, type LoaderArgs, redirect } from "@shopify/remix-oxygen";
+import { json, type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import invariant from "tiny-invariant";
@@ -18,7 +18,7 @@ import invariant from "tiny-invariant";
 import { Link } from "~/components/Link";
 import { notFound, statusMessage } from "~/lib/utils";
 
-export const seo: SeoHandleFunction = ({ data }) => ({
+export const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: `Order ${data?.order?.name}`,
 });
 
@@ -26,7 +26,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({ request, context, params }: LoaderArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   if (!params.id) {
     return redirect(params?.lang ? `${params.lang}/account` : "/account");
   }

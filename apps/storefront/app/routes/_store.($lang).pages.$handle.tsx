@@ -2,7 +2,7 @@ import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
@@ -12,7 +12,8 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
-import type { SanityPage } from "~/lib/sanity";
+import { baseLanguage } from "~/data/countries";
+import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
@@ -27,8 +28,9 @@ export const handle = {
   seo,
 };
 
-export async function loader({ params, context }: LoaderArgs) {
+export async function loader({ params, context }: LoaderFunctionArgs) {
   validateLocale({ context, params });
+  const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing page handle");
@@ -43,6 +45,8 @@ export async function loader({ params, context }: LoaderArgs) {
     query: PAGE_QUERY,
     params: {
       slug: handle,
+      language,
+      baseLanguage,
     },
     cache,
   });
@@ -54,21 +58,29 @@ export async function loader({ params, context }: LoaderArgs) {
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({ page, context });
 
-  return defer({ page, gids });
+  return defer({ language, page, gids });
 }
 
 export default function Page() {
-  const { page, gids } = useLoaderData<SerializeFrom<typeof loader>>();
+  const { language, page, gids } =
+    useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
   return (
-    <SanityPreview data={page} query={PAGE_QUERY} params={{ slug: handle }}>
+    <SanityPreview
+      data={page}
+      query={PAGE_QUERY}
+      params={{ slug: handle, language, baseLanguage }}
+    >
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
           <Suspense>
             <Await resolve={gids}>
               {/* Page hero */}
-              <PageHero fallbackTitle={page?.title || ""} hero={page?.hero} />
+              <PageHero
+                fallbackTitle={page?.title || ""}
+                hero={page?.hero as SanityHeroPage}
+              />
               {/* Body */}
               {page?.body && (
                 <PortableText

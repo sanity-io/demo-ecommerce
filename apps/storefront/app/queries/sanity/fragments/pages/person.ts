@@ -7,7 +7,7 @@ import { SEO } from "../seo";
 export const PERSON_PAGE = groq`
   name,
   image,
-  bio[]{
+  "bio": bio[_key == $language][0].value[] {
     ${PORTABLE_TEXT}
   },
   ${SEO},
