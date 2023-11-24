@@ -13,6 +13,7 @@ import pages from './pages'
 import people from './people'
 import products from './products'
 import settings from './settings'
+import badges from './badges'
 
 /**
  * Desk structure overrides
@@ -54,6 +55,7 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       collections(S, context),
       products(S, context),
+      badges(S, context),
       S.divider(),
       people(S, context),
       materials(S, context),

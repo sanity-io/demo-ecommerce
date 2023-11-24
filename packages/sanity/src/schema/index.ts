@@ -20,8 +20,9 @@ import page from './documents/page'
 import person from './documents/person'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
+import badge from './documents/badge'
 
-const documents = [collection, colorTheme, guide, material, page, product, productVariant, person]
+const documents = [collection, colorTheme, guide, material, page, product, productVariant, person, badge]
 
 // Singleton document types
 import home from './singletons/home'

@@ -42,6 +42,7 @@ import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
 import { SanityLayout } from "./lib/sanity";
+import { BADGES_QUERY } from "./queries/sanity/badges";
 
 export const meta: MetaFunction = () => [
   {
@@ -97,12 +98,15 @@ export async function loader({ context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const [cartId, shop, layout] = await Promise.all([
+  const [cartId, shop, layout, badges] = await Promise.all([
     context.session.get("cartId"),
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
     context.sanity.fetch<SanityLayout>(LAYOUT_QUERY, {
       language: context.storefront.i18n.language.toLowerCase(),
       baseLanguage,
+    }),
+    context.sanity.fetch(BADGES_QUERY, {
+      language: context.storefront.i18n.language.toLowerCase(),
     }),
   ]);
 
@@ -115,6 +119,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
     },
     cart: cartId ? getCart(context, cartId) : undefined,
     layout,
+    badges,
     notFoundCollection: layout?.notFoundPage?.collectionGid
       ? context.storefront.query<{ collection: Collection }>(
           COLLECTION_QUERY_ID,

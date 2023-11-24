@@ -35,6 +35,7 @@ export const PRODUCT_FIELDS = `
     }
     title
     vendor
+    tags
   }
 `;
 

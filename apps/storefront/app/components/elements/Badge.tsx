@@ -5,6 +5,10 @@ type Props = {
   mode?: "default" | "outline";
   small?: boolean;
   tone?: "default" | "critical";
+  colorTheme?: {
+    background?: string;
+    text?: string;
+  };
 };
 
 export default function Badge({
@@ -12,6 +16,7 @@ export default function Badge({
   mode = "default",
   small,
   tone = "default",
+  colorTheme,
 }: Props) {
   return (
     <div
@@ -22,6 +27,11 @@ export default function Badge({
         tone === "critical" && "border-red text-red",
         tone === "default" && "border-darkGray text-darkGray"
       )}
+      style={{
+        backgroundColor: colorTheme?.background,
+        color: colorTheme?.text,
+        marginBottom: ".5rem",
+      }}
     >
       {label}
     </div>

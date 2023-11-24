@@ -1,3 +1,4 @@
+import { useMatches } from "@remix-run/react";
 import { Money } from "@shopify/hydrogen";
 import type { ProductVariant } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
@@ -10,12 +11,17 @@ import {
 } from "~/lib/utils";
 import { ProductWithNodes } from "~/types/shopify";
 
+import Badge from "../elements/Badge";
+
 type Props = {
   storefrontProduct: ProductWithNodes;
   variantGid?: string;
 };
 
 export default function ProductTile({ storefrontProduct, variantGid }: Props) {
+  const [root] = useMatches();
+  const badges = root.data?.badges;
+
   const firstVariant =
     useGid<ProductVariant>(variantGid) ??
     storefrontProduct.variants.nodes.find(
@@ -26,6 +32,10 @@ export default function ProductTile({ storefrontProduct, variantGid }: Props) {
   if (!(storefrontProduct && firstVariant)) {
     return null;
   }
+
+  const matchingBadges = badges.filter((badge) =>
+    storefrontProduct.tags?.includes(badge.tag)
+  );
 
   const { availableForSale, compareAtPrice, price } = firstVariant;
 
@@ -57,6 +67,12 @@ export default function ProductTile({ storefrontProduct, variantGid }: Props) {
               Sale
             </div>
           )}
+
+          {matchingBadges.map((badge) => (
+            <div style={{ width: "fit-content" }} key={badge._id}>
+              <Badge label={badge.text} colorTheme={badge.colorTheme} />
+            </div>
+          ))}
 
           {/* Title */}
           <div className="truncate text-lg font-bold group-hover:underline">

@@ -24,7 +24,7 @@ export default defineField({
     }),
     defineField({
       name: 'attributes',
-      type: 'object',
+      type: 'object' as const,
       fields: [
         defineField({
           name: 'environmentallyFriendly',

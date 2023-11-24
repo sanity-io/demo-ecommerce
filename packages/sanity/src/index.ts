@@ -78,7 +78,8 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       internationalizedArray({
         languages: LANGUAGES,
-        defaultLanguages: ['en'],
+        // disabling as default languages seems to create duplicates
+        // defaultLanguages: ['en'],
         fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent', 'hero.collection'],
         buttonLocations: ['unstable__fieldAction'],
       }),

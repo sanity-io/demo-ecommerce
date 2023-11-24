@@ -1,3 +1,4 @@
+import { useMatches } from "@remix-run/react";
 import { Image, Money, type ShopifyAnalyticsProduct } from "@shopify/hydrogen";
 import type { ProductVariant } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
@@ -27,6 +28,9 @@ export default function ProductCard({
   variantGid,
   imageOnly = false,
 }: Props) {
+  const [root] = useMatches();
+  const badges = root.data?.badges;
+
   const firstVariant =
     useGid<ProductVariant>(variantGid) ??
     storefrontProduct.variants.nodes.find(
@@ -37,6 +41,12 @@ export default function ProductCard({
   if (firstVariant == null) {
     return null;
   }
+
+  const matchingBadges = badges.filter((badge) =>
+    storefrontProduct.tags?.includes(badge.tag)
+  );
+
+  console.log("BADGES", matchingBadges);
 
   const multipleProductOptions = hasMultipleProductOptions(
     storefrontProduct.options
@@ -83,6 +93,13 @@ export default function ProductCard({
             )}
             {/* Sold out */}
             {!firstVariant?.availableForSale && <Badge label="Sold out" />}
+            {matchingBadges.map((badge) => (
+              <Badge
+                label={badge.text}
+                key={badge._id}
+                colorTheme={badge.colorTheme}
+              />
+            ))}
           </div>
         </Link>
 

@@ -1,3 +1,4 @@
+import { useMatches } from "@remix-run/react";
 import { EarthAmericasIcon, PackageIcon } from "@sanity/icons";
 import { Money, ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
@@ -9,6 +10,7 @@ import clsx from "clsx";
 import ProductForm from "~/components/product/Form";
 import type { SanityProductPage } from "~/lib/sanity";
 
+import Badge from "../elements/Badge";
 import { Label } from "../global/Label";
 
 type Props = {
@@ -47,6 +49,9 @@ export default function ProductWidget({
   selectedVariant,
   analytics,
 }: Props) {
+  const [root] = useMatches();
+  const badges = root.data?.badges;
+
   const availableForSale = selectedVariant?.availableForSale;
 
   const environmentallyFriendly =
@@ -59,6 +64,10 @@ export default function ProductWidget({
   if (!selectedVariant) {
     return null;
   }
+
+  const matchingBadges = badges.filter((badge) =>
+    storefrontProduct.tags?.includes(badge.tag)
+  );
 
   return (
     <div
@@ -80,6 +89,16 @@ export default function ProductWidget({
           <Label _key="product.sale" />
         </div>
       )}
+
+      <div style={{ width: "fit-content" }}>
+        {matchingBadges.map((badge) => (
+          <Badge
+            label={badge.text}
+            key={badge._id}
+            colorTheme={badge.colorTheme}
+          />
+        ))}
+      </div>
 
       {/* Title */}
       {storefrontProduct?.title && (
