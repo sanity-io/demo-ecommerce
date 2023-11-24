@@ -1,4 +1,5 @@
 import { Await, useLoaderData, useParams } from "@remix-run/react";
+import { useQuery } from "@sanity/react-loader";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
@@ -6,7 +7,6 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -20,9 +20,9 @@ import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { GUIDE_QUERY } from "~/queries/sanity/guide";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.seo?.title,
-  description: data?.page?.seo?.description,
-  media: data?.page?.seo?.image,
+  title: data?.page?.data?.seo?.title,
+  description: data?.page?.data?.seo?.description,
+  media: data?.page?.data?.seo?.image,
 });
 
 export const handle = {
@@ -36,78 +36,70 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const cache = context.storefront.CacheCustom({
-    mode: "public",
-    maxAge: 60,
-    staleWhileRevalidate: 60,
+  const page = await context.sanity.loader.loadQuery<SanityPage>(GUIDE_QUERY, {
+    slug: handle,
+    language,
   });
 
-  const page = await context.sanity.query<SanityPage>({
-    query: GUIDE_QUERY,
-    params: {
-      slug: handle,
-      language,
-    },
-    cache,
-  });
-
-  if (!page) {
+  if (!page.data) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page, context });
+  const gids = fetchGids({ page: page.data, context });
 
   return defer({ language, page, gids });
 }
 
 export default function Page() {
-  const { language, page, gids } =
+  const { language, gids, ...data } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
+  const { error, data: page } = useQuery(
+    GUIDE_QUERY,
+    { slug: handle, language },
+    { initial: page }
+  );
+
+  if (error) {
+    throw error;
+  }
+
   return (
-    <SanityPreview
-      data={page}
-      query={GUIDE_QUERY}
-      params={{ slug: handle, language }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Page hero */}
-              {page?.banner && (
-                <PageHero
-                  fallbackTitle={page?.title || ""}
-                  hero={page?.hero as SanityHeroPage}
-                />
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          {page?.banner && (
+            <PageHero
+              fallbackTitle={page?.title || ""}
+              hero={page?.hero as SanityHeroPage}
+            />
+          )}
+          {page?.banner && (
+            <div className={clsx("mb-1 mt-24 px-4", "md:px-8")}>
+              <Banner items={page.banner} />
+            </div>
+          )}
+          {/* Body */}
+          {page?.body && (
+            <PortableText
+              blocks={page.body}
+              centered
+              className={clsx(
+                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+                "md:px-8"
               )}
-              {page?.banner && (
-                <div className={clsx("mb-1 mt-24 px-4", "md:px-8")}>
-                  <Banner items={page.banner} />
-                </div>
-              )}
-              {/* Body */}
-              {page?.body && (
-                <PortableText
-                  blocks={page.body}
-                  centered
-                  className={clsx(
-                    "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                    "md:px-8"
-                  )}
-                />
-              )}
-              {page?.modules && (
-                <div className={clsx("mb-2 mt-2 px-4", "md:px-8")}>
-                  <ModuleGrid items={page.modules} />
-                </div>
-              )}
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            />
+          )}
+          {page?.modules && (
+            <div className={clsx("mb-2 mt-2 px-4", "md:px-8")}>
+              <ModuleGrid items={page.modules} />
+            </div>
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }

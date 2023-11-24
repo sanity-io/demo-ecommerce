@@ -2,17 +2,18 @@
 /// <reference types="@shopify/remix-oxygen" />
 /// <reference types="@shopify/oxygen-workers-types" />
 
-import type { Cache, HydrogenCart } from "@shopify/hydrogen";
-import type { PreviewSession, Sanity } from "hydrogen-sanity";
+import type { HydrogenCart } from "@shopify/hydrogen";
 
+import type { SanityContext } from "~/lib/sanity";
 import type { Storefront } from "~/types/shopify";
 
-import type { HydrogenSession } from "../server";
+import type { HydrogenSession } from "handler";
 
 declare global {
   /**
    * A global `process` object is only available during build to access NODE_ENV.
    */
+  // @ts-expect-error
   const process: { env: { NODE_ENV: "production" | "development" } & Env };
 
   /**
@@ -43,6 +44,6 @@ declare module "@shopify/remix-oxygen" {
     storefront: Storefront;
     cart: HydrogenCart;
     env: Env;
-    sanity: Sanity;
+    sanity: SanityContext
   }
 }
