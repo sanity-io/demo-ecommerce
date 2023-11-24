@@ -18,6 +18,7 @@ import {ENVIRONMENT, LANGUAGES} from './constants'
 import {locate} from './location'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
+import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 /**
  * Configuration options that will be passed in
@@ -52,6 +53,7 @@ export function defineSanityConfig(config: SanityConfig) {
     title,
 
     plugins: [
+     
       presentationTool({
         // title: 'Storefront',
         // name: 'storefront',
@@ -105,6 +107,7 @@ export function defineSanityConfig(config: SanityConfig) {
           return true
         },
       }),
+      scheduledPublishing(),
     ],
 
     schema: {
