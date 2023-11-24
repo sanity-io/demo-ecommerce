@@ -320,3 +320,7 @@ export function isLocalPath(request: Request, url: string) {
   // If the origins don't match the slug is not on our domain.
   return currentUrl.origin === urlToCheck.origin;
 }
+
+export function isServer(): boolean {
+  return typeof document === "undefined";
+}

@@ -11,6 +11,7 @@ import type {
 import {
   lazy,
   type ReactElement,
+  Suspense,
   useEffect,
   useState,
   useTransition,
