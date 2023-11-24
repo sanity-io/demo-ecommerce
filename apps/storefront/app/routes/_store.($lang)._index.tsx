@@ -17,6 +17,7 @@ import {
   type SanityHomePage,
   useQuery,
 } from "~/lib/sanity";
+import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
@@ -79,17 +80,19 @@ export default function Index() {
   if (error) throw error;
 
   return (
-    <Suspense>
-      <Await resolve={gids}>
-        {/* Page hero */}
-        {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
-        {page?.modules && (
-          <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-            <ModuleGrid items={page.modules} />
-          </div>
-        )}
-      </Await>
-    </Suspense>
+          {page?.modules && (
+            <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
+              <ModuleGrid items={page.modules} />
+            </div>
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }

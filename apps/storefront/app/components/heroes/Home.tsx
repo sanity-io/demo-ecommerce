@@ -3,18 +3,22 @@ import clsx from "clsx";
 import LinkButton from "~/components/elements/LinkButton";
 import HeroContent from "~/components/heroes/HeroContent";
 import type { SanityHeroHome } from "~/lib/sanity";
+import { useColorTheme } from "~/lib/theme";
 
 type Props = {
   hero: SanityHeroHome;
 };
 
 export default function HomeHero({ hero }: Props) {
+  const colorTheme = useColorTheme();
+  
   return (
     <div
       className={clsx(
         "flex flex-col items-center rounded-b-xl bg-peach px-4 pb-4 pt-24",
         "md:px-8 md:pb-8 md:pt-34"
       )}
+      style={{ background: colorTheme?.background }}
     >
       {/* Title */}
       {hero.title && (
@@ -23,6 +27,7 @@ export default function HomeHero({ hero }: Props) {
             "mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl",
             "md:text-5xl"
           )}
+          style={{ color: colorTheme?.text || "black" }}
         >
           {hero.title}
         </h1>

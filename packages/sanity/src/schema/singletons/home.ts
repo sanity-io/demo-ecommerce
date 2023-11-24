@@ -10,6 +10,10 @@ export default defineField({
   icon: HomeIcon,
   groups: [
     {
+      name: 'theme',
+      title: 'Theme',
+    },
+    {
       default: true,
       name: 'editorial',
       title: 'Editorial',
@@ -20,6 +24,14 @@ export default defineField({
     },
   ],
   fields: [
+        // Color theme
+        defineField({
+          name: 'colorTheme',
+          title: 'Color theme',
+          type: 'reference',
+          to: [{type: 'colorTheme'}],
+          group: 'theme',
+        }),
     // Hero
     defineField({
       name: 'hero',
