@@ -126,6 +126,9 @@ export function defineSanityConfig(config: SanityConfig) {
 
     document: {
       productionUrl: resolveProductionUrl,
+      unstable_comments: {
+        enabled: true,
+      },
     },
 
     form: {
