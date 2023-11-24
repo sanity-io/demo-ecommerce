@@ -87,7 +87,7 @@ export default function Footer() {
       </div>
 
       {/* Sanity Footer */}
-      <SanityFooter />
+      {/* <SanityFooter /> */}
     </footer>
   );
 }

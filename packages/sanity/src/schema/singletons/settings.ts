@@ -13,6 +13,10 @@ export default defineType({
   icon: CogIcon,
   groups: [
     {
+      name: 'storefront',
+      title: 'Storefront'
+    },
+    {
       default: true,
       name: 'navigation',
       title: 'Navigation',
@@ -31,6 +35,21 @@ export default defineType({
     },
   ],
   fields: [
+    // Storefront
+    defineField({
+      name: 'storeName',
+      title: 'Store Name',
+      type: 'string',
+      validation: (rule) => rule.required(),
+      group: 'storefront'
+    }),
+    defineField({
+      name: 'storeLogo',
+      title: 'Store Logo',
+      type: 'image',
+      validation: (rule) => rule.required(),
+      group: 'storefront'
+    }),
     // Menu
     defineField({
       name: 'menu',

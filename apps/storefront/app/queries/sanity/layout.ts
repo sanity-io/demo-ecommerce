@@ -9,6 +9,8 @@ export const LAYOUT_QUERY = groq`
     _id,
     _type,
     seo,
+    storeName,
+    "storeLogo": storeLogo.asset->,
     "menuLinks": menu.links[] {
       ${LINKS}
     },

@@ -39,7 +39,7 @@ type SanityConfig = Pick<SingleWorkspace, 'projectId' | 'dataset' | 'title' | 'b
  * In this example, it's a single workspace but adjust as necessary.
  */
 export function defineSanityConfig(config: SanityConfig) {
-  const {title = 'AKVA', preview, shopify, ...rest} = config
+  const {title = 'Steve Madden US', preview, shopify, ...rest} = config
 
   window[ENVIRONMENT] = {
     preview,
@@ -53,15 +53,8 @@ export function defineSanityConfig(config: SanityConfig) {
 
     plugins: [
       presentationTool({
-        title: 'AKVA Storefront',
-        name: 'storefront',
-        // previewUrl: preview.domain ?? 'http://localhost:3000',
-        previewUrl:
-          typeof document === 'undefined' ? 'http://localhost:3000' : window.location.origin,
-        locate,
-      }),
-      presentationTool({
-        title: 'AKVA Kiosk',
+        // title: 'Storefront',
+        // name: 'storefront',
         // previewUrl: preview.domain ?? 'http://localhost:3000',
         previewUrl:
           typeof document === 'undefined' ? 'http://localhost:3000' : window.location.origin,
@@ -163,7 +156,7 @@ export function defineSanityConfig(config: SanityConfig) {
     studio: {
       components: {
         //navbar: Navbar,
-        logo: Logo,
+        // logo: Logo,
       },
     },
   })
