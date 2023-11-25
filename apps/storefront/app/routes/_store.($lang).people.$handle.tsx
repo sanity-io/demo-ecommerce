@@ -40,14 +40,14 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.query<SanityPersonPage>({
-    query: PERSON_QUERY,
-    params: {
+  const page = await context.sanity.client.fetch<SanityPersonPage>(
+    PERSON_QUERY,
+    {
       slug: handle,
       language,
     },
-    cache,
-  });
+    { hydrogen: { cache } }
+  );
 
   if (!page) {
     throw notFound();

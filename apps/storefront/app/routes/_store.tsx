@@ -1,13 +1,7 @@
-import { Outlet, useLoaderData } from "@remix-run/react";
-import {
-  json,
-  type LinksFunction,
-  type LoaderFunctionArgs,
-} from "@shopify/remix-oxygen";
-import { getPreview, PreviewProvider } from "hydrogen-sanity";
+import { Outlet } from "@remix-run/react";
+import { type LinksFunction } from "@shopify/remix-oxygen";
 
 import { Layout } from "~/components/global/Layout";
-import { PreviewLoading } from "~/components/global/PreviewLoading";
 import stylesheet from "~/styles/tailwind.css";
 
 export const links: LinksFunction = () => {
@@ -38,22 +32,10 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export async function loader({ context }: LoaderFunctionArgs) {
-  const preview = getPreview(context);
-
-  return json({
-    preview,
-  });
-}
-
 export default function Store() {
-  const { preview } = useLoaderData<typeof loader>();
-
   return (
-    <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
-      <Layout>
-        <Outlet />
-      </Layout>
-    </PreviewProvider>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 }

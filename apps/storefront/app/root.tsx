@@ -66,14 +66,14 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const [shop, layout] = await Promise.all([
     context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    context.sanity.query<SanityLayout>({
-      query: LAYOUT_QUERY,
-      cache,
-      params: {
+    context.sanity.client.fetch<SanityLayout>(
+      LAYOUT_QUERY,
+      {
         language: context.storefront.i18n.language.toLowerCase(),
         baseLanguage,
       },
-    }),
+      { hydrogen: { cache } }
+    ),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;

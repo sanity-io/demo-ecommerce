@@ -87,15 +87,15 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   });
 
   const [page, { product }] = await Promise.all([
-    context.sanity.query<SanityProductPage>({
-      query: PRODUCT_PAGE_QUERY,
-      params: {
+    context.sanity.client.fetch<SanityProductPage>(
+      PRODUCT_PAGE_QUERY,
+      {
         slug: params.handle,
         language,
         baseLanguage,
       },
-      cache,
-    }),
+      { hydrogen: { cache } }
+    ),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;
