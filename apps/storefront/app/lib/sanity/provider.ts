@@ -1,12 +1,16 @@
 import type {
   FilteredResponseQueryOptions,
+  InitializedClientConfig,
   QueryParams,
   RawQueryResponse,
   ResponseQueryOptions,
   SanityClient,
   UnfilteredResponseQueryOptions,
 } from "@sanity/client";
-import { SanityStegaClient } from "@sanity/client/stega";
+import type {
+  InitializedClientStegaConfig,
+  SanityStegaClient,
+} from "@sanity/client/stega";
 import { createQueryStore } from "@sanity/react-loader";
 import { CacheLong, createWithCache } from "@shopify/hydrogen";
 
@@ -65,24 +69,30 @@ export function createSanityProvider(options: SanityProviderOptions): Sanity {
     waitUntil,
   });
 
+  // Wrap `client.fetch` in additional logic to handle caching
   client.fetch = new Proxy(client.fetch, {
-    async apply(target, thisArg, args) {
+    async apply(target, thisArg: SanityClient | SanityStegaClient, args) {
+      const config = thisArg.config();
       const [query, params, options] = args;
       const strategy = options?.hydrogen?.cache ?? CacheLong();
       const queryHash = await hashQuery(query, params);
 
-      return await withCache(
-        queryHash,
-        strategy,
-        async () => await Reflect.apply(target, thisArg, args)
-      );
+      const response = await (options.loader && isStegaEnabled(config)
+        ? options.loader.loadQuery(query, params)
+        : withCache(
+            queryHash,
+            strategy,
+            async () => await Reflect.apply(target, thisArg, args)
+          ));
+
+      return response;
     },
   });
 
   if ("loader" in options) {
-    if (!(client instanceof SanityStegaClient)) {
-      throw new Error("If using loaders, the client must be a stega client");
-    }
+    // if (!(client instanceof SanityStegaClient)) {
+    //   throw new Error("If using loaders, the client must be a stega client");
+    // }
     const { loader } = options;
     // Run on each invocation of the handler!
     if (!globalThis.didSetClient) {
@@ -98,6 +108,15 @@ export function createSanityProvider(options: SanityProviderOptions): Sanity {
 
   // @ts-expect-error
   return { client, cache, loader: options?.loader };
+}
+
+/**
+ * Checks whether stega is enabled on the configuration passed in
+ */
+function isStegaEnabled(
+  config: InitializedClientConfig | InitializedClientStegaConfig
+): config is InitializedClientStegaConfig {
+  return "stega" in config && config.stega?.enabled;
 }
 
 /**
@@ -138,7 +157,6 @@ type SanityOverlayProvider = {
 };
 
 type SanityProvider = {
-  // TODO: narrow this based on the client that was passed in
   client: Omit<SanityClient, "fetch"> & {
     /**
      * Perform a GROQ-query against the configured dataset.
@@ -181,4 +199,5 @@ type SanityProvider = {
   cache: Cache;
 };
 
+// TODO: narrow this based on the client that was passed in
 export type Sanity = SanityOverlayProvider & SanityProvider;

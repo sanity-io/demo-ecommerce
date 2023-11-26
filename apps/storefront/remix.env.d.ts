@@ -3,8 +3,8 @@
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type { Cache, HydrogenCart } from "@shopify/hydrogen";
-import type { Sanity } from "~/lib/sanity";
 
+import type { Sanity } from "~/lib/sanity";
 import type { Storefront } from "~/types/shopify";
 
 import type { HydrogenSession } from "../server";
