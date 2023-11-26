@@ -18,7 +18,7 @@ import {
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
 
-import { createSanityProvider, loader } from "~/lib/sanity";
+import { createSanityProvider, loader, stegaFilter } from "~/lib/sanity";
 import { getLocaleFromRequest } from "~/lib/utils";
 
 // TODO: setting server client should be a noop.
@@ -99,6 +99,7 @@ export async function handler(
           // TODO: conditional based on session?
           enabled: true,
           studioUrl: "/studio",
+          filter: stegaFilter,
         },
       }),
       waitUntil,
