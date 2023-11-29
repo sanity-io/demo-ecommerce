@@ -1,0 +1,684 @@
+{
+    "_createdAt": "2023-10-24T10:35:35Z",
+    "_id": "sharedText",
+    "_rev": "5WzuELUF8U9PqF2lio7UPP",
+    "_type": "sharedText",
+    "_updatedAt": "2023-10-24T10:35:35Z",
+    "deliveryAndReturns": [
+      {
+        "_key": "en",
+        "value": [
+          {
+            "_key": "7f3da8669bb6",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "d6553e9259c9",
+                "_type": "span",
+                "marks": [],
+                "text": "We offer priced delivery and ship all of our products by courier. For next day delivery, please order before 2pm and choose to upgrade at checkout. If for any reason you are not completely satisfied with your order, we offer a 30 day returns policy for a full refund. Products must not have been used and must still be in a sellable condition. "
+              },
+              {
+                "_key": "0d424da357cb",
+                "_type": "span",
+                "marks": [
+                  "b628b0efa265"
+                ],
+                "text": "Read our full policy."
+              }
+            ],
+            "markDefs": [
+              {
+                "_key": "b628b0efa265",
+                "_type": "annotationLinkInternal",
+                "reference": {
+                  "_ref": "63dd2660-bc35-4941-b86f-0dbe1d1513fb",
+                  "_type": "reference",
+                  "_weak": true
+                }
+              }
+            ],
+            "style": "normal"
+          }
+        ]
+      },
+      {
+        "_key": "no",
+        "_type": "internationalizedArraySimpleBlockContentValue",
+        "value": [
+          {
+            "_key": "69406a1cceee",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "0802637de30b0",
+                "_type": "span",
+                "marks": [],
+                "text": "Vi tilbyr priset levering og sender alle våre produkter med bud. For levering neste dag, bestill før kl. 14.00 og velg å oppgradere i kassen. Hvis du av en eller annen grunn ikke er helt fornøyd med bestillingen din, tilbyr vi 30 dagers returrett for full refusjon. Produktene må ikke ha vært brukt og må fortsatt være i salgbar stand. "
+              },
+              {
+                "_key": "ddc9f02ac347",
+                "_type": "span",
+                "marks": [
+                  "2424ca988052"
+                ],
+                "text": "Les hele retningslinjene våre."
+              }
+            ],
+            "markDefs": [
+              {
+                "_key": "2424ca988052",
+                "_type": "annotationLinkInternal",
+                "reference": {
+                  "_ref": "63dd2660-bc35-4941-b86f-0dbe1d1513fb",
+                  "_type": "reference",
+                  "_weak": true
+                }
+              }
+            ],
+            "style": "normal"
+          }
+        ]
+      }
+    ],
+    "labels": [
+      {
+        "_key": "b554ead2acfd",
+        "_type": "label",
+        "key": "attribute.environmentallyFriendly",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Environmentally Friendly"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Miljøvennlig"
+          }
+        ]
+      },
+      {
+        "_key": "a22725b63673",
+        "_type": "label",
+        "key": "cart.title",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Cart"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Handlevogn"
+          }
+        ]
+      },
+      {
+        "_key": "b734cc9ca56f",
+        "_type": "label",
+        "key": "cart.addToCart",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Add to cart"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Legg i handlekurv"
+          }
+        ]
+      },
+      {
+        "_key": "f26837b0c3ac",
+        "_type": "label",
+        "key": "cart.buyNow",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Buy Now"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Kjøp Nå"
+          }
+        ]
+      },
+      {
+        "_key": "0de985bc8378",
+        "_type": "label",
+        "key": "cart.quickAdd",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Quick Add"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Legg til raskt"
+          }
+        ]
+      },
+      {
+        "_key": "c7f56fc58d91",
+        "_type": "label",
+        "key": "faqs.title",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "FAQs"
+          }
+        ]
+      },
+      {
+        "_key": "2de7fd95f7d6",
+        "_type": "label",
+        "key": "guide.title",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Guide"
+          }
+        ]
+      },
+      {
+        "_key": "f3a201c56a4e",
+        "_type": "label",
+        "key": "person.checkOutWork",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Check out all of {name}'s work"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Sjekk ut alt arbeidet til {name}"
+          }
+        ]
+      },
+      {
+        "_key": "ef2bdb60b652",
+        "_type": "label",
+        "key": "person.artisan",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Artisan"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Håndverker"
+          }
+        ]
+      },
+      {
+        "_key": "d0c6ab8a9876",
+        "_type": "label",
+        "key": "person.ceramist",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Ceramist"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Keramiker"
+          }
+        ]
+      },
+      {
+        "_key": "b5b62a369314",
+        "_type": "label",
+        "key": "person.designer",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Designer"
+          }
+        ]
+      },
+      {
+        "_key": "08e6a500d1a6",
+        "_type": "label",
+        "key": "person.supplier",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Supplier"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Leverandør"
+          }
+        ]
+      },
+      {
+        "_key": "85e1992bb68e",
+        "_type": "label",
+        "key": "product.madeFrom",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Made from..."
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Laget av..."
+          }
+        ]
+      },
+      {
+        "_key": "2e4e7ce6a694",
+        "_type": "label",
+        "key": "product.soldOut",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Sold Out"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Utsolgt"
+          }
+        ]
+      },
+      {
+        "_key": "62955fec187e",
+        "_type": "label",
+        "key": "products.relatedProducts",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Related Products"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Relaterte produkter"
+          }
+        ]
+      },
+      {
+        "_key": "364662694727",
+        "_type": "label",
+        "key": "shipping.free",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Free shipping"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Gratis frakt"
+          }
+        ]
+      },
+      {
+        "_key": "62dfdf02fc52",
+        "_type": "label",
+        "key": "shipping.shippingReturns",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Shipping & Returns"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Frakt og retur"
+          }
+        ]
+      },
+      {
+        "_key": "7f18fac453c9",
+        "_type": "label",
+        "key": "global.skipToContent",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Skip to content"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Hopp til innholdet"
+          }
+        ]
+      },
+      {
+        "_key": "d64c4d467d6e",
+        "_type": "label",
+        "key": "global.account",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Account"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Konto"
+          }
+        ]
+      },
+      {
+        "_key": "207c4b7269be",
+        "_type": "label",
+        "key": "global.loadMore",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Load more"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Last mer"
+          }
+        ]
+      },
+      {
+        "_key": "d6b36e1298b4",
+        "_type": "label",
+        "key": "collection.shopCollection",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Shop collection"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Handle samlingen"
+          }
+        ]
+      },
+      {
+        "_key": "7d9de52aae23",
+        "_type": "label",
+        "key": "product.sale",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Sale"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Salg"
+          }
+        ]
+      },
+      {
+        "_key": "2aa58606c96c",
+        "_type": "label",
+        "key": "collection.sortFeatured",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Featured"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Omtalt"
+          }
+        ]
+      },
+      {
+        "_key": "7bcbb7d325cac49f75a139025be8298b",
+        "_type": "label",
+        "key": "collection.sortPriceAsc",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Price (low to high)"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Pris (lav til høy)"
+          }
+        ]
+      },
+      {
+        "_key": "3328db12d0fa32d3c6569710ca245eea",
+        "_type": "label",
+        "key": "collection.sortPriceDesc",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Price (high to low)"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Pris (høy til lav)"
+          }
+        ]
+      },
+      {
+        "_key": "b210e5b566893f0336df1e1d6a16d170",
+        "_type": "label",
+        "key": "collection.sortTitleAsc",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Title (A to Z)"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Tittel (A til Å)"
+          }
+        ]
+      },
+      {
+        "_key": "e6d8a7a6729492111d0a5550be4de3b8",
+        "_type": "label",
+        "key": "collection.sortTitleDesc",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Title (Z to A)"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Tittel (Å til A)"
+          }
+        ]
+      },
+      {
+        "_key": "50fe2abe9618d60e312c77cbf8c71bf6",
+        "_type": "label",
+        "key": "collection.sortBestSelling",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Best Selling"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Bestselger"
+          }
+        ]
+      },
+      {
+        "_key": "9b57c6fdabfa0423bab14a8f7b5dfe6b",
+        "_type": "label",
+        "key": "collection.sortNewArrivals",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "New Arrivals"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Nyankomne"
+          }
+        ]
+      },
+      {
+        "_key": "0b4a111bb10e",
+        "_type": "label",
+        "key": "cart.continueShopping",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Continue Shopping"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Fortsette å handle"
+          }
+        ]
+      },
+      {
+        "_key": "04029d14dc0b",
+        "_type": "label",
+        "key": "cart.empty",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "There's nothing in here...yet."
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Det er ingenting her inne...ennå."
+          }
+        ]
+      },
+      {
+        "_key": "09ab76a41817",
+        "_type": "label",
+        "key": "cart.subtotal",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Subtotal"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Delsum"
+          }
+        ]
+      },
+      {
+        "_key": "015bb0ec8e21d9e03413288b7d78d14e",
+        "_type": "label",
+        "key": "cart.shipping",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Shipping"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Frakt"
+          }
+        ]
+      },
+      {
+        "_key": "ee8fd2aba090",
+        "_type": "label",
+        "key": "cart.calculatedAtCheckout",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Calculated at checkout"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Beregnes i kassen"
+          }
+        ]
+      },
+      {
+        "_key": "c6cd97bf7348",
+        "_type": "label",
+        "key": "cart.checkout",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Checkout"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Sjekk ut"
+          }
+        ]
+      },
+      {
+        "_key": "f1adc2f9d4a2",
+        "_type": "label",
+        "key": "collection.noResults",
+        "text": [
+          {
+            "_key": "en",
+            "_type": "internationalizedArrayStringValue",
+            "value": "No products"
+          },
+          {
+            "_key": "no",
+            "_type": "internationalizedArrayStringValue",
+            "value": "Ingen produkter"
+          }
+        ]
+      }
+    ]
+  }
+  

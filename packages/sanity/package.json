@@ -25,6 +25,7 @@
     "sanity-plugin-iframe-pane": "^2.6.0",
     "sanity-plugin-internationalized-array": "^1.10.3",
     "sanity-plugin-media": "^2.2.4",
+    "@sanity/cross-dataset-duplicator": "^1.2.3",
     "slug": "^8.2.3"
   },
   "devDependencies": {
