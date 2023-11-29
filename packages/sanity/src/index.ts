@@ -286,8 +286,8 @@ export function defineSanityConfig(config: SanityConfig) {
       },
     },
 
-    name: 'canada',
-    basePath: '/canada',
+    name: 'Norway',
+    basePath: '/norway',
     dataset: 'daniel-demo-nov-2023-b'
   }
 
