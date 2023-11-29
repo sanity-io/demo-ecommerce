@@ -53,6 +53,7 @@ import moduleAccordion from './objects/module/accordion'
 import moduleCallout from './objects/module/callout'
 import moduleCallToAction from './objects/module/callToAction'
 import moduleCollection from './objects/module/collection'
+import moduleExperiment from './objects/module/experiment'
 import moduleGrid from './objects/module/grid'
 import moduleImage from './objects/module/image'
 import moduleImages from './objects/module/images'
@@ -96,6 +97,7 @@ const objects = [
   moduleProduct,
   moduleProducts,
   moduleTaggedProducts,
+  moduleExperiment,
   placeholderString,
   productHotspots,
   productOption,

@@ -32,4 +32,7 @@ export const MODULES = groq`
   (_type == "module.product") => {
     ${MODULE_PRODUCT}
   },
+  (_type == "module.experiment") => {
+    ...,
+  },
 `;

@@ -20,7 +20,9 @@ export default defineField({
       name: 'image',
       title: 'Image',
       type: 'image',
-      options: {hotspot: true, captionField: 'alt'},
+      options: {hotspot: true, 
+        // captionField: 'alt'
+      },
       validation: (Rule) => Rule.required(),
       fields: [
         defineField({
@@ -49,7 +51,7 @@ export default defineField({
       title: 'Caption',
       type: 'text',
       rows: 2,
-      hidden: ({parent}) => parent.variant !== 'caption',
+      hidden: ({parent}) => parent?.variant !== 'caption',
     }),
     // Call to action
     defineField({
@@ -72,21 +74,21 @@ export default defineField({
           validation: (Rule) => Rule.max(1),
         },
       ],
-      hidden: ({parent}) => parent.variant !== 'callToAction',
+      hidden: ({parent}) => parent?.variant !== 'callToAction',
     }),
     // Product hotspots
     defineField({
       name: 'productHotspots',
       title: 'Hotspots',
       type: 'productHotspots',
-      hidden: ({parent}) => parent.variant !== 'productHotspots',
+      hidden: ({parent}) => parent?.variant !== 'productHotspots',
     }),
     // Product tags
     defineField({
       name: 'productTags',
       title: 'Products',
       type: 'array',
-      hidden: ({parent}) => parent.variant !== 'productTags',
+      hidden: ({parent}) => parent?.variant !== 'productTags',
       of: [
         {
           name: 'productWithVariant',

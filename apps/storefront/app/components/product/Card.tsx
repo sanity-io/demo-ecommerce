@@ -46,7 +46,7 @@ export default function ProductCard({
     storefrontProduct.tags?.includes(badge.tag)
   );
 
-  console.log("BADGES", matchingBadges);
+  // console.log("BADGES", matchingBadges);
 
   const multipleProductOptions = hasMultipleProductOptions(
     storefrontProduct.options

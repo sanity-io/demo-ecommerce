@@ -6,6 +6,8 @@ import InstagramModule from "~/components/modules/Instagram";
 import ProductModule from "~/components/modules/Product";
 import type { SanityModule } from "~/lib/sanity";
 
+import { ExperimentModule } from "./Experiment";
+
 type Props = {
   imageAspectClassName?: string;
   module: SanityModule;
@@ -30,6 +32,8 @@ export default function Module({ imageAspectClassName, module }: Props) {
           module={module}
         />
       );
+    case "module.experiment":
+      return <ExperimentModule module={module} />;
     default:
       return null;
   }

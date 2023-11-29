@@ -3,6 +3,7 @@ import groq from "groq";
 import { MODULE_ACCORDION } from "../modules/accordion";
 import { MODULE_CALLOUT } from "../modules/callout";
 import { MODULE_GRID } from "../modules/grid";
+import { MODULE_IMAGE } from "../modules/image";
 import { MODULE_IMAGES } from "../modules/images";
 import { MODULE_INSTAGRAM } from "../modules/instagram";
 import { MODULE_PRODUCTS } from "../modules/products";
@@ -39,6 +40,11 @@ export const PORTABLE_TEXT = groq`
   (_type == 'blockTaggedProducts' || _type == 'module.blockTaggedProducts') => {
     '_type': 'module.taggedProducts',
     ${MODULE_TAGGED_PRODUCTS}
+  },
+  (_type == 'blockExperiment' || _type == 'module.experiment') => {
+    ...,
+    '_type': 'module.experiment',
+
   },
   markDefs[] {
     ${MARK_DEFS}

@@ -18,6 +18,7 @@ import { ImagesBlock } from "~/components/portableText/blocks/Images";
 import { InstagramBlock } from "~/components/portableText/blocks/Instagram";
 import { ProductsBlock } from "~/components/portableText/blocks/Products";
 import { TaggedProductsBlock } from "~/components/portableText/blocks/TaggedProducts";
+import { ExperimentBlock } from "./blocks/ExperimentBlock";
 
 const SHARED_LIST_CLASSES = clsx(
   "first:mt-0 last:mb-0", //
@@ -59,6 +60,7 @@ export function CustomPortableText({ blocks, centered, className }: Props) {
       "module.instagram": InstagramBlock,
       "module.products": ProductsBlock,
       "module.taggedProducts": TaggedProductsBlock,
+      "module.experiment": ExperimentBlock
     },
   };
 

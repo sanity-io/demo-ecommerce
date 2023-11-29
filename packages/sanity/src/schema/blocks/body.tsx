@@ -76,5 +76,9 @@ export default defineField({
       name: 'blockTaggedProducts',
       type: 'module.taggedProducts',
     },
+    {
+      name: 'blockExperiment',
+      type: 'module.experiment'
+    }
   ],
 })
