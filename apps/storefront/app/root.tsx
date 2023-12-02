@@ -34,7 +34,7 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
-import { SanityLayout } from "./lib/sanity";
+import { SanityEnvironment, SanityLayout } from "./lib/sanity";
 
 export const meta: MetaFunction = () => [
   {
@@ -124,6 +124,7 @@ export default function App() {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
+        <SanityEnvironment nonce={nonce} />
       </body>
     </html>
   );

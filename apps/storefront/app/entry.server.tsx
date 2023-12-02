@@ -4,6 +4,8 @@ import type { AppLoadContext, EntryContext } from "@shopify/remix-oxygen";
 import isbot from "isbot";
 import { renderToReadableStream } from "react-dom/server";
 
+import { createSanityEnvironment } from "./lib/sanity";
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -11,7 +13,10 @@ export default async function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext
 ) {
-  const { SANITY_PROJECT_ID: projectId } = loadContext.env;
+  const {
+    SANITY_PROJECT_ID: projectId,
+    SANITY_DATASET: dataset = "production",
+  } = loadContext.env;
 
   /**
    * Apply a content security policy with nonce, and only apply in production
@@ -37,13 +42,21 @@ export default async function handleRequest(
     ],
   });
 
+  const { SanityProvider } = createSanityEnvironment({
+    projectId,
+    dataset,
+  });
+
   if (process.env.NODE_ENV === "production") {
     responseHeaders.set("Content-Security-Policy", header);
   }
 
   const body = await renderToReadableStream(
     <NonceProvider>
-      <RemixServer context={remixContext} url={request.url} />
+      <SanityProvider>
+        {/* @ts-expect-error */}
+        <RemixServer context={remixContext} url={request.url} />
+      </SanityProvider>
     </NonceProvider>,
     {
       nonce,
