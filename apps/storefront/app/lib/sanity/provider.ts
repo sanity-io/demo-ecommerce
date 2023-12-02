@@ -14,6 +14,8 @@ import type {
 import { createQueryStore } from "@sanity/react-loader";
 import { CacheLong, createWithCache } from "@shopify/hydrogen";
 
+import { createSanityEnvironment, SanityEnvironment } from "./environment";
+
 /** @see https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies */
 type CachingStrategy = ReturnType<typeof CacheLong>;
 
@@ -62,11 +64,26 @@ type SanityProviderOptions =
   | SanityClientProviderOptions;
 
 // TODO: narrow the return value based on the options passed in
-export function createSanityProvider(options: SanityProviderOptions): Sanity {
+export function createSanityProvider(
+  options: SanityProviderOptions
+): SanityContext {
   const { client, cache, waitUntil } = options;
   const withCache = createWithCache({
     cache,
     waitUntil,
+  });
+
+  const clientConfig = client.config();
+  const { projectId, dataset } = clientConfig;
+
+  const environment: SanityEnvironment = {
+    projectId: projectId!,
+    dataset: dataset!,
+  };
+
+  const { SanityProvider } = createSanityEnvironment({
+    projectId: projectId!,
+    dataset: dataset!,
   });
 
   // Wrap `client.fetch` in additional logic to handle caching
@@ -106,8 +123,15 @@ export function createSanityProvider(options: SanityProviderOptions): Sanity {
   //   throw new Error("Stega client must be used with a loader");
   // }
 
-  // @ts-expect-error
-  return { client, cache, loader: options?.loader };
+  return {
+    // @ts-expect-error
+    client,
+    cache,
+    // @ts-expect-error
+    loader: options?.loader,
+    SanityProvider,
+    ...environment,
+  };
 }
 
 /**
@@ -150,13 +174,9 @@ function hashQuery(query: string, params: QueryParams): Promise<string> {
   return sha256(hash);
 }
 
-type SanityOverlayProvider = {
-  // TODO: narrow this based on the loader passed in?
+export type SanityContext = {
   loader: QueryStore;
   cache: Cache;
-};
-
-type SanityProvider = {
   client: Omit<SanityClient, "fetch"> & {
     /**
      * Perform a GROQ-query against the configured dataset.
@@ -196,8 +216,11 @@ type SanityProvider = {
       options: UnfilteredResponseQueryOptions & HydrogenResponseQueryOptions
     ): Promise<RawQueryResponse<R>>;
   };
-  cache: Cache;
-};
-
-// TODO: narrow this based on the client that was passed in
-export type Sanity = SanityOverlayProvider & SanityProvider;
+  SanityProvider: ({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) => React.FunctionComponentElement<
+    React.ProviderProps<SanityEnvironment | null>
+  >;
+} & SanityEnvironment;

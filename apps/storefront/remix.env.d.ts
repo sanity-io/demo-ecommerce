@@ -4,7 +4,7 @@
 
 import type { Cache, HydrogenCart } from "@shopify/hydrogen";
 
-import type { Sanity } from "~/lib/sanity";
+import type { SanityContext } from "~/lib/sanity";
 import type { Storefront } from "~/types/shopify";
 
 import type { HydrogenSession } from "../server";
@@ -43,6 +43,6 @@ declare module "@shopify/remix-oxygen" {
     storefront: Storefront;
     cart: HydrogenCart;
     env: Env;
-    sanity: Sanity;
+    sanity: SanityContext
   }
 }

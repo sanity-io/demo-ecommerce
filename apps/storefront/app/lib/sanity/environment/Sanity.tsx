@@ -2,7 +2,7 @@ import { type HTMLProps } from "react";
 
 import { type SanityEnvironment, useSanityEnvironment } from "./context";
 
-export function SanityEnvironment(props: SanityProps) {
+export function Sanity(props: SanityProps) {
   const environment = useSanityEnvironment();
 
   if (!environment) {

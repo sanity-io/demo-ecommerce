@@ -1,10 +1,4 @@
-import {
-  createContext,
-  createElement,
-  type ReactNode,
-  useContext,
-  useMemo,
-} from "react";
+import { createContext, createElement, useContext, useMemo } from "react";
 
 import { isServer } from "~/lib/utils";
 
@@ -16,14 +10,11 @@ export type SanityEnvironment = {
 const SanityContext = createContext<SanityEnvironment | null>(null);
 const SanityProvider = SanityContext.Provider;
 
-export function createSanityEnvironment({
-  projectId,
-  dataset,
-}: SanityEnvironment) {
-  const Provider = ({ children }: { children: ReactNode }) => {
+export function createSanityEnvironment(environment: SanityEnvironment) {
+  const Provider = ({ children }: { children: React.ReactNode }) => {
     return createElement(
       SanityProvider,
-      { value: { projectId, dataset } },
+      { value: Object.freeze(environment) },
       children
     );
   };

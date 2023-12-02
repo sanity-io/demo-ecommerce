@@ -4,8 +4,6 @@ import type { AppLoadContext, EntryContext } from "@shopify/remix-oxygen";
 import isbot from "isbot";
 import { renderToReadableStream } from "react-dom/server";
 
-import { createSanityEnvironment } from "./lib/sanity";
-
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -13,10 +11,7 @@ export default async function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext
 ) {
-  const {
-    SANITY_PROJECT_ID: projectId,
-    SANITY_DATASET: dataset = "production",
-  } = loadContext.env;
+  const { SanityProvider, projectId } = loadContext.sanity;
 
   /**
    * Apply a content security policy with nonce, and only apply in production
@@ -40,11 +35,6 @@ export default async function handleRequest(
       `https://${projectId}.api.sanity.io`,
       `wss://${projectId}.api.sanity.io`,
     ],
-  });
-
-  const { SanityProvider } = createSanityEnvironment({
-    projectId,
-    dataset,
   });
 
   if (process.env.NODE_ENV === "production") {

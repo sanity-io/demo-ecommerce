@@ -1,2 +1,6 @@
-export { createSanityEnvironment, useSanityEnvironment } from "./context";
-export { SanityEnvironment } from "./SanityEnvironment";
+export {
+  createSanityEnvironment,
+  type SanityEnvironment,
+  useSanityEnvironment,
+} from "./context";
+export { Sanity } from "./Sanity";
