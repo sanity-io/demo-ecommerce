@@ -194,6 +194,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
+        <SanityEnvironment nonce={nonce} />
       </body>
     </html>
   );
