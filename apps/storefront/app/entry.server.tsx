@@ -44,7 +44,6 @@ export default async function handleRequest(
   const body = await renderToReadableStream(
     <NonceProvider>
       <SanityProvider>
-        {/* @ts-expect-error */}
         <RemixServer context={remixContext} url={request.url} />
       </SanityProvider>
     </NonceProvider>,
