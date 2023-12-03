@@ -1,15 +1,15 @@
 import { type HTMLProps } from "react";
 
-import { type SanityEnvironment, useSanityEnvironment } from "./context";
+import {
+  assertSanityEnvironment,
+  type SanityEnvironment,
+  useSanityEnvironment,
+} from "./context";
 
 export function Sanity(props: SanityProps) {
   const environment = useSanityEnvironment();
 
-  if (!environment) {
-    throw new Error(
-      "Failed to find a Sanity environment. Did you forget to wrap your app in a SanityProvider?"
-    );
-  }
+  assertSanityEnvironment(environment);
 
   return (
     <script
@@ -22,7 +22,7 @@ export function Sanity(props: SanityProps) {
   );
 }
 
-type SanityProps = Omit<
+export type SanityProps = Omit<
   HTMLProps<HTMLScriptElement>,
   | "children"
   | "async"

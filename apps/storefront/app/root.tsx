@@ -34,7 +34,7 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
-import { Sanity, SanityLayout } from "./lib/sanity";
+import { Sanity, SanityLayout, stegaFilter, VisualEditing } from "./lib/sanity";
 
 export const meta: MetaFunction = () => [
   {
@@ -125,6 +125,7 @@ export default function App() {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
+        <VisualEditing filter={stegaFilter} />
       </body>
     </html>
   );
@@ -195,6 +196,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
+        <VisualEditing filter={stegaFilter} />
       </body>
     </html>
   );

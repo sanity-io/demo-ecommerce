@@ -1,9 +1,9 @@
-import type { StegaConfig } from "@sanity/client/stega";
+import type { FilterDefault } from "@sanity/client/stega";
 
 const denyList = new Set(["seo"]);
 const allowList = new Set(["title", "text", "body"]);
 
-export const stegaFilter: StegaConfig["filter"] = (props) => {
+export const stegaFilter: FilterDefault = (props) => {
   if (
     props.sourcePath.some((path) =>
       typeof path === "string" ? denyList.has(path) : false

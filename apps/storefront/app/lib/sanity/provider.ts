@@ -74,17 +74,15 @@ export function createSanityProvider(
   });
 
   const clientConfig = client.config();
-  const { projectId, dataset } = clientConfig;
+  const { projectId, dataset, apiVersion } = clientConfig;
 
   const environment: SanityEnvironment = {
     projectId: projectId!,
     dataset: dataset!,
+    apiVersion,
   };
 
-  const { SanityProvider } = createSanityEnvironment({
-    projectId: projectId!,
-    dataset: dataset!,
-  });
+  const { SanityProvider } = createSanityEnvironment(environment);
 
   // Wrap `client.fetch` in additional logic to handle caching
   client.fetch = new Proxy(client.fetch, {
