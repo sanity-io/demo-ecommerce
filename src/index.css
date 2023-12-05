@@ -74,9 +74,6 @@ html {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   overflow-y: visible;
-  @media (prefers-color-scheme: dark) {
-    background-color: black;
-  }
   overscroll-behavior: none;
 }
 
