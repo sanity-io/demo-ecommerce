@@ -40,7 +40,7 @@ export default defineField({
       return {
         media: image,
         subtitle:
-          showHotspots && hotspots.length > 0
+          showHotspots && Array.isArray(hotspots) && hotspots.length > 0
             ? `${pluralize('hotspot', hotspots.length, true)}`
             : undefined,
         title: fileName,
