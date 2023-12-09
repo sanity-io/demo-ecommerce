@@ -58,13 +58,13 @@ export default defineType({
                   name: 'title',
                   title: 'Title',
                   type: 'string',
-                  validation: (Rule) => Rule.required(),
+                  validation: (rule) => rule.required(),
                 },
                 {
                   name: 'collectionLinks',
                   title: 'Collection links',
                   type: 'array',
-                  validation: (Rule) => Rule.unique().max(4),
+                  validation: (rule) => rule.unique().max(4),
                   of: [
                     {
                       name: 'collection',
@@ -163,8 +163,8 @@ export default defineType({
           type: 'customProductOption.size',
         },
       ],
-      validation: (Rule) =>
-        Rule.custom((options: ProductOptions[] | undefined) => {
+      validation: (rule) =>
+        rule.custom((options: ProductOptions[] | undefined) => {
           // Each product option type must have a unique title
           if (options) {
             const uniqueTitles = new Set(options.map((option) => option.title))
@@ -186,7 +186,7 @@ export default defineType({
           name: 'title',
           title: 'Title',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (rule) => rule.required(),
         }),
         defineField({
           name: 'body',
@@ -232,18 +232,18 @@ export default defineType({
           name: 'title',
           title: 'Site title',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (rule) => rule.required(),
         }),
         defineField({
           name: 'description',
           title: 'Description',
           type: 'text',
           rows: 2,
-          validation: (Rule) =>
-            Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
+          validation: (rule) =>
+            rule.max(150).warning('Longer descriptions may be truncated by search engines'),
         }),
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'language',

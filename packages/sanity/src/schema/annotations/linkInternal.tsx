@@ -34,7 +34,7 @@ export default defineField({
       name: 'reference',
       type: 'reference',
       weak: true,
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
       to: PAGE_REFERENCES,
     },
   ],

@@ -79,8 +79,8 @@ export default defineType({
         accept: 'image/svg+xml',
       },
       group: 'theme',
-      validation: (Rule) =>
-        Rule.custom((image) => {
+      validation: (rule) =>
+        rule.custom((image) => {
           if (!image?.asset?._ref) {
             return true
           }

@@ -20,7 +20,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Text color
     defineField({
@@ -28,7 +28,7 @@ export default defineType({
       title: 'Text',
       type: 'color',
       options: {disableAlpha: true},
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Background color
     defineField({
@@ -36,7 +36,7 @@ export default defineType({
       title: 'Background',
       type: 'color',
       options: {disableAlpha: true},
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

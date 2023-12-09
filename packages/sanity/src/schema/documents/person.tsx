@@ -34,7 +34,7 @@ export default defineField({
       type: 'slug',
       options: {source: 'name'},
       group: 'editorial',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Image
     defineField({

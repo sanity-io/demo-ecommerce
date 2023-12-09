@@ -24,7 +24,7 @@ export default defineField({
           readOnly: true,
           fieldset: 'position',
           initialValue: 50,
-          validation: (Rule) => Rule.required().min(0).max(100),
+          validation: (rule) => rule.required().min(0).max(100),
         }),
         defineField({
           name: 'y',
@@ -32,7 +32,7 @@ export default defineField({
           readOnly: true,
           fieldset: 'position',
           initialValue: 50,
-          validation: (Rule) => Rule.required().min(0).max(100),
+          validation: (rule) => rule.required().min(0).max(100),
         }),
       ],
       preview: {
