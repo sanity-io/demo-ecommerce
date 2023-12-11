@@ -34,7 +34,14 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
-import { Sanity, SanityLayout, stegaFilter, VisualEditing } from "./lib/sanity";
+import {
+  loader as queryStore,
+  Sanity,
+  SanityLayout,
+  stegaFilter,
+  VisualEditing,
+} from "./lib/sanity";
+const { useQuery } = queryStore;
 
 export const meta: MetaFunction = () => [
   {
@@ -44,11 +51,11 @@ export const meta: MetaFunction = () => [
 ];
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.layout?.seo?.title,
+  title: data?.layout?.data?.seo?.title,
   titleTemplate: `%s${
-    data?.layout?.seo?.title ? ` · ${data?.layout?.seo?.title}` : ""
+    data?.layout?.data?.seo?.title ? ` · ${data?.layout?.data?.seo?.title}` : ""
   }`,
-  description: data?.layout?.seo?.description,
+  description: data?.layout?.data?.seo?.description,
 });
 
 export const handle = {
@@ -56,27 +63,28 @@ export const handle = {
 };
 
 export async function loader({ context }: LoaderFunctionArgs) {
-  const { cart } = context;
+  const { cart, storefront, sanity, env } = context;
 
-  const cache = context.storefront.CacheCustom({
-    mode: "public",
-    maxAge: 60,
-    staleWhileRevalidate: 60,
-  });
+  // const cache = context.storefront.CacheCustom({
+  //   mode: "public",
+  //   maxAge: 60,
+  //   staleWhileRevalidate: 60,
+  // });
+
+  const selectedLocale = storefront.i18n;
+  const language = selectedLocale.language.toLowerCase();
 
   const [shop, layout] = await Promise.all([
-    context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    context.sanity.client.fetch<SanityLayout>(
+    storefront.query<{ shop: Shop }>(SHOP_QUERY),
+    sanity.loader.loadQuery<SanityLayout>(
       LAYOUT_QUERY,
       {
-        language: context.storefront.i18n.language.toLowerCase(),
+        language,
         baseLanguage,
-      },
-      { hydrogen: { cache } }
+      }
+      // { hydrogen: { cache } }
     ),
   ]);
-
-  const selectedLocale = context.storefront.i18n as I18nLocale;
 
   return defer({
     analytics: {
@@ -85,29 +93,35 @@ export async function loader({ context }: LoaderFunctionArgs) {
     },
     cart: cart.get(),
     layout,
-    notFoundCollection: layout?.notFoundPage?.collectionGid
+    notFoundCollection: layout?.data.notFoundPage?.collectionGid
       ? context.storefront.query<{ collection: Collection }>(
           COLLECTION_QUERY_ID,
           {
             variables: {
-              id: layout.notFoundPage.collectionGid,
+              id: layout.data.notFoundPage.collectionGid,
               count: 16,
             },
           }
         )
       : undefined,
-    sanityProjectID: context.env.SANITY_PROJECT_ID,
-    sanityDataset: context.env.SANITY_DATASET || "production",
+    sanityProjectID: env.SANITY_PROJECT_ID,
+    sanityDataset: env.SANITY_DATASET || "production",
     selectedLocale,
-    storeDomain: context.storefront.getShopifyDomain(),
+    storeDomain: storefront.getShopifyDomain(),
   });
 }
 
 export default function App() {
   const data = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
+  const language = locale.language.toLowerCase();
   const hasUserConsent = true;
   const nonce = useNonce();
+  const {} = useQuery<typeof data.layout>(
+    LAYOUT_QUERY,
+    { language, baseLanguage },
+    { initial: data.layout }
+  );
 
   useAnalytics(hasUserConsent);
 
@@ -155,7 +169,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
         layout: null,
         notFoundCollection: undefined,
       };
-  const { notFoundPage } = layout || {};
+  const { notFoundPage } = layout?.data || {};
 
   let title = "Error";
   if (isRouteError) {

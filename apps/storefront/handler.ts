@@ -100,6 +100,7 @@ export async function handler(
           enabled: true,
           studioUrl: "/studio",
           filter: stegaFilter,
+          // logger: console,
         },
       }),
       waitUntil,
@@ -147,7 +148,7 @@ export async function handler(
  * Feel free to customize it to your needs, add helper methods, or
  * swap out the cookie-based implementation with something else!
  */
-class HydrogenSession {
+export class HydrogenSession {
   constructor(
     private sessionStorage: SessionStorage,
     private session: Session

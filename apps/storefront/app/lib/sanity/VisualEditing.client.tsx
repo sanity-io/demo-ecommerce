@@ -11,14 +11,15 @@ const { useLiveMode } = loader;
 export type VisualEditingProps = {
   filter: FilterDefault;
   studioUrl?: string;
+  allowStudioOrigin?: string;
 };
 
 export function VisualEditing({
   filter,
   studioUrl = "/studio",
+  allowStudioOrigin,
 }: VisualEditingProps) {
   const { projectId, dataset, apiVersion } = useSanityEnvironment();
-  const allowStudioOrigin = `location.origin`;
 
   const client = useMemo(
     () =>
@@ -27,10 +28,13 @@ export function VisualEditing({
         dataset,
         apiVersion,
         useCdn: false,
+        perspective: "previewDrafts",
+        resultSourceMap: "withKeyArraySelector",
         stega: {
           enabled: true,
           filter,
           studioUrl,
+          logger: console,
         },
       }),
     [projectId, dataset, apiVersion, filter, studioUrl]

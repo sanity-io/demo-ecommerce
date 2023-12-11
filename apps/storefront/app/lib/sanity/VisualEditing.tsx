@@ -1,5 +1,6 @@
 import { lazy, useEffect, useState, useTransition } from "react";
 
+import { isServer } from "../utils";
 import type { VisualEditingProps } from "./VisualEditing.client";
 
 /**
@@ -13,17 +14,16 @@ function VisualEditingFallback(): React.ReactElement {
  * If server-side rendering, then return the fallback instead of the heavy dependency.
  * @see https://remix.run/docs/en/1.14.3/guides/constraints#browser-only-code-on-the-server
  */
-const VisualEditingClient =
-  typeof document === "undefined"
-    ? VisualEditingFallback
-    : lazy(
-        () =>
-          /**
-           * `lazy` expects the component as the default export
-           * @see https://react.dev/reference/react/lazy
-           */
-          import("./VisualEditing.client")
-      );
+const VisualEditingClient = isServer()
+  ? VisualEditingFallback
+  : lazy(
+      () =>
+        /**
+         * `lazy` expects the component as the default export
+         * @see https://react.dev/reference/react/lazy
+         */
+        import("./VisualEditing.client")
+    );
 
 export function VisualEditing(props: VisualEditingProps) {
   const [, startTransition] = useTransition();
