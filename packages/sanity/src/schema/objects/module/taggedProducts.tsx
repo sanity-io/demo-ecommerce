@@ -24,7 +24,7 @@ export default defineField({
       title: 'Number of products',
       type: 'number',
       initialValue: 2,
-      validation: (Rule) => Rule.max(4).min(1).required(),
+      validation: (rule) => rule.max(4).min(1).required(),
     }),
     // Layout
     defineField({
@@ -46,7 +46,7 @@ export default defineField({
           },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

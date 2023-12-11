@@ -19,13 +19,13 @@ export default defineField({
           name: 'question',
           title: 'Question',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (rule) => rule.required(),
         }),
         defineField({
           name: 'answer',
           title: 'Answer',
           type: 'simpleBlockContent',
-          validation: (Rule) => Rule.required(),
+          validation: (rule) => rule.required(),
         }),
       ],
       preview: {

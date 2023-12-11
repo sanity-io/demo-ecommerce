@@ -33,14 +33,14 @@ export default defineField({
           },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Title
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
       fieldset: 'copy',
     }),
     // Body
@@ -57,7 +57,7 @@ export default defineField({
       title: 'Link',
       type: 'array',
       of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-      validation: (Rule) => Rule.max(1),
+      validation: (rule) => rule.max(1),
       fieldset: 'copy',
     }),
     // Content
@@ -65,7 +65,7 @@ export default defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
-      validation: (Rule) => Rule.required().max(1),
+      validation: (rule) => rule.required().max(1),
       of: [
         {
           icon: ImageIcon,
@@ -76,7 +76,7 @@ export default defineField({
           name: 'productWithVariant',
           title: 'Product + Variant',
           type: 'productWithVariant',
-          validation: (Rule) => Rule.required(),
+          validation: (rule) => rule.required(),
         },
       ],
     }),

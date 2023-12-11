@@ -26,13 +26,13 @@ export default defineField({
               name: 'title',
               title: 'Title',
               type: 'string',
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'body',
               title: 'Body',
               type: 'simpleBlockContent',
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
           ],
           preview: {

@@ -10,7 +10,7 @@ export default defineField({
     defineField({
       name: 'name',
       type: 'internationalizedArrayString',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'story',

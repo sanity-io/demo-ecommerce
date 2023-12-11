@@ -31,7 +31,7 @@ export default defineField({
       title: 'Title',
       type: 'string',
       description: 'Shopify product option name (case sensitive)',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Colors
     defineField({
@@ -49,14 +49,14 @@ export default defineField({
               title: 'Title',
               type: 'string',
               description: 'Shopify product option value (case sensitive)',
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'color',
               title: 'Color',
               type: 'color',
               options: {disableAlpha: true},
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
           ],
           preview: {
@@ -75,8 +75,8 @@ export default defineField({
           },
         },
       ],
-      validation: (Rule) =>
-        Rule.custom((options: ColorOption[] | undefined) => {
+      validation: (rule) =>
+        rule.custom((options: ColorOption[] | undefined) => {
           // Each size must have a unique title
           if (options) {
             const uniqueTitles = new Set(options.map((option) => option?.title))

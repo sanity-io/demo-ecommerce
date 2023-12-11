@@ -21,7 +21,7 @@ export default defineField({
       title: 'Image',
       type: 'image',
       options: {hotspot: true},
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Variant
     defineField({
@@ -61,7 +61,7 @@ export default defineField({
           title: 'Link',
           type: 'array',
           of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-          validation: (Rule) => Rule.max(1),
+          validation: (rule) => rule.max(1),
         },
       ],
       hidden: ({parent}) => parent.variant !== 'callToAction',

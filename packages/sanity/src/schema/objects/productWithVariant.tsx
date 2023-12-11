@@ -48,8 +48,8 @@ export default defineField({
         const productSelected = parent?.product
         return !productSelected
       },
-      validation: (Rule) =>
-        Rule.custom(async (value, {parent, getClient}) => {
+      validation: (rule) =>
+        rule.custom(async (value, {parent, getClient}) => {
           // Selected product in adjacent `product` field
           // @ts-ignore
           const productId = parent?.product?._ref

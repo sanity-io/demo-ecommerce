@@ -16,7 +16,7 @@ export default defineField({
       type: 'reference',
       weak: true,
       to: [{type: 'collection'}],
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Show background
     defineField({

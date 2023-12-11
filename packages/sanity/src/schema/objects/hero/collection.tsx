@@ -24,7 +24,7 @@ export default defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
-      validation: (Rule) => Rule.max(1),
+      validation: (rule) => rule.max(1),
       of: [
         {
           name: 'productWithVariant',
