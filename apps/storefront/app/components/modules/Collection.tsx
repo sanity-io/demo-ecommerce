@@ -1,12 +1,12 @@
 import { Image } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
-
+import SanityImage from "~/components/media/SanityImage";
 import Button from "~/components/elements/Button";
 import { Link } from "~/components/Link";
 import type { SanityModuleCollection } from "~/lib/sanity";
 import { useGid } from "~/lib/utils";
-
+import { useRootLoaderData } from "~/root";
 import { Label } from "../global/Label";
 
 type Props = {
@@ -17,6 +17,7 @@ export default function CollectionModule({ module }: Props) {
   const collection = module?.collection;
   const collectionGid = collection?.gid;
   const storefrontCollection = useGid<Collection>(collectionGid);
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   if (!collection || !collection?.slug || !storefrontCollection) {
     return null;
@@ -27,57 +28,36 @@ export default function CollectionModule({ module }: Props) {
       className="group relative flex aspect-[4/3] h-full w-full flex-col items-center justify-center md:aspect-square"
       to={collection.slug}
     >
-      <div className="relative flex h-full w-full flex-col items-center justify-center">
-        {/* Vector artwork */}
-        {collection.vector && (
+      <div className="relative h-full w-full flex-col items-center justify-center">
+        <div className="shadow-lg mx-auto overflow-hidden bg-slate-500">
           <div
-            className={clsx(
-              "absolute bottom-2 left-2 right-1 top-2 duration-1000 ease-out",
-              "group-hover:scale-[1.01]"
-            )}
+            className="relative h-96 bg-cover bg-center"
             style={{
-              WebkitMask: `url(${collection.vector}) center center / contain no-repeat`,
-              mask: `url(${collection.vector}) center center / contain no-repeat`,
+              backgroundImage:
+                //'url("https://www.stevemadden.com/cdn/shop/files/WOMENS-SHOES_SM_NOV_Site-Assets_250x.jpg?v=1699007283")',
+                'url(${(collection.image?.asset?._ref)})',
             }}
           >
-            {module?.showBackground && storefrontCollection?.image ? (
-              <>
-                <Image
-                  className="absolute h-full w-full bg-cover bg-center object-cover object-center"
-                  data={storefrontCollection.image}
-                />
-                {/* Overlay */}
-                <div
-                  className={clsx(
-                    "absolute left-0 top-0 h-full w-full bg-black bg-opacity-20 duration-500 ease-out",
-                    "group-hover:bg-opacity-30"
-                  )}
-                />
-              </>
-            ) : (
-              <div
-                className="h-full w-full"
-                style={{
-                  background: collection?.colorTheme?.text || "darkGray",
-                }}
-              />
-            )}
+            <SanityImage
+              alt={collection.collectionImage?.altText}
+              crop={collection.collectionImage?.crop}
+              dataset={sanityDataset}
+              hotspot={collection.collectionImage?.hotspot}
+              layout="fill"
+              objectFit="cover"
+              projectId={sanityProjectID}
+              sizes="25vw"
+              src={collection.collectionImage?.asset?._ref}
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <h2 className="text-2xl font-bold text-white ">
+                {storefrontCollection.title}
+              </h2>
+              {/* <br />
+              <span className="text-lg font-bold  text-white ">shop collection</span> */}
+            </div>
           </div>
-        )}
-        {/* Title */}
-        <div
-          className={clsx(
-            "relative mt-[0.5em] w-[65%] text-center text-2xl",
-            "group-hover:underline",
-            "md:text-3xl",
-            collection.vector ? "text-white" : "text-offBlack"
-          )}
-        >
-          {storefrontCollection.title}
         </div>
-        <Button className="pointer-events-none relative mt-6 bg-white text-offBlack hover:opacity-50">
-          <Label _key="collection.shopCollection" />
-        </Button>
       </div>
     </Link>
   );

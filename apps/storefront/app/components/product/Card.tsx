@@ -68,7 +68,8 @@ export default function ProductCard({
         >
           {firstVariant.image && (
             <Image
-              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
+              //className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
+              className="absolute h-full w-full transform bg-cover bg-center object-center ease-in-out"
               data={firstVariant.image}
               crop="center"
               sizes="100%"

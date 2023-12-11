@@ -8,4 +8,5 @@ export default defineType({
   name: 'guide',
   title: 'Guide',
   icon: EarthGlobeIcon,
+  
 })

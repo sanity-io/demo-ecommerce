@@ -78,9 +78,9 @@ export default function ProductGallery({
   }
 
   return (
-    <div className="relative h-screen bg-lightGray" tabIndex={-1}>
-      <div className="h-full overflow-hidden" ref={emblaRef}>
-        <div className="flex h-full">
+    <div className="relative  bg-lightGray" tabIndex={-1}>
+      <div className=" overflow-hidden" ref={emblaRef}>
+        <div className="flex">
           {/* Slides */}
           {media.map((med) => {
             let extraProps: Record<string, any> = {};

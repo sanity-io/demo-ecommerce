@@ -69,6 +69,29 @@ export default defineType({
       to: [{type: 'colorTheme'}],
       group: 'theme',
     }),
+    // Banner
+    defineField({
+      name: 'banner',
+      title: 'Banner',
+      type: 'array',
+      of: [
+        {type: 'module.callout'},
+        {type: 'module.callToAction'},
+        {type: 'module.collection'},
+        {type: 'module.image'},
+        {type: 'module.instagram'},
+        {type: 'module.product'},
+      ],
+      group: 'editorial',
+    }),
+    // Collection Image
+    defineField({
+      name: 'collectionImage',
+      title: 'Collection Image',
+      type: 'image',
+      group: 'editorial',
+    }),
+
     // Vector
     defineField({
       name: 'vector',
@@ -159,6 +182,7 @@ export default defineType({
   preview: {
     select: {
       imageUrl: 'store.imageUrl',
+      //imageUrl: 'collectionImage',
       isDeleted: 'store.isDeleted',
       rules: 'store.rules',
       title: 'store.title',

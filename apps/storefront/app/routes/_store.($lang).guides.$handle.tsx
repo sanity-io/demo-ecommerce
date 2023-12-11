@@ -11,6 +11,8 @@ import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
+import Banner from "~/components/modules/Banner";
+import ModuleGrid from "~/components/modules/ModuleGrid";
 import PortableText from "~/components/portableText/PortableText";
 import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
@@ -75,10 +77,17 @@ export default function Page() {
           <Suspense>
             <Await resolve={gids}>
               {/* Page hero */}
-              <PageHero
-                fallbackTitle={page?.title || ""}
-                hero={page?.hero as SanityHeroPage}
-              />
+              {page?.banner && (
+                <PageHero
+                  fallbackTitle={page?.title || ""}
+                  hero={page?.hero as SanityHeroPage}
+                />
+              )}
+              {page?.banner && (
+                <div className={clsx("mb-1 mt-24 px-4", "md:px-8")}>
+                  <Banner items={page.banner} />
+                </div>
+              )}
               {/* Body */}
               {page?.body && (
                 <PortableText
@@ -89,6 +98,11 @@ export default function Page() {
                     "md:px-8"
                   )}
                 />
+              )}
+              {page?.modules && (
+                <div className={clsx("mb-2 mt-2 px-4", "md:px-8")}>
+                  <ModuleGrid items={page.modules} />
+                </div>
               )}
             </Await>
           </Suspense>

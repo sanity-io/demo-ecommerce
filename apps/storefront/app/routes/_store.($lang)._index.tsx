@@ -11,6 +11,7 @@ import { Suspense } from "react";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
+import Banner from "~/components/modules/Banner";
 import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
@@ -71,10 +72,16 @@ export default function Index() {
         <Suspense>
           <Await resolve={gids}>
             {/* Page hero */}
-            {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+            {/* {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />} */}
+
+            {page?.banner && (
+              <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
+                <Banner items={page.banner} />
+              </div>
+            )}
 
             {page?.modules && (
-              <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
+              <div className={clsx("mb-2 mt-2 px-4", "md:px-8")}>
                 <ModuleGrid items={page.modules} />
               </div>
             )}

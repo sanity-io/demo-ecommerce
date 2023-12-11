@@ -34,6 +34,7 @@ export type SanityCollection = {
   colorTheme: SanityColorTheme;
   gid: string;
   hero?: SanityHeroPage;
+  collectionImage?: SanityAssetImage;
   slug?: string;
   title: string;
   vector?: string;
@@ -43,6 +44,7 @@ export type SanityCollectionPage = {
   _id: string;
   colorTheme: SanityColorTheme;
   hero?: SanityHeroCollection;
+  banner: (SanityModuleImage | SanityModuleInstagram)[];
   modules: (SanityModuleImage | SanityModuleInstagram)[];
   seo: SanitySeo;
   slug?: string;
@@ -110,6 +112,7 @@ export type SanityHeroPage = {
 export type SanityHomePage = {
   hero?: SanityHeroHome;
   modules: (SanityModuleImage | SanityModuleInstagram)[];
+  banner: (SanityModuleImage | SanityModuleInstagram)[];
   seo: SanitySeo;
 };
 
@@ -286,6 +289,8 @@ export type SanityPage = {
   body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
+  banner: (SanityModuleImage | SanityModuleInstagram)[];
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
   seo: SanitySeo;
   title: string;
 };

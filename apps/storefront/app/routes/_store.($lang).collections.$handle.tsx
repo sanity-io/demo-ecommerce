@@ -21,6 +21,7 @@ import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
+import Banner from "~/components/modules/Banner";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -130,11 +131,17 @@ export default function Collection() {
           <Suspense>
             <Await resolve={gids}>
               {/* Hero */}
-              <CollectionHero
-                fallbackTitle={collection?.title}
-                hero={page?.hero as SanityHeroHome}
-              />
-
+              {!page?.banner && (
+                <CollectionHero
+                  fallbackTitle={collection?.title}
+                  hero={page?.hero as SanityHeroHome}
+                />
+              )}
+              {page?.banner && (
+                <div className={clsx("mb-1 mt-24 px-4", "md:px-8")}>
+                  <Banner items={page.banner} />
+                </div>
+              )}
               <div
                 className={clsx(
                   "mb-32 mt-8 px-4", //

@@ -20,17 +20,10 @@ export default defineField({
     },
   ],
   fields: [
-    // Hero
+    // Banner
     defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'hero.home',
-      group: 'editorial',
-    }),
-    // Modules
-    defineField({
-      name: 'modules',
-      title: 'Modules',
+      name: 'banner',
+      title: 'Banner',
       type: 'array',
       of: [
         {type: 'module.callout'},
@@ -40,6 +33,28 @@ export default defineField({
         {type: 'module.instagram'},
         {type: 'module.product'},
       ],
+      group: 'editorial',
+    }),
+    // Page Modules
+    defineField({
+      name: 'modules',
+      title: 'Page Modules',
+      type: 'array',
+      of: [
+        {type: 'module.callout'},
+        {type: 'module.callToAction'},
+        {type: 'module.collection'},
+        {type: 'module.image'},
+        {type: 'module.instagram'},
+        {type: 'module.product'},
+      ],
+      group: 'editorial',
+    }),
+    // Hero
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'hero.home',
       group: 'editorial',
     }),
     // SEO

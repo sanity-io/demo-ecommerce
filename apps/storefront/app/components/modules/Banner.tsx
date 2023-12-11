@@ -100,9 +100,9 @@ type Props = {
   items: (SanityModule | ProductWithNodes)[];
 };
 
-export default function ModuleGrid({ items }: Props) {
+export default function Banner({ items }: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-x-[1vw] gap-y-[1vw] md:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-x-[1vw] gap-y-[1vw] md:grid-cols-1">
       {items.map((item, index) => {
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];

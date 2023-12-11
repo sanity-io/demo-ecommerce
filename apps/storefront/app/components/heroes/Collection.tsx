@@ -16,8 +16,8 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
     return (
       <h1
         className={clsx(
-          "max-w-[60rem] px-4 pt-24 text-3xl", //
-          "md:px-8 md:pt-34 md:text-5xl"
+          "max-w-[60rem] px-4 pt-24 text-xl", //
+          "te uppercase md:px-8 md:pt-34 md:text-2xl"
         )}
       >
         {fallbackTitle}
@@ -37,8 +37,8 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
       {hero.title && (
         <h1
           className={clsx(
-            "mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl",
-            "md:text-5xl"
+            "mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-xl",
+            "md:text-xl"
           )}
           style={{ color: colorTheme?.text || "black" }}
         >

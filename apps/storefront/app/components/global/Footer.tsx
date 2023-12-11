@@ -60,7 +60,7 @@ export default function Footer() {
             "md:flex-row"
           )}
         >
-          <div className="pb-4">
+          <div className=" w-36 pb-4">
             <LogoIcon />
           </div>
 
