@@ -1,9 +1,10 @@
-import {getIdPair, rule, Slug, type SlugValidationContext} from 'sanity'
+import type {Rule, Slug, SlugValidationContext} from 'sanity'
+import {getIdPair} from 'sanity'
 import slug from 'slug'
 
 const MAX_LENGTH = 96
 
-export const validateSlug = (rule: rule) => {
+export const validateSlug = (rule: Rule) => {
   return rule.required().custom(async (value: Slug) => {
     const currentSlug = value && value.current
     if (!currentSlug) {
