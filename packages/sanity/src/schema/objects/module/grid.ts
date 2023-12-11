@@ -26,7 +26,7 @@ export default defineField({
               name: 'title',
               title: 'Title',
               type: 'string',
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
             // Image
             defineField({
@@ -34,7 +34,7 @@ export default defineField({
               title: 'Image',
               type: 'image',
               options: {hotspot: true},
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
             // Body
             defineField({
@@ -84,7 +84,7 @@ export default defineField({
                   type: 'block',
                 },
               ],
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             }),
           ],
           preview: {

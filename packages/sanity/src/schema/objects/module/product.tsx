@@ -13,7 +13,7 @@ export default defineField({
       name: 'productWithVariant',
       title: 'Product + Variant',
       type: 'productWithVariant',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     },
   ],
   preview: {

@@ -46,7 +46,7 @@ export default defineField({
         layout: 'dropdown',
         list: ['active', 'archived', 'draft'],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Deleted
     defineField({

@@ -13,9 +13,9 @@ export default defineField({
       title: 'Text',
       type: 'text',
       rows: 2,
-      validation: (Rule) => [
-        Rule.required(),
-        Rule.max(70).warning(`Callout length shouldn't be more than 70 characters.`),
+      validation: (rule) => [
+        rule.required(),
+        rule.max(70).warning(`Callout length shouldn't be more than 70 characters.`),
       ],
     }),
     // Link
@@ -24,7 +24,7 @@ export default defineField({
       title: 'Link',
       type: 'array',
       of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-      validation: (Rule) => Rule.max(1),
+      validation: (rule) => rule.max(1),
     }),
   ],
   preview: {

@@ -18,14 +18,14 @@ export default defineField({
       title: 'Link',
       type: 'array',
       of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-      validation: (Rule) => Rule.max(1),
+      validation: (rule) => rule.max(1),
     }),
     // Content
     defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
-      validation: (Rule) => Rule.max(1),
+      validation: (rule) => rule.max(1),
       of: [
         {
           name: 'productWithVariant',

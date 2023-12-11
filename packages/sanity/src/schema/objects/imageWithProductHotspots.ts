@@ -13,7 +13,7 @@ export default defineField({
       title: 'Image',
       options: {hotspot: true},
       type: 'image',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'showHotspots',

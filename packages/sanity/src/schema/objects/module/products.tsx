@@ -14,7 +14,7 @@ export default defineField({
       title: 'Products',
       type: 'array',
       of: [{type: 'module.product'}],
-      validation: (Rule) => Rule.required().max(2),
+      validation: (rule) => rule.required().max(2),
     }),
     // Layout
     defineField({
@@ -36,7 +36,7 @@ export default defineField({
           },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

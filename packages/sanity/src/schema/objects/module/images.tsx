@@ -14,7 +14,7 @@ export default defineField({
       title: 'Images',
       type: 'array',
       of: [{type: 'module.image'}],
-      validation: (Rule) => Rule.required().max(2),
+      validation: (rule) => rule.required().max(2),
     }),
     // Full width
     defineField({
@@ -50,7 +50,7 @@ export default defineField({
         ],
       },
       hidden: ({parent}) => !parent?.modules || parent?.modules.length < 2,
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

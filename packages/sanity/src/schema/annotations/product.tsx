@@ -32,7 +32,7 @@ export default defineField({
       name: 'productWithVariant',
       title: 'Product + Variant',
       type: 'productWithVariant',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     },
     // Link action
     defineField({
@@ -57,7 +57,7 @@ export default defineField({
           },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     // Quantity
     defineField({
@@ -66,7 +66,7 @@ export default defineField({
       type: 'number',
       initialValue: 1,
       hidden: ({parent}) => parent.linkAction === 'link',
-      validation: (Rule) => Rule.required().min(1).max(10),
+      validation: (rule) => rule.required().min(1).max(10),
     }),
   ],
 })

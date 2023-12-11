@@ -12,14 +12,14 @@ export default defineField({
       title: 'Title',
       name: 'title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     },
     // URL
     {
       name: 'url',
       title: 'URL',
       type: 'url',
-      validation: (Rule) => Rule.required().uri({scheme: ['http', 'https']}),
+      validation: (rule) => rule.required().uri({scheme: ['http', 'https']}),
     },
     // Open in a new window
     {

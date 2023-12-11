@@ -86,7 +86,7 @@ export default defineField({
       of: [
         {
           name: 'rule',
-          title: 'Rule',
+          title: 'rule',
           type: 'collectionRule',
         },
       ],
