@@ -149,7 +149,7 @@ export default function SanityImage(props) {
           bottom: 0,
           height: "100%",
           left: 0,
-          objectFit,
+          objectFit: "contain",
           position: "absolute",
           right: 0,
           top: 0,

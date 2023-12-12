@@ -23,7 +23,8 @@ export default function CallToActionModule({ module }: Props) {
         module.layout === "right" && "flex-col-reverse md:flex-row-reverse"
       )}
     >
-      <div className="relative aspect-[864/485] grow">
+      {/* <div className="relative aspect-[864/485] grow"> */}
+      <div className="relative aspect-[10/10] grow">
         {module.content && <ModuleContent content={module.content} />}
       </div>
 
@@ -80,7 +81,7 @@ function ModuleContent({
           dataset={sanityDataset}
           hotspot={content?.hotspot}
           layout="fill"
-          objectFit="cover"
+          objectFit="contain"
           projectId={sanityProjectID}
           sizes="100vw"
           src={content?.asset?._ref}

@@ -61,13 +61,21 @@ export default defineType({
       type: 'proxyString',
       options: {field: 'store.slug.current'},
     }),
-    // Color theme
+    // Show hero
     defineField({
-      name: 'colorTheme',
-      title: 'Color theme',
-      type: 'reference',
-      to: [{type: 'colorTheme'}],
-      group: 'theme',
+      name: 'showHero',
+      title: 'Show hero',
+      type: 'boolean',
+      description: 'If disabled, page title will be displayed instead',
+      group: 'editorial',
+    }),
+    // // Hero
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'internationalizedArrayHero.collection',
+      hidden: ({document}) => !document?.showHero,
+      group: 'editorial',
     }),
     // Banner
     defineField({
@@ -116,22 +124,15 @@ export default defineType({
           return true
         }),
     }),
-    // Show hero
+    // Color theme
     defineField({
-      name: 'showHero',
-      title: 'Show hero',
-      type: 'boolean',
-      description: 'If disabled, page title will be displayed instead',
-      group: 'editorial',
+      name: 'colorTheme',
+      title: 'Color theme',
+      type: 'reference',
+      to: [{type: 'colorTheme'}],
+      group: 'theme',
     }),
-    // // Hero
-    defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'internationalizedArrayHero.collection',
-      hidden: ({document}) => !document?.showHero,
-      group: 'editorial',
-    }),
+    
     // // Modules
     defineField({
       name: 'modules',

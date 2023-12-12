@@ -40,6 +40,23 @@ export default defineField({
       // @ts-expect-error - TODO - fix this TS error
       validation: validateSlug,
     }),
+    // Show hero
+    defineField({
+      name: 'showHero',
+      title: 'Show hero',
+      type: 'boolean',
+      description: 'If disabled, page title will be displayed instead',
+      initialValue: false,
+      group: 'editorial',
+    }),
+    // Hero
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'hero.page',
+      hidden: ({document}) => !document?.showHero,
+      group: 'editorial',
+    }),
     // Banner
     defineField({
       name: 'banner',
@@ -105,23 +122,7 @@ export default defineField({
       to: [{type: 'colorTheme'}],
       group: 'theme',
     }),
-    // Show hero
-    defineField({
-      name: 'showHero',
-      title: 'Show hero',
-      type: 'boolean',
-      description: 'If disabled, page title will be displayed instead',
-      initialValue: false,
-      group: 'editorial',
-    }),
-    // Hero
-    defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'hero.page',
-      hidden: ({document}) => !document?.showHero,
-      group: 'editorial',
-    }),
+    
   ],
   preview: {
     select: {

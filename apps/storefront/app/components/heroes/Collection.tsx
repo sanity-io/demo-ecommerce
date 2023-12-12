@@ -37,8 +37,8 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
       {hero.title && (
         <h1
           className={clsx(
-            "mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-xl",
-            "md:text-xl"
+            "max-w-[60rem] whitespace-pre-line text-2xl",
+            "md:text-2xl"
           )}
           style={{ color: colorTheme?.text || "black" }}
         >
@@ -47,23 +47,18 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
       )}
 
       {/* Description */}
-      {hero.description && (
+      {/* {hero.description && (
         <div
           className="mx-auto mb-8 max-w-[40rem] whitespace-pre-line text-center text-md leading-paragraph"
           style={{ color: colorTheme?.text || "black" }}
         >
           {hero.description}
         </div>
-      )}
+      )} */}
 
       {/* Hero content */}
       {hero.content && (
-        <div
-          className={clsx(
-            "mt-6", //
-            "md:mt-12"
-          )}
-        >
+        <div className="mt-8">
           <HeroContent content={hero.content} />
         </div>
       )}
