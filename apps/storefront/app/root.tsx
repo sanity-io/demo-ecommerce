@@ -104,8 +104,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
           }
         )
       : undefined,
-    sanityProjectID: env.SANITY_PROJECT_ID,
-    sanityDataset: env.SANITY_DATASET || "production",
     selectedLocale,
     storeDomain: storefront.getShopifyDomain(),
   });
