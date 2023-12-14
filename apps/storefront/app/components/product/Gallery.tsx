@@ -108,7 +108,7 @@ export default function ProductGallery({
 
             return (
               <MediaFile
-                className="relative flex w-full shrink-0 grow-0 select-none object-cover"
+                className="relative  max-w-xl flex w-full shrink-0 grow-0 select-none object-cover"
                 data={data}
                 draggable={false}
                 key={med.id}

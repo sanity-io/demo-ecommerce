@@ -15,13 +15,18 @@ const annotations = [
 import collection from './documents/collection'
 import colorTheme from './documents/colorTheme'
 import guide from './documents/guide'
+import article from './documents/article'
 import material from './documents/material'
 import page from './documents/page'
 import person from './documents/person'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
+import promo from './documents/promo'
+import banner from './documents/banner'
+import landingPage from './documents/landingPage'
 
-const documents = [collection, colorTheme, guide, material, page, product, productVariant, person]
+
+const documents = [collection, colorTheme, guide, article, material, page, product, productVariant, person, promo, banner, landingPage]
 
 // Singleton document types
 import home from './singletons/home'
@@ -49,6 +54,7 @@ import label from './objects/label'
 import linkExternal from './objects/linkExternal'
 import linkInternal from './objects/linkInternal'
 import moduleAccordion from './objects/module/accordion'
+import moduleBanner from './objects/module/banner'
 import moduleCallout from './objects/module/callout'
 import moduleCallToAction from './objects/module/callToAction'
 import moduleCollection from './objects/module/collection'
@@ -58,6 +64,7 @@ import moduleImages from './objects/module/images'
 import moduleInstagram from './objects/module/instagram'
 import moduleProduct from './objects/module/product'
 import moduleProducts from './objects/module/products'
+import modulePromo from './objects/module/promo'
 import moduleTaggedProducts from './objects/module/taggedProducts'
 import placeholderString from './objects/placeholderString'
 import productHotspots from './objects/productHotspots'
@@ -85,11 +92,13 @@ const objects = [
   heroHome,
   heroPage,
   moduleAccordion,
+  moduleBanner,
   moduleCallout,
   moduleCallToAction,
   moduleCollection,
   moduleGrid,
   moduleImage,
+  modulePromo,
   moduleImages,
   moduleInstagram,
   moduleProduct,

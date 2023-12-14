@@ -202,7 +202,7 @@ export default function ProductHandle() {
     >
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
-          <div className="relative w-full">
+          <div className="relative top-20 w-full">
             <Suspense
               fallback={
                 <ProductDetails

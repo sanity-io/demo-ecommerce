@@ -39,11 +39,11 @@ export default function Creator({ product, creator }: Props) {
       <div className="col-span-2 grid grid-cols-2 grid-rows-2 gap-3">
         <div className="col-span-2">
           <div className="">
-            <div className="tracking-tight text-xl font-bold text-purple-600">
+            <div className="tracking-tight text-xl font-bold text-black">
               {creator.person.name}
             </div>
             {creator.role && (
-              <div className="tracking-tight mb-2 text-xl text-purple-600">
+              <div className="tracking-tight mb-2 text-xl ">
                 <Label _key={`person.${creator.role}`} />
                 {" // "}
                 {product.title}
@@ -53,8 +53,8 @@ export default function Creator({ product, creator }: Props) {
           </div>
         </div>
         <Link to={creator.person.slug}>
-          <div className="flex aspect-square items-center overflow-hidden rounded bg-purple-600 hover:bg-purple-800">
-            <div className="tracking-tight block items-center p-5 text-lg font-medium text-white xl:w-10/12">
+          <div className="flex aspect-square items-center overflow-hidden rounded bg-gray hover:bg-gray">
+            <div className="tracking-tight block items-center p-5 text-lg font-medium text-black xl:w-10/12">
               <Label
                 _key="person.checkOutWork"
                 replacements={{

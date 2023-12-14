@@ -131,12 +131,12 @@ export default function Collection() {
           <Suspense>
             <Await resolve={gids}>
               {/* Hero */}
-              {!page?.banner && (
+              {/* {!page?.banner && ( */}
                 <CollectionHero
                   fallbackTitle={collection?.title}
                   hero={page?.hero as SanityHeroHome}
                 />
-              )}
+              {/* )} */}
               {page?.banner && (
                 <div className={clsx("mb-1 mt-24 px-4", "md:px-8")}>
                   <Banner items={page.banner} />

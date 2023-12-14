@@ -68,7 +68,7 @@ export function defineSanityConfig(config: SanityConfig) {
       visionTool(),
       documentInternationalization({
         supportedLanguages: LANGUAGES,
-        schemaTypes: ['guide', 'page'],
+        schemaTypes: ['guide', 'page', 'article', 'landingPage'],
       }),
       internationalizedArray({
         languages: LANGUAGES,
@@ -119,6 +119,42 @@ export function defineSanityConfig(config: SanityConfig) {
             }),
           },
           {
+            id: 'article-language',
+            title: 'Article with Language',
+            schemaType: 'article',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+          {
+            id: 'landingPage-language',
+            title: 'Landing Page with Language',
+            schemaType: 'landingPage',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+          {
+            id: 'promo-language',
+            title: 'Promo with Language',
+            schemaType: 'promo',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+          {
+            id: 'banner-language',
+            title: 'Banner with Language',
+            schemaType: 'banner',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+          {
             id: 'page-language',
             title: 'Page with Language',
             schemaType: 'page',
@@ -127,7 +163,7 @@ export function defineSanityConfig(config: SanityConfig) {
               language: params.language,
             }),
           },
-        ].filter((template) => !['guide', 'page', 'translation.metadata'].includes(template.id))
+        ].filter((template) => !['guide', 'page', 'article', 'landingPage', 'translation.metadata'].includes(template.id))
       },
     },
 

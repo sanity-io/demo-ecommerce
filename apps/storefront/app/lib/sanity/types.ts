@@ -295,6 +295,28 @@ export type SanityPage = {
   title: string;
 };
 
+export type SanityArticle = {
+  body: PortableTextBlock[];
+  colorTheme?: SanityColorTheme;
+  hero?: SanityHeroPage;
+  banner: (SanityModuleImage | SanityModuleInstagram)[];
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
+  seo: SanitySeo;
+  title: string;
+  creators: SanityCreator[];
+};
+
+export type SanityLandingPage = {
+  body: PortableTextBlock[];
+  colorTheme?: SanityColorTheme;
+  hero?: SanityHeroPage;
+  banner: (SanityModuleImage | SanityModuleInstagram)[];
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
+  seo: SanitySeo;
+  title: string;
+  creators: SanityCreator[];
+};
+
 export type SanityProductHotspot = {
   _key?: string;
   product: SanityProductWithVariant;

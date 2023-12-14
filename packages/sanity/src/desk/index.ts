@@ -7,9 +7,13 @@ import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 import collections from './collections'
 import colorThemes from './colorThemes'
 import guides from './guides'
+import articles from './articles'
 import home from './home'
 import materials from './materials'
 import pages from './pages'
+import landingPages from './landingPages'
+import promos from './promos'
+import banners from './banners'
 import people from './people'
 import products from './products'
 import settings from './settings'
@@ -32,12 +36,16 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
   'guide',
+  'article',
   'home',
   'material',
   'media.tag',
   'page',
   'person',
+  'promo',
+  'banner',
   'product',
+  'landingPage',
   'productVariant',
   'settings',
   'sharedText',
@@ -50,11 +58,15 @@ export const structure: StructureResolver = (S, context) =>
     .items([
       home(S, context),
       pages(S, context),
+      landingPages(S, context),
       guides(S, context),
+      articles(S, context),
       S.divider(),
       collections(S, context),
       products(S, context),
       S.divider(),
+      promos(S, context),
+      banners(S, context),
       people(S, context),
       materials(S, context),
       colorThemes(S, context),

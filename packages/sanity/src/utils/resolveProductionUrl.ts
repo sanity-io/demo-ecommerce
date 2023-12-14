@@ -42,6 +42,18 @@ export const resolvePreviewUrl = (document: SanityDocumentLike) => {
       break
     }
 
+    case 'article': {
+      const slug = (document?.slug as Slug)?.current
+      path = slug == null ? '/' : `/articles/${slug}`
+      break
+    }
+
+    case 'landingPage': {
+      const slug = (document?.slug as Slug)?.current
+      path = slug == null ? '/' : `/landingPages/${slug}`
+      break
+    }
+
     case 'collection': {
       const slug = (document?.store as store)?.slug?.current
       path = slug == null ? '/' : `/collections/${slug}`

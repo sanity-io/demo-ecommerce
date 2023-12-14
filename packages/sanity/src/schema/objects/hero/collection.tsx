@@ -22,15 +22,15 @@ export default defineField({
     // Content
     defineField({
       name: 'content',
-      title: 'Content',
+      title: 'Hero Image',
       type: 'array',
       validation: (Rule) => Rule.max(1),
       of: [
-        {
-          name: 'productWithVariant',
-          title: 'Product with variant',
-          type: 'productWithVariant',
-        },
+        // {
+        //   name: 'productWithVariant',
+        //   title: 'Product with variant',
+        //   type: 'productWithVariant',
+        // },
         {
           name: 'imageWithProductHotspots',
           title: 'Image',

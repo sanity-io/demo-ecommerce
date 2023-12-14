@@ -47,14 +47,14 @@ export default function CollectionHero({ fallbackTitle, hero }: Props) {
       )}
 
       {/* Description */}
-      {/* {hero.description && (
+      {hero.description && (
         <div
           className="mx-auto mb-8 max-w-[40rem] whitespace-pre-line text-center text-md leading-paragraph"
           style={{ color: colorTheme?.text || "black" }}
         >
           {hero.description}
         </div>
-      )} */}
+      )} 
 
       {/* Hero content */}
       {hero.content && (

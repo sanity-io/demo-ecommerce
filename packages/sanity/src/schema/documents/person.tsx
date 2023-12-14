@@ -49,6 +49,24 @@ export default defineField({
       type: 'internationalizedArraySimpleBlockContent',
       group: 'editorial',
     }),
+    // LinkedIn Link
+    defineField({
+      name: 'linkedIn',
+      title: 'LinkedIn Profile',
+      type: 'array',
+      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+      validation: (Rule) => Rule.max(1),
+      group: 'editorial',
+    }),
+    // TikTok Link
+    defineField({
+      name: 'tiktoc',
+      title: 'TicTok Profile',
+      type: 'array',
+      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+      validation: (Rule) => Rule.max(1),
+      group: 'editorial',
+    }),
     // SEO
     defineField({
       name: 'seo',

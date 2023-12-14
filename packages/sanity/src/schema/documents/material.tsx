@@ -31,7 +31,11 @@ export default defineField({
           type: 'boolean',
         }),
         defineField({
-          name: 'dishwasherSafe',
+          name: 'washingMachineSafe',
+          type: 'boolean',
+        }),
+        defineField({
+          name: 'dryCleanOnly',
           type: 'boolean',
         }),
       ],

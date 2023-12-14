@@ -26,12 +26,9 @@ export default defineField({
       title: 'Banner',
       type: 'array',
       of: [
-        {type: 'module.callout'},
-        {type: 'module.callToAction'},
-        {type: 'module.collection'},
         {type: 'module.image'},
-        {type: 'module.instagram'},
-        {type: 'module.product'},
+        {type: 'module.banner'},
+        
       ],
       group: 'editorial',
     }),
@@ -47,6 +44,10 @@ export default defineField({
         {type: 'module.image'},
         {type: 'module.instagram'},
         {type: 'module.product'},
+        {type: 'module.grid'},
+        {type: 'module.promo'},
+        
+        
       ],
       group: 'editorial',
     }),
