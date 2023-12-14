@@ -3,6 +3,7 @@ import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 
 import defineStructure from '../utils/defineStructure'
+import {previewPane} from './preview'
 
 /**
  * Show guides where a product is referenced
@@ -63,7 +64,7 @@ export default defineStructure<ListItemBuilder>((S) =>
                   S.document()
                     .schemaType('product')
                     .documentId(id)
-                    .views([S.view.form(), guidesPane(S)])
+                    .views([S.view.form(), previewPane(S), guidesPane(S)])
                 ),
               // Product variants
               S.listItem()

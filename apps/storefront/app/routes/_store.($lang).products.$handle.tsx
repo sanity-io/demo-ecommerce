@@ -1,6 +1,5 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
-import { useQuery } from "@sanity/react-loader";
 import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   flattenConnection,
@@ -23,6 +22,7 @@ import {
   redirect,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
+import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -50,12 +50,12 @@ const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
 
   return {
     title:
-      data?.page?.data?.seo?.title ??
+      data?.page?.seo?.title ??
       data?.product?.seo?.title ??
       data?.product?.title,
-    media: data?.page?.data?.seo?.image ?? media?.image,
+    media: data?.page?.seo?.image ?? media?.image,
     description:
-      data?.page?.data?.seo?.description ??
+      data?.page?.seo?.description ??
       data?.product?.seo?.description ??
       data?.product?.description,
     jsonLd: {
@@ -80,11 +80,21 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 
   const selectedOptions = getSelectedProductOptions(request);
 
+  const cache = context.storefront.CacheCustom({
+    mode: "public",
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
   const [page, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(PRODUCT_PAGE_QUERY, {
-      slug: params.handle,
-      language,
-      baseLanguage,
+    context.sanity.query<SanityProductPage>({
+      query: PRODUCT_PAGE_QUERY,
+      params: {
+        slug: params.handle,
+        language,
+        baseLanguage,
+      },
+      cache,
     }),
     context.storefront.query<{
       product: Product & {
@@ -99,7 +109,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     }),
   ]);
 
-  if (!page.data || !product?.id) {
+  if (!page || !product?.id) {
     throw notFound();
   }
 
@@ -108,7 +118,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
+  const gids = fetchGids({ page, context });
 
   // In order to show which variants are available in the UI, we need to query
   // all of them. We defer this query so that it doesn't block the page.
@@ -174,121 +184,119 @@ function redirectToFirstVariant({
 export default function ProductHandle() {
   const {
     language,
+    page,
     product,
     variants,
     selectedVariant,
     analytics,
     recommended,
     gids,
-    ...data
   } = useLoaderData<typeof loader>();
   const { handle } = useParams();
 
-  const { error, data: page } = useQuery(
-    PRODUCT_PAGE_QUERY,
-    { slug: handle, language, baseLanguage },
-    { initial: data.page }
-  );
-
-  if (error) {
-    throw error;
-  }
-
   return (
-    <ColorTheme value={page?.colorTheme}>
-      <div className="relative top-20 w-full">
-        <Suspense
-          fallback={
-            <ProductDetails
-              selectedVariant={selectedVariant}
-              sanityProduct={page as SanityProductPage}
-              storefrontProduct={product}
-              storefrontVariants={[]}
-              analytics={analytics as ShopifyAnalyticsPayload}
-            />
-          }
-        >
-          <Await
-            errorElement="There was a problem loading related products"
-            resolve={variants}
-          >
-            {(resp) => (
-              <ProductDetails
-                selectedVariant={selectedVariant}
-                sanityProduct={page as SanityProductPage}
-                storefrontProduct={product}
-                storefrontVariants={resp.product?.variants.nodes || []}
-                analytics={analytics as ShopifyAnalyticsPayload}
-              />
-            )}
-          </Await>
-        </Suspense>
-
-        <Suspense>
-          <Await resolve={gids}>
-            {/* Body */}
-            {page?.body && (
-              <div
-                className={clsx(
-                  "w-full", //
-                  "lg:w-[calc(100%-315px)]",
-                  "mb-10 mt-8 p-5"
-                )}
+    <SanityPreview
+      data={page}
+      query={PRODUCT_PAGE_QUERY}
+      params={{ slug: handle, language, baseLanguage }}
+    >
+      {(page) => (
+        <ColorTheme value={page?.colorTheme}>
+          <div className="relative top-20 w-full">
+            <Suspense
+              fallback={
+                <ProductDetails
+                  selectedVariant={selectedVariant}
+                  sanityProduct={page as SanityProductPage}
+                  storefrontProduct={product}
+                  storefrontVariants={[]}
+                  analytics={analytics as ShopifyAnalyticsPayload}
+                />
+              }
+            >
+              <Await
+                errorElement="There was a problem loading related products"
+                resolve={variants}
               >
-                <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                  <div className="hidden xl:block" />
-                  <div className="col-span-6 xl:col-span-5">
-                    <PortableText blocks={page.body} />
+                {(resp) => (
+                  <ProductDetails
+                    selectedVariant={selectedVariant}
+                    sanityProduct={page as SanityProductPage}
+                    storefrontProduct={product}
+                    storefrontVariants={resp.product?.variants.nodes || []}
+                    analytics={analytics as ShopifyAnalyticsPayload}
+                  />
+                )}
+              </Await>
+            </Suspense>
+
+            <Suspense>
+              <Await resolve={gids}>
+                {/* Body */}
+                {page?.body && (
+                  <div
+                    className={clsx(
+                      "w-full", //
+                      "lg:w-[calc(100%-315px)]",
+                      "mb-10 mt-8 p-5"
+                    )}
+                  >
+                    <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                      <div className="hidden xl:block" />
+                      <div className="col-span-6 xl:col-span-5">
+                        <PortableText blocks={page.body} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Magazine */}
+                <Magazine page={page as SanityProductPage} product={product} />
+
+                {/* Shipping info and FAQs */}
+                <div
+                  className={clsx(
+                    "w-full", //
+                    "lg:w-[calc(100%-315px)]",
+                    "mb-10 mt-8 p-5"
+                  )}
+                >
+                  <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+                    <div className="hidden aspect-square xl:block" />
+                    <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                      {page?.sharedText?.deliveryAndReturns && (
+                        <SanityProductShipping
+                          blocks={page?.sharedText?.deliveryAndReturns}
+                        />
+                      )}
+                    </div>
+                    <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                      {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
+                        <SanityProductFaqs faqs={page.faqs} />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              </Await>
+            </Suspense>
+          </div>
 
-            {/* Magazine */}
-            <Magazine page={page as SanityProductPage} product={product} />
-
-            {/* Shipping info and FAQs */}
-            <div
-              className={clsx(
-                "w-full", //
-                "lg:w-[calc(100%-315px)]",
-                "mb-10 mt-8 p-5"
-              )}
+          {/* Related products */}
+          <Suspense>
+            <Await
+              errorElement="There was a problem loading related products"
+              resolve={recommended}
             >
-              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                <div className="hidden aspect-square xl:block" />
-                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-                  {page?.sharedText?.deliveryAndReturns && (
-                    <SanityProductShipping
-                      blocks={page?.sharedText?.deliveryAndReturns}
-                    />
-                  )}
-                </div>
-                <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                  {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
-                    <SanityProductFaqs faqs={page.faqs} />
-                  )}
-                </div>
-              </div>
-            </div>
-          </Await>
-        </Suspense>
-      </div>
-
-      {/* Related products */}
-      <Suspense>
-        <Await
-          errorElement="There was a problem loading related products"
-          resolve={recommended}
-        >
-          {(products) => (
-            <RelatedProducts
-              relatedProducts={products.productRecommendations}
-            />
-          )}
-        </Await>
-      </Suspense>
-    </ColorTheme>
+              {(products) => (
+                <RelatedProducts
+                  relatedProducts={products.productRecommendations}
+                />
+              )}
+            </Await>
+          </Suspense>
+        </ColorTheme>
+      )}
+    </SanityPreview>
   );
 }
 

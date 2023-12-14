@@ -33,16 +33,10 @@ import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import stylesheet from "~/styles/tailwind.css";
+import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
-import {
-  loader as queryStore,
-  Sanity,
-  SanityLayout,
-  stegaFilter,
-  VisualEditing,
-} from "./lib/sanity";
-const { useQuery } = queryStore;
+import { SanityLayout } from "./lib/sanity";
 
 export const meta: MetaFunction = () => [
   {
@@ -80,11 +74,11 @@ export const links: LinksFunction = () => {
 };
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.layout?.data?.seo?.title,
+  title: data?.layout?.seo?.title,
   titleTemplate: `%s${
-    data?.layout?.data?.seo?.title ? ` · ${data?.layout?.data?.seo?.title}` : ""
+    data?.layout?.seo?.title ? ` · ${data?.layout?.seo?.title}` : ""
   }`,
-  description: data?.layout?.data?.seo?.description,
+  description: data?.layout?.seo?.description,
 });
 
 export const handle = {
@@ -92,18 +86,27 @@ export const handle = {
 };
 
 export async function loader({ context }: LoaderFunctionArgs) {
-  const { cart, storefront, sanity } = context;
+  const { cart } = context;
 
-  const selectedLocale = storefront.i18n;
-  const language = selectedLocale.language.toLowerCase();
+  const cache = context.storefront.CacheCustom({
+    mode: "public",
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
 
   const [shop, layout] = await Promise.all([
-    storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    sanity.loader.loadQuery<SanityLayout>(LAYOUT_QUERY, {
-      language,
-      baseLanguage,
+    context.storefront.query<{ shop: Shop }>(SHOP_QUERY),
+    context.sanity.query<SanityLayout>({
+      query: LAYOUT_QUERY,
+      cache,
+      params: {
+        language: context.storefront.i18n.language.toLowerCase(),
+        baseLanguage,
+      },
     }),
   ]);
+
+  const selectedLocale = context.storefront.i18n as I18nLocale;
 
   return defer({
     analytics: {
@@ -112,19 +115,21 @@ export async function loader({ context }: LoaderFunctionArgs) {
     },
     cart: cart.get(),
     layout,
-    notFoundCollection: layout?.data.notFoundPage?.collectionGid
+    notFoundCollection: layout?.notFoundPage?.collectionGid
       ? context.storefront.query<{ collection: Collection }>(
           COLLECTION_QUERY_ID,
           {
             variables: {
-              id: layout.data.notFoundPage.collectionGid,
+              id: layout.notFoundPage.collectionGid,
               count: 16,
             },
           }
         )
       : undefined,
+    sanityProjectID: context.env.SANITY_PROJECT_ID,
+    sanityDataset: context.env.SANITY_DATASET || "production",
     selectedLocale,
-    storeDomain: storefront.getShopifyDomain(),
+    storeDomain: context.storefront.getShopifyDomain(),
   });
 }
 
@@ -149,8 +154,6 @@ export default function App() {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
-        <Sanity nonce={nonce} />
-        <VisualEditing filter={stegaFilter} />
       </body>
     </html>
   );
@@ -158,31 +161,7 @@ export default function App() {
 
 export const useRootLoaderData = () => {
   const [root] = useMatches();
-  const data = root?.data as SerializeFrom<typeof loader>;
-
-  // TODO: Remove this once we have a better way to handle this
-  const locale = data.selectedLocale ?? DEFAULT_LOCALE;
-  const language = locale.language.toLowerCase();
-  const {
-    error,
-    loading,
-    data: layout,
-  } = useQuery(
-    LAYOUT_QUERY,
-    { language, baseLanguage },
-    { initial: data.layout }
-  );
-
-  if (error) {
-    throw error;
-  }
-
-  return loading
-    ? data
-    : {
-        ...data,
-        layout,
-      };
+  return root?.data as SerializeFrom<typeof loader>;
 };
 
 export function ErrorBoundary({ error }: { error: Error }) {
@@ -244,8 +223,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
-        <Sanity nonce={nonce} />
-        <VisualEditing filter={stegaFilter} />
       </body>
     </html>
   );
