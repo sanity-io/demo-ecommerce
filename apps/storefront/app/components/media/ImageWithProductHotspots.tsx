@@ -1,16 +1,14 @@
 import SanityImage from "~/components/media/SanityImage";
 import ProductHotspot from "~/components/product/Hotspot";
-import {
-  type SanityImageWithProductHotspots,
-  useSanityEnvironment,
-} from "~/lib/sanity";
+import type { SanityImageWithProductHotspots } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   content: SanityImageWithProductHotspots;
 };
 
 export default function ImageWithProductHotspots({ content }: Props) {
-  const { projectId, dataset } = useSanityEnvironment();
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   return (
     <>
@@ -33,11 +31,11 @@ export default function ImageWithProductHotspots({ content }: Props) {
       <SanityImage
         alt={content?.image?.altText}
         crop={content?.image?.crop}
-        dataset={dataset}
+        dataset={sanityDataset}
         hotspot={content?.image?.hotspot}
         layout="responsive"
         objectFit="cover"
-        projectId={projectId}
+        projectId={sanityProjectID}
         sizes="100vw"
         src={content?.image?.asset?._ref}
       />

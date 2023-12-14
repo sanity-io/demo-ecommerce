@@ -1,7 +1,8 @@
 import { Link } from "~/components/Link";
 import SanityImage from "~/components/media/SanityImage";
 import PortableText from "~/components/portableText/PortableText";
-import { type SanityCreator, useSanityEnvironment } from "~/lib/sanity";
+import type { SanityCreator } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 import type { ProductWithNodes } from "~/types/shopify";
 
 import { Label } from "../global/Label";
@@ -12,7 +13,7 @@ type Props = {
 };
 
 export default function Creator({ product, creator }: Props) {
-  const { projectId, dataset } = useSanityEnvironment();
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   return (
     <div className="mb-10 grid grid-cols-3 gap-3 lg:grid-cols-6">
@@ -23,11 +24,11 @@ export default function Creator({ product, creator }: Props) {
             <SanityImage
               alt={creator.person.image?.altText}
               crop={creator.person.image?.crop}
-              dataset={dataset}
+              dataset={sanityDataset}
               hotspot={creator.person.image?.hotspot}
               layout="fill"
               objectFit="cover"
-              projectId={projectId}
+              projectId={sanityProjectID}
               sizes="25vw"
               src={creator.person.image?.asset?._ref}
             />

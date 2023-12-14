@@ -11,7 +11,7 @@ export default async function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext
 ) {
-  const { SanityProvider, projectId } = loadContext.sanity;
+  const { SANITY_PROJECT_ID: projectId } = loadContext.env;
 
   /**
    * Apply a content security policy with nonce, and only apply in production
@@ -43,9 +43,7 @@ export default async function handleRequest(
 
   const body = await renderToReadableStream(
     <NonceProvider>
-      <SanityProvider>
-        <RemixServer context={remixContext} url={request.url} />
-      </SanityProvider>
+      <RemixServer context={remixContext} url={request.url} />
     </NonceProvider>,
     {
       nonce,

@@ -20,7 +20,7 @@ export const previewPane = (S: StructureBuilder) => {
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, options) => {
   const {schemaType} = options
   if (PREVIEW_TYPES.includes(schemaType)) {
-    return S.document().views([S.view.form()])
+    return S.document().views([S.view.form(), previewPane(S)])
   } else {
     return S.document().views([S.view.form()])
   }

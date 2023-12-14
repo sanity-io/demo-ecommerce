@@ -3,14 +3,15 @@ import clsx from "clsx";
 
 import SanityImage from "~/components/media/SanityImage";
 import PortableText from "~/components/portableText/PortableText";
-import { type SanityModuleGrid, useSanityEnvironment } from "~/lib/sanity";
+import type { SanityModuleGrid } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   value: PortableTextBlock & SanityModuleGrid;
 };
 
 export default function GridBlock({ value }: Props) {
-  const { projectId, dataset } = useSanityEnvironment();
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   return (
     <div
@@ -30,11 +31,11 @@ export default function GridBlock({ value }: Props) {
               <SanityImage
                 alt={item.image?.altText}
                 crop={item.image?.crop}
-                dataset={dataset}
+                dataset={sanityDataset}
                 hotspot={item.image?.hotspot}
                 layout="fill"
                 objectFit="cover"
-                projectId={projectId}
+                projectId={sanityProjectID}
                 sizes="25vw"
                 src={item.image?.asset?._ref}
               />

@@ -5,7 +5,8 @@ import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
 import ProductHotspot from "~/components/product/Hotspot";
 import ProductTag from "~/components/product/Tag";
-import { type SanityModuleImage, useSanityEnvironment } from "~/lib/sanity";
+import type { SanityModuleImage } from "~/lib/sanity";
+import { useRootLoaderData } from "~/root";
 
 type Props = {
   module: SanityModuleImage;
@@ -76,7 +77,7 @@ export default function ImageModule({ module }: Props) {
 
 const ImageContent = ({ module }: Props) => {
   const image = module.image;
-  const { projectId, dataset } = useSanityEnvironment();
+  const { sanityDataset, sanityProjectID } = useRootLoaderData();
 
   return (
     <div
@@ -87,10 +88,10 @@ const ImageContent = ({ module }: Props) => {
     >
       <SanityImage
         crop={image?.crop}
-        dataset={dataset}
+        dataset={sanityDataset}
         hotspot={image?.hotspot}
         layout="responsive"
-        projectId={projectId}
+        projectId={sanityProjectID}
         sizes={["50vw, 100vw"]}
         src={image?.asset?._ref}
       />
