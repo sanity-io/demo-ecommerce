@@ -4,6 +4,7 @@ import {
   useParams,
   useSearchParams,
 } from "@remix-run/react";
+import { useQuery } from "@sanity/react-loader";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
 import {
@@ -12,7 +13,6 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -28,9 +28,10 @@ import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.seo?.title ?? data?.collection?.title,
-  description: data?.page?.seo?.description ?? data?.collection?.description,
-  media: data?.page?.seo?.image ?? data?.collection?.image,
+  title: data?.page?.data?.seo?.title ?? data?.collection?.title,
+  description:
+    data?.page?.data?.seo?.description ?? data?.collection?.description,
+  media: data?.page?.data?.seo?.image ?? data?.collection?.image,
 });
 
 export const handle = {
@@ -62,20 +63,13 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 
   invariant(params.handle, "Missing collection handle");
 
-  const cache = context.storefront.CacheCustom({
-    mode: "public",
-    maxAge: 60,
-    staleWhileRevalidate: 60,
-  });
-
   const [page, { collection }] = await Promise.all([
-    context.sanity.client.fetch<SanityCollectionPage>(
+    context.sanity.loader.loadQuery<SanityCollectionPage>(
       COLLECTION_PAGE_QUERY,
       {
         slug: params.handle,
         language,
-      },
-      { hydrogen: { cache } }
+      }
     ),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
       variables: {
@@ -89,12 +83,12 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   ]);
 
   // Handle 404s
-  if (!page || !collection) {
+  if (!page.data || !collection) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page, context });
+  const gids = fetchGids({ page: page.data, context });
 
   return defer({
     language,
@@ -111,7 +105,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const { language, collection, page, gids } =
+  const { language, collection, gids, ...data } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
@@ -119,63 +113,62 @@ export default function Collection() {
 
   const products = (collection as any).products.nodes;
 
-  return (
-    <SanityPreview
-      data={page}
-      query={COLLECTION_PAGE_QUERY}
-      params={{ slug: handle, language }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Hero */}
-              <CollectionHero
-                fallbackTitle={collection?.title}
-                hero={page?.hero as SanityHeroHome}
-              />
+  const { error, data: page } = useQuery(
+    COLLECTION_PAGE_QUERY,
+    { slug: handle, language },
+    { initial: data.page }
+  );
 
+  if (error) {
+    throw error;
+  }
+
+  return (
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Hero */}
+          <CollectionHero
+            fallbackTitle={collection?.title}
+            hero={page?.hero as SanityHeroHome}
+          />
+
+          <div
+            className={clsx(
+              "mb-32 mt-8 px-4", //
+              "md:px-8"
+            )}
+          >
+            {products.length > 0 && (
               <div
                 className={clsx(
-                  "mb-32 mt-8 px-4", //
-                  "md:px-8"
+                  "mb-8 flex justify-start", //
+                  "md:justify-end"
                 )}
               >
-                {products.length > 0 && (
-                  <div
-                    className={clsx(
-                      "mb-8 flex justify-start", //
-                      "md:justify-end"
-                    )}
-                  >
-                    <SortOrder
-                      key={page?._id}
-                      initialSortOrder={page?.sortOrder}
-                    />
-                  </div>
-                )}
-
-                {/* No results */}
-                {products.length === 0 && (
-                  <div className="mt-16 text-center text-lg text-darkGray">
-                    <Label _key="collection.noResults" />
-                  </div>
-                )}
-
-                {(page?.modules || products.length > 0) && (
-                  <ProductGrid
-                    collection={collection as any}
-                    modules={page?.modules || []}
-                    url={`/collections/${(collection as any).handle}`}
-                    key={`${(collection as any).handle}-${sort}`}
-                  />
-                )}
+                <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
               </div>
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            )}
+
+            {/* No results */}
+            {products.length === 0 && (
+              <div className="mt-16 text-center text-lg text-darkGray">
+                <Label _key="collection.noResults" />
+              </div>
+            )}
+
+            {(page?.modules || products.length > 0) && (
+              <ProductGrid
+                collection={collection as any}
+                modules={page?.modules || []}
+                url={`/collections/${(collection as any).handle}`}
+                key={`${(collection as any).handle}-${sort}`}
+              />
+            )}
+          </div>
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }
 

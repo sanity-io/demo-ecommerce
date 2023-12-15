@@ -31,7 +31,6 @@ import { useAnalytics } from "~/hooks/useAnalytics";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
-import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
 import {
@@ -63,27 +62,17 @@ export const handle = {
 };
 
 export async function loader({ context }: LoaderFunctionArgs) {
-  const { cart, storefront, sanity, env } = context;
-
-  // const cache = context.storefront.CacheCustom({
-  //   mode: "public",
-  //   maxAge: 60,
-  //   staleWhileRevalidate: 60,
-  // });
+  const { cart, storefront, sanity } = context;
 
   const selectedLocale = storefront.i18n;
   const language = selectedLocale.language.toLowerCase();
 
   const [shop, layout] = await Promise.all([
     storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    sanity.loader.loadQuery<SanityLayout>(
-      LAYOUT_QUERY,
-      {
-        language,
-        baseLanguage,
-      }
-      // { hydrogen: { cache } }
-    ),
+    sanity.loader.loadQuery<SanityLayout>(LAYOUT_QUERY, {
+      language,
+      baseLanguage,
+    }),
   ]);
 
   return defer({
@@ -112,14 +101,8 @@ export async function loader({ context }: LoaderFunctionArgs) {
 export default function App() {
   const data = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
-  const language = locale.language.toLowerCase();
   const hasUserConsent = true;
   const nonce = useNonce();
-  const {} = useQuery<typeof data.layout>(
-    LAYOUT_QUERY,
-    { language, baseLanguage },
-    { initial: data.layout }
-  );
 
   useAnalytics(hasUserConsent);
 
@@ -145,7 +128,31 @@ export default function App() {
 
 export const useRootLoaderData = () => {
   const [root] = useMatches();
-  return root?.data as SerializeFrom<typeof loader>;
+  const data = root?.data as SerializeFrom<typeof loader>;
+
+  // TODO: Remove this once we have a better way to handle this
+  const locale = data.selectedLocale ?? DEFAULT_LOCALE;
+  const language = locale.language.toLowerCase();
+  const {
+    error,
+    loading,
+    data: layout,
+  } = useQuery(
+    LAYOUT_QUERY,
+    { language, baseLanguage },
+    { initial: data.layout }
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  return loading
+    ? data
+    : {
+        ...data,
+        layout,
+      };
 };
 
 export function ErrorBoundary({ error }: { error: Error }) {
@@ -167,7 +174,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
         layout: null,
         notFoundCollection: undefined,
       };
-  const { notFoundPage } = layout?.data || {};
+  const { notFoundPage } = layout || {};
 
   let title = "Error";
   if (isRouteError) {

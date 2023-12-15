@@ -1,4 +1,5 @@
 import { Await, useLoaderData, useParams } from "@remix-run/react";
+import { useQuery } from "@sanity/react-loader";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
@@ -6,7 +7,6 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
@@ -19,9 +19,9 @@ import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.seo?.title,
-  description: data?.page?.seo?.description,
-  media: data?.page?.seo?.image,
+  title: data?.page?.data?.seo?.title,
+  description: data?.page?.data?.seo?.description,
+  media: data?.page?.data?.seo?.image,
 });
 
 export const handle = {
@@ -35,67 +35,59 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const cache = context.storefront.CacheCustom({
-    mode: "public",
-    maxAge: 60,
-    staleWhileRevalidate: 60,
+  const page = await context.sanity.loader.loadQuery<SanityPage>(PAGE_QUERY, {
+    slug: handle,
+    language,
+    baseLanguage,
   });
 
-  const page = await context.sanity.client.fetch<SanityPage>(
-    PAGE_QUERY,
-    {
-      slug: handle,
-      language,
-      baseLanguage,
-    },
-    { hydrogen: { cache } }
-  );
-
-  if (!page) {
+  if (!page.data) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page, context });
+  const gids = fetchGids({ page: page.data, context });
 
   return defer({ language, page, gids });
 }
 
 export default function Page() {
-  const { language, page, gids } =
+  const { language, gids, ...data } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const { handle } = useParams();
 
+  const { error, data: page } = useQuery(
+    PAGE_QUERY,
+    { slug: handle, language, baseLanguage },
+    { initial: data.page }
+  );
+
+  if (error) {
+    throw error;
+  }
+
   return (
-    <SanityPreview
-      data={page}
-      query={PAGE_QUERY}
-      params={{ slug: handle, language, baseLanguage }}
-    >
-      {(page) => (
-        <ColorTheme value={page?.colorTheme}>
-          <Suspense>
-            <Await resolve={gids}>
-              {/* Page hero */}
-              <PageHero
-                fallbackTitle={page?.title || ""}
-                hero={page?.hero as SanityHeroPage}
-              />
-              {/* Body */}
-              {page?.body && (
-                <PortableText
-                  blocks={page.body}
-                  centered
-                  className={clsx(
-                    "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                    "md:px-8"
-                  )}
-                />
+    <ColorTheme value={page?.colorTheme}>
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          <PageHero
+            fallbackTitle={page?.title || ""}
+            hero={page?.hero as SanityHeroPage}
+          />
+          {/* Body */}
+          {page?.body && (
+            <PortableText
+              blocks={page.body}
+              centered
+              className={clsx(
+                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+                "md:px-8"
               )}
-            </Await>
-          </Suspense>
-        </ColorTheme>
-      )}
-    </SanityPreview>
+            />
+          )}
+        </Await>
+      </Suspense>
+    </ColorTheme>
   );
 }
