@@ -12,7 +12,7 @@ import { useRootLoaderData } from "~/root";
  */
 export default function Footer() {
   const { layout } = useRootLoaderData();
-  const { footer } = layout?.data || {};
+  const { footer } = layout || {};
 
   const renderLinks = footer?.links?.map((link: SanityLink) => {
     if (link._type === "linkExternal") {

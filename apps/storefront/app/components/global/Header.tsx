@@ -11,7 +11,7 @@ import { useRootLoaderData } from "~/root";
  */
 export default function Header() {
   const { layout } = useRootLoaderData();
-  const { menuLinks } = layout?.data || {};
+  const { menuLinks } = layout || {};
 
   return (
     <header

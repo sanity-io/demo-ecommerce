@@ -8,7 +8,7 @@ type props = {
 export function Label(props: props) {
   const { _key, replacements } = props;
   const { layout } = useRootLoaderData();
-  const labels = layout?.data?.labels || [];
+  const labels = layout?.labels || [];
 
   let label = labels.find(({ key }: { key: string }) => key === _key)?.text;
 

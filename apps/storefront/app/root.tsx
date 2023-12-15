@@ -27,12 +27,12 @@ import {
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
 import { NotFound } from "~/components/global/NotFound";
-import { useAnalytics } from "~/hooks/useAnalytics";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 
 import { baseLanguage } from "./data/countries";
+import { useAnalytics } from "./hooks/useAnalytics";
 import {
   loader as queryStore,
   Sanity,
@@ -130,7 +130,6 @@ export const useRootLoaderData = () => {
   const [root] = useMatches();
   const data = root?.data as SerializeFrom<typeof loader>;
 
-  // TODO: Remove this once we have a better way to handle this
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const language = locale.language.toLowerCase();
   const {
@@ -147,8 +146,9 @@ export const useRootLoaderData = () => {
     throw error;
   }
 
+  // TODO: Remove this once we have a better way to handle this
   return loading
-    ? data
+    ? { ...data, layout: data.layout.data }
     : {
         ...data,
         layout,

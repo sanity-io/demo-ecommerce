@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import { createClient, type FilterDefault } from "@sanity/client/stega";
-import type { HistoryUpdate } from "@sanity/overlays";
+import type { HistoryAdapterNavigate } from "@sanity/overlays";
 import { enableOverlays } from "@sanity/overlays";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useSanityEnvironment } from "./environment";
 import { loader } from "./loader";
@@ -11,13 +11,11 @@ const { useLiveMode } = loader;
 export type VisualEditingProps = {
   filter: FilterDefault;
   studioUrl?: string;
-  allowStudioOrigin?: string;
 };
 
 export function VisualEditing({
   filter,
   studioUrl = "/studio",
-  allowStudioOrigin,
 }: VisualEditingProps) {
   const { projectId, dataset, apiVersion } = useSanityEnvironment();
 
@@ -34,54 +32,51 @@ export function VisualEditing({
           enabled: true,
           filter,
           studioUrl,
-          logger: console,
         },
       }),
     [projectId, dataset, apiVersion, filter, studioUrl]
   );
   const navigateRemix = useNavigate();
-  const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
-    null
-  );
+  const navigateRemixRef = useRef(navigateRemix);
+  const [navigate, setNavigate] = useState<
+    HistoryAdapterNavigate | undefined
+  >();
 
   useEffect(() => {
-    // When displayed inside an iframe
-    if (window.parent !== window.self) {
-      const disable = enableOverlays({
-        allowStudioOrigin,
-        zIndex: 999999,
-        history: {
-          subscribe: (navigate) => {
-            navigateComposerRef.current = navigate;
-            return () => {
-              navigateComposerRef.current = null;
-            };
-          },
-          update: (update) => {
-            if (update.type === "push" || update.type === "replace") {
-              navigateRemix(update.url, { replace: update.type === "replace" });
-            } else if (update.type === "pop") {
-              navigateRemix(-1);
-            }
-          },
+    navigateRemixRef.current = navigateRemix;
+  }, [navigateRemix]);
+  useEffect(() => {
+    const disable = enableOverlays({
+      history: {
+        subscribe: (navigate) => {
+          setNavigate(() => navigate);
+          return () => setNavigate(undefined);
         },
-      });
-      return () => disable();
-    }
-  }, [allowStudioOrigin, navigateRemix]);
+        update: (update) => {
+          if (update.type === "push" || update.type === "replace") {
+            navigateRemixRef.current(update.url, {
+              replace: update.type === "replace",
+            });
+          } else if (update.type === "pop") {
+            navigateRemixRef.current(-1);
+          }
+        },
+      },
+    });
+    return () => disable();
+  }, []);
 
   const location = useLocation();
   useEffect(() => {
-    if (navigateComposerRef.current) {
-      navigateComposerRef.current({
+    if (navigate) {
+      navigate({
         type: "push",
         url: `${location.pathname}${location.search}${location.hash}`,
       });
     }
-  }, [location.hash, location.pathname, location.search]);
+  }, [location.hash, location.pathname, location.search, navigate]);
 
-  // Enable live queries from the specified studio origin URL
-  useLiveMode({ allowStudioOrigin, client });
+  useLiveMode({ client, studioUrl });
 
   return null;
 }

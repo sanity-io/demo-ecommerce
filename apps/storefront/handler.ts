@@ -92,15 +92,17 @@ export async function handler(
         dataset: env.SANITY_DATASET || "production",
         apiVersion: env.SANITY_API_VERSION || "2023-03-30",
         // TODO: should this be conditional on NODE_ENV?
-        useCdn: true,
-        perspective: "published",
+        useCdn: false,
+        resultSourceMap: "withKeyArraySelector",
+        perspective: "previewDrafts",
         // TODO: token for private dataset?
+        token: env.SANITY_API_TOKEN,
         stega: {
           // TODO: conditional based on session?
           enabled: true,
           studioUrl: "/studio",
           filter: stegaFilter,
-          // logger: console,
+          logger: console,
         },
       }),
       waitUntil,
