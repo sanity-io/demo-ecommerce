@@ -19,7 +19,6 @@ import { useNonce } from "@shopify/hydrogen";
 import type { Collection, Shop } from "@shopify/hydrogen/storefront-api-types";
 import {
   defer,
-  type LinksFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
   type SerializeFrom,
@@ -32,7 +31,6 @@ import { useAnalytics } from "~/hooks/useAnalytics";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { LAYOUT_QUERY } from "~/queries/sanity/layout";
 import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
-import stylesheet from "~/styles/tailwind.css";
 import type { I18nLocale } from "~/types/shopify";
 
 import { baseLanguage } from "./data/countries";
@@ -44,34 +42,6 @@ export const meta: MetaFunction = () => [
     content: "width=device-width,initial-scale=1",
   },
 ];
-
-export const links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: stylesheet },
-    {
-      href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap",
-      rel: "stylesheet",
-    },
-    {
-      rel: "preconnect",
-      href: "https://cdn.shopify.com",
-    },
-    {
-      rel: "preconnect",
-      href: "https://shop.app",
-    },
-    {
-      rel: "preconnect",
-      href: "https://fonts.gstatic.com",
-      crossOrigin: "anonymous",
-    },
-    {
-      rel: "preconnect",
-      href: "https://fonts.googleapis.com",
-      crossOrigin: "anonymous",
-    },
-  ];
-};
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.layout?.seo?.title,
