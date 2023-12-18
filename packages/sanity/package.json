@@ -21,7 +21,7 @@
     "rxjs": "^7.8.1",
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
-    "sanity-plugin-iframe-pane": "^2.6.0",
+    "sanity-plugin-iframe-pane": "^3.0.0",
     "sanity-plugin-internationalized-array": "^1.10.3",
     "sanity-plugin-media": "^2.2.4",
     "slug": "^8.2.3"
