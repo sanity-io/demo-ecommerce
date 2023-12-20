@@ -40,8 +40,10 @@ export function defineSanityConfig(config: SanityConfig) {
   /**
    * Prevent a consumer from importing into a worker/server bundle.
    */
-  if(typeof document === 'undefined') {
-    throw new Error('Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.')
+  if (typeof document === 'undefined') {
+    throw new Error(
+      'Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.'
+    )
   }
 
   const {title = 'AKVA', preview, shopify, ...rest} = config

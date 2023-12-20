@@ -23,7 +23,7 @@ export default defineStructure<ListItemBuilder>((S) =>
               .title(`Settings (${language.id.toLocaleUpperCase()})`)
           ),
           S.divider(),
-          S.listItem()
+          S.documentListItem()
             .title('Shared Text')
             .schemaType('sharedText')
             .child(
