@@ -12,8 +12,11 @@ import invariant from "tiny-invariant";
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
 import { baseLanguage } from "~/data/countries";
-import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
-import { loader as queryStore } from "~/lib/sanity";
+import {
+  loader as queryStore,
+  type SanityHeroPage,
+  type SanityPage,
+} from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";

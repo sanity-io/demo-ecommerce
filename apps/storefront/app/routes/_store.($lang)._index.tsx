@@ -10,8 +10,11 @@ import { Suspense } from "react";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
-import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
-import { loader as queryStore } from "~/lib/sanity";
+import {
+  loader as queryStore,
+  type SanityHeroHome,
+  type SanityHomePage,
+} from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 const { useQuery } = queryStore;

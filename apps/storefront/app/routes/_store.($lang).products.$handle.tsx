@@ -32,8 +32,11 @@ import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
 import { baseLanguage } from "~/data/countries";
-import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
-import { loader as queryStore } from "~/lib/sanity";
+import {
+  loader as queryStore,
+  type SanityFaqs,
+  type SanityProductPage,
+} from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";

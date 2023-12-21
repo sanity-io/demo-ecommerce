@@ -20,8 +20,11 @@ import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
-import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
-import { loader as queryStore } from "~/lib/sanity";
+import {
+  loader as queryStore,
+  type SanityCollectionPage,
+  type SanityHeroHome,
+} from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";

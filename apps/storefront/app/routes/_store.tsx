@@ -1,5 +1,5 @@
 import { Outlet } from "@remix-run/react";
-import { type LinksFunction } from "@shopify/remix-oxygen";
+import type { LinksFunction } from "@shopify/remix-oxygen";
 
 import { Layout } from "~/components/global/Layout";
 import stylesheet from "~/styles/tailwind.css";
