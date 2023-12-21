@@ -156,8 +156,9 @@ export function defineSanityConfig(config: SanityConfig) {
     studio: {
       components: {
         navbar: Navbar,
-        logo: Logo,
       },
     },
+
+    icon: Logo,
   })
 }
