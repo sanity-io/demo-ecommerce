@@ -57,7 +57,6 @@ export const locate: DocumentLocationResolver = (params, context) => {
 
       return document$.pipe(
         map((document) => {
-          console.log(document)
           // @ts-expect-error
           const href = `${localeByLanguage[document.language]}${
             // @ts-expect-error
@@ -114,8 +113,6 @@ export const locate: DocumentLocationResolver = (params, context) => {
                     // @ts-expect-error
                     firstSegmentBasedOnType[document._type]
                   }/${document?.slug?.current || document.store?.slug?.current || ''}`
-
-                  console.log({href, document})
 
                   return {
                     title,

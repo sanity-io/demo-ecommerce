@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import { createClient, type FilterDefault } from "@sanity/client/stega";
-import type { HistoryAdapterNavigate } from "@sanity/overlays";
-import { enableOverlays } from "@sanity/overlays";
+import { enableOverlays, type HistoryAdapterNavigate } from "@sanity/overlays";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useSanityEnvironment } from "./environment";

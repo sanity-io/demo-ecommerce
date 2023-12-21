@@ -1,6 +1,5 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
-import { useQuery } from "@sanity/react-loader";
 import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   flattenConnection,
@@ -34,6 +33,7 @@ import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
 import { baseLanguage } from "~/data/countries";
 import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
+import { loader as queryStore } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
@@ -42,6 +42,7 @@ import {
   RECOMMENDED_PRODUCTS_QUERY,
   VARIANTS_QUERY,
 } from "~/queries/shopify/product";
+const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(
@@ -81,11 +82,15 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   const selectedOptions = getSelectedProductOptions(request);
 
   const [page, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(PRODUCT_PAGE_QUERY, {
-      slug: params.handle,
-      language,
-      baseLanguage,
-    }),
+    context.sanity.loader.loadQuery<SanityProductPage>(
+      PRODUCT_PAGE_QUERY,
+      {
+        slug: params.handle,
+        language,
+        baseLanguage,
+      },
+      { perspective: "previewDrafts" }
+    ),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;

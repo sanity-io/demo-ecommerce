@@ -1,5 +1,4 @@
 import { Await, useLoaderData, useParams } from "@remix-run/react";
-import { useQuery } from "@sanity/react-loader";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
@@ -14,9 +13,11 @@ import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
 import { baseLanguage } from "~/data/countries";
 import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
+import { loader as queryStore } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
+const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.data?.seo?.title,
@@ -35,11 +36,17 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const page = await context.sanity.loader.loadQuery<SanityPage>(PAGE_QUERY, {
-    slug: handle,
-    language,
-    baseLanguage,
-  });
+  const page = await context.sanity.loader.loadQuery<SanityPage>(
+    PAGE_QUERY,
+    {
+      slug: handle,
+      language,
+      baseLanguage,
+    },
+    {
+      perspective: "previewDrafts",
+    }
+  );
 
   if (!page.data) {
     throw notFound();

@@ -1,5 +1,4 @@
 import { Await, useLoaderData, useParams } from "@remix-run/react";
-import { useQuery } from "@sanity/react-loader";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
@@ -14,8 +13,10 @@ import PageHero from "~/components/heroes/Page";
 import ModuleGrid from "~/components/modules/ModuleGrid";
 import PortableText from "~/components/portableText/PortableText";
 import type { SanityPersonPage } from "~/lib/sanity";
+import { loader as queryStore } from "~/lib/sanity";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PERSON_QUERY } from "~/queries/sanity/person";
+const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.data?.seo?.title || data?.page?.data?.name,
@@ -39,7 +40,8 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     {
       slug: handle,
       language,
-    }
+    },
+    { perspective: "previewDrafts" }
   );
 
   if (!page.data) {

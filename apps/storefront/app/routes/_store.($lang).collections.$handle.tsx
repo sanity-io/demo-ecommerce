@@ -4,7 +4,6 @@ import {
   useParams,
   useSearchParams,
 } from "@remix-run/react";
-import { useQuery } from "@sanity/react-loader";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
 import {
@@ -22,10 +21,12 @@ import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
+import { loader as queryStore } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
+const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.page?.data?.seo?.title ?? data?.collection?.title,
@@ -69,6 +70,9 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       {
         slug: params.handle,
         language,
+      },
+      {
+        perspective: "previewDrafts",
       }
     ),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {

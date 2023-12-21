@@ -69,10 +69,16 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const [shop, layout] = await Promise.all([
     storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    sanity.loader.loadQuery<SanityLayout>(LAYOUT_QUERY, {
-      language,
-      baseLanguage,
-    }),
+    sanity.loader.loadQuery<SanityLayout>(
+      LAYOUT_QUERY,
+      {
+        language,
+        baseLanguage,
+      },
+      {
+        perspective: "previewDrafts",
+      }
+    ),
   ]);
 
   return defer({

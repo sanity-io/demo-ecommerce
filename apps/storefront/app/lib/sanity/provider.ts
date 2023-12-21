@@ -85,24 +85,24 @@ export function createSanityProvider(
   const { SanityProvider } = createSanityEnvironment(environment);
 
   // Wrap `client.fetch` in additional logic to handle caching
-  client.fetch = new Proxy(client.fetch, {
-    async apply(target, thisArg: SanityClient | SanityStegaClient, args) {
-      const config = thisArg.config();
-      const [query, params, options] = args;
-      const strategy = options?.hydrogen?.cache ?? CacheLong();
-      const queryHash = await hashQuery(query, params);
+  // client.fetch = new Proxy(client.fetch, {
+  //   async apply(target, thisArg: SanityClient | SanityStegaClient, args) {
+  //     const config = thisArg.config();
+  //     const [query, params, options] = args;
+  //     const strategy = options?.hydrogen?.cache ?? CacheLong();
+  //     const queryHash = await hashQuery(query, params);
 
-      const response = await (options.loader && isStegaEnabled(config)
-        ? options.loader.loadQuery(query, params)
-        : withCache(
-            queryHash,
-            strategy,
-            async () => await Reflect.apply(target, thisArg, args)
-          ));
+  //     const response = await (options.loader && isStegaEnabled(config)
+  //       ? options.loader.loadQuery(query, params)
+  //       : withCache(
+  //           queryHash,
+  //           strategy,
+  //           async () => await Reflect.apply(target, thisArg, args)
+  //         ));
 
-      return response;
-    },
-  });
+  //     return response;
+  //   },
+  // });
 
   if ("loader" in options) {
     // if (!(client instanceof SanityStegaClient)) {
