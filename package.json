@@ -25,6 +25,6 @@
   },
   "packageManager": "npm@10.2.3",
   "overrides": {
-    "@sanity/ui": "^2.0.0-beta.13"
+    "@sanity/ui": "2.0.0-beta.13"
   }
 }
