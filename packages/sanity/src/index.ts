@@ -1,6 +1,7 @@
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {languageFilter} from '@sanity/language-filter'
+import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
 import {deskTool} from 'sanity/desk'
@@ -102,6 +103,7 @@ export function defineSanityConfig(config: SanityConfig) {
           return true
         },
       }),
+      scheduledPublishing()
     ],
 
     schema: {
