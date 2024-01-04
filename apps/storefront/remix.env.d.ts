@@ -3,11 +3,10 @@
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type { HydrogenCart } from "@shopify/hydrogen";
+import type { HydrogenSession } from "handler";
 
 import type { SanityContext } from "~/lib/sanity";
 import type { Storefront } from "~/types/shopify";
-
-import type { HydrogenSession } from "handler";
 
 declare global {
   /**
