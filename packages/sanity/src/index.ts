@@ -8,6 +8,7 @@ import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {workflow} from 'sanity-plugin-workflow'
 
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
@@ -107,6 +108,13 @@ export function defineSanityConfig(config: SanityConfig) {
 
           return true
         },
+      }),
+      workflow({
+        // Required, list of document type names
+        // schemaTypes: ['article', 'product'],
+        schemaTypes: ['page', 'guide'],
+        // Optional, see below
+        // states: [],
       }),
     ],
 
