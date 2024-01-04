@@ -64,13 +64,13 @@ export function defineSanityConfig(config: SanityConfig) {
     title,
 
     plugins: [
-      deskTool({
-        structure,
-        defaultDocumentNode,
-      }),
       presentationTool({
         previewUrl: preview.domain ?? window.location.origin,
         locate,
+      }),
+      deskTool({
+        structure,
+        defaultDocumentNode,
       }),
       assist(),
       googleMapsInput({

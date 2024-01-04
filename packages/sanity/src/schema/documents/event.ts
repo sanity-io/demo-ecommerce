@@ -101,6 +101,10 @@ export const event = defineType({
       type: 'reference',
       to: [{type: 'colorTheme'}],
       group: 'theme',
+      initialValue: {
+        _type: 'reference',
+        _ref: '1a4e28a9-76ae-44a7-92b0-19a07f9b7b79',
+      },
     }),
   ],
 })
