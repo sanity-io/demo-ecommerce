@@ -1,3 +1,4 @@
+import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {languageFilter} from '@sanity/language-filter'
@@ -70,6 +71,7 @@ export function defineSanityConfig(config: SanityConfig) {
         previewUrl: preview.domain ?? window.location.origin,
         locate,
       }),
+      assist(),
       colorInput(),
       imageHotspotArrayPlugin(),
       customDocumentActions(),
