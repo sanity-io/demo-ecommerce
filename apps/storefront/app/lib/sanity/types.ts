@@ -50,6 +50,25 @@ export type SanityCollectionPage = {
   title: string;
 };
 
+export type SanityShopPage = {
+  filterEditorial: {
+    title: string;
+    description: string;
+    colorTheme: SanityColorTheme;
+  };
+  products: SanityProductPage[];
+  materials: {
+    _id: string;
+    name: string;
+    slug: string;
+  }[];
+  people: {
+    _id: string;
+    name: string;
+    slug: string;
+  }[];
+};
+
 export type SanityCollectionGroup = {
   _key: string;
   _type: "collectionGroup";
@@ -372,6 +391,7 @@ export type SanityFaqs = {
 
 export type SanityMaterial = {
   name: string;
+  slug: string;
   attributes: SanityMaterialAttributes;
   story: PortableTextBlock[];
 };

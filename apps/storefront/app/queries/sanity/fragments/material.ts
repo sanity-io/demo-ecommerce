@@ -7,6 +7,7 @@ export const MATERIAL = groq`
   'material': @->{
     _id,
     "name": coalesce(name[_key == $language][0].value, name[_key == $baseLanguage][0].value),
+    "slug": slug.current,
     attributes,
     "story": coalesce(story[_key == $language][0].value, story[_key == $baseLanguage][0].value)[] {
       ...,

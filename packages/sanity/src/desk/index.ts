@@ -32,6 +32,7 @@ import settings from './settings'
 const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
+  'filter',
   'guide',
   'home',
   'material',
@@ -60,6 +61,7 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       people(S, context),
       materials(S, context),
+      S.documentTypeListItem('filter').title('Filters'),
       colorThemes(S, context),
       S.divider(),
       eventNode(S, context),

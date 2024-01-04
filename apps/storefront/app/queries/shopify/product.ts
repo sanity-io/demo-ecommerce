@@ -90,6 +90,29 @@ export const PRODUCT_QUERY = `#graphql
   }
 `;
 
+export const ALL_PRODUCTS = `#graphql
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
+  query products(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    products: products(first: 25) {
+      edges {
+        node {
+          ...ProductFields
+          variants(first: 25) {
+            nodes {
+              ...ProductVariantFields
+            }
+          }
+        }
+      }
+    } 
+  }
+`;
+
 export const PRODUCTS_AND_VARIANTS = `#graphql
   ${PRODUCT_FIELDS}
   ${PRODUCT_VARIANT_FIELDS}
