@@ -178,15 +178,15 @@ export function defineSanityConfig(config: SanityConfig) {
   return defineConfig([
     {
       ...sharedConfig,
-      title: 'Ecommerce Management',
-      name: 'ecom-mgmt',
-      basePath: '/mgmt',
+      title: 'Commerce',
+      name: 'commerce',
+      basePath: '/commerce',
     },
     {
       ...sharedConfig,
-      title: 'Editorial',
-      name: 'editorial',
-      basePath: '/editorial',
+      title: 'Magazine',
+      name: 'magazine',
+      basePath: '/magazine',
     },
   ])
 }
