@@ -102,7 +102,7 @@ export async function handler(
           enabled: true,
           studioUrl: "/studio",
           filter: stegaFilter,
-          logger: console,
+          //logger: console,
         },
       }),
       waitUntil,

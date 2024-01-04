@@ -1,5 +1,7 @@
+import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
+import {googleMapsInput} from '@sanity/google-maps-input'
 import {languageFilter} from '@sanity/language-filter'
 import {presentationTool} from '@sanity/presentation'
 import {visionTool} from '@sanity/vision'
@@ -8,6 +10,7 @@ import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {workflow} from 'sanity-plugin-workflow'
 
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
@@ -55,19 +58,23 @@ export function defineSanityConfig(config: SanityConfig) {
     shopify,
   }
 
-  return defineConfig({
+  const sharedConfig = {
     ...rest,
 
     title,
 
     plugins: [
+      presentationTool({
+        previewUrl: preview.domain ?? window.location.origin,
+        locate,
+      }),
       deskTool({
         structure,
         defaultDocumentNode,
       }),
-      presentationTool({
-        previewUrl: preview.domain ?? window.location.origin,
-        locate,
+      assist(),
+      googleMapsInput({
+        apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
       }),
       colorInput(),
       imageHotspotArrayPlugin(),
@@ -107,6 +114,13 @@ export function defineSanityConfig(config: SanityConfig) {
 
           return true
         },
+      }),
+      workflow({
+        // Required, list of document type names
+        // schemaTypes: ['article', 'product'],
+        schemaTypes: ['page', 'guide'],
+        // Optional, see below
+        // states: [],
       }),
     ],
 
@@ -165,5 +179,20 @@ export function defineSanityConfig(config: SanityConfig) {
         logo: Logo,
       },
     },
-  })
+  }
+
+  return defineConfig([
+    {
+      ...sharedConfig,
+      title: 'Commerce',
+      name: 'commerce',
+      basePath: '/commerce',
+    },
+    {
+      ...sharedConfig,
+      title: 'Magazine',
+      name: 'magazine',
+      basePath: '/magazine',
+    },
+  ])
 }

@@ -14,6 +14,7 @@ const firstSegmentBasedOnType = {
   product: 'products',
   person: 'people',
   article: 'articles',
+  event: 'events',
 }
 
 // TODO: needs to get cleaned up a bit
@@ -76,6 +77,29 @@ export const locate: DocumentLocationResolver = (params, context) => {
     }
 
     case 'collection':
+    case 'event': {
+      const document$ = documentStore.listenQuery(
+        `*[_id == $id][0]`,
+        {id},
+        {perspective: 'previewDrafts'}
+      )
+
+      return document$.pipe(
+        map((document) => {
+          // @ts-expect-error
+          const href = `${firstSegmentBasedOnType[document._type]}/${document?.slug?.current || ''}`
+
+          return {
+            locations: [
+              {
+                title: document?.title || document?.hero?.title || document.seo?.title,
+                href,
+              },
+            ],
+          } satisfies DocumentLocationsState
+        })
+      )
+    }
     case 'product':
     case 'person': {
       const incomingReferences$ = documentStore.listenQuery(
