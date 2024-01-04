@@ -55,7 +55,7 @@ export function defineSanityConfig(config: SanityConfig) {
     shopify,
   }
 
-  return defineConfig({
+  const sharedConfig = {
     ...rest,
 
     title,
@@ -165,5 +165,20 @@ export function defineSanityConfig(config: SanityConfig) {
         logo: Logo,
       },
     },
-  })
+  }
+
+  return defineConfig([
+    {
+      ...sharedConfig,
+      title: 'Ecommerce Management',
+      name: 'ecom-mgmt',
+      basePath: '/mgmt',
+    },
+    {
+      ...sharedConfig,
+      title: 'Editorial',
+      name: 'editorial',
+      basePath: '/editorial',
+    },
+  ])
 }
