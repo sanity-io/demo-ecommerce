@@ -6,6 +6,7 @@ import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 
 import collections from './collections'
 import colorThemes from './colorThemes'
+import {eventNode} from './events'
 import guides from './guides'
 import home from './home'
 import materials from './materials'
@@ -42,6 +43,8 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'settings',
   'sharedText',
   'translation.metadata',
+  'workflow.metadata',
+  'event',
 ]
 
 export const structure: StructureResolver = (S, context) =>
@@ -58,6 +61,8 @@ export const structure: StructureResolver = (S, context) =>
       people(S, context),
       materials(S, context),
       colorThemes(S, context),
+      S.divider(),
+      eventNode(S, context),
       S.divider(),
       settings(S, context),
       S.divider(),

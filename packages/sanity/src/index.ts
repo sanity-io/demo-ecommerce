@@ -1,6 +1,7 @@
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
+import {googleMapsInput} from '@sanity/google-maps-input'
 import {languageFilter} from '@sanity/language-filter'
 import {presentationTool} from '@sanity/presentation'
 import {visionTool} from '@sanity/vision'
@@ -72,6 +73,9 @@ export function defineSanityConfig(config: SanityConfig) {
         locate,
       }),
       assist(),
+      googleMapsInput({
+        apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
+      }),
       colorInput(),
       imageHotspotArrayPlugin(),
       customDocumentActions(),
