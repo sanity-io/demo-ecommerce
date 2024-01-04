@@ -13,6 +13,21 @@ export const event = defineType({
       media: 'image',
     },
   },
+  groups: [
+    {
+      name: 'theme',
+      title: 'Theme',
+    },
+    {
+      default: true,
+      name: 'editorial',
+      title: 'Editorial',
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+  ],
   fields: [
     defineField({
       type: 'string',
@@ -79,6 +94,13 @@ export const event = defineType({
       name: 'price',
       title: 'Event Price ($)',
       description: `No value or 0 means it's free`,
+    }),
+    defineField({
+      name: 'colorTheme',
+      title: 'Color theme',
+      type: 'reference',
+      to: [{type: 'colorTheme'}],
+      group: 'theme',
     }),
   ],
 })
