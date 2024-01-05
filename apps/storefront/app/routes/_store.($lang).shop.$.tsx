@@ -1,4 +1,9 @@
-import { Await, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Await,
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Product as ProductType } from "@shopify/hydrogen/storefront-api-types";
 import {
@@ -9,16 +14,16 @@ import {
 import clsx from "clsx";
 import { Suspense } from "react";
 
-import { SORT_OPTIONS } from "~/components/collection/SortOrder";
+import SortOrder, { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import Filter, { cleanString } from "~/components/Filter";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
 import ProductCard from "~/components/product/Card";
 import { loader as queryStore, SanityShopPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
-import { notFound, validateLocale } from "~/lib/utils";
+import { fetchGids, notFound, slugify, validateLocale } from "~/lib/utils";
 import { SHOP_PAGE_QUERY } from "~/queries/sanity/shop";
-import { ALL_PRODUCTS } from "~/queries/shopify/product";
+import { PRODUCTS_BY_IDS } from "~/queries/shopify/product";
 import { ProductWithNodes } from "~/types/shopify";
 const { useQuery } = queryStore;
 
@@ -62,49 +67,53 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     baseLanguage: "en",
     material: searchParams.get("material") ?? null,
     person: searchParams.get("person") ?? null,
+    color: searchParams.get("color") ?? null,
   };
 
-  const [page, { products }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityShopPage>(
-      SHOP_PAGE_QUERY,
-      queryParams,
-      {
-        perspective: "previewDrafts",
-      }
-    ),
-    context.storefront.query<{
-      products: {
-        edges: {
-          // TODO: No idea if this type is right, feels wrong
-          node: ProductType;
-        }[];
-      };
-    }>(ALL_PRODUCTS, {
-      variables: {
-        handle,
-        cursor,
-        sortKey,
-        reverse,
-        count: count ? parseInt(count) : PAGINATION_SIZE,
-      },
-    }),
-  ]);
+  // TODO: Avoid this network request waterfall if possible
+  // How do we query for Shopify products based on filters only known in Sanity?
+
+  // Fetch the products based on the current filter params
+  const page = await context.sanity.loader.loadQuery<SanityShopPage>(
+    SHOP_PAGE_QUERY,
+    queryParams,
+    {
+      perspective: "previewDrafts",
+    }
+  );
 
   // Handle 404s
-  if (!page.data || !products) {
+  if (!page.data) {
+    throw notFound();
+  }
+
+  // Fetch the products from Shopify based on IDs from Sanity
+  const { products: shopifyProducts } = await context.storefront.query<{
+    products: (ProductType | null)[];
+  }>(PRODUCTS_BY_IDS, {
+    variables: {
+      handle,
+      cursor,
+      sortKey,
+      reverse,
+      ids: page.data.products.map((p) => p.gid),
+      count: count ? parseInt(count) : PAGINATION_SIZE,
+    },
+  });
+
+  // Handle 404s
+  if (!shopifyProducts) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  // const gids = fetchGids({ page: page.data.products, context });
+  const gids = fetchGids({ page: page.data.products, context });
 
   return defer({
     queryParams,
     page,
-    products,
-
-    // TODO: What is this?
-    gids: [],
+    shopifyProducts: shopifyProducts.filter(Boolean) as ProductType[],
+    gids,
     sortKey,
     analytics: {
       pageType: AnalyticsPageType.collection,
@@ -116,12 +125,12 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const { queryParams, gids, ...data } =
+  const { shopifyProducts, queryParams, gids, ...data } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
 
-  const shopifyProducts = data.products.edges.map(({ node }) => node);
+  const navigation = useNavigation();
 
   const { error, data: page } = useQuery<SanityShopPage>(
     SHOP_PAGE_QUERY,
@@ -136,10 +145,17 @@ export default function Collection() {
     return null;
   }
 
-  const { filterEditorial, products, materials, people } = page;
+  const { filterEditorial, materials, people } = page;
+  const colors = page.colors.map((color) => ({
+    name: color,
+    slug: color,
+  }));
 
-  const fallbackTitle = ["All products"];
+  let fallbackTitle = ["All products"];
 
+  if (params.get("color")) {
+    fallbackTitle = [`All ${cleanString(params.get("color"))} products`];
+  }
   if (params.get("material")) {
     const material = materials.find((m) => m.slug === params.get("material"));
     if (material?.name) {
@@ -152,12 +168,6 @@ export default function Collection() {
       fallbackTitle.push(`created by ${cleanString(person.name)}`);
     }
   }
-
-  // TODO: This is not good, I'm returning way too many Shopify products
-  // just to find the ones that came back from the Sanity filtered query
-  const filteredProducts = products
-    .map((p) => shopifyProducts.find((sp) => sp.id === p.gid))
-    .filter(Boolean) as ProductType[];
 
   return (
     <ColorTheme value={filterEditorial?.colorTheme}>
@@ -176,7 +186,7 @@ export default function Collection() {
             )}
           >
             <div className="flex flex-col items-start gap-8 md:flex-row">
-              <section className="grid w-full grid-cols-2 flex-col gap-4 md:w-1/4 md:grid-cols-1 md:gap-8">
+              <section className="grid w-full grid-cols-2 flex-col gap-4 md:w-1/4 md:grid-cols-1 md:gap-12">
                 <h2 className="col-span-2 text-xl font-bold md:col-span-1">
                   Filters
                 </h2>
@@ -186,35 +196,49 @@ export default function Collection() {
                 {Array.isArray(people) && people.length > 0 ? (
                   <Filter filterKey="person" values={people} />
                 ) : null}
+                {Array.isArray(colors) && colors.length > 0 ? (
+                  <Filter filterKey="color" values={colors} />
+                ) : null}
               </section>
 
-              <section className="grid w-full grid-cols-2 gap-x-4 gap-y-12 md:w-3/4 md:grid-cols-3">
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => (
-                    <ProductCard
-                      key={product.handle}
-                      storefrontProduct={product}
-                    />
-                  ))
+              <section className="grid w-full grid-cols-2 gap-x-4 gap-y-8 md:w-3/4 md:grid-cols-3">
+                {shopifyProducts.length > 0 ? (
+                  <>
+                    <div className="col-span-2 flex justify-between md:col-span-3">
+                      <h2 className="text-xl font-bold">
+                        {shopifyProducts.length === 1
+                          ? `1 Product`
+                          : `${shopifyProducts.length} Products`}
+                      </h2>
+                      {shopifyProducts.length > 0 && (
+                        <SortOrder
+                          key={`sort-${sort}`}
+                          initialSortOrder={page?.sortOrder}
+                        />
+                      )}
+                    </div>
+                    {shopifyProducts.map((product) => (
+                      <div
+                        key={product.handle}
+                        className={clsx(
+                          `transition-opacity duration-100 ease-in-out`,
+                          navigation.state === "idle"
+                            ? `opacity-100`
+                            : `animate-pulse opacity-50`
+                        )}
+                      >
+                        <ProductCard storefrontProduct={product} />
+                      </div>
+                    ))}
+                  </>
                 ) : (
-                  <div className="mt-16 text-center text-lg text-darkGray">
+                  <div className="text-lg text-darkGray">
                     <Label _key="collection.noResults" />
                   </div>
                 )}
               </section>
             </div>
           </div>
-
-          {/* {products.length > 0 && (
-              <div
-                className={clsx(
-                  "mb-8 flex justify-start", //
-                  "md:justify-end"
-                )}
-              >
-                <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
-              </div>
-            )} */}
         </Await>
       </Suspense>
     </ColorTheme>

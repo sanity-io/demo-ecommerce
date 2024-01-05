@@ -90,26 +90,48 @@ export const PRODUCT_QUERY = `#graphql
   }
 `;
 
-export const ALL_PRODUCTS = `#graphql
+export const PRODUCTS_BY_IDS = `#graphql
   ${PRODUCT_FIELDS}
   ${PRODUCT_VARIANT_FIELDS}
 
   query products(
     $country: CountryCode
     $language: LanguageCode
+    $ids: [ID!]!
   ) @inContext(country: $country, language: $language) {
-    products: products(first: 25) {
-      edges {
-        node {
-          ...ProductFields
-          variants(first: 25) {
-            nodes {
-              ...ProductVariantFields
+    products: nodes(ids: $ids) {
+      ... on Product {
+        ...ProductFields
+        variants(first: 1) {
+          nodes {
+            ...ProductVariantFields
+          }
+        }
+        media(first: 20) {
+          nodes {
+            ... on MediaImage {
+              id
+              mediaContentType
+              image {
+                id
+                url
+                altText
+                width
+                height
+              }
+            }
+            ... on Model3d {
+              id
+              mediaContentType
+              sources {
+                mimeType
+                url
+              }
             }
           }
         }
       }
-    } 
+    }
   }
 `;
 
