@@ -18,18 +18,15 @@ export const event = defineType({
     {
       name: 'theme',
       title: 'Theme',
-      description: 'Customize the visual theme aspects of the event here.',
     },
     {
       default: true,
       name: 'editorial',
       title: 'Editorial',
-      description: 'Main content and details about the event.',
     },
     {
       name: 'seo',
       title: 'SEO',
-      description: 'Fields relevant for search engine optimization.',
     },
   ],
   fields: [
@@ -49,7 +46,12 @@ export const event = defineType({
       },
     }),
     defineField({
-      type: 'text',
+      name: 'callToAction',
+      title: 'Call to action',
+      type: 'module.callToAction',
+    }),
+    defineField({
+      type: 'simpleBlockContent',
       name: 'description',
       title: 'Event Description',
       description: 'A detailed description of the event, including its purpose and highlights.',
