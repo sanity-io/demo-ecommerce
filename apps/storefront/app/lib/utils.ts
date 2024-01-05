@@ -324,3 +324,10 @@ export function isLocalPath(request: Request, url: string) {
 export function isServer(): boolean {
   return typeof document === "undefined";
 }
+
+export function slugify(string: string) {
+  return string
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+}

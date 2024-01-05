@@ -1,7 +1,6 @@
 import groq from "groq";
 
 import { COLOR_THEME } from "./fragments/colorTheme";
-import { PRODUCT_PAGE } from "./fragments/pages/product";
 
 export const SHOP_PAGE_QUERY = groq`
   {
@@ -21,10 +20,12 @@ export const SHOP_PAGE_QUERY = groq`
     "products": *[
       _type == "product"
        && defined(store.slug.current)
+       && defined(store.gid)
        && select(defined($material) => $material in composition[]->slug.current, true)
        && select(defined($person) => $person in creators[].person->slug.current, true)
-    ] | order(_updatedAt desc){
-      ${PRODUCT_PAGE}
+       && select(defined($color) => $color in store.options[_key == "Color"].values[], true)
+    ]{
+      "gid": store.gid,
     },
     "materials": *[
       _type == "material"
@@ -42,5 +43,6 @@ export const SHOP_PAGE_QUERY = groq`
       name,
       "slug": slug.current
     } | order(name asc),
+    "colors": array::unique(*[_type == "product"].store.options[_key == "Color"].values[]),
   }
 `;

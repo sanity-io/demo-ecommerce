@@ -56,7 +56,7 @@ export type SanityShopPage = {
     description: string;
     colorTheme: SanityColorTheme;
   };
-  products: SanityProductPage[];
+  products: { gid: string }[];
   materials: {
     _id: string;
     name: string;
@@ -67,6 +67,7 @@ export type SanityShopPage = {
     name: string;
     slug: string;
   }[];
+  colors: string[];
 };
 
 export type SanityCollectionGroup = {
