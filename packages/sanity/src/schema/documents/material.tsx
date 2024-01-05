@@ -13,6 +13,14 @@ export default defineField({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'slug',
+      type: 'slug',
+      validation: (rule) => rule.required(),
+      options: {
+        source: 'name[0].value',
+      },
+    }),
+    defineField({
       name: 'story',
       type: 'internationalizedArraySimpleBlockContent',
     }),
