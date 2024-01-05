@@ -1,7 +1,6 @@
 import groq from "groq";
 
 import { COLOR_THEME } from "./fragments/colorTheme";
-import { PRODUCT_PAGE } from "./fragments/pages/product";
 
 export const SHOP_PAGE_QUERY = groq`
   {

@@ -12,15 +12,18 @@ export default defineField({
     {
       name: 'theme',
       title: 'Theme',
+      description: 'Customize the visual theme and style of the page here.',
     },
     {
       default: true,
       name: 'editorial',
       title: 'Editorial',
+      description: 'Core content and layout settings for the page.',
     },
     {
       name: 'seo',
       title: 'SEO',
+      description: 'Settings and content enhancements for search engine optimization.',
     },
   ],
   fields: [
@@ -29,30 +32,32 @@ export default defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'The primary title of the page, used as the main heading.',
       validation: (rule) => rule.required(),
     }),
     // Slug
     defineField({
       name: 'slug',
       type: 'slug',
+      description: 'The URL-friendly identifier for the page, derived from the title.',
       options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
-      // @ts-expect-error - TODO - fix this TS error
       validation: validateSlug,
     }),
-    // Color theme
+    // Color Theme
     defineField({
       name: 'colorTheme',
-      title: 'Color theme',
+      title: 'Color Theme',
       type: 'reference',
+      description: 'Select a color theme to apply to the page for consistent branding.',
       to: [{type: 'colorTheme'}],
       group: 'theme',
     }),
-    // Show hero
+    // Show Hero
     defineField({
       name: 'showHero',
-      title: 'Show hero',
+      title: 'Show Hero',
       type: 'boolean',
-      description: 'If disabled, page title will be displayed instead',
+      description: 'Toggle whether to display a hero section at the top of the page.',
       initialValue: false,
       group: 'editorial',
     }),
@@ -61,6 +66,7 @@ export default defineField({
       name: 'hero',
       title: 'Hero',
       type: 'hero.page',
+      description: 'Define the hero section content, visible only if the hero section is enabled.',
       hidden: ({document}) => !document?.showHero,
       group: 'editorial',
     }),
@@ -69,6 +75,7 @@ export default defineField({
       name: 'body',
       title: 'Body',
       type: 'body',
+      description: 'The main content area of the page, supports rich text and media elements.',
       group: 'editorial',
     }),
     // SEO
@@ -76,12 +83,14 @@ export default defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo.page',
+      description: 'Configure SEO-related aspects such as meta tags and descriptions.',
       group: 'seo',
     }),
     defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
+      description: 'The language setting for the page, used for multilingual support.',
       hidden: true,
     }),
   ],
