@@ -21,10 +21,9 @@ import CollectionHero from "~/components/heroes/Collection";
 import ProductCard from "~/components/product/Card";
 import { loader as queryStore, SanityShopPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
-import { fetchGids, notFound, slugify, validateLocale } from "~/lib/utils";
+import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { SHOP_PAGE_QUERY } from "~/queries/sanity/shop";
 import { PRODUCTS_BY_IDS } from "~/queries/shopify/product";
-import { ProductWithNodes } from "~/types/shopify";
 const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
