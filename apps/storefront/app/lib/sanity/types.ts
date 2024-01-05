@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types";
-import type { Image } from "@sanity/types";
+import { SanityImageAssetDocument } from "@sanity/client";
+import type { Image, Slug } from "@sanity/types";
 
 import type { SanityColorTheme } from "~/lib/theme";
 import type { ProductWithNodes } from "~/types/shopify";
@@ -68,6 +69,25 @@ export type SanityShopPage = {
     slug: string;
   }[];
   colors: string[];
+};
+
+export type SanityEventPage = {
+  _id: string;
+  title: string;
+  slug: Slug;
+  description: PortableTextBlock[];
+  date: string;
+  duration: number;
+  price: number;
+  capacity: number;
+  callToAction: SanityModuleCallToAction;
+  location: {
+    _type: "geopoint";
+    lat: number;
+    lng: number;
+  };
+  image: SanityImageAssetDocument;
+  colorTheme: SanityColorTheme;
 };
 
 export type SanityCollectionGroup = {
