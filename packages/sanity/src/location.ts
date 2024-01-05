@@ -79,7 +79,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     case 'product':
     case 'person': {
       const incomingReferences$ = documentStore.listenQuery(
-        `*[references($id) && defined(slug)]`,
+        `*[references($id) && (defined(slug) || defined(store.slug))]`,
         {id},
         {perspective: 'previewDrafts'}
       )
@@ -125,6 +125,48 @@ export const locate: DocumentLocationResolver = (params, context) => {
         }, document$)
       )
     }
+
+    case 'material': {
+      const incomingReferences$ = documentStore.listenQuery(
+        `*[references($id) && (defined(slug) || defined(store.slug))]`,
+        {id},
+        {perspective: 'previewDrafts'}
+      )
+
+      return incomingReferences$.pipe(
+        map((documents) => ({
+          locations: [...documents]
+            .map((document: any) => {
+              console.log(document)
+
+              const title =
+                document.seo?.title ||
+                document?.title ||
+                document?.store?.title ||
+                document?.name ||
+                'No title'
+              const href = `${
+                'language' in document
+                  ? // @ts-expect-error
+                    localeByLanguage[document.language]
+                  : document._type === 'home'
+                  ? ''
+                  : '/'
+              }${
+                // @ts-expect-error
+                firstSegmentBasedOnType[document._type]
+              }/${document?.slug?.current || document.store?.slug?.current || ''}`
+
+              return {
+                title,
+                href,
+              }
+            })
+            .filter(({href, title}: any) => href && title),
+        }))
+      )
+    }
+
     default:
       return null
   }
