@@ -2,6 +2,7 @@ import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
@@ -23,9 +24,9 @@ import { PAGE_QUERY } from "~/queries/sanity/page";
 const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.data?.seo?.title,
-  description: data?.page?.data?.seo?.description,
-  media: data?.page?.data?.seo?.image,
+  title: data?.initial?.data?.seo?.title,
+  description: data?.initial?.data?.seo?.description,
+  media: data?.initial?.data?.seo?.image,
 });
 
 export const handle = {
@@ -39,65 +40,58 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const page = await context.sanity.loader.loadQuery<SanityPage>(
+  const queryParams = {
+    slug: handle,
+    language,
+    baseLanguage,
+  };
+  const initial = await context.sanity.loader.loadQuery<SanityPage>(
     PAGE_QUERY,
-    {
-      slug: handle,
-      language,
-      baseLanguage,
-    },
-    {
-      perspective: "previewDrafts",
-    }
+    queryParams,
+    { perspective: "previewDrafts" }
   );
 
-  if (!page.data) {
+  if (!initial.data) {
     throw notFound();
   }
 
-  // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
-
-  return defer({ language, page, gids });
+  return json({ language, initial, queryParams });
 }
 
 export default function Page() {
-  const { language, gids, ...data } =
+  const { initial, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
-  const { handle } = useParams();
-
-  const { error, data: page } = useQuery(
-    PAGE_QUERY,
-    { slug: handle, language, baseLanguage },
-    { initial: data.page }
-  );
+  const {
+    data: page,
+    loading,
+    error,
+  } = useQuery<SanityPage>(PAGE_QUERY, queryParams, {
+    // @ts-expect-error
+    initial,
+  });
 
   if (error) {
     throw error;
+  } else if (loading || !page) {
+    return <div>Loading...</div>;
   }
 
   return (
     <ColorTheme value={page?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Page hero */}
-          <PageHero
-            fallbackTitle={page?.title || ""}
-            hero={page?.hero as SanityHeroPage}
-          />
-          {/* Body */}
-          {page?.body && (
-            <PortableText
-              blocks={page.body}
-              centered
-              className={clsx(
-                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                "md:px-8"
-              )}
-            />
+      <PageHero
+        fallbackTitle={page?.title || ""}
+        hero={page?.hero as SanityHeroPage}
+      />
+      {page?.body && (
+        <PortableText
+          blocks={page.body}
+          centered
+          className={clsx(
+            "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+            "md:px-8"
           )}
-        </Await>
-      </Suspense>
+        />
+      )}
     </ColorTheme>
   );
 }
