@@ -3,7 +3,10 @@ import Iframe from 'sanity-plugin-iframe-pane'
 
 import {resolvePreviewUrl} from '../utils/resolveProductionUrl'
 
-const PREVIEW_TYPES = ['page', 'product', 'home', 'guide', 'collection', 'person']
+// Soft deprecation of pane previews
+const PREVIEW_TYPES = [
+  /*'page', 'product', 'home', 'guide', 'collection', 'person'*/
+]
 
 export const previewPane = (S: StructureBuilder) => {
   return S.view
@@ -18,10 +21,12 @@ export const previewPane = (S: StructureBuilder) => {
 }
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, options) => {
-  const {schemaType} = options
-  if (PREVIEW_TYPES.includes(schemaType)) {
+  // const {schemaType} = options
+  return S.document().views([S.view.form()])
+  // Soft deprecation of pane previews
+  /* if (PREVIEW_TYPES.includes(schemaType)) {
     return S.document().views([S.view.form(), previewPane(S)])
   } else {
-    return S.document().views([S.view.form()])
-  }
+
+  } */
 }
