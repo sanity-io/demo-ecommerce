@@ -23,6 +23,7 @@ import {
   type MetaFunction,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
+import { Suspense } from "react";
 
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
@@ -126,7 +127,9 @@ export default function App() {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
-        <VisualEditing filter={stegaFilter} />
+        <Suspense>
+          <VisualEditing filter={stegaFilter} />
+        </Suspense>
       </body>
     </html>
   );

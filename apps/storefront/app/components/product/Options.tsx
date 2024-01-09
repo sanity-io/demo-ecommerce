@@ -12,6 +12,8 @@ import { forwardRef } from "react";
 import Tooltip from "~/components/elements/Tooltip";
 import type { SanityCustomProductOption } from "~/lib/sanity";
 
+import { cleanString } from "../Filter";
+
 export default function ProductOptions({
   product,
   variants,

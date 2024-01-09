@@ -99,7 +99,7 @@ export async function handler(
         token: env.SANITY_API_TOKEN,
         stega: {
           // TODO: conditional based on session?
-          enabled: true,
+          enabled: false,
           studioUrl: "/studio",
           filter: stegaFilter,
           //logger: console,

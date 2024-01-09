@@ -3,9 +3,10 @@ import { createClient, type FilterDefault } from "@sanity/client/stega";
 import { enableOverlays, type HistoryAdapterNavigate } from "@sanity/overlays";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { loader } from "~/root";
+
 import { useSanityEnvironment } from "./environment";
-import { loader } from "./loader";
-const { useLiveMode } = loader;
+import { useLiveMode } from "./loader";
 
 export type VisualEditingProps = {
   filter: FilterDefault;
@@ -75,7 +76,7 @@ export function VisualEditing({
     }
   }, [location.hash, location.pathname, location.search, navigate]);
 
-  useLiveMode({ client, studioUrl });
+  useLiveMode({ client });
 
   return null;
 }

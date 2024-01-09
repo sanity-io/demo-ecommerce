@@ -20,10 +20,10 @@ export const PRODUCT_PAGE = groq`
   colorTheme->{
     ${COLOR_THEME}
   },
-  creators[]{
+  creators[]|order(_key){
     ${CREATOR}
   },
-  composition[]{
+  composition[]|order(_key){
     ${MATERIAL}
   },
   ${PRODUCT_FAQS},
@@ -33,7 +33,4 @@ export const PRODUCT_PAGE = groq`
     ${CUSTOM_PRODUCT_OPTIONS}
   },
   "gid": store.gid,
-  ${SEO_SHOPIFY},
-  "slug": store.slug.current,
-  ${SHARED_TEXT},
 `;
