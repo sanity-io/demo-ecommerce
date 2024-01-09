@@ -10,20 +10,20 @@ export default defineField({
   icon: DocumentIcon,
   groups: [
     {
+      // description: 'Customize the visual theme and style of the page here.',
       name: 'theme',
       title: 'Theme',
-      description: 'Customize the visual theme and style of the page here.',
     },
     {
       default: true,
+      // description: 'Core content and layout settings for the page.',
       name: 'editorial',
       title: 'Editorial',
-      description: 'Core content and layout settings for the page.',
     },
     {
+      // description: 'Settings and content enhancements for search engine optimization.',
       name: 'seo',
       title: 'SEO',
-      description: 'Settings and content enhancements for search engine optimization.',
     },
   ],
   fields: [
@@ -34,6 +34,41 @@ export default defineField({
       type: 'string',
       description: 'The primary title of the page, used as the main heading.',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'altTitles',
+      title: 'Alternative titles',
+      type: 'array',
+      group: 'editorial',
+      description: 'Provide alternative titles for A/B/N testing',
+      of: [
+        {
+          type: 'object',
+          name: 'variation',
+          title: 'Title variation',
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'weigth',
+            },
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'string',
+            },
+            defineField({
+              name: 'weight',
+              type: 'number',
+              description: 'Will be equal for all variations if not set',
+              validation: (rule) => [
+                rule.lessThan(100).error(`Weight can't be above 100.`),
+                rule.greaterThan(0).error(`Weight have to be above zero.`),
+              ],
+            }),
+          ],
+        },
+      ],
     }),
     // Slug
     defineField({
