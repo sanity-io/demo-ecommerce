@@ -1,7 +1,7 @@
 import {DefaultDocumentNodeResolver, StructureBuilder} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
-import {resolvePreviewUrl} from '../utils/resolveProductionUrl'
+import {resolvePreviewUrl} from '../../../utils/resolveProductionUrl'
 
 // Soft deprecation of pane previews
 const PREVIEW_TYPES = [

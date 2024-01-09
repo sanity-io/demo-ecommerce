@@ -1,9 +1,9 @@
 import {HomeIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 
-import TranslatedDoc from '../components/media/TranslatedDoc'
-import {LANGUAGES} from '../constants'
-import defineStructure from '../utils/defineStructure'
+import TranslatedDoc from '../../../components/media/TranslatedDoc'
+import {LANGUAGES} from '../../../constants'
+import defineStructure from '../../../utils/defineStructure'
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()

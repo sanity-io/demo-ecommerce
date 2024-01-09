@@ -1,11 +1,10 @@
-import {ComponentIcon} from '@sanity/icons'
 import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 
-import defineStructure from '../utils/defineStructure'
+import defineStructure from '../../../utils/defineStructure'
 
 /**
- * Show products where a material is used
+ * Show products for this person
  */
 const productsPane = (S: StructureBuilder) =>
   S.view
@@ -14,7 +13,7 @@ const productsPane = (S: StructureBuilder) =>
       query: `
         {
           'products': *[_type == 'product']{
-            _id, _type, composition, 'title': store.title
+            _id, _type, creators, 'title': store.title
           }
         }
         {
@@ -42,14 +41,13 @@ const productsPane = (S: StructureBuilder) =>
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
-    .title('Materials')
-    .icon(ComponentIcon)
-    .schemaType('material')
+    .title('People')
+    .schemaType('person')
     .child(
-      S.documentTypeList('material').child((documentId, context) => {
+      S.documentTypeList('person').child((documentId, context) => {
         const documentNode = context.structureContext.resolveDocumentNode({
           documentId,
-          schemaType: 'material',
+          schemaType: 'person',
         })
 
         return documentNode.views([...documentNode.getViews(), productsPane(S)])

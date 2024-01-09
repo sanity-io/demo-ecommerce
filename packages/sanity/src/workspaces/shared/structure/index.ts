@@ -29,7 +29,7 @@ import settings from './settings'
  */
 
 // If you add document types to desk structure manually, you can add them to this array to prevent duplicates in the root pane
-const DOCUMENT_TYPES_IN_STRUCTURE = [
+export const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
   'filter',
@@ -46,6 +46,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'translation.metadata',
   'workflow.metadata',
   'event',
+  'assist.instruction.context',
 ]
 
 export const structure: StructureResolver = (S, context) =>
