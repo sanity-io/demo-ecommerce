@@ -54,7 +54,7 @@ export default function ImageModule({ module }: Props) {
       )}
       {/* Product tags */}
       {module.variant === "productTags" && (
-        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
+        <div className="flex flex-wrap mt-2 gap-x-1 gap-y-2">
           {module.productTags?.map((tag) => {
             if (!tag?.gid) {
               return null;
@@ -93,6 +93,7 @@ const ImageContent = ({ module }: Props) => {
         projectId={projectId}
         sizes={["50vw, 100vw"]}
         src={image?.asset?._ref}
+        alt={image?.alt}
       />
 
       {/* Call to action */}
