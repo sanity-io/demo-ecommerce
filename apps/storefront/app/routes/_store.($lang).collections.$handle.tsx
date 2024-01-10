@@ -1,18 +1,12 @@
-import {
-  Await,
-  useLoaderData,
-  useParams,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import ProductGrid from "~/components/collection/ProductGrid";
@@ -20,22 +14,18 @@ import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
-import {
-  loader as queryStore,
-  type SanityCollectionPage,
-  type SanityHeroHome,
-} from "~/lib/sanity";
+import { type SanityCollectionPage, type SanityHeroHome } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { COLLECTION_PAGE_QUERY } from "~/queries/sanity/collection";
 import { COLLECTION_QUERY } from "~/queries/shopify/collection";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.data?.seo?.title ?? data?.collection?.title,
+  title: data?.initial?.data?.seo?.title ?? data?.collection?.title,
   description:
-    data?.page?.data?.seo?.description ?? data?.collection?.description,
-  media: data?.page?.data?.seo?.image ?? data?.collection?.image,
+    data?.initial?.data?.seo?.description ?? data?.collection?.description,
+  media: data?.initial?.data?.seo?.image ?? data?.collection?.image,
 });
 
 export const handle = {
@@ -67,13 +57,17 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 
   invariant(params.handle, "Missing collection handle");
 
-  const [page, { collection }] = await Promise.all([
+  const query = COLLECTION_PAGE_QUERY;
+  const queryParams = {
+    slug: params.handle,
+    language,
+  };
+  const [initial, { collection }] = await Promise.all([
     context.sanity.loader.loadQuery<SanityCollectionPage>(
-      COLLECTION_PAGE_QUERY,
-      {
-        slug: params.handle,
-        language,
-      }
+      query,
+      queryParams,
+      // TODO: This perspective should be set already in loadQuery
+      { perspective: context.sanity.client.config().perspective }
     ),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
       variables: {
@@ -87,17 +81,19 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   ]);
 
   // Handle 404s
-  if (!page.data || !collection) {
+  if (!initial.data || !collection) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({
-    language,
-    page,
+  return json({
+    initial,
+    query,
+    queryParams,
     collection,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
     sortKey,
     analytics: {
@@ -109,18 +105,18 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const { language, collection, gids, ...data } =
+  const { initial, query, queryParams, collection } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
-  const { handle } = useParams();
 
   const products = (collection as any).products.nodes;
 
   const { error, data: page } = useQuery(
-    COLLECTION_PAGE_QUERY,
-    { slug: handle, language },
-    { initial: data.page }
+    query,
+    queryParams,
+    // @ts-expect-error
+    { initial }
   );
 
   if (error) {
@@ -129,49 +125,45 @@ export default function Collection() {
 
   return (
     <ColorTheme value={page?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Hero */}
-          <CollectionHero
-            fallbackTitle={collection?.title}
-            hero={page?.hero as SanityHeroHome}
-          />
+      {/* Hero */}
+      <CollectionHero
+        fallbackTitle={collection?.title}
+        hero={page?.hero as SanityHeroHome}
+      />
 
+      <div
+        className={clsx(
+          "mb-32 mt-8 px-4", //
+          "md:px-8"
+        )}
+      >
+        {products.length > 0 && (
           <div
             className={clsx(
-              "mb-32 mt-8 px-4", //
-              "md:px-8"
+              "mb-8 flex justify-start", //
+              "md:justify-end"
             )}
           >
-            {products.length > 0 && (
-              <div
-                className={clsx(
-                  "mb-8 flex justify-start", //
-                  "md:justify-end"
-                )}
-              >
-                <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
-              </div>
-            )}
-
-            {/* No results */}
-            {products.length === 0 && (
-              <div className="mt-16 text-lg text-center text-darkGray">
-                <Label _key="collection.noResults" />
-              </div>
-            )}
-
-            {(page?.modules || products.length > 0) && (
-              <ProductGrid
-                collection={collection as any}
-                modules={page?.modules || []}
-                url={`/collections/${(collection as any).handle}`}
-                key={`${(collection as any).handle}-${sort}`}
-              />
-            )}
+            <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
           </div>
-        </Await>
-      </Suspense>
+        )}
+
+        {/* No results */}
+        {products.length === 0 && (
+          <div className="mt-16 text-center text-lg text-darkGray">
+            <Label _key="collection.noResults" />
+          </div>
+        )}
+
+        {(page?.modules || products.length > 0) && (
+          <ProductGrid
+            collection={collection as any}
+            modules={page?.modules || []}
+            url={`/collections/${(collection as any).handle}`}
+            key={`${(collection as any).handle}-${sort}`}
+          />
+        )}
+      </div>
     </ColorTheme>
   );
 }

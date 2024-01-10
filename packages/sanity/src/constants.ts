@@ -35,3 +35,5 @@ export const LANGUAGES = [
   {id: 'en', title: 'English', icon: '🇬🇧', previewUrl: ''},
   {id: 'no', title: 'Norwegian', icon: '🇳🇴', previewUrl: 'no-no'},
 ]
+
+export const STUDIO_PATH = '/studio'

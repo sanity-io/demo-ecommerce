@@ -96,6 +96,7 @@ export default function OrderRoute() {
           </div>
           <h1
             className={clsx([
+              "text-balance",
               "mb-4 text-2xl", //
               "md:text-3xl",
             ])}

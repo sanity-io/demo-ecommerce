@@ -1,4 +1,4 @@
-import { useAsyncValue, useFetcher } from "@remix-run/react";
+import { useAsyncValue, useFetcher, useLoaderData } from "@remix-run/react";
 import { extract } from "@sanity/mutator";
 import type {
   Collection,
@@ -23,6 +23,7 @@ import type {
   SanityPage,
   SanityPersonPage,
   SanityProductPage,
+  SanityShopPage,
 } from "~/lib/sanity";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
 import { useRootLoaderData } from "~/root";
@@ -187,6 +188,7 @@ export async function fetchGids({
 }: {
   page:
     | SanityHomePage
+    | SanityShopPage
     | SanityPage
     | SanityCollectionPage
     | SanityProductPage
@@ -267,10 +269,16 @@ export function useGid<
 }
 
 export function useGids() {
-  const gids = useAsyncValue();
+  // Used when `gids` was deferred and resolved on the front-end
+  // But abandoned because it appeared to affect Presentation performance
+  // const gids = useAsyncValue();
+
+  const loaderData = useLoaderData();
 
   // TODO: this doesnt' seem to actually memoize...
   return useMemo(() => {
+    const gids = loaderData?.gids ? loaderData.gids : [];
+
     const byGid = new Map<
       string,
       Product | Collection | ProductVariant | ProductVariant["image"]
@@ -289,7 +297,7 @@ export function useGids() {
     }
 
     return byGid;
-  }, [gids]);
+  }, [loaderData]);
 }
 
 /**

@@ -1,67 +1,75 @@
-import { Await, useLoaderData, useParams } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
-import {
-  loader as queryStore,
-  type SanityHeroPage,
-  type SanityPage,
-} from "~/lib/sanity";
+import { type SanityHeroPage, type SanityPage } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { GUIDE_QUERY } from "~/queries/sanity/guide";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.data?.seo?.title,
-  description: data?.page?.data?.seo?.description,
-  media: data?.page?.data?.seo?.image,
+  title: data?.initial?.data?.seo?.title,
+  description: data?.initial?.data?.seo?.description,
+  media: data?.initial?.data?.seo?.image,
 });
 
 export const handle = {
   seo,
 };
 
-export async function loader({ params, context }: LoaderFunctionArgs) {
+export async function loader({ request, params, context }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const page = await context.sanity.loader.loadQuery<SanityPage>(GUIDE_QUERY, {
+  const query = GUIDE_QUERY;
+  const queryParams = {
     slug: handle,
     language,
-  });
+  };
+  const initial = await context.sanity.loader.loadQuery<SanityPage>(
+    query,
+    queryParams,
+    // TODO: This perspective should be set already in loadQuery
+    { perspective: context.sanity.client.config().perspective }
+  );
 
-  if (!page.data) {
+  if (!initial.data) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({ language, page, gids });
+  return json({
+    initial,
+    query,
+    queryParams,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
+    gids,
+  });
 }
 
 export default function Page() {
-  const { language, gids, ...data } =
+  const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
-  const { handle } = useParams();
 
   const { error, data: page } = useQuery(
-    GUIDE_QUERY,
-    { slug: handle, language },
-    { initial: data.page }
+    query,
+    queryParams,
+    // @ts-expect-error
+    { initial }
   );
 
   if (error) {
@@ -70,26 +78,22 @@ export default function Page() {
 
   return (
     <ColorTheme value={page?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Page hero */}
-          <PageHero
-            fallbackTitle={page?.title || ""}
-            hero={page?.hero as SanityHeroPage}
-          />
-          {/* Body */}
-          {page?.body && (
-            <PortableText
-              blocks={page.body}
-              centered
-              className={clsx(
-                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                "md:px-8"
-              )}
-            />
+      {/* Page hero */}
+      <PageHero
+        fallbackTitle={page?.title || ""}
+        hero={page?.hero as SanityHeroPage}
+      />
+      {/* Body */}
+      {page?.body && (
+        <PortableText
+          blocks={page.body}
+          centered
+          className={clsx(
+            "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+            "md:px-8"
           )}
-        </Await>
-      </Suspense>
+        />
+      )}
     </ColorTheme>
   );
 }

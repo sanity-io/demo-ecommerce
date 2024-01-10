@@ -1,28 +1,23 @@
-import { Await, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
-import {
-  loader as queryStore,
-  type SanityHeroHome,
-  type SanityHomePage,
-} from "~/lib/sanity";
+import { type SanityHeroHome, type SanityHomePage } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.data?.seo?.title || "Sanity x Hydrogen",
+  title: data?.initial?.data?.seo?.title || "Sanity x Hydrogen",
   description:
-    data?.page?.data?.seo?.description ||
+    data?.initial?.data?.seo?.description ||
     "A custom storefront powered by Hydrogen and Sanity",
 });
 
@@ -30,25 +25,31 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
-  const page = await context.sanity.loader.loadQuery<SanityHomePage>(
-    HOME_PAGE_QUERY,
-    { language }
+  const query = HOME_PAGE_QUERY;
+  const queryParams = { language };
+  const initial = await context.sanity.loader.loadQuery<SanityHomePage>(
+    query,
+    queryParams,
+    // TODO: This perspective should be set already in loadQuery
+    { perspective: context.sanity.client.config().perspective }
   );
 
-  if (!page.data) {
+  if (!initial.data) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({
-    language,
-    page,
+  return json({
+    initial,
+    query,
+    queryParams,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
     analytics: {
       pageType: AnalyticsPageType.home,
@@ -57,13 +58,14 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
-  const { language, gids, ...data } =
+  const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
 
   const { error, data: page } = useQuery(
-    HOME_PAGE_QUERY,
-    { language },
-    { initial: data.page }
+    query,
+    queryParams,
+    // @ts-expect-error
+    { initial }
   );
 
   if (error) {
@@ -71,17 +73,15 @@ export default function Index() {
   }
 
   return (
-    <Suspense>
-      <Await resolve={gids}>
-        {/* Page hero */}
-        {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+    <>
+      {/* Page hero */}
+      {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
-        {page?.modules && (
-          <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-            <ModuleGrid items={page.modules} />
-          </div>
-        )}
-      </Await>
-    </Suspense>
+      {page?.modules && (
+        <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
+          <ModuleGrid items={page.modules} />
+        </div>
+      )}
+    </>
   );
 }

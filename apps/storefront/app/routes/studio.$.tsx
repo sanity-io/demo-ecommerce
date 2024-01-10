@@ -1,3 +1,4 @@
+import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -88,7 +89,7 @@ export default function Studio() {
 
   // Prevent hydration mismatch
   return hydrated ? (
-    <SanityStudio basePath="/studio" {...data} />
+    <SanityStudio basePath={STUDIO_PATH} {...data} />
   ) : (
     <SanityStudioFallback></SanityStudioFallback>
   );

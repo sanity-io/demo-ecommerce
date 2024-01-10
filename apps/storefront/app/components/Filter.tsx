@@ -60,10 +60,9 @@ export default function Filter({ filterKey, values }: FilterProps) {
                 onClick={handleFilter}
                 className={clsx(
                   isActive && "rounded font-bold text-purple-500",
-                  isActive && !gridLayout && "bg-purple-50 px-2",
                   isActive &&
-                    gridLayout &&
-                    "rounded-full ring-4 ring-purple-500",
+                    (!gridLayout || value.slug === "all") &&
+                    "bg-purple-50 px-2",
                   (!gridLayout || value.slug === "all") && "py-2",
                   `block w-full text-left transition-colors duration-100 hover:text-purple-700`
                 )}
@@ -72,6 +71,7 @@ export default function Filter({ filterKey, values }: FilterProps) {
                   filterKey={filterKey}
                   name={cleanString(value.name)}
                   slug={cleanString(value.slug)}
+                  isActive={isActive}
                 />
               </button>
             </li>
@@ -99,9 +99,15 @@ type FilterButtonProps = {
   filterKey: string;
   name: string;
   slug: string;
+  isActive?: boolean;
 };
 
-function FilterButton({ filterKey, name, slug }: FilterButtonProps) {
+function FilterButton({
+  filterKey,
+  name,
+  slug,
+  isActive = false,
+}: FilterButtonProps) {
   if (name === "All") {
     return <span>{name}</span>;
   }
@@ -109,10 +115,23 @@ function FilterButton({ filterKey, name, slug }: FilterButtonProps) {
   if (filterKey.split(":").pop() === "color") {
     return (
       <span
-        className="block h-8 w-8 rounded-full shadow-inner"
-        style={{ backgroundColor: COLOR_HEX_MAP[slug] }}
+        className={clsx(
+          "flex h-8 w-8 items-center justify-center rounded-full border",
+          isActive
+            ? "border-black"
+            : "cursor-pointer border-purple-200 border-transparent hover:border-black hover:border-opacity-30"
+        )}
         title={name}
-      ></span>
+      >
+        <div
+          className="rounded-full"
+          style={{
+            background: COLOR_HEX_MAP[slug],
+            height: "calc(100% - 4px)",
+            width: "calc(100% - 4px)",
+          }}
+        ></div>
+      </span>
     );
   }
 

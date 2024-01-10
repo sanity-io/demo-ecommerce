@@ -1,37 +1,38 @@
 import {
-  Await,
   useLoaderData,
   useNavigation,
   useSearchParams,
 } from "@remix-run/react";
-import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
+import { type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Product as ProductType } from "@shopify/hydrogen/storefront-api-types";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 
 import SortOrder, { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import Filter, { cleanString } from "~/components/Filter";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
 import ProductCard from "~/components/product/Card";
-import { loader as queryStore, SanityShopPage } from "~/lib/sanity";
+import { baseLanguage } from "~/data/countries";
+import { SanityShopPage } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { SHOP_PAGE_QUERY } from "~/queries/sanity/shop";
 import { PRODUCTS_BY_IDS } from "~/queries/shopify/product";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.data?.seo?.title ?? data?.page.filterEditorial?.title,
+  title:
+    data?.initial?.data?.seo?.title ?? data?.initial.filterEditorial?.title,
   description:
-    data?.page?.data?.seo?.description ??
-    data?.page.filterEditorial?.description,
-  media: data?.page?.data?.seo?.image ?? data?.page.filterEditorial?.image,
+    data?.initial?.data?.seo?.description ??
+    data?.initial.filterEditorial?.description,
+  media:
+    data?.initial?.data?.seo?.image ?? data?.initial.filterEditorial?.image,
 });
 
 export const handle = {
@@ -60,26 +61,27 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   const cursor = searchParams.get("cursor");
   const count = searchParams.get("count");
 
-  const queryParams = {
-    language,
-    // TODO: Shouldn't this be dynamic?
-    baseLanguage: "en",
-    material: searchParams.get("material") ?? null,
-    person: searchParams.get("person") ?? null,
-    color: searchParams.get("color") ?? null,
-  };
-
   // TODO: Avoid this network request waterfall if possible
   // How do we query for Shopify products based on filters only known in Sanity?
 
   // Fetch the products based on the current filter params
-  const page = await context.sanity.loader.loadQuery<SanityShopPage>(
-    SHOP_PAGE_QUERY,
-    queryParams
+  const query = SHOP_PAGE_QUERY;
+  const queryParams = {
+    language,
+    baseLanguage,
+    material: searchParams.get("material") ?? null,
+    person: searchParams.get("person") ?? null,
+    color: searchParams.get("color") ?? null,
+  };
+  const initial = await context.sanity.loader.loadQuery<SanityShopPage>(
+    query,
+    queryParams,
+    // TODO: This perspective should be set already in loadQuery
+    { perspective: context.sanity.client.config().perspective }
   );
 
   // Handle 404s
-  if (!page.data) {
+  if (!initial.data) {
     throw notFound();
   }
 
@@ -92,7 +94,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       cursor,
       sortKey,
       reverse,
-      ids: page.data.products.map((p) => p.gid),
+      ids: initial.data.products.map((p) => p.gid),
       count: count ? parseInt(count) : PAGINATION_SIZE,
     },
   });
@@ -103,25 +105,21 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data.products, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({
+  return json({
+    initial,
+    query,
     queryParams,
-    page,
     shopifyProducts: shopifyProducts.filter(Boolean) as ProductType[],
-    gids,
     sortKey,
-    analytics: {
-      pageType: AnalyticsPageType.collection,
-      handle,
-      // TODO: What is this?
-      // resourceId: collection.id,
-    },
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
+    gids,
   });
 }
 
 export default function Collection() {
-  const { shopifyProducts, queryParams, gids, ...data } =
+  const { initial, query, queryParams, shopifyProducts } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
@@ -129,10 +127,10 @@ export default function Collection() {
   const navigation = useNavigation();
 
   const { error, data: page } = useQuery<SanityShopPage>(
-    SHOP_PAGE_QUERY,
+    query,
     queryParams,
     // @ts-expect-error
-    { initial: data.page }
+    { initial }
   );
 
   if (error) {
@@ -167,76 +165,72 @@ export default function Collection() {
 
   return (
     <ColorTheme value={filterEditorial?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Hero */}
-          <CollectionHero
-            fallbackTitle={fallbackTitle.join(` `)}
-            hero={filterEditorial}
-          />
+      {/* Hero */}
+      <CollectionHero
+        fallbackTitle={fallbackTitle.join(` `)}
+        hero={filterEditorial}
+      />
 
-          <div
-            className={clsx(
-              "mb-32 mt-8 px-4", //
-              "md:px-8"
-            )}
-          >
-            <div className="flex flex-col items-start gap-8 md:flex-row">
-              <section className="grid flex-col w-full grid-cols-2 gap-4 md:w-1/4 md:grid-cols-1 md:gap-12">
-                <h2 className="col-span-2 text-xl font-bold md:col-span-1">
-                  Filters
-                </h2>
-                {Array.isArray(materials) && materials.length > 0 ? (
-                  <Filter filterKey="material" values={materials} />
-                ) : null}
-                {Array.isArray(people) && people.length > 0 ? (
-                  <Filter filterKey="person" values={people} />
-                ) : null}
-                {Array.isArray(colors) && colors.length > 0 ? (
-                  <Filter filterKey="color" values={colors} />
-                ) : null}
-              </section>
+      <div
+        className={clsx(
+          "mb-32 mt-8 px-4", //
+          "md:px-8"
+        )}
+      >
+        <div className="flex flex-col items-start gap-8 md:flex-row">
+          <section className="grid w-full grid-cols-2 flex-col gap-4 md:w-1/4 md:grid-cols-1 md:gap-12">
+            <h2 className="col-span-2 text-xl font-bold md:col-span-1">
+              Filters
+            </h2>
+            {Array.isArray(materials) && materials.length > 0 ? (
+              <Filter filterKey="material" values={materials} />
+            ) : null}
+            {Array.isArray(people) && people.length > 0 ? (
+              <Filter filterKey="person" values={people} />
+            ) : null}
+            {Array.isArray(colors) && colors.length > 0 ? (
+              <Filter filterKey="color" values={colors} />
+            ) : null}
+          </section>
 
-              <section className="grid w-full grid-cols-2 gap-x-4 gap-y-8 md:w-3/4 md:grid-cols-3">
-                {shopifyProducts.length > 0 ? (
-                  <>
-                    <div className="flex justify-between col-span-2 md:col-span-3">
-                      <h2 className="text-xl font-bold">
-                        {shopifyProducts.length === 1
-                          ? `1 Product`
-                          : `${shopifyProducts.length} Products`}
-                      </h2>
-                      {shopifyProducts.length > 0 && (
-                        <SortOrder
-                          key={`sort-${sort}`}
-                          initialSortOrder={page?.sortOrder}
-                        />
-                      )}
-                    </div>
-                    {shopifyProducts.map((product) => (
-                      <div
-                        key={product.handle}
-                        className={clsx(
-                          `transition-opacity duration-100 ease-in-out`,
-                          navigation.state === "idle"
-                            ? `opacity-100`
-                            : `animate-pulse opacity-50`
-                        )}
-                      >
-                        <ProductCard storefrontProduct={product} />
-                      </div>
-                    ))}
-                  </>
-                ) : (
-                  <div className="text-lg text-darkGray">
-                    <Label _key="collection.noResults" />
+          <section className="grid w-full grid-cols-2 gap-x-4 gap-y-8 md:w-3/4 md:grid-cols-3">
+            {shopifyProducts.length > 0 ? (
+              <>
+                <div className="col-span-2 flex justify-between md:col-span-3">
+                  <h2 className="text-xl font-bold">
+                    {shopifyProducts.length === 1
+                      ? `1 Product`
+                      : `${shopifyProducts.length} Products`}
+                  </h2>
+                  {shopifyProducts.length > 0 && (
+                    <SortOrder
+                      key={`sort-${sort}`}
+                      initialSortOrder={page?.sortOrder}
+                    />
+                  )}
+                </div>
+                {shopifyProducts.map((product) => (
+                  <div
+                    key={product.handle}
+                    className={clsx(
+                      `transition-opacity duration-100 ease-in-out`,
+                      navigation.state === "idle"
+                        ? `opacity-100`
+                        : `animate-pulse opacity-50`
+                    )}
+                  >
+                    <ProductCard storefrontProduct={product} />
                   </div>
-                )}
-              </section>
-            </div>
-          </div>
-        </Await>
-      </Suspense>
+                ))}
+              </>
+            ) : (
+              <div className="text-lg text-darkGray">
+                <Label _key="collection.noResults" />
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
     </ColorTheme>
   );
 }
