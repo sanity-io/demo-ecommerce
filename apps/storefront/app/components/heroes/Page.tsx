@@ -16,6 +16,7 @@ export default function PageHero({ fallbackTitle, hero }: Props) {
     return (
       <h1
         className={clsx(
+          "text-balance",
           "mx-auto max-w-[60rem] px-4 pb-8 pt-34 text-center text-3xl",
           "md:px-8 md:text-4xl"
         )}
@@ -38,10 +39,11 @@ export default function PageHero({ fallbackTitle, hero }: Props) {
       {hero.title && (
         <h1
           className={clsx(
+            "text-balance",
             "max-w-[60rem] whitespace-pre-line text-2xl",
             "md:text-4xl"
           )}
-          style={{ color: colorTheme?.text || "black", textWrap: "balance" }}
+          style={{ color: colorTheme?.text || "black" }}
         >
           {hero.title}
         </h1>
