@@ -18,8 +18,6 @@ import type {
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
 import { json, type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense, useMemo, useRef } from "react";
-import isEqual from "react-fast-compare";
 import invariant from "tiny-invariant";
 
 import { Label } from "~/components/global/Label";
@@ -246,17 +244,20 @@ export default function ProductHandle() {
         >
           <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
             <div className="hidden aspect-square xl:block" />
-            <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-              {page?.sharedText?.deliveryAndReturns && (
-                <SanityProductShipping
-                  blocks={page?.sharedText?.deliveryAndReturns}
-                />
-              )}
-            </div>
-            <div className="col-span-3 md:col-span-4 lg:col-span-3">
-              {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
-                <SanityProductFaqs faqs={page.faqs} />
-              )}
+              <div className="grid grid-cols-3 gap-10 mb-10 md:grid-cols-4 lg:grid-cols-6">
+                <div className="hidden aspect-square xl:block" />
+                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                  {page?.sharedText?.deliveryAndReturns && (
+                    <SanityProductShipping
+                      blocks={page?.sharedText?.deliveryAndReturns}
+                    />
+                  )}
+                </div>
+                <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                  {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
+                    <SanityProductFaqs faqs={page.faqs} />
+                  )}
+                </div>
             </div>
           </div>
         </div>

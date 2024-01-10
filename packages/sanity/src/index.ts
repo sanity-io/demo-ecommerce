@@ -15,12 +15,13 @@ import {workflow} from 'sanity-plugin-workflow'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
-import {structure} from './desk'
-import {defaultDocumentNode} from './desk/preview'
 import {locate} from './location'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
+import {magazineStructure} from './workspaces/magazine/structure'
+import {structure} from './workspaces/shared/structure'
+import {defaultDocumentNode} from './workspaces/shared/structure/preview'
 
 /**
  * Configuration options that will be passed in
@@ -193,6 +194,12 @@ export function defineSanityConfig(config: SanityConfig) {
       title: 'Magazine',
       name: 'magazine',
       basePath: '/magazine',
+      plugins: [
+        ...sharedConfig.plugins.filter(({name}) => name !== '@sanity/desk-tool'),
+        deskTool({
+          structure: magazineStructure,
+        }),
+      ],
     },
   ])
 }

@@ -87,7 +87,7 @@ export default function Event() {
     <ColorTheme value={colorTheme}>
       <PageHero fallbackTitle="Event details" hero={{ title: event.title }} />
       <article className="grid grid-cols-1 gap-12 md:grid-cols-5">
-        <div className="mb-auto flex flex-col items-start gap-4 py-4 md:col-span-3 md:col-start-3 md:gap-8 md:py-8">
+        <div className="flex flex-col items-start gap-4 py-4 mb-auto md:col-span-3 md:col-start-3 md:gap-8 md:py-8">
           <div className="overflow-hidden rounded-xl">
             <SanityImage
               src={event?.image?.asset?._id}
@@ -104,18 +104,18 @@ export default function Event() {
         <div className="p-4 text-lg md:col-span-2 md:col-start-1 md:row-start-1 md:p-8">
           <h2 className="mb-8 text-xl font-bold">{date}</h2>
 
-          <table className="mb-8 w-full border-b border-t border-purple-100">
+          <table className="w-full mb-8 border-t border-b border-purple-100">
             <tbody className="divide-y divide-purple-100">
               {event.capacity ? (
                 <tr>
-                  <td className="py-4 text-sm font-bold uppercase text-purple-400">
+                  <td className="py-4 text-sm font-bold text-purple-400 uppercase">
                     Capacity:
                   </td>
                   <td className="py-4">{event.capacity}</td>
                 </tr>
               ) : null}
               <tr>
-                <td className="py-4 text-sm font-bold uppercase text-purple-400">
+                <td className="py-4 text-sm font-bold text-purple-400 uppercase">
                   Price:
                 </td>
                 <td className="py-4">{price}</td>
