@@ -1,3 +1,4 @@
+import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import {
   isRouteErrorResponse,
   Links,
@@ -34,6 +35,7 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 
 import { baseLanguage } from "./data/countries";
 import { useAnalytics } from "./hooks/useAnalytics";
+import { isStegaEnabled } from "./lib/isStegaEnabled";
 import {
   loader as queryStore,
   Sanity,
@@ -62,24 +64,21 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: LoaderFunctionArgs) {
   const { cart, storefront, sanity } = context;
+
+  const isStudioRoute = new URL(request.url).pathname.startsWith(STUDIO_PATH);
+  const stegaEnabled = isStegaEnabled(request.url);
 
   const selectedLocale = storefront.i18n;
   const language = selectedLocale.language.toLowerCase();
 
   const [shop, layout] = await Promise.all([
     storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    sanity.loader.loadQuery<SanityLayout>(
-      LAYOUT_QUERY,
-      {
-        language,
-        baseLanguage,
-      },
-      {
-        perspective: "previewDrafts",
-      }
-    ),
+    sanity.loader.loadQuery<SanityLayout>(LAYOUT_QUERY, {
+      language,
+      baseLanguage,
+    }),
   ]);
 
   return defer({
@@ -102,12 +101,17 @@ export async function loader({ context }: LoaderFunctionArgs) {
       : undefined,
     selectedLocale,
     storeDomain: storefront.getShopifyDomain(),
+    sanity: {
+      isStudioRoute,
+      stegaEnabled,
+    },
   });
 }
 
 export default function App() {
-  const data = useLoaderData<SerializeFrom<typeof loader>>();
-  const locale = data.selectedLocale ?? DEFAULT_LOCALE;
+  const { selectedLocale, sanity } =
+    useLoaderData<SerializeFrom<typeof loader>>();
+  const locale = selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
 
@@ -127,9 +131,11 @@ export default function App() {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
-        <Suspense>
-          <VisualEditing filter={stegaFilter} />
-        </Suspense>
+        {!sanity.isStudioRoute && sanity.stegaEnabled ? (
+          <Suspense>
+            <VisualEditing filter={stegaFilter} />
+          </Suspense>
+        ) : null}
       </body>
     </html>
   );

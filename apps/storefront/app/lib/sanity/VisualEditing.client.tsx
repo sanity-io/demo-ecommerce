@@ -1,25 +1,22 @@
+import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import { useLocation, useNavigate } from "@remix-run/react";
-import { createClient, type FilterDefault } from "@sanity/client/stega";
-import { enableOverlays, type HistoryAdapterNavigate } from "@sanity/overlays";
-import { useEffect, useMemo, useRef, useState } from "react";
-
-import { loader } from "~/root";
+import { createClient, FilterDefault } from "@sanity/client/stega";
+import type { HistoryUpdate } from "@sanity/overlays";
+import { enableOverlays } from "@sanity/overlays";
+import { useEffect, useMemo, useRef } from "react";
 
 import { useSanityEnvironment } from "./environment";
 import { useLiveMode } from "./loader";
 
-export type VisualEditingProps = {
+type VisualEditingProps = {
   filter: FilterDefault;
-  studioUrl?: string;
 };
 
-export function VisualEditing({
-  filter,
-  studioUrl = "/studio",
-}: VisualEditingProps) {
+// Default export required for React Lazy loading
+export default function VisualEditing({ filter }: VisualEditingProps) {
   const { projectId, dataset, apiVersion } = useSanityEnvironment();
 
-  const client = useMemo(
+  const stegaClient = useMemo(
     () =>
       createClient({
         projectId,
@@ -27,58 +24,64 @@ export function VisualEditing({
         apiVersion,
         useCdn: false,
         perspective: "previewDrafts",
-        resultSourceMap: "withKeyArraySelector",
+        // resultSourceMap: "withKeyArraySelector",
         stega: {
           enabled: true,
           filter,
-          studioUrl,
+          studioUrl: STUDIO_PATH,
         },
       }),
-    [projectId, dataset, apiVersion, filter, studioUrl]
+    [projectId, dataset, apiVersion, filter]
   );
+
   const navigateRemix = useNavigate();
-  const navigateRemixRef = useRef(navigateRemix);
-  const [navigate, setNavigate] = useState<
-    HistoryAdapterNavigate | undefined
-  >();
+  const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
+    null
+  );
 
   useEffect(() => {
-    navigateRemixRef.current = navigateRemix;
+    // When displayed inside an iframe
+    if (window.parent !== window.self) {
+      const disable = enableOverlays({
+        zIndex: 999999,
+        history: {
+          subscribe: (navigate) => {
+            navigateComposerRef.current = navigate;
+            return () => {
+              navigateComposerRef.current = null;
+            };
+          },
+          update: (update) => {
+            if (update.type === "push" || update.type === "replace") {
+              navigateRemix(update.url, { replace: update.type === "replace" });
+            } else if (update.type === "pop") {
+              navigateRemix(-1);
+            }
+          },
+        },
+      });
+      return () => disable();
+    } else {
+      if (typeof document !== "undefined") {
+        console.log(
+          `Stega is enabled but Visual Editing is configured to only display in an iframe.`
+        );
+      }
+    }
   }, [navigateRemix]);
-  useEffect(() => {
-    const disable = enableOverlays({
-      history: {
-        subscribe: (navigate) => {
-          setNavigate(() => navigate);
-          return () => setNavigate(undefined);
-        },
-        update: (update) => {
-          if (update.type === "push" || update.type === "replace") {
-            navigateRemixRef.current(update.url, {
-              replace: update.type === "replace",
-            });
-          } else if (update.type === "pop") {
-            navigateRemixRef.current(-1);
-          }
-        },
-      },
-    });
-    return () => disable();
-  }, []);
 
   const location = useLocation();
   useEffect(() => {
-    if (navigate) {
-      navigate({
+    if (navigateComposerRef.current) {
+      navigateComposerRef.current({
         type: "push",
         url: `${location.pathname}${location.search}${location.hash}`,
       });
     }
-  }, [location.hash, location.pathname, location.search, navigate]);
+  }, [location.hash, location.pathname, location.search]);
 
-  useLiveMode({ client });
+  // Enable live queries from the specified studio origin URL
+  useLiveMode({ client: stegaClient });
 
   return null;
 }
-
-export { VisualEditing as default };

@@ -10,6 +10,7 @@ import { Suspense } from "react";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import {
   loader as queryStore,
   type SanityHeroHome,
@@ -30,14 +31,13 @@ export const handle = {
   seo,
 };
 
-export async function loader({ context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
   const page = await context.sanity.loader.loadQuery<SanityHomePage>(
     HOME_PAGE_QUERY,
-    { language },
-    { perspective: "previewDrafts" }
+    { language }
   );
 
   if (!page.data) {

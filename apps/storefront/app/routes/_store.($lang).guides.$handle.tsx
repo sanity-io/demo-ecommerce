@@ -2,6 +2,7 @@ import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
@@ -11,6 +12,7 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import {
   loader as queryStore,
   type SanityHeroPage,
@@ -38,34 +40,40 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const page = await context.sanity.loader.loadQuery<SanityPage>(
-    GUIDE_QUERY,
-    {
-      slug: handle,
-      language,
-    },
-    { perspective: "previewDrafts" }
+  const query = GUIDE_QUERY;
+  const queryParams = {
+    slug: handle,
+    language,
+  };
+  const initial = await context.sanity.loader.loadQuery<SanityPage>(
+    query,
+    queryParams
   );
 
-  if (!page.data) {
+  if (!initial.data) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: page.data, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({ language, page, gids });
+  return json({ initial, query, queryParams, gids });
 }
 
 export default function Page() {
-  const { language, gids, ...data } =
-    useLoaderData<SerializeFrom<typeof loader>>();
-  const { handle } = useParams();
+  const {
+    initial,
+    query,
+    queryParams,
+    // TODO: Uncover the purpose of this variable
+    gids,
+  } = useLoaderData<SerializeFrom<typeof loader>>();
 
   const { error, data: page } = useQuery(
-    GUIDE_QUERY,
-    { slug: handle, language },
-    { initial: page }
+    query,
+    queryParams,
+    // @ts-expect-error
+    { initial }
   );
 
   if (error) {
@@ -74,26 +82,22 @@ export default function Page() {
 
   return (
     <ColorTheme value={page?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Page hero */}
-          <PageHero
-            fallbackTitle={page?.title || ""}
-            hero={page?.hero as SanityHeroPage}
-          />
-          {/* Body */}
-          {page?.body && (
-            <PortableText
-              blocks={page.body}
-              centered
-              className={clsx(
-                "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
-                "md:px-8"
-              )}
-            />
+      {/* Page hero */}
+      <PageHero
+        fallbackTitle={page?.title || ""}
+        hero={page?.hero as SanityHeroPage}
+      />
+      {/* Body */}
+      {page?.body && (
+        <PortableText
+          blocks={page.body}
+          centered
+          className={clsx(
+            "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
+            "md:px-8"
           )}
-        </Await>
-      </Suspense>
+        />
+      )}
     </ColorTheme>
   );
 }

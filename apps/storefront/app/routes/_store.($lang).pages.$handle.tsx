@@ -13,6 +13,7 @@ import invariant from "tiny-invariant";
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
 import { baseLanguage } from "~/data/countries";
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import {
   loader as queryStore,
   type SanityHeroPage,
@@ -40,40 +41,34 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
+  const query = PAGE_QUERY;
   const queryParams = {
     slug: handle,
     language,
     baseLanguage,
   };
   const initial = await context.sanity.loader.loadQuery<SanityPage>(
-    PAGE_QUERY,
-    queryParams,
-    { perspective: "previewDrafts" }
+    query,
+    queryParams
   );
 
   if (!initial.data) {
     throw notFound();
   }
 
-  return json({ language, initial, queryParams });
+  return json({ language, initial, query, queryParams });
 }
 
 export default function Page() {
-  const { initial, queryParams } =
+  const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
-  const {
-    data: page,
-    loading,
-    error,
-  } = useQuery<SanityPage>(PAGE_QUERY, queryParams, {
+  const { data: page, error } = useQuery<SanityPage>(query, queryParams, {
     // @ts-expect-error
     initial,
   });
 
   if (error) {
     throw error;
-  } else if (loading || !page) {
-    return <div>Loading...</div>;
   }
 
   return (

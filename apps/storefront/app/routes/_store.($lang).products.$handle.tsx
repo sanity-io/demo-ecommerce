@@ -16,12 +16,7 @@ import type {
   ProductVariant,
 } from "@shopify/hydrogen/storefront-api-types";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import {
-  defer,
-  json,
-  type LoaderFunctionArgs,
-  redirect,
-} from "@shopify/remix-oxygen";
+import { json, type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense, useMemo, useRef } from "react";
 import isEqual from "react-fast-compare";
@@ -86,17 +81,14 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 
   const selectedOptions = getSelectedProductOptions(request);
 
+  const query = PRODUCT_PAGE_QUERY;
   const queryParams = {
     slug: params.handle,
     language,
     baseLanguage,
   };
   const [initial, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(
-      PRODUCT_PAGE_QUERY,
-      queryParams,
-      { perspective: "previewDrafts" }
-    ),
+    context.sanity.loader.loadQuery<SanityProductPage>(query, queryParams),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;
@@ -154,6 +146,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   return json({
     language,
     initial,
+    query,
     queryParams,
     product,
     variants,
@@ -189,46 +182,61 @@ function redirectToFirstVariant({
 export default function ProductHandle() {
   const {
     initial,
+    query,
     queryParams,
     product,
     variants,
     selectedVariant,
     analytics,
     recommended,
+    // TODO: Discover the purpose of this variable on this page
     gids,
   } = useLoaderData<typeof loader>();
 
-  const { error, data } = useQuery<SanityProductPage>(
-    PRODUCT_PAGE_QUERY,
+  const { error, data: page } = useQuery<SanityProductPage>(
+    query,
     queryParams,
     // @ts-expect-error
     { initial }
   );
-
-  // Doing our own ref + isEqual because useQuery was resorting keys
-  const dataRef = useRef<SanityProductPage>(initial?.data);
-  if (data && !isEqual(data, dataRef.current)) {
-    dataRef.current = data;
-  }
-
-  const { current: page } = dataRef;
 
   if (error) {
     throw error;
   }
 
   return (
-    <div className="relative w-full">
-      <ProductDetails
-        selectedVariant={selectedVariant}
-        sanityProduct={page as SanityProductPage}
-        storefrontProduct={product}
-        storefrontVariants={variants.product?.variants.nodes || []}
-        analytics={analytics as ShopifyAnalyticsPayload}
-      />
+    <ColorTheme value={page?.colorTheme}>
+      <div className="relative w-full">
+        <ProductDetails
+          selectedVariant={selectedVariant}
+          sanityProduct={page as SanityProductPage}
+          storefrontProduct={product}
+          storefrontVariants={variants.product?.variants.nodes || []}
+          analytics={analytics as ShopifyAnalyticsPayload}
+        />
 
-      {/* Body */}
-      {page?.body && (
+        {/* Body */}
+        {page?.body && (
+          <div
+            className={clsx(
+              "w-full", //
+              "lg:w-[calc(100%-315px)]",
+              "mb-10 mt-8 p-5"
+            )}
+          >
+            <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+              <div className="hidden xl:block" />
+              <div className="col-span-6 xl:col-span-5">
+                <PortableText blocks={page.body} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Magazine */}
+        <Magazine page={page as SanityProductPage} product={product} />
+
+        {/* Shipping info and FAQs */}
         <div
           className={clsx(
             "w-full", //
@@ -236,43 +244,26 @@ export default function ProductHandle() {
             "mb-10 mt-8 p-5"
           )}
         >
-          <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-            <div className="hidden xl:block" />
-            <div className="col-span-6 xl:col-span-5">
-              <PortableText blocks={page.body} />
+          <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+            <div className="hidden aspect-square xl:block" />
+            <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+              {page?.sharedText?.deliveryAndReturns && (
+                <SanityProductShipping
+                  blocks={page?.sharedText?.deliveryAndReturns}
+                />
+              )}
+            </div>
+            <div className="col-span-3 md:col-span-4 lg:col-span-3">
+              {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
+                <SanityProductFaqs faqs={page.faqs} />
+              )}
             </div>
           </div>
         </div>
-      )}
-
-      {/* Magazine */}
-      <Magazine page={page as SanityProductPage} product={product} />
-
-      {/* Shipping info and FAQs */}
-      <div
-        className={clsx(
-          "w-full", //
-          "lg:w-[calc(100%-315px)]",
-          "mb-10 mt-8 p-5"
-        )}
-      >
-        <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-          <div className="hidden aspect-square xl:block" />
-          <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-            {page?.sharedText?.deliveryAndReturns && (
-              <SanityProductShipping
-                blocks={page?.sharedText?.deliveryAndReturns}
-              />
-            )}
-          </div>
-          <div className="col-span-3 md:col-span-4 lg:col-span-3">
-            {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
-              <SanityProductFaqs faqs={page.faqs} />
-            )}
-          </div>
-        </div>
       </div>
-    </div>
+
+      <RelatedProducts relatedProducts={recommended.productRecommendations} />
+    </ColorTheme>
   );
 }
 

@@ -39,7 +39,8 @@ export default function ProductOptions({
           // Check if current product has a valid custom option type.
           // If so, render a custom option component.
           const customProductOption = customProductOptions?.find(
-            (customOption) => customOption.title === option.name
+            (customOption) =>
+              cleanString(customOption.title) === cleanString(option.name)
           );
 
           return (
@@ -56,7 +57,8 @@ export default function ProductOptions({
                       const foundCustomOptionValue =
                         customProductOption.colors.find(
                           (color) =>
-                            color.title.toLowerCase() === value.toLowerCase()
+                            cleanString(color.title).toLowerCase() ===
+                            cleanString(value).toLowerCase()
                         );
 
                       return (

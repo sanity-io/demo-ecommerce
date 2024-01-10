@@ -1,4 +1,5 @@
 // Virtual entry point for the app
+import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import * as remixBuild from "@remix-run/dev/server-build";
 import { createClient as createSanityClient } from "@sanity/client/stega";
 import {
@@ -18,6 +19,7 @@ import {
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
 
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import { createSanityProvider, loader, stegaFilter } from "~/lib/sanity";
 import { getLocaleFromRequest } from "~/lib/utils";
 
@@ -85,6 +87,7 @@ export async function handler(
       setCartId: cartSetIdDefault(),
     });
 
+    const stegaEnabled = isStegaEnabled(request.url);
     const sanity = createSanityProvider({
       loader,
       client: createSanityClient({
@@ -94,13 +97,13 @@ export async function handler(
         // TODO: should this be conditional on NODE_ENV?
         useCdn: false,
         resultSourceMap: "withKeyArraySelector",
-        perspective: "previewDrafts",
+        perspective: stegaEnabled ? "previewDrafts" : "published",
         // TODO: token for private dataset?
         token: env.SANITY_API_TOKEN,
         stega: {
           // TODO: conditional based on session?
-          enabled: false,
-          studioUrl: "/studio",
+          enabled: stegaEnabled,
+          studioUrl: STUDIO_PATH,
           filter: stegaFilter,
           //logger: console,
         },

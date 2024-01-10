@@ -75,10 +75,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   // Fetch the products based on the current filter params
   const page = await context.sanity.loader.loadQuery<SanityShopPage>(
     SHOP_PAGE_QUERY,
-    queryParams,
-    {
-      perspective: "previewDrafts",
-    }
+    queryParams
   );
 
   // Handle 404s

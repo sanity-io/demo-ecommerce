@@ -31,8 +31,7 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
 
   const initial = await context.sanity.loader.loadQuery<SanityEventPage>(
     EVENT_PAGE_QUERY,
-    { slug: handle },
-    { perspective: "previewDrafts" }
+    { slug: handle }
   );
 
   if (!initial.data) {

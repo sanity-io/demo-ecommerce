@@ -39,8 +39,7 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     {
       slug: handle,
       language,
-    },
-    { perspective: "previewDrafts" }
+    }
   );
 
   if (!page.data) {

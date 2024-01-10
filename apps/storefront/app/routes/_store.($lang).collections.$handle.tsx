@@ -20,6 +20,7 @@ import SortOrder from "~/components/collection/SortOrder";
 import { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import {
   loader as queryStore,
   type SanityCollectionPage,
@@ -73,9 +74,6 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       {
         slug: params.handle,
         language,
-      },
-      {
-        perspective: "previewDrafts",
       }
     ),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
