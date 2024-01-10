@@ -19,7 +19,7 @@ import {
 import { useNonce } from "@shopify/hydrogen";
 import type { Collection, Shop } from "@shopify/hydrogen/storefront-api-types";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type MetaFunction,
   type SerializeFrom,
@@ -36,14 +36,8 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 import { baseLanguage } from "./data/countries";
 import { useAnalytics } from "./hooks/useAnalytics";
 import { isStegaEnabled } from "./lib/isStegaEnabled";
-import {
-  loader as queryStore,
-  Sanity,
-  SanityLayout,
-  stegaFilter,
-  VisualEditing,
-} from "./lib/sanity";
-const { useQuery } = queryStore;
+import { Sanity, SanityLayout, stegaFilter, VisualEditing } from "./lib/sanity";
+import { useQuery } from "./lib/sanity/loader";
 
 export const meta: MetaFunction = () => [
   {
@@ -69,31 +63,36 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 
   const isStudioRoute = new URL(request.url).pathname.startsWith(STUDIO_PATH);
   const stegaEnabled = isStegaEnabled(request.url);
+  const visualEditingEnabled = stegaEnabled && !isStudioRoute;
 
   const selectedLocale = storefront.i18n;
   const language = selectedLocale.language.toLowerCase();
 
-  const [shop, layout] = await Promise.all([
+  const query = LAYOUT_QUERY;
+  const queryParams = {
+    language,
+    baseLanguage,
+  };
+  const [shop, initial] = await Promise.all([
     storefront.query<{ shop: Shop }>(SHOP_QUERY),
-    sanity.loader.loadQuery<SanityLayout>(LAYOUT_QUERY, {
-      language,
-      baseLanguage,
-    }),
+    sanity.loader.loadQuery<SanityLayout>(query, queryParams),
   ]);
 
-  return defer({
+  return json({
     analytics: {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
     },
     cart: cart.get(),
-    layout,
-    notFoundCollection: layout?.data.notFoundPage?.collectionGid
+    layout: initial,
+    query,
+    queryParams,
+    notFoundCollection: initial?.data.notFoundPage?.collectionGid
       ? context.storefront.query<{ collection: Collection }>(
           COLLECTION_QUERY_ID,
           {
             variables: {
-              id: layout.data.notFoundPage.collectionGid,
+              id: initial.data.notFoundPage.collectionGid,
               count: 16,
             },
           }
@@ -101,15 +100,12 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
       : undefined,
     selectedLocale,
     storeDomain: storefront.getShopifyDomain(),
-    sanity: {
-      isStudioRoute,
-      stegaEnabled,
-    },
+    visualEditingEnabled,
   });
 }
 
 export default function App() {
-  const { selectedLocale, sanity } =
+  const { selectedLocale, visualEditingEnabled } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const locale = selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
@@ -131,7 +127,7 @@ export default function App() {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
-        {!sanity.isStudioRoute && sanity.stegaEnabled ? (
+        {visualEditingEnabled ? (
           <Suspense>
             <VisualEditing filter={stegaFilter} />
           </Suspense>
@@ -144,16 +140,12 @@ export default function App() {
 export const useRootLoaderData = () => {
   const [root] = useMatches();
   const data = root?.data as SerializeFrom<typeof loader>;
+  const { query, queryParams } = data;
 
-  const locale = data.selectedLocale ?? DEFAULT_LOCALE;
-  const language = locale.language.toLowerCase();
-  const {
-    error,
-    loading,
-    data: layout,
-  } = useQuery(
-    LAYOUT_QUERY,
-    { language, baseLanguage },
+  const { error, data: layout } = useQuery(
+    query,
+    queryParams,
+    // @ts-expect-error
     { initial: data.layout }
   );
 
@@ -161,13 +153,10 @@ export const useRootLoaderData = () => {
     throw error;
   }
 
-  // TODO: Remove this once we have a better way to handle this
-  return loading
-    ? { ...data, layout: data.layout.data }
-    : {
-        ...data,
-        layout,
-      };
+  return {
+    ...data,
+    layout,
+  };
 };
 
 export function ErrorBoundary({ error }: { error: Error }) {

@@ -1,26 +1,13 @@
-import { Await, useLoaderData, useParams } from "@remix-run/react";
-
-import {
-  loader as queryStore,
-  type SanityEventPage,
-  useSanityEnvironment,
-} from "~/lib/sanity";
-const { useQuery } = queryStore;
-
-import { SanityDocument } from "@sanity/client";
-import {
-  defer,
-  json,
-  LoaderFunctionArgs,
-  SerializeFrom,
-} from "@shopify/remix-oxygen";
-import { Suspense } from "react";
+import { useLoaderData } from "@remix-run/react";
+import { json, LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import SanityImage from "~/components/media/SanityImage";
 import CallToActionModule from "~/components/modules/CallToAction";
 import PortableText from "~/components/portableText/PortableText";
+import { type SanityEventPage, useSanityEnvironment } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
 import { notFound } from "~/lib/utils";
 import { EVENT_PAGE_QUERY } from "~/queries/sanity/event";
@@ -29,25 +16,28 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing event handle");
 
+  const query = EVENT_PAGE_QUERY;
+  const queryParams = { slug: handle };
   const initial = await context.sanity.loader.loadQuery<SanityEventPage>(
-    EVENT_PAGE_QUERY,
-    { slug: handle }
+    query,
+    queryParams,
+    // TODO: This perspective should be set already in loadQuery
+    { perspective: context.sanity.client.config().perspective }
   );
 
   if (!initial.data) {
     throw notFound();
   }
 
-  return json({ initial });
+  return json({ initial, query, queryParams });
 }
 
 export default function Event() {
-  const { initial } = useLoaderData<typeof loader>();
-  const { handle } = useParams();
+  const { initial, query, queryParams } = useLoaderData<typeof loader>();
 
   const { error, data: event } = useQuery<SanityEventPage>(
-    EVENT_PAGE_QUERY,
-    { slug: handle },
+    query,
+    queryParams,
     // @ts-expect-error
     { initial }
   );
@@ -87,7 +77,7 @@ export default function Event() {
     <ColorTheme value={colorTheme}>
       <PageHero fallbackTitle="Event details" hero={{ title: event.title }} />
       <article className="grid grid-cols-1 gap-12 md:grid-cols-5">
-        <div className="flex flex-col items-start gap-4 py-4 mb-auto md:col-span-3 md:col-start-3 md:gap-8 md:py-8">
+        <div className="mb-auto flex flex-col items-start gap-4 py-4 md:col-span-3 md:col-start-3 md:gap-8 md:py-8">
           <div className="overflow-hidden rounded-xl">
             <SanityImage
               src={event?.image?.asset?._id}
@@ -104,18 +94,18 @@ export default function Event() {
         <div className="p-4 text-lg md:col-span-2 md:col-start-1 md:row-start-1 md:p-8">
           <h2 className="mb-8 text-xl font-bold">{date}</h2>
 
-          <table className="w-full mb-8 border-t border-b border-purple-100">
+          <table className="mb-8 w-full border-b border-t border-purple-100">
             <tbody className="divide-y divide-purple-100">
               {event.capacity ? (
                 <tr>
-                  <td className="py-4 text-sm font-bold text-purple-400 uppercase">
+                  <td className="py-4 text-sm font-bold uppercase text-purple-400">
                     Capacity:
                   </td>
                   <td className="py-4">{event.capacity}</td>
                 </tr>
               ) : null}
               <tr>
-                <td className="py-4 text-sm font-bold text-purple-400 uppercase">
+                <td className="py-4 text-sm font-bold uppercase text-purple-400">
                   Price:
                 </td>
                 <td className="py-4">{price}</td>

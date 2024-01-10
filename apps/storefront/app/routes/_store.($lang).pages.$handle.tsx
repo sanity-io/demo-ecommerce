@@ -1,28 +1,21 @@
-import { Await, useLoaderData, useParams } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
-  defer,
   json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
 import { baseLanguage } from "~/data/countries";
-import { isStegaEnabled } from "~/lib/isStegaEnabled";
-import {
-  loader as queryStore,
-  type SanityHeroPage,
-  type SanityPage,
-} from "~/lib/sanity";
+import { type SanityHeroPage, type SanityPage } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
-import { fetchGids, notFound, validateLocale } from "~/lib/utils";
+import { notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
   title: data?.initial?.data?.seo?.title,
@@ -49,7 +42,9 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   };
   const initial = await context.sanity.loader.loadQuery<SanityPage>(
     query,
-    queryParams
+    queryParams,
+    // TODO: This perspective should be set already in loadQuery
+    { perspective: context.sanity.client.config().perspective }
   );
 
   if (!initial.data) {

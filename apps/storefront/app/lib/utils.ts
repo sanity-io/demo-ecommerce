@@ -23,6 +23,7 @@ import type {
   SanityPage,
   SanityPersonPage,
   SanityProductPage,
+  SanityShopPage,
 } from "~/lib/sanity";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
 import { useRootLoaderData } from "~/root";
@@ -187,6 +188,7 @@ export async function fetchGids({
 }: {
   page:
     | SanityHomePage
+    | SanityShopPage
     | SanityPage
     | SanityCollectionPage
     | SanityProductPage

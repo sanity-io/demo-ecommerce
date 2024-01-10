@@ -11,7 +11,7 @@ import type {
   InitializedClientStegaConfig,
   SanityStegaClient,
 } from "@sanity/client/stega";
-import { createQueryStore } from "@sanity/react-loader";
+import * as queryStore from "@sanity/react-loader";
 import { CacheLong, createWithCache } from "@shopify/hydrogen";
 
 import { createSanityEnvironment, SanityEnvironment } from "./environment";
@@ -51,10 +51,9 @@ type EnvironmentOptions = {
   waitUntil: ExecutionContext["waitUntil"];
 };
 
-type QueryStore = ReturnType<typeof createQueryStore>;
+type QueryStore = ReturnType<typeof queryStore.createQueryStore>;
 type SanityOverlayProviderOptions = {
   client: SanityStegaClient;
-  loader: QueryStore;
 } & EnvironmentOptions;
 type SanityClientProviderOptions = {
   client: SanityClient;
@@ -104,17 +103,13 @@ export function createSanityProvider(
   //   },
   // });
 
-  if ("loader" in options) {
-    // if (!(client instanceof SanityStegaClient)) {
-    //   throw new Error("If using loaders, the client must be a stega client");
-    // }
-    const { loader } = options;
-    // Run on each invocation of the handler!
-    if (!globalThis.didSetClient) {
-      loader.setServerClient(client);
-      globalThis.didSetClient = true;
-    }
+  if (!globalThis.didSetClient) {
+    // TODO: The perspective set by this client is not being respected in the exported loadQuery
+    queryStore.setServerClient(client);
+    globalThis.didSetClient = true;
   }
+
+  const { loadQuery } = queryStore;
 
   // TODO: should this be enforced?
   // if (client instanceof SanityStegaClient) {
@@ -125,8 +120,7 @@ export function createSanityProvider(
     // @ts-expect-error
     client,
     cache,
-    // @ts-expect-error
-    loader: options?.loader,
+    loader: { loadQuery },
     SanityProvider,
     ...environment,
   };
@@ -173,7 +167,7 @@ function hashQuery(query: string, params: QueryParams): Promise<string> {
 }
 
 export type SanityContext = {
-  loader: QueryStore;
+  loader: { loadQuery: QueryStore["loadQuery"] };
   cache: Cache;
   client: Omit<SanityClient, "fetch"> & {
     /**

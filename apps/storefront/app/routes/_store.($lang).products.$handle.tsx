@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from "@portabletext/types";
-import { Await, useLoaderData, useParams } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
   flattenConnection,
@@ -27,11 +27,8 @@ import ProductDetails from "~/components/product/Details";
 import Magazine from "~/components/product/Magazine";
 import RelatedProducts from "~/components/product/RelatedProducts";
 import { baseLanguage } from "~/data/countries";
-import {
-  loader as queryStore,
-  type SanityFaqs,
-  type SanityProductPage,
-} from "~/lib/sanity";
+import { type SanityFaqs, type SanityProductPage } from "~/lib/sanity";
+import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PRODUCT_PAGE_QUERY } from "~/queries/sanity/product";
@@ -40,7 +37,6 @@ import {
   RECOMMENDED_PRODUCTS_QUERY,
   VARIANTS_QUERY,
 } from "~/queries/shopify/product";
-const { useQuery } = queryStore;
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(
@@ -49,12 +45,12 @@ const seo: SeoHandleFunction<typeof loader> = ({ data }) => {
 
   return {
     title:
-      data?.page?.data?.seo?.title ??
+      data?.initial?.data?.seo?.title ??
       data?.product?.seo?.title ??
       data?.product?.title,
-    media: data?.page?.data?.seo?.image ?? media?.image,
+    media: data?.initial?.data?.seo?.image ?? media?.image,
     description:
-      data?.page?.data?.seo?.description ??
+      data?.initial?.data?.seo?.description ??
       data?.product?.seo?.description ??
       data?.product?.description,
     jsonLd: {
@@ -86,7 +82,12 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     baseLanguage,
   };
   const [initial, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(query, queryParams),
+    context.sanity.loader.loadQuery<SanityProductPage>(
+      query,
+      queryParams,
+      // TODO: This perspective should be set already in loadQuery
+      { perspective: context.sanity.client.config().perspective }
+    ),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;
@@ -244,20 +245,20 @@ export default function ProductHandle() {
         >
           <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
             <div className="hidden aspect-square xl:block" />
-              <div className="grid grid-cols-3 gap-10 mb-10 md:grid-cols-4 lg:grid-cols-6">
-                <div className="hidden aspect-square xl:block" />
-                <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-                  {page?.sharedText?.deliveryAndReturns && (
-                    <SanityProductShipping
-                      blocks={page?.sharedText?.deliveryAndReturns}
-                    />
-                  )}
-                </div>
-                <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                  {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
-                    <SanityProductFaqs faqs={page.faqs} />
-                  )}
-                </div>
+            <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+              <div className="hidden aspect-square xl:block" />
+              <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
+                {page?.sharedText?.deliveryAndReturns && (
+                  <SanityProductShipping
+                    blocks={page?.sharedText?.deliveryAndReturns}
+                  />
+                )}
+              </div>
+              <div className="col-span-3 md:col-span-4 lg:col-span-3">
+                {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
+                  <SanityProductFaqs faqs={page.faqs} />
+                )}
+              </div>
             </div>
           </div>
         </div>

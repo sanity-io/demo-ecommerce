@@ -20,7 +20,7 @@ import {
 } from "@shopify/remix-oxygen";
 
 import { isStegaEnabled } from "~/lib/isStegaEnabled";
-import { createSanityProvider, loader, stegaFilter } from "~/lib/sanity";
+import { createSanityProvider, stegaFilter } from "~/lib/sanity";
 import { getLocaleFromRequest } from "~/lib/utils";
 
 // TODO: setting server client should be a noop.
@@ -88,20 +88,19 @@ export async function handler(
     });
 
     const stegaEnabled = isStegaEnabled(request.url);
+
     const sanity = createSanityProvider({
-      loader,
       client: createSanityClient({
         projectId: env.SANITY_PROJECT_ID,
         dataset: env.SANITY_DATASET || "production",
         apiVersion: env.SANITY_API_VERSION || "2023-03-30",
-        // TODO: should this be conditional on NODE_ENV?
-        useCdn: false,
-        resultSourceMap: "withKeyArraySelector",
+        useCdn: !stegaEnabled,
+        // resultSourceMap: "withKeyArraySelector",
         perspective: stegaEnabled ? "previewDrafts" : "published",
         // TODO: token for private dataset?
         token: env.SANITY_API_TOKEN,
         stega: {
-          // TODO: conditional based on session?
+          // TODO: conditional based on session instead of URL
           enabled: stegaEnabled,
           studioUrl: STUDIO_PATH,
           filter: stegaFilter,
