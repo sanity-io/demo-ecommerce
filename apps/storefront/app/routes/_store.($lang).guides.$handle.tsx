@@ -61,7 +61,7 @@ export default function Page() {
   const { error, data: page } = useQuery(
     GUIDE_QUERY,
     { slug: handle, language },
-    { initial: page }
+    { initial: data.page }
   );
 
   if (error) {
