@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
   json,
@@ -6,6 +6,7 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
+import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
@@ -14,7 +15,7 @@ import { baseLanguage } from "~/data/countries";
 import { type SanityHeroPage, type SanityPage } from "~/lib/sanity";
 import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
-import { notFound, validateLocale } from "~/lib/utils";
+import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { PAGE_QUERY } from "~/queries/sanity/page";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
@@ -51,7 +52,16 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     throw notFound();
   }
 
-  return json({ language, initial, query, queryParams });
+  // Resolve any references to products on the Storefront API
+  const gids = await fetchGids({ page: initial.data, context });
+
+  return json({
+    initial,
+    query,
+    queryParams,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
+    gids,
+  });
 }
 
 export default function Page() {

@@ -9,7 +9,6 @@ import clsx from "clsx";
 
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
-import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import { type SanityHeroHome, type SanityHomePage } from "~/lib/sanity";
 import { useQuery } from "~/lib/sanity/loader";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
@@ -50,6 +49,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
     initial,
     query,
     queryParams,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
     analytics: {
       pageType: AnalyticsPageType.home,
@@ -58,7 +58,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
-  const { initial, query, queryParams, gids, ...data } =
+  const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
 
   const { error, data: page } = useQuery(

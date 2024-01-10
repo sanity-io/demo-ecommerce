@@ -10,7 +10,6 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
-import { isStegaEnabled } from "~/lib/isStegaEnabled";
 import { type SanityHeroPage, type SanityPage } from "~/lib/sanity";
 import { useQuery } from "~/lib/sanity/loader";
 import { ColorTheme } from "~/lib/theme";
@@ -53,17 +52,18 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   // Resolve any references to products on the Storefront API
   const gids = await fetchGids({ page: initial.data, context });
 
-  return json({ initial, query, queryParams, gids });
-}
-
-export default function Page() {
-  const {
+  return json({
     initial,
     query,
     queryParams,
-    // TODO: Uncover the purpose of this variable
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
-  } = useLoaderData<SerializeFrom<typeof loader>>();
+  });
+}
+
+export default function Page() {
+  const { initial, query, queryParams } =
+    useLoaderData<SerializeFrom<typeof loader>>();
 
   const { error, data: page } = useQuery(
     query,

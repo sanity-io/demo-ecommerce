@@ -149,6 +149,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     queryParams,
     product,
     variants,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
     selectedVariant,
     recommended,
@@ -188,8 +189,6 @@ export default function ProductHandle() {
     selectedVariant,
     analytics,
     recommended,
-    // TODO: Discover the purpose of this variable on this page
-    gids,
   } = useLoaderData<typeof loader>();
 
   const { error, data: page } = useQuery<SanityProductPage>(

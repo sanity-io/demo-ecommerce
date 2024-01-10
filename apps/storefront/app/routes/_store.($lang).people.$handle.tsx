@@ -52,11 +52,17 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   // Resolve any references to products on the Storefront API
   const gids = await fetchGids({ page: initial.data, context });
 
-  return json({ initial, query, queryParams, gids });
+  return json({
+    initial,
+    query,
+    queryParams,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
+    gids,
+  });
 }
 
 export default function Page() {
-  const { initial, query, queryParams, gids, ...data } =
+  const { initial, query, queryParams, gids } =
     useLoaderData<SerializeFrom<typeof loader>>();
 
   const { error, data: page } = useQuery(

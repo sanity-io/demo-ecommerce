@@ -1,13 +1,12 @@
-import { Await, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { AnalyticsPageType, type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Collection as CollectionType } from "@shopify/hydrogen/storefront-api-types";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import ProductGrid from "~/components/collection/ProductGrid";
@@ -87,13 +86,14 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = fetchGids({ page: initial.data, context });
+  const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({
+  return json({
     initial,
     query,
     queryParams,
     collection,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
     gids,
     sortKey,
     analytics: {
@@ -105,7 +105,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const { initial, query, queryParams, collection, gids } =
+  const { initial, query, queryParams, collection } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
@@ -125,49 +125,45 @@ export default function Collection() {
 
   return (
     <ColorTheme value={page?.colorTheme}>
-      <Suspense>
-        <Await resolve={gids}>
-          {/* Hero */}
-          <CollectionHero
-            fallbackTitle={collection?.title}
-            hero={page?.hero as SanityHeroHome}
-          />
+      {/* Hero */}
+      <CollectionHero
+        fallbackTitle={collection?.title}
+        hero={page?.hero as SanityHeroHome}
+      />
 
+      <div
+        className={clsx(
+          "mb-32 mt-8 px-4", //
+          "md:px-8"
+        )}
+      >
+        {products.length > 0 && (
           <div
             className={clsx(
-              "mb-32 mt-8 px-4", //
-              "md:px-8"
+              "mb-8 flex justify-start", //
+              "md:justify-end"
             )}
           >
-            {products.length > 0 && (
-              <div
-                className={clsx(
-                  "mb-8 flex justify-start", //
-                  "md:justify-end"
-                )}
-              >
-                <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
-              </div>
-            )}
-
-            {/* No results */}
-            {products.length === 0 && (
-              <div className="mt-16 text-center text-lg text-darkGray">
-                <Label _key="collection.noResults" />
-              </div>
-            )}
-
-            {(page?.modules || products.length > 0) && (
-              <ProductGrid
-                collection={collection as any}
-                modules={page?.modules || []}
-                url={`/collections/${(collection as any).handle}`}
-                key={`${(collection as any).handle}-${sort}`}
-              />
-            )}
+            <SortOrder key={page?._id} initialSortOrder={page?.sortOrder} />
           </div>
-        </Await>
-      </Suspense>
+        )}
+
+        {/* No results */}
+        {products.length === 0 && (
+          <div className="mt-16 text-center text-lg text-darkGray">
+            <Label _key="collection.noResults" />
+          </div>
+        )}
+
+        {(page?.modules || products.length > 0) && (
+          <ProductGrid
+            collection={collection as any}
+            modules={page?.modules || []}
+            url={`/collections/${(collection as any).handle}`}
+            key={`${(collection as any).handle}-${sort}`}
+          />
+        )}
+      </div>
     </ColorTheme>
   );
 }

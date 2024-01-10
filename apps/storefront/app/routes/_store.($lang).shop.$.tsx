@@ -6,7 +6,7 @@ import {
 import { type SeoHandleFunction } from "@shopify/hydrogen";
 import { type Product as ProductType } from "@shopify/hydrogen/storefront-api-types";
 import {
-  defer,
+  json,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
@@ -107,18 +107,19 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   // Resolve any references to products on the Storefront API
   const gids = await fetchGids({ page: initial.data, context });
 
-  return defer({
+  return json({
     initial,
     query,
     queryParams,
     shopifyProducts: shopifyProducts.filter(Boolean) as ProductType[],
-    gids,
     sortKey,
+    // Retrieved by useLoaderData() in useGids() for Image Hotspots
+    gids,
   });
 }
 
 export default function Collection() {
-  const { initial, query, queryParams, shopifyProducts, gids, ...data } =
+  const { initial, query, queryParams, shopifyProducts } =
     useLoaderData<SerializeFrom<typeof loader>>();
   const [params] = useSearchParams();
   const sort = params.get("sort");
