@@ -73,9 +73,6 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
       {
         slug: params.handle,
         language,
-      },
-      {
-        perspective: "previewDrafts",
       }
     ),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
@@ -159,7 +156,7 @@ export default function Collection() {
 
             {/* No results */}
             {products.length === 0 && (
-              <div className="mt-16 text-center text-lg text-darkGray">
+              <div className="mt-16 text-lg text-center text-darkGray">
                 <Label _key="collection.noResults" />
               </div>
             )}

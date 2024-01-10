@@ -75,10 +75,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   // Fetch the products based on the current filter params
   const page = await context.sanity.loader.loadQuery<SanityShopPage>(
     SHOP_PAGE_QUERY,
-    queryParams,
-    {
-      perspective: "previewDrafts",
-    }
+    queryParams
   );
 
   // Handle 404s
@@ -185,7 +182,7 @@ export default function Collection() {
             )}
           >
             <div className="flex flex-col items-start gap-8 md:flex-row">
-              <section className="grid w-full grid-cols-2 flex-col gap-4 md:w-1/4 md:grid-cols-1 md:gap-12">
+              <section className="grid flex-col w-full grid-cols-2 gap-4 md:w-1/4 md:grid-cols-1 md:gap-12">
                 <h2 className="col-span-2 text-xl font-bold md:col-span-1">
                   Filters
                 </h2>
@@ -203,7 +200,7 @@ export default function Collection() {
               <section className="grid w-full grid-cols-2 gap-x-4 gap-y-8 md:w-3/4 md:grid-cols-3">
                 {shopifyProducts.length > 0 ? (
                   <>
-                    <div className="col-span-2 flex justify-between md:col-span-3">
+                    <div className="flex justify-between col-span-2 md:col-span-3">
                       <h2 className="text-xl font-bold">
                         {shopifyProducts.length === 1
                           ? `1 Product`

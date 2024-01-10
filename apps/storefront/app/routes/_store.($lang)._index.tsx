@@ -36,8 +36,7 @@ export async function loader({ context, params }: LoaderFunctionArgs) {
 
   const page = await context.sanity.loader.loadQuery<SanityHomePage>(
     HOME_PAGE_QUERY,
-    { language },
-    { perspective: "previewDrafts" }
+    { language }
   );
 
   if (!page.data) {

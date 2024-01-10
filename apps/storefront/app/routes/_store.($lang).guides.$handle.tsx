@@ -38,14 +38,10 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   const { handle } = params;
   invariant(handle, "Missing page handle");
 
-  const page = await context.sanity.loader.loadQuery<SanityPage>(
-    GUIDE_QUERY,
-    {
-      slug: handle,
-      language,
-    },
-    { perspective: "previewDrafts" }
-  );
+  const page = await context.sanity.loader.loadQuery<SanityPage>(GUIDE_QUERY, {
+    slug: handle,
+    language,
+  });
 
   if (!page.data) {
     throw notFound();

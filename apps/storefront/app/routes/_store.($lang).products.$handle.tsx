@@ -85,15 +85,11 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   const selectedOptions = getSelectedProductOptions(request);
 
   const [page, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(
-      PRODUCT_PAGE_QUERY,
-      {
-        slug: params.handle,
-        language,
-        baseLanguage,
-      },
-      { perspective: "previewDrafts" }
-    ),
+    context.sanity.loader.loadQuery<SanityProductPage>(PRODUCT_PAGE_QUERY, {
+      slug: params.handle,
+      language,
+      baseLanguage,
+    }),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;
@@ -263,7 +259,7 @@ export default function ProductHandle() {
                 "mb-10 mt-8 p-5"
               )}
             >
-              <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
+              <div className="grid grid-cols-3 gap-10 mb-10 md:grid-cols-4 lg:grid-cols-6">
                 <div className="hidden aspect-square xl:block" />
                 <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
                   {page?.sharedText?.deliveryAndReturns && (
