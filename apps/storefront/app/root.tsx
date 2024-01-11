@@ -62,6 +62,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   const { cart, storefront, sanity } = context;
 
   const isStudioRoute = new URL(request.url).pathname.startsWith(STUDIO_PATH);
+  // TODO: Check this from context.sanity.client.config().stega.enabled
+  // Type of initialized client in TS makes this complicated currently
   const stegaEnabled = isStegaEnabled(request.url);
   const visualEditingEnabled = stegaEnabled && !isStudioRoute;
 
