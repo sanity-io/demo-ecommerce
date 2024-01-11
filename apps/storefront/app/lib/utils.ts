@@ -16,6 +16,7 @@ import pluralize from "pluralize-esm";
 import { useEffect, useMemo, useRef } from "react";
 
 import { countries } from "~/data/countries";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import type {
   SanityCollectionPage,
   SanityHomePage,
@@ -26,7 +27,6 @@ import type {
   SanityShopPage,
 } from "~/lib/sanity";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
-import { useRootLoaderData } from "~/root";
 import type { I18nLocale } from "~/types/shopify";
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
@@ -222,7 +222,7 @@ export function useGid<
   const gids = useRef(useGids());
   const fetcher = useFetcher();
   const isPreview = Boolean(usePreviewContext());
-  const { selectedLocale } = useRootLoaderData();
+  const { locale } = useRootLoaderData();
 
   const gid = useRef(gids.current.get(id as string) as T | null);
 
@@ -231,9 +231,7 @@ export function useGid<
   // the Storefront API
   useEffect(() => {
     if (isPreview && !gid.current && id) {
-      const apiUrl = `${
-        selectedLocale && `${selectedLocale.pathPrefix}`
-      }/api/fetchgids`;
+      const apiUrl = `${locale && `${locale.pathPrefix}`}/api/fetchgids`;
       if (fetcher.state === "idle" && fetcher.data == null) {
         fetcher.submit(
           { ids: JSON.stringify([id]) },
@@ -263,7 +261,7 @@ export function useGid<
         gid.current = gids.current.get(id as string) as T | null;
       }
     }
-  }, [gids, id, isPreview, fetcher, selectedLocale]);
+  }, [gids, id, isPreview, fetcher, locale]);
 
   return gid.current;
 }

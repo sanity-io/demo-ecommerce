@@ -8,7 +8,6 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useMatches,
   useRouteError,
 } from "@remix-run/react";
 import {
@@ -24,7 +23,7 @@ import {
   type MetaFunction,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 
 import { GenericError } from "~/components/global/GenericError";
 import { Layout } from "~/components/global/Layout";
@@ -35,9 +34,11 @@ import { COLLECTION_QUERY_ID } from "~/queries/shopify/collection";
 
 import { baseLanguage } from "./data/countries";
 import { useAnalytics } from "./hooks/useAnalytics";
+import { LayoutContext } from "./hooks/useLayoutContext";
 import { isStegaEnabled } from "./lib/isStegaEnabled";
-import { Sanity, SanityLayout, stegaFilter, VisualEditing } from "./lib/sanity";
-import { useQuery } from "./lib/sanity/loader";
+import { Sanity, SanityLayout } from "./lib/sanity";
+
+const VisualEditing = lazy(() => import("./lib/sanity/VisualEditing"));
 
 export const meta: MetaFunction = () => [
   {
@@ -85,8 +86,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
     },
-    cart: cart.get(),
-    layout: initial,
+    cart: await cart.get(),
+    initial,
     query,
     queryParams,
     notFoundCollection: initial?.data.notFoundPage?.collectionGid
@@ -100,16 +101,22 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
           }
         )
       : undefined,
-    selectedLocale,
+    locale: selectedLocale ?? DEFAULT_LOCALE,
     storeDomain: storefront.getShopifyDomain(),
     visualEditingEnabled,
+    isStudioRoute,
   });
 }
 
 export default function App() {
-  const { selectedLocale, visualEditingEnabled } =
-    useLoaderData<SerializeFrom<typeof loader>>();
-  const locale = selectedLocale ?? DEFAULT_LOCALE;
+  const {
+    initial,
+    query,
+    queryParams,
+    visualEditingEnabled,
+    isStudioRoute,
+    locale,
+  } = useLoaderData<SerializeFrom<typeof loader>>();
   const hasUserConsent = true;
   const nonce = useNonce();
 
@@ -124,14 +131,30 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet key={`${locale.language}-${locale.country}`} />
+        {isStudioRoute ? (
+          <Outlet key={`${locale.language}-${locale.country}`} />
+        ) : (
+          <LayoutContext.Provider
+            value={{
+              initial: {
+                ...initial,
+                // Satisfy TS
+                sourceMap: initial.sourceMap || undefined,
+              },
+              query,
+              queryParams,
+            }}
+          >
+            <Outlet key={`${locale.language}-${locale.country}`} />
+          </LayoutContext.Provider>
+        )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
         {visualEditingEnabled ? (
           <Suspense>
-            <VisualEditing filter={stegaFilter} />
+            <VisualEditing />
           </Suspense>
         ) : null}
       </body>
@@ -139,48 +162,17 @@ export default function App() {
   );
 }
 
-export const useRootLoaderData = () => {
-  const [root] = useMatches();
-  const data = root?.data as SerializeFrom<typeof loader>;
-  const { query, queryParams } = data;
-
-  const { error, data: layout } = useQuery(
-    query,
-    queryParams,
-    // @ts-expect-error
-    { initial: data.layout }
-  );
-
-  if (error) {
-    throw error;
-  }
-
-  return {
-    ...data,
-    layout,
-  };
-};
-
 export function ErrorBoundary({ error }: { error: Error }) {
   const nonce = useNonce();
 
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
-  const rootData = useRootLoaderData();
-
-  const {
-    selectedLocale: locale,
-    layout,
-    notFoundCollection,
-  } = rootData
-    ? rootData
-    : {
-        selectedLocale: DEFAULT_LOCALE,
-        layout: null,
-        notFoundCollection: undefined,
-      };
-  const { notFoundPage } = layout || {};
+  // TODO: Restore dynamic values form useLoaderData()
+  const locale = DEFAULT_LOCALE;
+  const notFoundCollection = undefined;
+  const layout = { notFoundPage: undefined };
+  const { notFoundPage } = layout;
 
   let title = "Error";
   if (isRouteError) {
@@ -221,7 +213,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
         <Sanity nonce={nonce} />
-        <VisualEditing filter={stegaFilter} />
       </body>
     </html>
   );
