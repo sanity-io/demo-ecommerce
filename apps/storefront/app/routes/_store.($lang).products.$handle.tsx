@@ -82,12 +82,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     baseLanguage,
   };
   const [initial, { product }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityProductPage>(
-      query,
-      queryParams,
-      // TODO: This perspective should be set already in loadQuery
-      { perspective: context.sanity.client.config().perspective }
-    ),
+    context.sanity.loader.loadQuery<SanityProductPage>(query, queryParams),
     context.storefront.query<{
       product: Product & {
         selectedVariant?: ProductVariant;

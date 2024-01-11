@@ -25,7 +25,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ context, params }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
 
@@ -33,9 +33,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
   const queryParams = { language };
   const initial = await context.sanity.loader.loadQuery<SanityHomePage>(
     query,
-    queryParams,
-    // TODO: This perspective should be set already in loadQuery
-    { perspective: context.sanity.client.config().perspective }
+    queryParams
   );
 
   if (!initial.data) {

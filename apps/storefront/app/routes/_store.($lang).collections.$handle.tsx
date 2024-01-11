@@ -63,12 +63,7 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
     language,
   };
   const [initial, { collection }] = await Promise.all([
-    context.sanity.loader.loadQuery<SanityCollectionPage>(
-      query,
-      queryParams,
-      // TODO: This perspective should be set already in loadQuery
-      { perspective: context.sanity.client.config().perspective }
-    ),
+    context.sanity.loader.loadQuery<SanityCollectionPage>(query, queryParams),
     context.storefront.query<{ collection: CollectionType }>(COLLECTION_QUERY, {
       variables: {
         handle,

@@ -43,9 +43,7 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   };
   const initial = await context.sanity.loader.loadQuery<SanityPage>(
     query,
-    queryParams,
-    // TODO: This perspective should be set already in loadQuery
-    { perspective: context.sanity.client.config().perspective }
+    queryParams
   );
 
   if (!initial.data) {
