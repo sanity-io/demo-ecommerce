@@ -1,19 +1,16 @@
 import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import { useLocation, useNavigate } from "@remix-run/react";
-import { createClient, FilterDefault } from "@sanity/client/stega";
-import type { HistoryUpdate } from "@sanity/overlays";
+import { createClient } from "@sanity/client/stega";
+import type { DisableOverlays, HistoryUpdate } from "@sanity/overlays";
 import { enableOverlays } from "@sanity/overlays";
 import { useEffect, useMemo, useRef } from "react";
 
 import { useSanityEnvironment } from "./environment";
 import { useLiveMode } from "./loader";
-
-type VisualEditingProps = {
-  filter: FilterDefault;
-};
+import { stegaFilter } from "./stega";
 
 // Default export required for React Lazy loading
-export default function VisualEditing({ filter }: VisualEditingProps) {
+export default function VisualEditing() {
   const { projectId, dataset, apiVersion } = useSanityEnvironment();
 
   const stegaClient = useMemo(
@@ -24,14 +21,14 @@ export default function VisualEditing({ filter }: VisualEditingProps) {
         apiVersion,
         useCdn: false,
         perspective: "previewDrafts",
-        // resultSourceMap: "withKeyArraySelector",
+        resultSourceMap: "withKeyArraySelector",
         stega: {
           enabled: true,
-          filter,
+          filter: stegaFilter,
           studioUrl: STUDIO_PATH,
         },
       }),
-    [projectId, dataset, apiVersion, filter]
+    [projectId, dataset, apiVersion]
   );
 
   const navigateRemix = useNavigate();
@@ -40,9 +37,11 @@ export default function VisualEditing({ filter }: VisualEditingProps) {
   );
 
   useEffect(() => {
+    let disable: DisableOverlays | undefined;
+
     // When displayed inside an iframe
-    if (window.parent !== window.self) {
-      const disable = enableOverlays({
+    if (window.parent !== window.self && !disable) {
+      disable = enableOverlays({
         zIndex: 999999,
         history: {
           subscribe: (navigate) => {
@@ -60,7 +59,9 @@ export default function VisualEditing({ filter }: VisualEditingProps) {
           },
         },
       });
-      return () => disable();
+      return () => {
+        return disable ? disable() : undefined;
+      };
     } else {
       if (typeof document !== "undefined") {
         console.log(

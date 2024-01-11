@@ -10,7 +10,7 @@ import { CountrySelector } from "~/components/global/CountrySelector";
 import { UserIcon } from "~/components/icons/User";
 import { Link } from "~/components/Link";
 import { useCartFetchers } from "~/hooks/useCartFetchers";
-import { useRootLoaderData } from "~/root";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 
 export default function HeaderActions() {
   const { isOpen, openDrawer, closeDrawer } = useDrawer();

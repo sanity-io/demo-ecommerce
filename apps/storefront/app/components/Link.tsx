@@ -6,7 +6,7 @@ import {
 } from "@remix-run/react";
 import { forwardRef } from "react";
 
-import { useRootLoaderData } from "~/root";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 
 type LinkProps = Omit<RemixLinkProps, "className"> & {
   className?: RemixNavLinkProps["className"] | RemixLinkProps["className"];
@@ -31,13 +31,13 @@ const ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const { to, className, ...resOfProps } = props;
-  const { selectedLocale } = useRootLoaderData();
+  const { locale } = useRootLoaderData();
 
   let toWithLocale = to;
 
   // If we have a string and not an absolute URL, add the locale prefix
   if (typeof to === "string" && !ABSOLUTE_URL_REGEX.test(to) && to != "..") {
-    toWithLocale = selectedLocale ? `${selectedLocale.pathPrefix}${to}` : to;
+    toWithLocale = locale ? `${locale.pathPrefix}${to}` : to;
   }
 
   if (typeof className === "function") {

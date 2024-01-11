@@ -1,4 +1,5 @@
-import { useRootLoaderData } from "~/root";
+import { useLayoutContext } from "~/hooks/useLayoutContext";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 
 type props = {
   _key: string;
@@ -7,8 +8,7 @@ type props = {
 
 export function Label(props: props) {
   const { _key, replacements } = props;
-  const { layout } = useRootLoaderData();
-  const labels = layout?.labels || [];
+  const { labels = [] } = useLayoutContext();
 
   let label = labels.find(({ key }: { key: string }) => key === _key)?.text;
 

@@ -15,8 +15,8 @@ import {
   CartSummary,
 } from "~/components/cart/Cart";
 import SpinnerIcon from "~/components/icons/Spinner";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import { isLocalPath } from "~/lib/utils";
-import { useRootLoaderData } from "~/root";
 
 const seo: SeoHandleFunction = () => ({
   title: "Cart",
@@ -101,7 +101,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 }
 
 export default function Cart() {
-  const rootData = useRootLoaderData();
+  const { cart } = useRootLoaderData();
 
   return (
     <section
@@ -117,7 +117,7 @@ export default function Cart() {
           </div>
         }
       >
-        <Await resolve={rootData?.cart}>
+        <Await resolve={cart}>
           {(cart) => (
             <>
               {cart && (

@@ -21,7 +21,7 @@ import RemoveIcon from "~/components/icons/Remove";
 import SpinnerIcon from "~/components/icons/Spinner";
 import { Link } from "~/components/Link";
 import { useCartFetchers } from "~/hooks/useCartFetchers";
-import { useRootLoaderData } from "~/root";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 
 import { Label } from "../global/Label";
 
