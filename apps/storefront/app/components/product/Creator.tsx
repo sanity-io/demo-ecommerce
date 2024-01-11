@@ -21,7 +21,7 @@ export default function Creator({ product, creator }: Props) {
         <div className="relative aspect-square overflow-hidden rounded bg-lightGray">
           {creator.person.image && (
             <SanityImage
-              alt={creator.person.image?.altText}
+              alt={creator.person.image?.alt}
               crop={creator.person.image?.crop}
               dataset={dataset}
               hotspot={creator.person.image?.hotspot}

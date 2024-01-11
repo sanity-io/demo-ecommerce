@@ -75,7 +75,7 @@ function ModuleContent({
     case "image": {
       return (
         <SanityImage
-          alt={content?.altText}
+          alt={content?.alt}
           crop={content?.crop}
           dataset={dataset}
           hotspot={content?.hotspot}
