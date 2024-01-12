@@ -1,4 +1,4 @@
-import {DefaultDocumentNodeResolver, StructureBuilder} from 'sanity/desk'
+import {DefaultDocumentNodeResolver, StructureBuilder} from 'sanity/structure'
 import {Iframe} from 'sanity-plugin-iframe-pane'
 
 import {resolvePreviewUrl} from '../utils/resolveProductionUrl'

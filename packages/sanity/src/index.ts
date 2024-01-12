@@ -4,7 +4,7 @@ import {languageFilter} from '@sanity/language-filter'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import {structureTool} from 'sanity/structure'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
@@ -60,7 +60,7 @@ export function defineSanityConfig(config: SanityConfig) {
     title,
 
     plugins: [
-      deskTool({
+      structureTool({
         structure,
         defaultDocumentNode,
       }),
@@ -103,7 +103,7 @@ export function defineSanityConfig(config: SanityConfig) {
           return true
         },
       }),
-      scheduledPublishing()
+      scheduledPublishing(),
     ],
 
     schema: {

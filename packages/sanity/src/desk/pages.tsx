@@ -1,5 +1,5 @@
 import {DocumentsIcon} from '@sanity/icons'
-import {ListItemBuilder} from 'sanity/desk'
+import {ListItemBuilder} from 'sanity/structure'
 
 import TranslatedDoc from '../components/media/TranslatedDoc'
 import {LANGUAGES, SANITY_API_VERSION} from '../constants'
