@@ -64,7 +64,7 @@ export default defineField({
       return {
         // media: icon,
         title: TITLE,
-        subtitle: language.toUpperCase(),
+        subtitle: language?.toUpperCase(),
       }
     },
   },
