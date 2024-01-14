@@ -102,12 +102,16 @@ export default function Event() {
                   <td className="py-4">{event.capacity}</td>
                 </tr>
               ) : null}
-              <tr>
-                <td className="py-4 text-sm font-bold uppercase text-purple-400">
-                  Price:
-                </td>
-                <td className="py-4">{price}</td>
-              </tr>
+              {
+                <tr>
+                  <td className="py-4 text-sm font-bold uppercase text-purple-400">
+                    Price:
+                  </td>
+                  <td className="py-4">
+                    {Number(price) === 0 ? "Free" : price}
+                  </td>
+                </tr>
+              }
             </tbody>
           </table>
 

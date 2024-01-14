@@ -12,6 +12,7 @@ import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {workflow} from 'sanity-plugin-workflow'
 
+import {CustomNavigator} from './components/studio/CustomNavigator'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
@@ -68,6 +69,13 @@ export function defineSanityConfig(config: SanityConfig) {
       presentationTool({
         previewUrl: preview.domain ?? window.location.origin,
         locate,
+        components: {
+          unstable_navigator: {
+            minWidth: 120,
+            maxWidth: 240,
+            component: CustomNavigator,
+          },
+        },
       }),
       deskTool({
         structure,
