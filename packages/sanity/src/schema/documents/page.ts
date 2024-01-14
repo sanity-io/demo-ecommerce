@@ -32,6 +32,7 @@ export default defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: ['editorial', 'seo'],
       description: 'The primary title of the page, used as the main heading.',
       validation: (rule) => rule.required(),
     }),
@@ -39,7 +40,7 @@ export default defineField({
       name: 'altTitles',
       title: 'Alternative titles',
       type: 'array',
-      group: 'editorial',
+      group: ['editorial', 'seo'],
       description: 'Provide alternative titles for A/B/N testing',
       of: [
         {
