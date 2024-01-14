@@ -24,10 +24,8 @@ export const LayoutContext = createContext<LayoutContextValue>({
   queryParams: {},
 });
 
-let render = 0;
 export function useLayoutContext() {
   const { initial, query, queryParams } = useContext(LayoutContext);
-  console.log("useLayoutContext Render:", render++);
 
   const { data: layout } = useQuery(query, queryParams, { initial });
 
