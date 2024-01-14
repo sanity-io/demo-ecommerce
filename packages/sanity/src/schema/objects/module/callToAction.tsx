@@ -33,14 +33,14 @@ export default defineField({
           },
         ],
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().warning(),
     }),
     // Title
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().warning(),
       fieldset: 'copy',
     }),
     // Body
@@ -65,7 +65,7 @@ export default defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
-      validation: (rule) => rule.required().max(1),
+      validation: (rule) => rule.required().max(1).warning(),
       of: [
         {
           icon: ImageIcon,

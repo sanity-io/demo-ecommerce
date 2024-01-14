@@ -68,7 +68,7 @@ export const event = defineType({
       title: 'Event Duration',
       description: 'The total duration of the event in minutes.',
       validation: (rule) => [
-        rule.required(),
+        rule.required().warning('Remember to set the duration of the event'),
         rule.greaterThan(0).error('Duration has to be above 0'),
       ],
     }),
