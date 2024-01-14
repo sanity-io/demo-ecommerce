@@ -208,6 +208,7 @@ export type SanityModuleCallout = {
   _key?: string;
   _type: "module.callout";
   link: SanityLink;
+  links?: SanityLink[];
   text: string;
 };
 
