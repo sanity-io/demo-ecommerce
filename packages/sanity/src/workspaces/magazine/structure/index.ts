@@ -1,3 +1,4 @@
+import {UsersIcon} from '@sanity/icons'
 import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 
 import {eventNode} from '../../shared/structure/events'
@@ -8,12 +9,26 @@ import pages from '../../shared/structure/pages'
 
 export const magazineStructure: StructureResolver = (S, context) =>
   S.list()
-    .title('Content')
+    .title('Magazine content')
     .items([
       //home(S, context),
       guides(S, context),
-      pages(S, context),
+      S.documentTypeListItem('guide')
+        .id('top-guides')
+        .title('Top performing guides')
+        .icon(() => '🥇'),
+      S.documentTypeListItem('guide')
+        .id('whoops-guides')
+        .title('Guides that needs attention')
+        .icon(() => '👀'),
       S.divider(),
+      pages(S, context),
+      S.documentTypeListItem('page')
+        .id('experiments')
+        .title('Experiments')
+        .icon(() => '🧪'),
+      S.divider(),
+      S.listItem().title('Authors').icon(UsersIcon),
       //collections(S, context),
       //products(S, context),
       //S.divider(),
@@ -22,15 +37,61 @@ export const magazineStructure: StructureResolver = (S, context) =>
       //S.documentTypeListItem('filter').title('Filters'),
       //colorThemes(S, context),
       //S.divider(),
-      eventNode(S, context),
       //S.divider(),
       //settings(S, context),
+
+      S.divider(),
+      S.listItem()
+        .title('Ads and channels')
+        .icon(() => '📣')
+        .child(
+          S.list()
+            .title('Ads and channels')
+
+            .items([
+              S.documentTypeListItem('ad')
+                .title('All ads')
+                .icon(() => '📣'),
+              S.listItem()
+                .title('Goolge')
+                .child(
+                  S.documentList()
+                    .title('Goolge ads')
+                    .schemaType('ad')
+                    .filter('_type == "ad" && channel == $channel')
+                    .params({channel: 'google'})
+                ),
+              S.listItem()
+                .title('Instagram')
+                .child(
+                  S.documentList()
+                    .title('Instagram ads')
+                    .schemaType('ad')
+                    .filter('_type == "ad" && channel == $channel')
+                    .params({channel: 'instagram'})
+                ),
+              S.listItem()
+                .title('Pinterest')
+                .child(
+                  S.documentList()
+                    .title('Pinterest ads')
+                    .schemaType('ad')
+                    .filter('_type == "ad" && channel == $channel')
+                    .params({channel: 'pinterest'})
+                ),
+              S.divider(),
+              S.listItem().title('Ads by quarter/year'),
+            ])
+        ),
+
+      S.divider(),
+      eventNode(S, context),
       S.divider(),
       S.documentTypeListItem('assist.instruction.context').title('AI Context'),
       // Automatically add new document types to the root pane
-      ...S.documentTypeListItems().filter(
+      /* ...S.documentTypeListItems().filter(
         (listItem: ListItemBuilder) =>
           // @ts-expect-error Object is possibly 'undefined'
           !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString())
-      ),
+      ), */
     ])
