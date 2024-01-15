@@ -6,7 +6,7 @@ import {languageFilter} from '@sanity/language-filter'
 import {presentationTool} from '@sanity/presentation'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import {structureTool} from 'sanity/structure'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
@@ -77,7 +77,7 @@ export function defineSanityConfig(config: SanityConfig) {
           },
         },
       }),
-      deskTool({
+      structureTool({
         structure,
         defaultDocumentNode,
       }),
@@ -189,7 +189,7 @@ export function defineSanityConfig(config: SanityConfig) {
       },
     },
   }
-
+  console.log(sharedConfig.plugins)
   return defineConfig([
     {
       ...sharedConfig,
@@ -199,14 +199,16 @@ export function defineSanityConfig(config: SanityConfig) {
     },
     {
       ...sharedConfig,
-      title: 'Magazine',
+      title: 'Magazine Team',
       name: 'magazine',
       basePath: '/magazine',
       plugins: [
-        ...sharedConfig.plugins.filter(({name}) => name !== '@sanity/desk-tool'),
-        deskTool({
+        structureTool({
           structure: magazineStructure,
         }),
+        ...sharedConfig.plugins.filter(
+          ({name}) => !['sanity/structure', '@sanity/vision'].includes(name)
+        ),
       ],
     },
   ])

@@ -2,7 +2,7 @@
  * Desk structure overrides
  */
 
-import {ListItemBuilder, StructureResolver} from 'sanity/desk'
+import {ListItemBuilder, StructureResolver} from 'sanity/structure'
 
 import collections from './collections'
 import colorThemes from './colorThemes'
