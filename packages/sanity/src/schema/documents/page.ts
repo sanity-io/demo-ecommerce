@@ -114,6 +114,33 @@ export default defineField({
       description: 'The main content area of the page, supports rich text and media elements.',
       group: 'editorial',
     }),
+    defineField({
+      name: 'related',
+      title: 'Related content',
+      description: 'Drive readers to this related content.',
+      type: 'array',
+      group: ['seo', 'editorial'],
+      validation: (rule) => rule.unique(),
+      of: [
+        {
+          name: 'cta',
+          title: 'Related content call to action',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              type: 'string',
+              title: 'Custom call to action',
+            },
+            {
+              name: 'article',
+              type: 'reference',
+              to: [{type: 'page'}, {type: 'guide'}],
+            },
+          ],
+        },
+      ],
+    }),
     // SEO
     defineField({
       name: 'seo',
