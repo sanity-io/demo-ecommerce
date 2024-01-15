@@ -15,24 +15,26 @@ export default defineField({
     defineField({
       name: 'title',
       type: 'internationalizedArrayString',
+      description: `Catch the reader's eye. Use less than 5 words.`,
       validation: (rule) => rule.required(),
     }),
     defineField({
-        name: 'description',
-        type: 'internationalizedArrayString',
+      name: 'description',
+      description: 'A short description that represents this combination',
+      type: 'internationalizedArrayString',
     }),
     defineField({
-        name: 'material',
-        type: 'reference',
-        to: [{type: 'material'}],
-        validation: (rule) => rule.required(),
+      name: 'material',
+      type: 'reference',
+      to: [{type: 'material'}],
+      validation: (rule) => rule.required(),
     }),
     defineField({
-        name: 'person',
-        type: 'reference',
-        to: [{type: 'person'}],
-        validation: (rule) => rule.required(),
-    })
+      name: 'person',
+      type: 'reference',
+      to: [{type: 'person'}],
+      validation: (rule) => rule.required(),
+    }),
   ],
   preview: {
     select: {

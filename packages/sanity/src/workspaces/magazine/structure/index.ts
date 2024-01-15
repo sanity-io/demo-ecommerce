@@ -12,10 +12,10 @@ export const magazineStructure: StructureResolver = (S, context) =>
     .title('Magazine content')
     .items([
       //home(S, context),
-      guides(S, context),
+      S.documentTypeListItem('guide').title('Articles'),
       S.documentTypeListItem('guide')
         .id('top-guides')
-        .title('Top performing guides')
+        .title('Top performing stories')
         .icon(() => '🥇'),
       S.documentTypeListItem('guide')
         .id('whoops-guides')

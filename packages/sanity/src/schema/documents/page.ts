@@ -1,5 +1,5 @@
 import {DocumentIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 import {isUniqueOtherThanLanguage, validateSlug} from '../../utils/validateSlug'
 
@@ -122,7 +122,7 @@ export default defineField({
       group: ['seo', 'editorial'],
       validation: (rule) => rule.unique(),
       of: [
-        {
+        defineArrayMember({
           name: 'cta',
           title: 'Related content call to action',
           type: 'object',
@@ -138,7 +138,7 @@ export default defineField({
               to: [{type: 'page'}, {type: 'guide'}],
             },
           ],
-        },
+        }),
       ],
     }),
     // SEO

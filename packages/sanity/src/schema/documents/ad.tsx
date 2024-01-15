@@ -4,6 +4,20 @@ export const ad = defineType({
   name: 'ad',
   type: 'document',
   title: 'Ad',
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'channel',
+      media: 'product.store.previewImageUrl',
+    },
+    prepare({title, subtitle, media}) {
+      return {
+        title,
+        subtitle,
+        media: () => media && <img src={media} alt={title} />,
+      }
+    },
+  },
   fields: [
     {
       name: 'title',
@@ -15,6 +29,11 @@ export const ad = defineType({
       options: {
         list: ['instagram', 'google', 'pinterest'],
       },
+    },
+    {
+      name: 'product',
+      type: 'reference',
+      to: [{type: 'product'}],
     },
     {
       name: 'copy',
