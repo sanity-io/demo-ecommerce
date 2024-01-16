@@ -154,6 +154,7 @@ function Account({ customer, orders, heading, addresses }: Account) {
         <div className="mb-4 text-sm font-bold">Account</div>
         <h1
           className={clsx([
+            "text-balance",
             "mb-4 text-2xl", //
             "md:text-3xl",
           ])}

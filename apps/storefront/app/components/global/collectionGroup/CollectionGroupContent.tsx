@@ -7,8 +7,8 @@ import { useInView } from "react-intersection-observer";
 import CollectionCard from "~/components/collection/Card";
 import CloseIcon from "~/components/icons/Close";
 import ProductPill, { PillSkeleton } from "~/components/product/Pill";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import type { SanityCollection, SanityCollectionGroup } from "~/lib/sanity";
-import { useRootLoaderData } from "~/root";
 
 type Props = {
   collection?: SanityCollection;
@@ -21,7 +21,7 @@ export default function CollectionGroupContent({
   collectionGroup,
   onClose,
 }: Props) {
-  const { selectedLocale } = useRootLoaderData();
+  const { locale } = useRootLoaderData();
 
   const fetcher = useFetcher();
   const { collection: collectionData } = (fetcher.data ?? {}) as {
@@ -34,12 +34,12 @@ export default function CollectionGroupContent({
   });
 
   useEffect(() => {
-    const apiUrl = `${selectedLocale && `${selectedLocale.pathPrefix}`}/api${
+    const apiUrl = `${locale && `${locale.pathPrefix}`}/api${
       collection?.slug
     }?count=4`;
     if (!inView || fetcher.data || fetcher.state === "loading") return;
     fetcher.load(apiUrl);
-  }, [inView, fetcher, collection?.slug, selectedLocale]);
+  }, [inView, fetcher, collection?.slug, locale]);
 
   const products = collectionData?.products.nodes;
 

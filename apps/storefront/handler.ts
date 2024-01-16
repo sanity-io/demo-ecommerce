@@ -1,5 +1,7 @@
 // Virtual entry point for the app
+import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import * as remixBuild from "@remix-run/dev/server-build";
+import { createClient as createSanityClient } from "@sanity/client/stega";
 import {
   cartGetIdDefault,
   cartSetIdDefault,
@@ -16,9 +18,17 @@ import {
   createRequestHandler,
   getStorefrontHeaders,
 } from "@shopify/remix-oxygen";
-import { createSanityClient } from "hydrogen-sanity";
 
+import { isStegaEnabled } from "~/lib/isStegaEnabled";
+import { createSanityProvider, stegaFilter } from "~/lib/sanity";
 import { getLocaleFromRequest } from "~/lib/utils";
+
+// TODO: setting server client should be a noop.
+declare global {
+  // eslint-disable-next-line no-var
+  var didSetClient: boolean;
+}
+globalThis.didSetClient = false;
 
 export async function handler(
   request: Request,
@@ -36,23 +46,9 @@ export async function handler(
     const waitUntil = (p: Promise<any>) => executionContext.waitUntil(p);
     const secrets = [env.SESSION_SECRET];
     // eslint-disable-next-line prefer-const
-    let [cache, session, previewSession] = await Promise.all([
+    let [cache, session] = await Promise.all([
       caches?.open("hydrogen"),
       HydrogenSession.init(request, secrets),
-      (async function createPreviewSession() {
-        const storage = createCookieSessionStorage({
-          cookie: {
-            name: "__preview",
-            httpOnly: true,
-            sameSite: true,
-            secrets,
-          },
-        });
-
-        const session = await storage.getSession(request.headers.get("Cookie"));
-
-        return new HydrogenSession(storage, session);
-      })(),
     ]);
 
     // shim `Cache` when deployed in an environment that
@@ -91,25 +87,28 @@ export async function handler(
       setCartId: cartSetIdDefault(),
     });
 
-    const sanity = createSanityClient({
-      cache,
-      waitUntil,
-      // Optionally, pass session and token to enable live-preview
-      preview:
-        env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
-          ? {
-              session: previewSession,
-              token: env.SANITY_API_TOKEN,
-            }
-          : undefined,
-      // Pass configuration options for Sanity client
-      config: {
+    const stegaEnabled = isStegaEnabled(request.url);
+
+    const sanity = createSanityProvider({
+      client: createSanityClient({
         projectId: env.SANITY_PROJECT_ID,
         dataset: env.SANITY_DATASET || "production",
         apiVersion: env.SANITY_API_VERSION || "2023-03-30",
-        useCdn: process.env.NODE_ENV === "production",
-        perspective: "published",
-      },
+        useCdn: !stegaEnabled,
+        // resultSourceMap: "withKeyArraySelector",
+        perspective: stegaEnabled ? "previewDrafts" : "published",
+        // TODO: token for private dataset?
+        token: env.SANITY_API_TOKEN,
+        stega: {
+          // TODO: conditional based on session instead of URL
+          enabled: stegaEnabled,
+          studioUrl: STUDIO_PATH,
+          filter: stegaFilter,
+          //logger: console,
+        },
+      }),
+      waitUntil,
+      cache,
     });
 
     /**
@@ -153,7 +152,7 @@ export async function handler(
  * Feel free to customize it to your needs, add helper methods, or
  * swap out the cookie-based implementation with something else!
  */
-class HydrogenSession {
+export class HydrogenSession {
   constructor(
     private sessionStorage: SessionStorage,
     private session: Session

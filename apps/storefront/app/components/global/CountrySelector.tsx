@@ -8,8 +8,8 @@ import invariant from "tiny-invariant";
 import { ChevronDownIcon } from "~/components/icons/ChevronDown";
 import RadioIcon from "~/components/icons/Radio";
 import { countries } from "~/data/countries";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import { DEFAULT_LOCALE } from "~/lib/utils";
-import { useRootLoaderData } from "~/root";
 import type { Locale } from "~/types/shopify";
 
 type Props = {

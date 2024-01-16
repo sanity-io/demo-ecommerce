@@ -4,15 +4,15 @@ import SanityFooter from "~/components/global/SanityFooter";
 import LogoIcon from "~/components/icons/Logo";
 import { Link } from "~/components/Link";
 import PortableText from "~/components/portableText/PortableText";
+import { useLayoutContext } from "~/hooks/useLayoutContext";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import type { SanityLink } from "~/lib/sanity";
-import { useRootLoaderData } from "~/root";
 
 /**
  * A component that specifies the content of the footer on the website
  */
 export default function Footer() {
-  const { layout } = useRootLoaderData();
-  const { footer } = layout || {};
+  const { footer } = useLayoutContext();
 
   const renderLinks = footer?.links?.map((link: SanityLink) => {
     if (link._type === "linkExternal") {

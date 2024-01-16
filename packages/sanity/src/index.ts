@@ -1,21 +1,29 @@
+import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
+import {googleMapsInput} from '@sanity/google-maps-input'
 import {languageFilter} from '@sanity/language-filter'
+import {presentationTool} from '@sanity/presentation'
+import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import {structureTool} from 'sanity/structure'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {workflow} from 'sanity-plugin-workflow'
 
+import {CustomNavigator} from './components/studio/CustomNavigator'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
-import {structure} from './desk'
-import {defaultDocumentNode} from './desk/preview'
+import {locate} from './location'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
+import {magazineStructure} from './workspaces/magazine/structure'
+import {structure} from './workspaces/shared/structure'
+import {defaultDocumentNode} from './workspaces/shared/structure/preview'
 
 /**
  * Configuration options that will be passed in
@@ -40,8 +48,10 @@ export function defineSanityConfig(config: SanityConfig) {
   /**
    * Prevent a consumer from importing into a worker/server bundle.
    */
-  if(typeof document === 'undefined') {
-    throw new Error('Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.')
+  if (typeof document === 'undefined') {
+    throw new Error(
+      'Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.'
+    )
   }
 
   const {title = 'AKVA', preview, shopify, ...rest} = config
@@ -51,15 +61,31 @@ export function defineSanityConfig(config: SanityConfig) {
     shopify,
   }
 
-  return defineConfig({
+  const sharedConfig = {
     ...rest,
 
     title,
 
     plugins: [
-      deskTool({
+      presentationTool({
+        previewUrl: preview.domain ?? window.location.origin,
+        locate,
+        components: {
+          unstable_navigator: {
+            minWidth: 120,
+            maxWidth: 240,
+            component: CustomNavigator,
+          },
+        },
+      }),
+      structureTool({
         structure,
         defaultDocumentNode,
+      }),
+      scheduledPublishing(),
+      assist(),
+      googleMapsInput({
+        apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
       }),
       colorInput(),
       imageHotspotArrayPlugin(),
@@ -99,6 +125,13 @@ export function defineSanityConfig(config: SanityConfig) {
 
           return true
         },
+      }),
+      workflow({
+        // Required, list of document type names
+        // schemaTypes: ['article', 'product'],
+        schemaTypes: ['page', 'guide'],
+        // Optional, see below
+        // states: [],
       }),
     ],
 
@@ -157,5 +190,28 @@ export function defineSanityConfig(config: SanityConfig) {
         logo: Logo,
       },
     },
-  })
+  }
+  console.log(sharedConfig.plugins)
+  return defineConfig([
+    {
+      ...sharedConfig,
+      title: 'Commerce',
+      name: 'commerce',
+      basePath: '/commerce',
+    },
+    {
+      ...sharedConfig,
+      title: 'Magazine Team',
+      name: 'magazine',
+      basePath: '/magazine',
+      plugins: [
+        structureTool({
+          structure: magazineStructure,
+        }),
+        ...sharedConfig.plugins.filter(
+          ({name}) => !['sanity/structure', '@sanity/vision'].includes(name)
+        ),
+      ],
+    },
+  ])
 }

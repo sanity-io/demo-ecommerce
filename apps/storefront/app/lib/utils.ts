@@ -1,4 +1,4 @@
-import { useAsyncValue, useFetcher } from "@remix-run/react";
+import { useAsyncValue, useFetcher, useLoaderData } from "@remix-run/react";
 import { extract } from "@sanity/mutator";
 import type {
   Collection,
@@ -16,6 +16,7 @@ import pluralize from "pluralize-esm";
 import { useEffect, useMemo, useRef } from "react";
 
 import { countries } from "~/data/countries";
+import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 import type {
   SanityCollectionPage,
   SanityHomePage,
@@ -23,9 +24,9 @@ import type {
   SanityPage,
   SanityPersonPage,
   SanityProductPage,
+  SanityShopPage,
 } from "~/lib/sanity";
 import { PRODUCTS_AND_COLLECTIONS } from "~/queries/shopify/product";
-import { useRootLoaderData } from "~/root";
 import type { I18nLocale } from "~/types/shopify";
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
@@ -187,6 +188,7 @@ export async function fetchGids({
 }: {
   page:
     | SanityHomePage
+    | SanityShopPage
     | SanityPage
     | SanityCollectionPage
     | SanityProductPage
@@ -220,7 +222,7 @@ export function useGid<
   const gids = useRef(useGids());
   const fetcher = useFetcher();
   const isPreview = Boolean(usePreviewContext());
-  const { selectedLocale } = useRootLoaderData();
+  const { locale } = useRootLoaderData();
 
   const gid = useRef(gids.current.get(id as string) as T | null);
 
@@ -229,9 +231,7 @@ export function useGid<
   // the Storefront API
   useEffect(() => {
     if (isPreview && !gid.current && id) {
-      const apiUrl = `${
-        selectedLocale && `${selectedLocale.pathPrefix}`
-      }/api/fetchgids`;
+      const apiUrl = `${locale && `${locale.pathPrefix}`}/api/fetchgids`;
       if (fetcher.state === "idle" && fetcher.data == null) {
         fetcher.submit(
           { ids: JSON.stringify([id]) },
@@ -261,16 +261,22 @@ export function useGid<
         gid.current = gids.current.get(id as string) as T | null;
       }
     }
-  }, [gids, id, isPreview, fetcher, selectedLocale]);
+  }, [gids, id, isPreview, fetcher, locale]);
 
   return gid.current;
 }
 
 export function useGids() {
-  const gids = useAsyncValue();
+  // Used when `gids` was deferred and resolved on the front-end
+  // But abandoned because it appeared to affect Presentation performance
+  // const gids = useAsyncValue();
+
+  const loaderData = useLoaderData();
 
   // TODO: this doesnt' seem to actually memoize...
   return useMemo(() => {
+    const gids = loaderData?.gids ? loaderData.gids : [];
+
     const byGid = new Map<
       string,
       Product | Collection | ProductVariant | ProductVariant["image"]
@@ -289,7 +295,7 @@ export function useGids() {
     }
 
     return byGid;
-  }, [gids]);
+  }, [loaderData]);
 }
 
 /**
@@ -319,4 +325,15 @@ export function isLocalPath(request: Request, url: string) {
 
   // If the origins don't match the slug is not on our domain.
   return currentUrl.origin === urlToCheck.origin;
+}
+
+export function isServer(): boolean {
+  return typeof document === "undefined";
+}
+
+export function slugify(string: string) {
+  return string
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
 }

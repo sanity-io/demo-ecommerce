@@ -3,12 +3,12 @@ import clsx from "clsx";
 import Link from "~/components/elements/Link";
 import SanityImage from "~/components/media/SanityImage";
 import ProductHero from "~/components/product/ProductHero";
-import type {
-  SanityAssetImage,
-  SanityModuleCallToAction,
-  SanityProductWithVariant,
+import {
+  type SanityAssetImage,
+  type SanityModuleCallToAction,
+  type SanityProductWithVariant,
+  useSanityEnvironment,
 } from "~/lib/sanity";
-import { useRootLoaderData } from "~/root";
 
 type Props = {
   module: SanityModuleCallToAction;
@@ -69,19 +69,19 @@ function ModuleContent({
 }: {
   content: SanityAssetImage | SanityProductWithVariant;
 }) {
-  const { sanityDataset, sanityProjectID } = useRootLoaderData();
+  const { projectId, dataset } = useSanityEnvironment();
 
   switch (content?._type) {
     case "image": {
       return (
         <SanityImage
-          alt={content?.altText}
+          alt={content?.alt}
           crop={content?.crop}
-          dataset={sanityDataset}
+          dataset={dataset}
           hotspot={content?.hotspot}
           layout="fill"
           objectFit="cover"
-          projectId={sanityProjectID}
+          projectId={projectId}
           sizes="100vw"
           src={content?.asset?._ref}
         />

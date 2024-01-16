@@ -1,7 +1,11 @@
 import clsx from "clsx";
 
 import LinkButton from "~/components/elements/LinkButton";
-import type { SanityModuleCallout } from "~/lib/sanity";
+import type {
+  SanityLinkExternal,
+  SanityLinkInternal,
+  SanityModuleCallout,
+} from "~/lib/sanity";
 import { useColorTheme } from "~/lib/theme";
 
 type Props = {
@@ -32,6 +36,15 @@ export default function CalloutModule({ module }: Props) {
           <LinkButton backgroundColor={colorTheme?.text} link={module.link} />
         </div>
       )}
+      {module?.links &&
+        module?.links.length > 0 &&
+        module?.links.map((link: SanityLinkInternal | SanityLinkExternal) => {
+          return (
+            <div key={link?._key} className="mt-4">
+              <LinkButton backgroundColor={colorTheme?.text} link={link} />
+            </div>
+          );
+        })}
     </div>
   );
 }

@@ -1,35 +1,35 @@
-import {DocumentsIcon} from '@sanity/icons'
+import {EarthGlobeIcon} from '@sanity/icons'
 import {ListItemBuilder} from 'sanity/desk'
 
-import TranslatedDoc from '../components/media/TranslatedDoc'
-import {LANGUAGES, SANITY_API_VERSION} from '../constants'
-import defineStructure from '../utils/defineStructure'
+import TranslatedDoc from '../../../components/media/TranslatedDoc'
+import {LANGUAGES, SANITY_API_VERSION} from '../../../constants'
+import defineStructure from '../../../utils/defineStructure'
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
-    .title('Pages')
-    .icon(DocumentsIcon)
-    .schemaType('page')
+    .title('Guides')
+    .icon(EarthGlobeIcon)
+    .schemaType('guide')
     .child(
       S.list()
-        .title('Pages')
+        .title('Guides')
         .items([
           ...LANGUAGES.map((language) =>
             S.listItem()
-              .title(`Pages (${language.id.toLocaleUpperCase()})`)
-              .schemaType('page')
-              .icon(() => <TranslatedDoc icon={<DocumentsIcon />} languageIcon={language.icon} />)
+              .title(`Guides (${language.id.toLocaleUpperCase()})`)
+              .schemaType('guide')
+              .icon(() => <TranslatedDoc icon={<EarthGlobeIcon />} languageIcon={language.icon} />)
               .child(
                 S.documentList()
                   .id(language.id)
-                  .title(`${language.title} Pages`)
-                  .schemaType('page')
+                  .title(`${language.title} Guides`)
+                  .schemaType('guide')
                   .apiVersion(SANITY_API_VERSION)
-                  .filter('_type == "page" && language == $language')
+                  .filter('_type == "guide" && language == $language')
                   .params({language: language.id})
                   .initialValueTemplates([
-                    S.initialValueTemplateItem('page-language', {
-                      id: 'page-language',
+                    S.initialValueTemplateItem('guide-language', {
+                      id: 'guide-language',
                       language: language.id,
                     }),
                   ])
@@ -49,16 +49,16 @@ export default defineStructure<ListItemBuilder>((S) =>
           ),
           S.divider(),
           S.listItem()
-            .title(`All Pages`)
-            .schemaType('page')
-            .icon(DocumentsIcon)
+            .title(`All Guides`)
+            .schemaType('guide')
+            .icon(EarthGlobeIcon)
             .child(
               S.documentList()
-                .id(`all-pages`)
-                .title(`All Pages`)
-                .schemaType('page')
-                .filter('_type == "page"')
+                .id(`all-guides`)
+                .title(`All Guides`)
+                .schemaType('guide')
                 .apiVersion(SANITY_API_VERSION)
+                .filter('_type == "guide"')
                 .canHandleIntent(
                   (intentName, params) => intentName === 'edit' || params.template === `guide`
                 )

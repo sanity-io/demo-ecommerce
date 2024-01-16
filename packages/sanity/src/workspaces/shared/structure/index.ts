@@ -2,10 +2,11 @@
  * Desk structure overrides
  */
 
-import {ListItemBuilder, StructureResolver} from 'sanity/desk'
+import {ListItemBuilder, StructureResolver} from 'sanity/structure'
 
 import collections from './collections'
 import colorThemes from './colorThemes'
+import {eventNode} from './events'
 import guides from './guides'
 import home from './home'
 import materials from './materials'
@@ -28,9 +29,10 @@ import settings from './settings'
  */
 
 // If you add document types to desk structure manually, you can add them to this array to prevent duplicates in the root pane
-const DOCUMENT_TYPES_IN_STRUCTURE = [
+export const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
+  'filter',
   'guide',
   'home',
   'material',
@@ -42,6 +44,9 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'settings',
   'sharedText',
   'translation.metadata',
+  'workflow.metadata',
+  'event',
+  'assist.instruction.context',
 ]
 
 export const structure: StructureResolver = (S, context) =>
@@ -57,7 +62,10 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       people(S, context),
       materials(S, context),
+      S.documentTypeListItem('filter').title('Filters'),
       colorThemes(S, context),
+      S.divider(),
+      eventNode(S, context),
       S.divider(),
       settings(S, context),
       S.divider(),

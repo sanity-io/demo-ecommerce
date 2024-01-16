@@ -77,7 +77,7 @@ export default function ProductWidget({
 
       {/* Title */}
       {storefrontProduct?.title && (
-        <h1 className="text-md font-bold uppercase">
+        <h1 className="text-balance text-md font-bold uppercase">
           {storefrontProduct.title}
         </h1>
       )}
