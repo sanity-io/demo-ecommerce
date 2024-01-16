@@ -4,6 +4,7 @@ import {documentInternationalization} from '@sanity/document-internationalizatio
 import {googleMapsInput} from '@sanity/google-maps-input'
 import {languageFilter} from '@sanity/language-filter'
 import {presentationTool} from '@sanity/presentation'
+import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
 import {structureTool} from 'sanity/structure'
@@ -81,6 +82,7 @@ export function defineSanityConfig(config: SanityConfig) {
         structure,
         defaultDocumentNode,
       }),
+      scheduledPublishing(),
       assist(),
       googleMapsInput({
         apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
