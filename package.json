@@ -23,9 +23,5 @@
     "turbo": "^1.10.16",
     "vercel": "^32.5.3"
   },
-  "packageManager": "npm@10.2.3",
-  "overrides": {
-    "@sanity/ui": "^2",
-    "styled-components": "^6"
-  }
+  "packageManager": "npm@10.2.3"
 }
