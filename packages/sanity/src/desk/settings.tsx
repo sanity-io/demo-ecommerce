@@ -1,5 +1,5 @@
 import {CogIcon} from '@sanity/icons'
-import {ListItemBuilder} from 'sanity/desk'
+import {ListItemBuilder} from 'sanity/structure'
 
 import TranslatedDoc from '../components/media/TranslatedDoc'
 import {LANGUAGES} from '../constants'
@@ -23,7 +23,7 @@ export default defineStructure<ListItemBuilder>((S) =>
               .title(`Settings (${language.id.toLocaleUpperCase()})`)
           ),
           S.divider(),
-          S.listItem()
+          S.documentListItem()
             .title('Shared Text')
             .schemaType('sharedText')
             .child(
