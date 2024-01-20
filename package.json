@@ -21,7 +21,7 @@
     "@turbo/gen": "^1.11.3",
     "husky": "^8.0.3",
     "turbo": "^1.11.3",
-    "vercel": "^32.7.2"
+    "vercel": "^33.2.0"
   },
   "packageManager": "npm@10.2.3"
 }
