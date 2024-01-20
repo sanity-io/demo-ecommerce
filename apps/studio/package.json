@@ -1,8 +1,7 @@
 {
   "name": "studio",
   "private": true,
-  "version": "1.0.0",
-  "main": "package.json",
+  "type": "module",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
@@ -12,9 +11,6 @@
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx --ignore-path ../../.gitignore --max-warnings 0 .",
     "format": "npx prettier --write . --ignore-path ../../.gitignore"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
     "@demo-ecommerce/sanity": "file:../../packages/sanity",
     "react": "^18.2.0",

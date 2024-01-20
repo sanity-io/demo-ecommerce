@@ -21,7 +21,7 @@ import {
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { AccountAddressBook } from "~/components/account/AccountAddressBook";
 import { AccountDetails } from "~/components/account/AccountDetails";

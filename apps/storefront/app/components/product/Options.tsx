@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { VariantSelector } from "@shopify/hydrogen";
-import {
+import type {
   Product,
   ProductOption,
   ProductVariant,

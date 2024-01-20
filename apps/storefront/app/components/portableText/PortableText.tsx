@@ -1,8 +1,6 @@
-import {
-  PortableText as PortableTextReact,
-  PortableTextComponents,
-} from "@portabletext/react";
-import { PortableTextBlock } from "@portabletext/types";
+import type { PortableTextComponents } from "@portabletext/react";
+import { PortableText as PortableTextReact } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 import { useMemo } from "react";
 

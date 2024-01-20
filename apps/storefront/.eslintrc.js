@@ -2,7 +2,11 @@
  * @type {import("@types/eslint").Linter.BaseConfig}
  */
 module.exports = {
-  extends: ["plugin:hydrogen/recommended", "plugin:hydrogen/typescript"],
+  extends: [
+    "@remix-run/eslint-config",
+    "plugin:hydrogen/recommended",
+    "plugin:hydrogen/typescript",
+  ],
   plugins: ["simple-import-sort"],
   rules: {
     "simple-import-sort/imports": "warn",

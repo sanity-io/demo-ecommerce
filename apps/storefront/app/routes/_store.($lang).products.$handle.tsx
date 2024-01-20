@@ -1,12 +1,14 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
-import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
+import type {
+  SeoConfig,
+  SeoHandleFunction,
+  ShopifyAnalyticsPayload,
+  ShopifyAnalyticsProduct,
+} from "@shopify/hydrogen";
 import {
   flattenConnection,
   getSelectedProductOptions,
-  type SeoConfig,
-  type SeoHandleFunction,
-  ShopifyAnalyticsProduct,
 } from "@shopify/hydrogen";
 import type {
   MediaConnection,

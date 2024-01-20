@@ -4,7 +4,8 @@ import {
   type CartQueryData,
   type SeoHandleFunction,
 } from "@shopify/hydrogen";
-import { ActionFunctionArgs, json } from "@shopify/remix-oxygen";
+import type { ActionFunctionArgs } from "@shopify/remix-oxygen";
+import { json } from "@shopify/remix-oxygen";
 import clsx from "clsx";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";

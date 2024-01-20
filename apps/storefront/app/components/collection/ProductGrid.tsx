@@ -42,6 +42,7 @@ export default function ProductGrid({
   const sort = params.get("sort");
 
   // props have changes, reset component state
+  // eslint-disable-next-line no-self-compare
   if (initialItems !== initialItems) {
     setInitialItems(combinedItems);
     setItems(combinedItems);

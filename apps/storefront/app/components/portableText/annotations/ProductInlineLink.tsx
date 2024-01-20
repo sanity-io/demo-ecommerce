@@ -2,7 +2,8 @@ import type { ShopifyAnalyticsProduct } from "@shopify/hydrogen";
 import type { ProductVariant } from "@shopify/hydrogen/storefront-api-types";
 import Tippy from "@tippyjs/react/headless";
 import clsx from "clsx";
-import { ReactNode, useMemo } from "react";
+import type { ReactNode } from "react";
+import { useMemo } from "react";
 
 import Tooltip from "~/components/elements/Tooltip";
 import { Label } from "~/components/global/Label";

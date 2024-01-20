@@ -154,6 +154,7 @@ export async function handler(
  * swap out the cookie-based implementation with something else!
  */
 class HydrogenSession {
+  // eslint-disable-next-line no-useless-constructor
   constructor(
     private sessionStorage: SessionStorage,
     private session: Session

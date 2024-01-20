@@ -1,4 +1,4 @@
-import { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
+import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import type {
   Product,
   ProductVariant,

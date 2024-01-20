@@ -1,10 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
-import {
-  flattenConnection,
-  Image,
-  Money,
-  SeoHandleFunction,
-} from "@shopify/hydrogen";
+import type { SeoHandleFunction } from "@shopify/hydrogen";
+import { flattenConnection, Image, Money } from "@shopify/hydrogen";
 import type {
   DiscountApplicationConnection,
   Order,
@@ -12,7 +8,7 @@ import type {
 } from "@shopify/hydrogen/storefront-api-types";
 import { json, type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import invariant from "tiny-invariant";
 
 import { Link } from "~/components/Link";
