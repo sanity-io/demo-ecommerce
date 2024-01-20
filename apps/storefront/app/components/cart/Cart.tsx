@@ -58,6 +58,7 @@ function LineItem({
   // Check if the line item is being updated, as we want to show the new quantity as optimistic UI
   let updatingQty;
   const updating =
+    // eslint-disable-next-line array-callback-return
     updatingItems?.find((fetcher) => {
       const formData = fetcher?.formData;
 
@@ -74,6 +75,7 @@ function LineItem({
     }) && updatingQty;
 
   // Check if the line item is being removed, as we want to show the line item as being deleted
+  // eslint-disable-next-line array-callback-return
   const deleting = removingItems.find((fetcher) => {
     const formData = fetcher?.formData;
     if (formData) {

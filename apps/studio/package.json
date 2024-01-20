@@ -1,8 +1,7 @@
 {
   "name": "studio",
   "private": true,
-  "version": "1.0.0",
-  "main": "package.json",
+  "type": "module",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
@@ -12,29 +11,20 @@
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx --ignore-path ../../.gitignore --max-warnings 0 .",
     "format": "npx prettier --write . --ignore-path ../../.gitignore"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
     "@demo-ecommerce/sanity": "file:../../packages/sanity",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "sanity": "^3.25.0",
-    "styled-components": "^6.1.1"
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^2.0.1",
-    "@types/styled-components": "^5.1.26",
-    "eslint": "^8.6.0",
+    "@sanity/eslint-config-studio": "^3.0.1",
+    "@types/styled-components": "^5.1.34",
+    "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^2.8.7",
-    "typescript": "^4.0.0"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
   }
 }

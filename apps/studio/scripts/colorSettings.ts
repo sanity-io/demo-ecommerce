@@ -35,7 +35,7 @@ const fetchSettings = () =>
           }
         }
       }
-    }`
+    }`,
   )
 
 // Create a transaction from the patches

@@ -1,5 +1,6 @@
-import { Money, ShopifyAnalyticsPayload } from "@shopify/hydrogen";
-import {
+import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
+import { Money } from "@shopify/hydrogen";
+import type {
   Product,
   ProductVariant,
 } from "@shopify/hydrogen/storefront-api-types";

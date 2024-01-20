@@ -61,6 +61,6 @@ export const structure: StructureResolver = (S, context) =>
       ...S.documentTypeListItems().filter(
         (listItem: ListItemBuilder) =>
           // @ts-expect-error Object is possibly 'undefined'
-          !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString())
+          !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString()),
       ),
     ])

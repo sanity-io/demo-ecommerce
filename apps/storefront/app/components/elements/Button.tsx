@@ -1,4 +1,4 @@
-import { RemixLinkProps } from "@remix-run/react/dist/components";
+import type { RemixLinkProps } from "@remix-run/react/dist/components";
 import clsx from "clsx";
 import type { ButtonHTMLAttributes, ElementType } from "react";
 import { twMerge } from "tailwind-merge";

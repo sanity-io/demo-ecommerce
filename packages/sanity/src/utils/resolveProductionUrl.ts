@@ -8,7 +8,7 @@ type store = {
 
 export default async function resolveProductionUrl(
   _: string | undefined,
-  context: ResolveProductionUrlContext
+  context: ResolveProductionUrlContext,
 ) {
   const {document} = context
 

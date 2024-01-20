@@ -44,8 +44,8 @@ export default defineStructure<ListItemBuilder>((S) =>
 
                     const languageValue = params?.template?.split(`-`).pop()
                     return languageValue === language.id
-                  })
-              )
+                  }),
+              ),
           ),
           S.divider(),
           S.listItem()
@@ -60,9 +60,9 @@ export default defineStructure<ListItemBuilder>((S) =>
                 .apiVersion(SANITY_API_VERSION)
                 .filter('_type == "guide"')
                 .canHandleIntent(
-                  (intentName, params) => intentName === 'edit' || params.template === `guide`
-                )
+                  (intentName, params) => intentName === 'edit' || params.template === `guide`,
+                ),
             ),
-        ])
-    )
+        ]),
+    ),
 )

@@ -25,7 +25,7 @@ const fetchDocuments = () =>
         && defined(${FIELD_NAME}) 
         && !(${FIELD_NAME}[0]._key == "en")
     ][0...100] {_id, _rev, ${FIELD_NAME}}`,
-    {type: TYPE}
+    {type: TYPE},
   )
 
 const buildPatches = (docs) =>
@@ -61,7 +61,7 @@ const migrateNextBatch = async () => {
   }
   console.log(
     `Migrating batch:\n %s`,
-    patches.map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`).join('\n')
+    patches.map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`).join('\n'),
   )
 
   const transaction = createTransaction(patches)

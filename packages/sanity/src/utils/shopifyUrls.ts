@@ -15,7 +15,7 @@ export const productUrl = (storeDomain: string, productId: number) => {
 export const productVariantUrl = (
   storeDomain: string,
   productId: number,
-  productVariantId: number
+  productVariantId: number,
 ) => {
   if (!storeDomain) {
     return null

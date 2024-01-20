@@ -53,6 +53,6 @@ export default defineStructure<ListItemBuilder>((S) =>
         })
 
         return documentNode.views([...documentNode.getViews(), productsPane(S)])
-      })
-    )
+      }),
+    ),
 )

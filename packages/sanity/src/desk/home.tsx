@@ -20,11 +20,11 @@ export default defineStructure<ListItemBuilder>((S) =>
               .schemaType(`home`)
               .icon(() => <TranslatedDoc icon={<HomeIcon />} languageIcon={language.icon} />)
               .id(`home-${language.id}`)
-              .title(`Home (${language.id.toLocaleUpperCase()})`)
+              .title(`Home (${language.id.toLocaleUpperCase()})`),
           ),
         ])
         .canHandleIntent(
-          (intentName, params) => intentName === 'edit' && params.id.startsWith('home')
-        )
-    )
+          (intentName, params) => intentName === 'edit' && params.id.startsWith('home'),
+        ),
+    ),
 )

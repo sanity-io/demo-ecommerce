@@ -1,5 +1,5 @@
 import { MediaFile } from "@shopify/hydrogen";
-import {
+import type {
   MediaImage,
   ProductVariant,
 } from "@shopify/hydrogen/storefront-api-types";

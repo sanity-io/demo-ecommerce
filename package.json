@@ -7,21 +7,21 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --concurrency=1",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint --concurrency=1",
     "lint:fix": "npm run lint -- -- --fix",
-    "format": "turbo run format",
-    "typecheck": "turbo run typecheck",
+    "format": "turbo run format --concurrency=1",
+    "typecheck": "turbo run typecheck --concurrency=1",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.5",
-    "@commitlint/config-conventional": "^17.6.5",
-    "@turbo/gen": "^1.10.16",
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
+    "@turbo/gen": "^1.11.3",
     "husky": "^8.0.3",
-    "turbo": "^1.10.16",
-    "vercel": "^32.5.3"
+    "turbo": "^1.11.3",
+    "vercel": "^32.7.2"
   },
   "packageManager": "npm@10.2.3"
 }

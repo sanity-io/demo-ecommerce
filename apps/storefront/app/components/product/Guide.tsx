@@ -1,5 +1,5 @@
 import { Link } from "~/components/Link";
-import { SanityGuideProducts } from "~/lib/sanity";
+import type { SanityGuideProducts } from "~/lib/sanity";
 
 import { Label } from "../global/Label";
 import Image from "../modules/Image";

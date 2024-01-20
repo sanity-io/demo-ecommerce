@@ -27,7 +27,7 @@ export default function ProductPreview(props: HotspotTooltipProps<HotspotFields>
       schemaType: productSchemaType as SchemaType,
       layout: 'default' as PreviewLayoutKey,
     }),
-    [productSchemaType, value?.productWithVariant?.product]
+    [productSchemaType, value?.productWithVariant?.product],
   )
 
   return (

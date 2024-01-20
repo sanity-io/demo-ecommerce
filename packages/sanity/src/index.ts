@@ -43,7 +43,7 @@ export function defineSanityConfig(config: SanityConfig) {
    */
   if (typeof document === 'undefined') {
     throw new Error(
-      'Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.'
+      'Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.',
     )
   }
 

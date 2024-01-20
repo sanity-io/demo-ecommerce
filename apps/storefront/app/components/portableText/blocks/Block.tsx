@@ -1,6 +1,6 @@
-import { PortableTextBlock } from "@portabletext/types";
+import type { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type Props = {
   children?: ReactNode;

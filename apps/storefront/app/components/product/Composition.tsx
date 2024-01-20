@@ -4,7 +4,7 @@ import groq from "groq";
 import { Skeleton } from "~/components/global/Skeleton";
 import ProductModule from "~/components/modules/Product";
 import PortableText from "~/components/portableText/PortableText";
-import { SanityComposition, SanityProductPage } from "~/lib/sanity";
+import type { SanityComposition, SanityProductPage } from "~/lib/sanity";
 
 import { Label } from "../global/Label";
 

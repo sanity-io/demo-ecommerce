@@ -1,6 +1,6 @@
 import { Await } from "@remix-run/react";
 import { CartForm } from "@shopify/hydrogen";
-import { Cart } from "@shopify/hydrogen/storefront-api-types";
+import type { Cart } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import { useEffect } from "react";
 

@@ -1,5 +1,5 @@
 import { Await } from "@remix-run/react";
-import { Cart } from "@shopify/hydrogen/storefront-api-types";
+import type { Cart } from "@shopify/hydrogen/storefront-api-types";
 import { Suspense } from "react";
 
 import CircleOutlineButton from "~/components/elements/CircleOutlineButton";

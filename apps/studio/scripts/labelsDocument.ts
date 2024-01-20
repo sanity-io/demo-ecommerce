@@ -20,7 +20,7 @@ const fetchSettings = () =>
       "_type": "sharedText",
       labels,
       deliveryAndReturns,
-    }`
+    }`,
   )
 
 // Migrate the settings documents by getting the documents, building the patches, creating a transaction and committing it.

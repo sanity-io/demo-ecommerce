@@ -17,8 +17,7 @@ import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
 import ProductGrid from "~/components/collection/ProductGrid";
-import SortOrder from "~/components/collection/SortOrder";
-import { SORT_OPTIONS } from "~/components/collection/SortOrder";
+import SortOrder, { SORT_OPTIONS } from "~/components/collection/SortOrder";
 import { Label } from "~/components/global/Label";
 import CollectionHero from "~/components/heroes/Collection";
 import type { SanityCollectionPage, SanityHeroHome } from "~/lib/sanity";
