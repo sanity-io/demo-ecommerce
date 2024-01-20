@@ -32,11 +32,11 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^2.8.8",
     "react": "^18",
-    "typescript": "^4"
+    "typescript": "^5"
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "^3.25.0"
+    "sanity": "^3.23"
   },
   "prettier": {
     "semi": false,

@@ -7,12 +7,12 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --concurrency=1",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint --concurrency=1",
     "lint:fix": "npm run lint -- -- --fix",
-    "format": "turbo run format",
-    "typecheck": "turbo run typecheck",
+    "format": "turbo run format --concurrency=1",
+    "typecheck": "turbo run typecheck --concurrency=1",
     "prepare": "husky install"
   },
   "devDependencies": {

@@ -117,7 +117,6 @@ export async function handler(
      * Hydrogen's Storefront client to the loader context.
      */
     const handleRequest = createRequestHandler({
-      // @ts-expect-error
       build: remixBuild,
       mode: process.env.NODE_ENV,
       getLoadContext: () => ({
