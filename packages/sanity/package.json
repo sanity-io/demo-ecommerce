@@ -16,7 +16,7 @@
     "@sanity/document-internationalization": "^2.0.2",
     "@sanity/language-filter": "^3.2.1",
     "@sanity/presentation": "0.12.4-pink-lizard",
-    "@sanity/ui": "^1.8.3",
+    "@sanity/ui": "^2.0.0",
     "@sanity/vision": "3.19.3-pink-lizard.18",
     "rxjs": "^7.8.1",
     "sanity-plugin-documents-pane": "^2.1.2",
