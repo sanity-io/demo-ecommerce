@@ -17,7 +17,7 @@
     "@turbo/gen": "^1.10.16",
     "husky": "^8.0.3",
     "turbo": "^1.10.16",
-    "vercel": "^32.5.3"
+    "vercel": "^33.2.0"
   },
   "packageManager": "pnpm@8.10.2",
   "dependencies": {
