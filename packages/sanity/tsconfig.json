@@ -4,6 +4,6 @@
   "compilerOptions": {
     "rootDir": ".",
     "jsx": "react-jsx",
-    "noEmit": true
-  }
+    "noEmit": true,
+  },
 }

@@ -13,7 +13,7 @@ export const resolveDocumentActions: DocumentActionsResolver = (prev, {schemaTyp
   if (LOCKED_DOCUMENT_TYPES.includes(schemaType)) {
     prev = prev.filter(
       (previousAction: DocumentActionComponent) =>
-        previousAction.action === 'publish' || previousAction.action === 'discardChanges'
+        previousAction.action === 'publish' || previousAction.action === 'discardChanges',
     )
   }
 
@@ -22,7 +22,7 @@ export const resolveDocumentActions: DocumentActionsResolver = (prev, {schemaTyp
       (previousAction: DocumentActionComponent) =>
         previousAction.action === 'publish' ||
         previousAction.action === 'unpublish' ||
-        previousAction.action === 'discardChanges'
+        previousAction.action === 'discardChanges',
     )
 
     return [

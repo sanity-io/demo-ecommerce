@@ -10,8 +10,8 @@
     "moduleResolution": "Bundler",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

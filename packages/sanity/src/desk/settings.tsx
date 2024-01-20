@@ -20,18 +20,18 @@ export default defineStructure<ListItemBuilder>((S) =>
               .schemaType(`settings`)
               .icon(() => <TranslatedDoc icon={<CogIcon />} languageIcon={language.icon} />)
               .id(`settings-${language.id}`)
-              .title(`Settings (${language.id.toLocaleUpperCase()})`)
+              .title(`Settings (${language.id.toLocaleUpperCase()})`),
           ),
           S.divider(),
           S.documentListItem()
             .title('Shared Text')
             .schemaType('sharedText')
             .child(
-              S.editor().title('Shared Text').schemaType('sharedText').documentId('sharedText')
+              S.editor().title('Shared Text').schemaType('sharedText').documentId('sharedText'),
             ),
         ])
         .canHandleIntent(
-          (intentName, params) => intentName === 'edit' && params.id.startsWith('home')
-        )
-    )
+          (intentName, params) => intentName === 'edit' && params.id.startsWith('home'),
+        ),
+    ),
 )

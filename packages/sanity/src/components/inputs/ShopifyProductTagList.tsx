@@ -10,7 +10,7 @@ export function ShopifyProductTagList(props: StringInputProps) {
   useEffect(() => {
     client
       .fetch(
-        `array::unique(string::split(array::join(*[_type == 'product' && store.tags != ""].store.tags, ","), ","))`
+        `array::unique(string::split(array::join(*[_type == 'product' && store.tags != ""].store.tags, ","), ","))`,
       )
       .then((tags) => {
         setOptions(tags)

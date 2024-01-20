@@ -25,23 +25,17 @@
     "slug": "^8.2.3"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^2.0.4",
+    "@sanity/eslint-config-studio": "^3.0.1",
     "@types/lodash.get": "^4.4.9",
     "@types/slug": "^5.0.7",
     "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.2.4",
     "react": "^18",
     "typescript": "^5"
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "^3.23"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
+    "sanity": "^3"
   }
 }

@@ -56,7 +56,7 @@ async function createSingletons() {
       }
 
       return [metadata, ...translations]
-    })
+    }),
   ).then((res) => res.flat())
 
   const transaction = client.transaction()
