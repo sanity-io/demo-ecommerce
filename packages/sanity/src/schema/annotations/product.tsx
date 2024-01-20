@@ -28,12 +28,12 @@ export default defineField({
   },
   fields: [
     // Product
-    {
+    defineField({
       name: 'productWithVariant',
       title: 'Product + Variant',
       type: 'productWithVariant',
       validation: (rule) => rule.required(),
-    },
+    }),
     // Link action
     defineField({
       name: 'linkAction',

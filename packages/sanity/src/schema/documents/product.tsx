@@ -1,6 +1,6 @@
 import {TagIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import ShopifyIcon from '../../components/icons/Shopify'
 import ProductHiddenInput from '../../components/inputs/ProductHidden'
@@ -77,7 +77,7 @@ export default defineType({
       title: 'Creators',
       type: 'array',
       group: 'editorial',
-      of: [{type: 'creator'}],
+      of: [defineArrayMember({type: 'creator'})],
       validation: (rule) => rule.max(1),
     }),
     defineField({
@@ -85,7 +85,7 @@ export default defineType({
       title: 'Composition',
       type: 'array',
       group: 'editorial',
-      of: [{type: 'reference', to: [{type: 'material'}]}],
+      of: [defineArrayMember({type: 'reference', to: [{type: 'material'}]})],
     }),
     defineField({
       name: 'faqs',

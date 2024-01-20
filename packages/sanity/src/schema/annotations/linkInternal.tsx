@@ -30,12 +30,12 @@ export default defineField({
   },
   fields: [
     // Reference
-    {
+    defineField({
       name: 'reference',
       type: 'reference',
       weak: true,
       validation: (rule) => rule.required(),
       to: PAGE_REFERENCES,
-    },
+    }),
   ],
 })

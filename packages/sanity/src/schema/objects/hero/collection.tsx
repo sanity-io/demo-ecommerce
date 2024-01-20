@@ -1,4 +1,4 @@
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'hero.collection',
@@ -26,16 +26,16 @@ export default defineField({
       type: 'array',
       validation: (rule) => rule.max(1),
       of: [
-        {
+        defineArrayMember({
           name: 'productWithVariant',
           title: 'Product with variant',
           type: 'productWithVariant',
-        },
-        {
+        }),
+        defineArrayMember({
           name: 'imageWithProductHotspots',
           title: 'Image',
           type: 'imageWithProductHotspots',
-        },
+        }),
       ],
     }),
   ],

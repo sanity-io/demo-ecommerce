@@ -1,7 +1,7 @@
 import {getExtension} from '@sanity/asset-utils'
 import {PackageIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import ShopifyIcon from '../../components/icons/Shopify'
 import CollectionHiddenInput from '../../components/inputs/CollectionHidden'
@@ -101,7 +101,7 @@ export default defineType({
       description: 'If disabled, page title will be displayed instead',
       group: 'editorial',
     }),
-    // // Hero
+    // Hero
     defineField({
       name: 'hero',
       title: 'Hero',
@@ -109,7 +109,7 @@ export default defineType({
       hidden: ({document}) => !document?.showHero,
       group: 'editorial',
     }),
-    // // Modules
+    // Modules
     defineField({
       name: 'modules',
       title: 'Modules',
@@ -121,10 +121,10 @@ export default defineType({
         </>
       ),
       of: [
-        {type: 'module.callout'},
-        {type: 'module.callToAction'},
-        {type: 'module.image'},
-        {type: 'module.instagram'},
+        defineArrayMember({type: 'module.callout'}),
+        defineArrayMember({type: 'module.callToAction'}),
+        defineArrayMember({type: 'module.image'}),
+        defineArrayMember({type: 'module.instagram'}),
       ],
       group: 'editorial',
     }),

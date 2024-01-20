@@ -1,5 +1,5 @@
 import {StackCompactIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 import blocksToText from '../../utils/blocksToText'
 
@@ -9,7 +9,7 @@ export default defineField({
   type: 'array',
   icon: StackCompactIcon,
   of: [
-    {
+    defineArrayMember({
       name: 'faq',
       title: 'FAQ',
       type: 'object',
@@ -41,6 +41,6 @@ export default defineField({
           }
         },
       },
-    },
+    }),
   ],
 })

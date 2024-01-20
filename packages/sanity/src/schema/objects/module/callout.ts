@@ -1,5 +1,5 @@
 import {BulbOutlineIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'module.callout',
@@ -23,7 +23,7 @@ export default defineField({
       name: 'links',
       title: 'Link',
       type: 'array',
-      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+      of: [defineArrayMember({type: 'linkInternal'}), defineArrayMember({type: 'linkExternal'})],
       validation: (rule) => rule.max(1),
     }),
   ],

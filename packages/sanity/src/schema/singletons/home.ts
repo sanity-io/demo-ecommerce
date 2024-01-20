@@ -1,5 +1,5 @@
 import {HomeIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 const TITLE = 'Home'
 
@@ -33,12 +33,12 @@ export default defineField({
       title: 'Modules',
       type: 'array',
       of: [
-        {type: 'module.callout'},
-        {type: 'module.callToAction'},
-        {type: 'module.collection'},
-        {type: 'module.image'},
-        {type: 'module.instagram'},
-        {type: 'module.product'},
+        defineArrayMember({type: 'module.callout'}),
+        defineArrayMember({type: 'module.callToAction'}),
+        defineArrayMember({type: 'module.collection'}),
+        defineArrayMember({type: 'module.image'}),
+        defineArrayMember({type: 'module.instagram'}),
+        defineArrayMember({type: 'module.product'}),
       ],
       group: 'editorial',
     }),

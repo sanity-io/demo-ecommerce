@@ -1,5 +1,5 @@
 import {ImageIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 const VARIANTS = [
   {title: 'Simple', value: undefined},
@@ -50,19 +50,22 @@ export default defineField({
       type: 'object',
       fields: [
         // Title
-        {
+        defineField({
           name: 'title',
           title: 'Title',
           type: 'string',
-        },
+        }),
         // Link
-        {
+        defineField({
           name: 'links',
           title: 'Link',
           type: 'array',
-          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+          of: [
+            defineArrayMember({type: 'linkInternal'}),
+            defineArrayMember({type: 'linkExternal'}),
+          ],
           validation: (rule) => rule.max(1),
-        },
+        }),
       ],
       hidden: ({parent}) => parent.variant !== 'callToAction',
     }),
@@ -80,11 +83,11 @@ export default defineField({
       type: 'array',
       hidden: ({parent}) => parent.variant !== 'productTags',
       of: [
-        {
+        defineArrayMember({
           name: 'productWithVariant',
           title: 'Product + Variant',
           type: 'productWithVariant',
-        },
+        }),
       ],
     }),
   ],

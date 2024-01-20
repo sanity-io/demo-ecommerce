@@ -10,7 +10,7 @@ export default defineField({
     collapsible: true,
   },
   fields: [
-    {
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'placeholderString',
@@ -24,19 +24,19 @@ export default defineField({
       },
       validation: (rule) =>
         rule.max(50).warning('Longer titles may be truncated by search engines'),
-    },
-    {
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
       rows: 2,
       validation: (rule) =>
         rule.max(150).warning('Longer descriptions may be truncated by search engines'),
-    },
-    {
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'image',
-    },
+    }),
   ],
 })

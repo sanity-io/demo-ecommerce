@@ -1,5 +1,5 @@
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 interface SizeOption {
   title: string
@@ -25,7 +25,7 @@ export default defineField({
       title: 'Sizes',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           name: 'customProductOption.sizeObject',
           title: 'Size',
           type: 'object',
@@ -66,7 +66,7 @@ export default defineField({
               }
             },
           },
-        },
+        }),
       ],
       validation: (rule) =>
         rule.custom((options: SizeOption[] | undefined) => {

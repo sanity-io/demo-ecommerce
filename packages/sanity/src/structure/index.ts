@@ -39,7 +39,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'settings',
   'sharedText',
   'translation.metadata',
-  contextDocumentTypeName
+  contextDocumentTypeName,
 ]
 
 export const structure: StructureResolver = (S, context) =>

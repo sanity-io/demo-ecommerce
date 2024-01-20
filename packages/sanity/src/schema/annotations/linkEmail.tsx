@@ -28,11 +28,11 @@ export default defineField({
   },
   fields: [
     // Email
-    {
+    defineField({
       title: 'Email',
       name: 'email',
       type: 'email',
-    },
+    }),
   ],
   preview: {
     select: {

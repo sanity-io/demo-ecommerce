@@ -1,9 +1,11 @@
+import {defineArrayMember} from 'sanity'
+
 export default {
   title: 'Simple Block Content',
   name: 'simpleBlockContent',
   type: 'array',
   of: [
-    {
+    defineArrayMember({
       title: 'Block',
       type: 'block',
       styles: [],
@@ -36,6 +38,6 @@ export default {
           },
         ],
       },
-    },
+    }),
   ],
 }

@@ -1,5 +1,5 @@
 import {CogIcon, PackageIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const TITLE = 'Settings'
 interface ProductOptions {
@@ -48,44 +48,44 @@ export default defineType({
           title: 'Links',
           type: 'array',
           of: [
-            {
+            defineArrayMember({
               name: 'collectionGroup',
               title: 'Collection group',
               type: 'object',
               icon: PackageIcon,
               fields: [
-                {
+                defineField({
                   name: 'title',
                   title: 'Title',
                   type: 'string',
                   validation: (rule) => rule.required(),
-                },
-                {
+                }),
+                defineField({
                   name: 'collectionLinks',
                   title: 'Collection links',
                   type: 'array',
                   validation: (rule) => rule.unique().max(4),
                   of: [
-                    {
+                    defineArrayMember({
                       name: 'collection',
                       type: 'reference',
                       weak: true,
                       to: [{type: 'collection'}],
-                    },
+                    }),
                   ],
-                },
-                {
+                }),
+                defineField({
                   name: 'collectionProducts',
                   title: 'Collection products',
                   type: 'reference',
                   description: 'Products from this collection will be listed',
                   weak: true,
                   to: [{type: 'collection'}],
-                },
+                }),
               ],
-            },
-            {type: 'linkInternal'},
-            {type: 'linkExternal'},
+            }),
+            defineArrayMember({type: 'linkInternal'}),
+            defineArrayMember({type: 'linkExternal'}),
           ],
         }),
       ],
@@ -106,7 +106,10 @@ export default defineType({
           name: 'links',
           title: 'Links',
           type: 'array',
-          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+          of: [
+            defineArrayMember({type: 'linkInternal'}),
+            defineArrayMember({type: 'linkExternal'}),
+          ],
         }),
         // Text
         defineField({
@@ -114,7 +117,7 @@ export default defineType({
           title: 'Text',
           type: 'array',
           of: [
-            {
+            defineArrayMember({
               lists: [],
               marks: {
                 annotations: [
@@ -142,7 +145,7 @@ export default defineType({
               // Block styles
               styles: [{title: 'Normal', value: 'normal'}],
               type: 'block',
-            },
+            }),
           ],
         }),
       ],
@@ -154,14 +157,14 @@ export default defineType({
       type: 'array',
       group: 'productOptions',
       of: [
-        {
+        defineArrayMember({
           name: 'customProductOption.color',
           type: 'customProductOption.color',
-        },
-        {
+        }),
+        defineArrayMember({
           name: 'customProductOption.size',
           type: 'customProductOption.size',
-        },
+        }),
       ],
       validation: (rule) =>
         rule.custom((options: ProductOptions[] | undefined) => {

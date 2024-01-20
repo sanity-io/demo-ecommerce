@@ -1,5 +1,5 @@
 import {TagIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const TITLE = 'Shared Text'
 
@@ -19,7 +19,7 @@ export default defineType({
       name: 'labels',
       title: 'Labels',
       type: 'array',
-      of: [{type: 'label'}],
+      of: [defineArrayMember({type: 'label'})],
     }),
   ],
   preview: {

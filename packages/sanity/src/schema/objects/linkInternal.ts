@@ -11,20 +11,20 @@ export default defineField({
   icon: LinkIcon,
   fields: [
     // Title
-    {
+    defineField({
       title: 'Title',
       name: 'title',
       type: 'string',
       validation: (rule) => rule.required(),
-    },
+    }),
     // Reference
-    {
+    defineField({
       name: 'reference',
       type: 'reference',
       weak: true,
       validation: (rule) => rule.required(),
       to: PAGE_REFERENCES,
-    },
+    }),
   ],
   preview: {
     select: {

@@ -1,6 +1,6 @@
 import {ThLargeIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 import blocksToText from '../../../utils/blocksToText'
 
@@ -11,12 +11,12 @@ export default defineField({
   icon: ThLargeIcon,
   fields: [
     // Items
-    {
+    defineField({
       name: 'items',
       title: 'Items',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           name: 'item',
           title: 'Item',
           type: 'object',
@@ -42,7 +42,7 @@ export default defineField({
               title: 'Body',
               type: 'array',
               of: [
-                {
+                defineArrayMember({
                   lists: [],
                   marks: {
                     annotations: [
@@ -82,7 +82,7 @@ export default defineField({
                   styles: [],
                   // Paragraphs
                   type: 'block',
-                },
+                }),
               ],
               validation: (rule) => rule.required(),
             }),
@@ -102,9 +102,9 @@ export default defineField({
               }
             },
           },
-        },
+        }),
       ],
-    },
+    }),
   ],
   preview: {
     select: {

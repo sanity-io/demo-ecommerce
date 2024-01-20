@@ -1,6 +1,6 @@
 import {ImageIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'module.images',
@@ -13,7 +13,7 @@ export default defineField({
       name: 'modules',
       title: 'Images',
       type: 'array',
-      of: [{type: 'module.image'}],
+      of: [defineArrayMember({type: 'module.image'})],
       validation: (rule) => rule.required().max(2),
     }),
     // Full width

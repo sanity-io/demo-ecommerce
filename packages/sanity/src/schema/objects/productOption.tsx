@@ -1,5 +1,5 @@
 import {SunIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   title: 'Product option',
@@ -9,18 +9,18 @@ export default defineField({
   readOnly: true,
   fields: [
     // Name
-    {
+    defineField({
       title: 'Name',
       name: 'name',
       type: 'string',
-    },
+    }),
     // Values
-    {
+    defineField({
       title: 'Values',
       name: 'values',
       type: 'array',
-      of: [{type: 'string'}],
-    },
+      of: [defineArrayMember({type: 'string'})],
+    }),
   ],
   preview: {
     select: {

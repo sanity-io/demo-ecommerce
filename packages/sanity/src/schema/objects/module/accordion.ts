@@ -1,6 +1,6 @@
 import {StackCompactIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 import blocksToText from '../../../utils/blocksToText'
 
@@ -16,7 +16,7 @@ export default defineField({
       title: 'Groups',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           name: 'group',
           title: 'Group',
           type: 'object',
@@ -48,7 +48,7 @@ export default defineField({
               }
             },
           },
-        },
+        }),
       ],
     }),
   ],

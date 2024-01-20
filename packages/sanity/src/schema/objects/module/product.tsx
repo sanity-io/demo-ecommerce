@@ -9,12 +9,12 @@ export default defineField({
   type: 'object',
   icon: TagIcon,
   fields: [
-    {
+    defineField({
       name: 'productWithVariant',
       title: 'Product + Variant',
       type: 'productWithVariant',
       validation: (rule) => rule.required(),
-    },
+    }),
   ],
   preview: {
     select: {

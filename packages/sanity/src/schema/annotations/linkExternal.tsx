@@ -27,18 +27,18 @@ export default defineField({
     ),
   },
   fields: [
-    {
+    defineField({
       name: 'url',
       title: 'URL',
       type: 'url',
       validation: (rule) => rule.required().uri({scheme: ['http', 'https']}),
-    },
+    }),
     // Open in a new window
-    {
+    defineField({
       title: 'Open in a new window?',
       name: 'newWindow',
       type: 'boolean',
       initialValue: true,
-    },
+    }),
   ],
 })

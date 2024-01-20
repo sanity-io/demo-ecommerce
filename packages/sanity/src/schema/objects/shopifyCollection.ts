@@ -1,4 +1,4 @@
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'shopifyCollection',
@@ -84,11 +84,11 @@ export default defineField({
       type: 'array',
       description: 'Include Shopify products that satisfy these conditions',
       of: [
-        {
+        defineArrayMember({
           name: 'rule',
           title: 'rule',
           type: 'collectionRule',
-        },
+        }),
       ],
     }),
     // Disjunctive rules

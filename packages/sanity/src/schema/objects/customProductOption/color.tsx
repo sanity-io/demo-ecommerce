@@ -1,5 +1,5 @@
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 interface ColorOption {
   title: string
@@ -39,7 +39,7 @@ export default defineField({
       title: 'Colors',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           name: 'customProductOption.colorObject',
           title: 'Color',
           type: 'object',
@@ -73,7 +73,7 @@ export default defineField({
               }
             },
           },
-        },
+        }),
       ],
       validation: (rule) =>
         rule.custom((options: ColorOption[] | undefined) => {

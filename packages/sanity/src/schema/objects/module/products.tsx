@@ -1,6 +1,6 @@
 import {TagIcon} from '@sanity/icons'
 import pluralize from 'pluralize-esm'
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'module.products',
@@ -13,7 +13,7 @@ export default defineField({
       name: 'modules',
       title: 'Products',
       type: 'array',
-      of: [{type: 'module.product'}],
+      of: [defineArrayMember({type: 'module.product'})],
       validation: (rule) => rule.required().max(2),
     }),
     // Layout

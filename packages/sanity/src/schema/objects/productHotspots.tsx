@@ -1,4 +1,4 @@
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 import ProductTooltip from '../../components/hotspots/ProductTooltip'
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
@@ -8,7 +8,7 @@ export default defineField({
   title: 'Hotspots',
   type: 'array',
   of: [
-    {
+    defineArrayMember({
       name: 'spot',
       type: 'object',
       fieldsets: [{name: 'position', options: {columns: 2}}],
@@ -63,7 +63,7 @@ export default defineField({
           }
         },
       },
-    },
+    }),
   ],
   options: {
     imageHotspot: {

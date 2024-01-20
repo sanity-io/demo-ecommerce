@@ -1,4 +1,4 @@
-import {defineField} from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export default defineField({
   name: 'hero.home',
@@ -17,7 +17,7 @@ export default defineField({
       name: 'links',
       title: 'Link',
       type: 'array',
-      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+      of: [defineArrayMember({type: 'linkInternal'}), defineArrayMember({type: 'linkExternal'})],
       validation: (rule) => rule.max(1),
     }),
     // Content
@@ -27,16 +27,16 @@ export default defineField({
       type: 'array',
       validation: (rule) => rule.max(1),
       of: [
-        {
+        defineArrayMember({
           name: 'productWithVariant',
           title: 'Product with variant',
           type: 'productWithVariant',
-        },
-        {
+        }),
+        defineArrayMember({
           name: 'imageWithProductHotspots',
           title: 'Image',
           type: 'imageWithProductHotspots',
-        },
+        }),
       ],
     }),
   ],
