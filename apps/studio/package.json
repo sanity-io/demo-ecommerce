@@ -21,18 +21,18 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "sanity": "3.19.3-pink-lizard.18",
+    "sanity": "3.25.0",
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
-    "@sanity/cli": "3.19.3-pink-lizard.18",
-    "@types/styled-components": "^5.1.29",
-    "@types/yargs": "^17.0.29",
-    "eslint": "^8.52.0",
+    "@sanity/cli": "3.25.0",
+    "@types/styled-components": "^5.1.34",
+    "@types/yargs": "^17.0.32",
+    "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
   },
   "prettier": {
     "semi": false,

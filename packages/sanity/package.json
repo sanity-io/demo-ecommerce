@@ -17,7 +17,7 @@
     "@sanity/language-filter": "^3.2.1",
     "@sanity/presentation": "0.12.4-pink-lizard",
     "@sanity/ui": "^1.8.3",
-    "@sanity/vision": "3.19.3-pink-lizard.18",
+    "@sanity/vision": "3.25.0",
     "rxjs": "^7.8.1",
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
@@ -28,17 +28,17 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
-    "@types/lodash.get": "^4.4.8",
-    "@types/slug": "^5.0.6",
-    "eslint": "^8.52.0",
+    "@types/lodash.get": "^4.4.9",
+    "@types/slug": "^5.0.7",
+    "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^3.0.3",
-    "react": "^18",
-    "typescript": "^5"
+    "prettier": "^3.2.4",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "3.19.3-pink-lizard.18"
+    "sanity": "3.25.0"
   },
   "prettier": {
     "semi": false,
