@@ -1,3 +1,4 @@
+import {contextDocumentTypeName} from '@sanity/assist'
 import {ListItemBuilder, StructureResolver} from 'sanity/structure'
 
 import collections from './collections'
@@ -11,10 +12,10 @@ import products from './products'
 import settings from './settings'
 
 /**
- * Desk structure overrides
+ * Structure overrides
  *
  * Sanity Studio automatically lists document types out of the box.
- * With this custom desk structure we achieve things like showing the `home`
+ * With this custom structure we achieve things like showing the `home`
  * and `settings` document types as singletons, and grouping product details
  * and variants for easy editorial access.
  *
@@ -23,7 +24,7 @@ import settings from './settings'
  * https://www.sanity.io/docs/overview-structure-builder
  */
 
-// If you add document types to desk structure manually, you can add them to this array to prevent duplicates in the root pane
+// If you add document types to structure manually, you can add them to this array to prevent duplicates in the root pane
 const DOCUMENT_TYPES_IN_STRUCTURE = [
   'collection',
   'colorTheme',
@@ -38,6 +39,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'settings',
   'sharedText',
   'translation.metadata',
+  contextDocumentTypeName
 ]
 
 export const structure: StructureResolver = (S, context) =>
@@ -56,6 +58,7 @@ export const structure: StructureResolver = (S, context) =>
       colorThemes(S, context),
       S.divider(),
       settings(S, context),
+      S.documentTypeListItem(contextDocumentTypeName),
       S.divider(),
       // Automatically add new document types to the root pane
       ...S.documentTypeListItems().filter(

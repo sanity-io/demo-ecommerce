@@ -13,10 +13,10 @@ import {media, mediaAssetSource} from 'sanity-plugin-media'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
-import {structure} from './desk'
-import {defaultDocumentNode} from './desk/preview'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
+import {structure} from './structure'
+import {defaultDocumentNode} from './structure/preview'
 import resolveProductionUrl from './utils/resolveProductionUrl'
 
 /**

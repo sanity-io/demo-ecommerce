@@ -15,7 +15,7 @@ import {getCliClient} from 'sanity/cli'
  * 4. Run the script (replace <schema-type> with the name of your schema type):
  * npx sanity@latest exec ./createSingletons.ts --with-user-token
  *
- * 5. Update your desk structure to use the new documents
+ * 5. Update your structure to use the new documents
  */
 
 const SINGLETONS = [
