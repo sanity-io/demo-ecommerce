@@ -77,7 +77,8 @@ export function defineSanityConfig(config: SanityConfig) {
         languages: LANGUAGES,
         defaultLanguages: ['en'],
         fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent', 'hero.collection'],
-        buttonLocations: ['unstable__fieldAction'],
+        // TODO: remove when field action is fixed
+        buttonLocations: ['unstable__fieldAction', 'field'],
       }),
       languageFilter({
         supportedLanguages: LANGUAGES,
