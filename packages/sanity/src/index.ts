@@ -12,7 +12,7 @@ import {media, mediaAssetSource} from 'sanity-plugin-media'
 
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
-import {ENVIRONMENT, LANGUAGES} from './constants'
+import {ENVIRONMENT, LANGUAGES, SANITY_API_VERSION} from './constants'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import {structure} from './structure'
@@ -106,7 +106,19 @@ export function defineSanityConfig(config: SanityConfig) {
         },
       }),
       scheduledPublishing(),
-      assist(),
+      assist({
+        translate: {
+          document: {
+            languageField: 'language',
+            documentTypes: ['guide', 'page'],
+          },
+          field: {
+            documentTypes: ['collection', 'material', 'product', 'person'],
+            languages: LANGUAGES,
+            apiVersion: SANITY_API_VERSION,
+          },
+        },
+      }),
     ],
 
     schema: {
