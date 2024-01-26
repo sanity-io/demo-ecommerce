@@ -163,5 +163,5 @@ export default defineField({
       description: 'Image displayed in both cart and checkout',
     }),
   ],
-  readOnly: true,
+  readOnly: false,
 })
