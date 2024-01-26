@@ -70,13 +70,14 @@ export function defineSanityConfig(config: SanityConfig) {
       presentationTool({
         previewUrl: preview.domain ?? window.location.origin,
         locate,
-        components: {
+        // TODO: Make this
+        /* components: {
           unstable_navigator: {
             minWidth: 120,
             maxWidth: 240,
             component: CustomNavigator,
           },
-        },
+        }, */
       }),
       structureTool({
         structure,
