@@ -1,10 +1,7 @@
 import {UsersIcon} from '@sanity/icons'
-import {ListItemBuilder, StructureResolver} from 'sanity/desk'
+import {StructureResolver} from 'sanity/structure'
 
 import {eventNode} from '../../shared/structure/events'
-import guides from '../../shared/structure/guides'
-import home from '../../shared/structure/home'
-import {DOCUMENT_TYPES_IN_STRUCTURE} from '../../shared/structure/index'
 import pages from '../../shared/structure/pages'
 
 export const magazineStructure: StructureResolver = (S, context) =>
@@ -29,17 +26,6 @@ export const magazineStructure: StructureResolver = (S, context) =>
         .icon(() => '🧪'),
       S.divider(),
       S.listItem().title('Authors').icon(UsersIcon),
-      //collections(S, context),
-      //products(S, context),
-      //S.divider(),
-      //people(S, context),
-      //materials(S, context),
-      //S.documentTypeListItem('filter').title('Filters'),
-      //colorThemes(S, context),
-      //S.divider(),
-      //S.divider(),
-      //settings(S, context),
-
       S.divider(),
       S.listItem()
         .title('Ads and channels')
@@ -88,10 +74,4 @@ export const magazineStructure: StructureResolver = (S, context) =>
       eventNode(S, context),
       S.divider(),
       S.documentTypeListItem('assist.instruction.context').title('AI Context'),
-      // Automatically add new document types to the root pane
-      /* ...S.documentTypeListItems().filter(
-        (listItem: ListItemBuilder) =>
-          // @ts-expect-error Object is possibly 'undefined'
-          !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString())
-      ), */
     ])

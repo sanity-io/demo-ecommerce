@@ -23,7 +23,8 @@ import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
 import {magazineStructure} from './workspaces/magazine/structure'
 import {structure} from './workspaces/shared/structure'
-import {defaultDocumentNode} from './workspaces/shared/structure/preview'
+
+import {commerceStructure} from './workspaces/commerce'
 
 /**
  * Configuration options that will be passed in
@@ -81,7 +82,6 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       structureTool({
         structure,
-        defaultDocumentNode,
       }),
       scheduledPublishing(),
       assist(),
@@ -199,6 +199,14 @@ export function defineSanityConfig(config: SanityConfig) {
       title: 'Commerce',
       name: 'commerce',
       basePath: '/commerce',
+      plugins: [
+        structureTool({
+          structure: commerceStructure,
+        }),
+        ...sharedConfig.plugins.filter(
+          ({name}) => !['sanity/structure', '@sanity/vision'].includes(name)
+        ),
+      ],
     },
     {
       ...sharedConfig,

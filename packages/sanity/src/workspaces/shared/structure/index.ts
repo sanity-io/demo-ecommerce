@@ -53,9 +53,9 @@ export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('Content')
     .items([
-      home(S, context),
+      /* home(S, context),
       pages(S, context),
-      guides(S, context),
+      guides(S, context), */
       S.divider(),
       collections(S, context),
       products(S, context),
