@@ -1,12 +1,13 @@
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {documentInternationalization} from '@sanity/document-internationalization'
+import {embeddingsIndexDashboard} from '@sanity/embeddings-index-ui'
 import {googleMapsInput} from '@sanity/google-maps-input'
 import {languageFilter} from '@sanity/language-filter'
 import {presentationTool} from '@sanity/presentation'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
-import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace} from 'sanity'
+import {AssetSource, defineConfig, isKeyedObject, type SingleWorkspace, Tool} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
@@ -21,11 +22,9 @@ import {locate} from './location'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
 import resolveProductionUrl from './utils/resolveProductionUrl'
+import {commerceStructure} from './workspaces/commerce'
 import {magazineStructure} from './workspaces/magazine/structure'
 import {structure} from './workspaces/shared/structure'
-
-import {commerceStructure} from './workspaces/commerce'
-import {embeddingsIndexDashboard} from '@sanity/embeddings-index-ui'
 
 /**
  * Configuration options that will be passed in
@@ -72,14 +71,6 @@ export function defineSanityConfig(config: SanityConfig) {
       presentationTool({
         previewUrl: preview.domain ?? window.location.origin,
         locate,
-        // TODO: Make this
-        /* components: {
-          unstable_navigator: {
-            minWidth: 120,
-            maxWidth: 240,
-            component: CustomNavigator,
-          },
-        }, */
       }),
       structureTool({
         structure,
@@ -195,6 +186,7 @@ export function defineSanityConfig(config: SanityConfig) {
     },
   }
 
+  const isPresentation = (tools: Tool[]) => tools.length > 0 && 'presentation' === tools[0]?.name
   return defineConfig([
     {
       ...sharedConfig,
@@ -202,12 +194,20 @@ export function defineSanityConfig(config: SanityConfig) {
       name: 'commerce',
       basePath: '/commerce',
       plugins: [
+        ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
         structureTool({
           structure: commerceStructure,
         }),
-        ...sharedConfig.plugins.filter(
-          ({name}) => !['sanity/structure', '@sanity/vision'].includes(name)
-        ),
+        // Hack to de-deplicate tools and make them fall in order
+        ...sharedConfig.plugins.filter(({name, tools = []}) => {
+          if (name && ['sanity/structure', '@sanity/vision'].includes(name)) {
+            return false
+          }
+          if (isPresentation(tools)) {
+            return false
+          }
+          return true
+        }),
       ],
     },
     {
@@ -216,12 +216,20 @@ export function defineSanityConfig(config: SanityConfig) {
       name: 'magazine',
       basePath: '/magazine',
       plugins: [
+        ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
         structureTool({
           structure: magazineStructure,
         }),
-        ...sharedConfig.plugins.filter(
-          ({name}) => !['sanity/structure', '@sanity/vision'].includes(name)
-        ),
+        // Hack to de-deplicate tools and make them fall in order
+        ...sharedConfig.plugins.filter(({name, tools = []}) => {
+          if (name && ['sanity/structure', '@sanity/vision'].includes(name)) {
+            return false
+          }
+          if (isPresentation(tools)) {
+            return false
+          }
+          return true
+        }),
       ],
     },
   ])
