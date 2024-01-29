@@ -13,7 +13,7 @@ import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {workflow} from 'sanity-plugin-workflow'
 
-import {CustomNavigator} from './components/studio/CustomNavigator'
+//import {CustomNavigator} from './components/studio/CustomNavigator'
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
 import {ENVIRONMENT, LANGUAGES} from './constants'
@@ -25,6 +25,7 @@ import {magazineStructure} from './workspaces/magazine/structure'
 import {structure} from './workspaces/shared/structure'
 
 import {commerceStructure} from './workspaces/commerce'
+import {embeddingsIndexDashboard} from '@sanity/embeddings-index-ui'
 
 /**
  * Configuration options that will be passed in
@@ -93,6 +94,7 @@ export function defineSanityConfig(config: SanityConfig) {
       customDocumentActions(),
       media(),
       visionTool(),
+      embeddingsIndexDashboard(),
       documentInternationalization({
         supportedLanguages: LANGUAGES,
         schemaTypes: ['guide', 'page'],
@@ -192,7 +194,7 @@ export function defineSanityConfig(config: SanityConfig) {
       },
     },
   }
-  console.log(sharedConfig.plugins)
+
   return defineConfig([
     {
       ...sharedConfig,

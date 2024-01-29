@@ -123,6 +123,16 @@ export default defineField({
       validation: (rule) => rule.unique(),
       of: [
         defineArrayMember({
+          name: 'article',
+          type: 'reference',
+          to: [{type: 'guide'}],
+          options: {
+            aiWritingAssistance: {
+              embeddingsIndex: 'Everything',
+            },
+          },
+        }),
+        /* defineArrayMember({
           name: 'cta',
           title: 'Related content call to action',
           type: 'object',
@@ -136,9 +146,14 @@ export default defineField({
               name: 'article',
               type: 'reference',
               to: [{type: 'page'}, {type: 'guide'}],
+              options: {
+                aiWritingAssistance: {
+                  embeddingsIndex: 'Everything',
+                },
+              },
             },
           ],
-        }),
+        }), */
       ],
     }),
     // SEO

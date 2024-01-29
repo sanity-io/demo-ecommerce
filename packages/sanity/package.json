@@ -11,9 +11,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@sanity/assist": "^1.2.16",
+    "@sanity/assist": "1.2.15-lang.8",
     "@sanity/color-input": "^3.1.0",
     "@sanity/document-internationalization": "^2.0.2",
+    "@sanity/embeddings-index-ui": "^1.1.8",
     "@sanity/google-maps-input": "^3.0.2",
     "@sanity/language-filter": "^3.2.1",
     "@sanity/presentation": "^1.7.0",
