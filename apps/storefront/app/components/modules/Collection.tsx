@@ -32,7 +32,7 @@ export default function CollectionModule({ module }: Props) {
         {collection.vector && (
           <div
             className={clsx(
-              "absolute bottom-2 left-2 right-1 top-2 duration-1000 ease-out",
+              "absolute bottom-2 left-2 right-1 top-2 scale-x-125 duration-1000 ease-out",
               "group-hover:scale-[1.01]"
             )}
             style={{

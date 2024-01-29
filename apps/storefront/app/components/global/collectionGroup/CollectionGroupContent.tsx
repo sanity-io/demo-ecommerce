@@ -90,7 +90,7 @@ export default function CollectionGroupContent({
       {/* Collections */}
       <div className="px-8">
         <div className="text-lg font-bold">Collections</div>
-        <div className="relative mt-3 grid grid-cols-2 gap-2">
+        <div className="relative mt-3 grid grid-cols-3 gap-2">
           {renderCollections()}
         </div>
       </div>
