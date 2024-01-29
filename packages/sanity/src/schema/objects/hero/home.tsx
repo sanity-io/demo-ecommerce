@@ -47,6 +47,12 @@ export default defineField({
           description:
             'An interactive image with hotspots to highlight products or features, enhancing engagement on the home page.',
         },
+        {
+          name: 'text',
+          title: 'Text',
+          type: 'simpleBlockContent',
+          description: 'Simple paragraphs of text.',
+        },
       ],
     }),
   ],
