@@ -64,7 +64,11 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
 export default function Page() {
   const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
-  const { data: page, error } = useQuery<SanityPage>(query, queryParams, {
+  const {
+    data: page,
+    error,
+    encodeDataAttribute,
+  } = useQuery<SanityPage>(query, queryParams, {
     // @ts-expect-error
     initial,
   });
@@ -87,6 +91,7 @@ export default function Page() {
             "mx-auto max-w-[660px] px-4 pb-24 pt-8", //
             "md:px-8"
           )}
+          encodeDataAttribute={encodeDataAttribute}
         />
       )}
     </ColorTheme>

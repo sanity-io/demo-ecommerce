@@ -1,6 +1,7 @@
 import groq from "groq";
 
 export const PRODUCT_WITH_VARIANT_FIELDS = groq`
+  ...,
   _id,
   "_type": "productWithVariant",
   "available": !store.isDeleted && store.status == 'active',

@@ -3,6 +3,7 @@ import {
   PortableTextComponents,
 } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
+import { WithEncodeDataAttribute } from "@sanity/react-loader";
 import clsx from "clsx";
 import { useMemo } from "react";
 
@@ -28,9 +29,15 @@ type Props = {
   blocks: PortableTextBlock[];
   className?: string;
   centered?: boolean;
+  encodeDataAttribute?: WithEncodeDataAttribute["encodeDataAttribute"];
 };
 
-export default function PortableText({ blocks, centered, className }: Props) {
+export default function PortableText({
+  blocks,
+  centered,
+  className,
+  encodeDataAttribute,
+}: Props) {
   const components: PortableTextComponents = {
     list: {
       bullet: ({ children }) => (
@@ -57,7 +64,13 @@ export default function PortableText({ blocks, centered, className }: Props) {
         <ImagesBlock centered={centered} {...props} />
       ),
       "module.instagram": InstagramBlock,
-      "module.products": ProductsBlock,
+      "module.products": (props: any) => (
+        <ProductsBlock
+          encodeDataAttribute={encodeDataAttribute}
+          parentIndex={props.index}
+          {...props}
+        />
+      ),
       "module.taggedProducts": TaggedProductsBlock,
     },
   };

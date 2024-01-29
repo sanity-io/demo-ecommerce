@@ -154,7 +154,7 @@ export type SanityHomePage = {
 };
 
 export type SanityImageWithProductHotspots = {
-  _key?: string;
+  _key: string;
   _type: "imageWithProductHotspots";
   image: SanityAssetImage;
   productHotspots: SanityProductHotspot[];
@@ -194,7 +194,7 @@ export type SanityModule =
   | SanityModuleProduct;
 
 export type SanityModuleAccordion = {
-  _key?: string;
+  _key: string;
   _type: "module.accordion";
   groups: {
     _key: string;
@@ -205,7 +205,7 @@ export type SanityModuleAccordion = {
 };
 
 export type SanityModuleCallout = {
-  _key?: string;
+  _key: string;
   _type: "module.callout";
   link: SanityLink;
   links?: SanityLink[];
@@ -213,7 +213,7 @@ export type SanityModuleCallout = {
 };
 
 export type SanityModuleCallToAction = {
-  _key?: string;
+  _key: string;
   _type: "module.callToAction";
   body?: string;
   content?: SanityAssetImage | SanityProductWithVariant;
@@ -223,7 +223,7 @@ export type SanityModuleCallToAction = {
 };
 
 export type SanityModuleCollection = {
-  _key?: string;
+  _key: string;
   _type: "module.collection";
   collection: SanityCollection;
   showBackground?: boolean;
@@ -236,7 +236,7 @@ export type SanityModuleImage =
   | SanityModuleImageProductTags;
 
 export type SanityModuleGrid = {
-  _key?: string;
+  _key: string;
   _type: "module.grid";
   items: {
     _key: string;
@@ -248,13 +248,13 @@ export type SanityModuleGrid = {
 };
 
 export type SanityModuleImageBase = {
-  _key?: string;
+  _key: string;
   _type: "module.image";
   image: SanityAssetImage;
 };
 
 export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
-  _key?: string;
+  _key: string;
   callToAction?: {
     link: SanityLink;
     title?: string;
@@ -263,25 +263,25 @@ export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
 }
 
 export interface SanityModuleImageCaption extends SanityModuleImageBase {
-  _key?: string;
+  _key: string;
   caption?: string;
   variant: "caption";
 }
 export interface SanityModuleImageProductHotspots
   extends SanityModuleImageBase {
-  _key?: string;
+  _key: string;
   productHotspots?: SanityProductHotspot[];
   variant: "productHotspots";
 }
 
 export interface SanityModuleImageProductTags extends SanityModuleImageBase {
-  _key?: string;
+  _key: string;
   productTags?: SanityProductWithVariant[];
   variant: "productTags";
 }
 
 export type SanityModuleImages = {
-  _key?: string;
+  _key: string;
   _type: "module.images";
   fullWidth?: boolean;
   modules: SanityModuleImage[];
@@ -289,26 +289,26 @@ export type SanityModuleImages = {
 };
 
 export type SanityModuleInstagram = {
-  _key?: string;
+  _key: string;
   _type: "module.instagram";
   url: string;
 };
 
 export type SanityModuleProduct = {
-  _key?: string;
+  _key: string;
   _type: "module.product";
   productWithVariant: SanityProductWithVariant;
 };
 
 export type SanityModuleProducts = {
-  _key?: string;
+  _key: string;
   _type: "module.products";
   layout?: "card" | "pill";
   modules: SanityModuleProduct[];
 };
 
 export type SanityModuleTaggedProducts = {
-  _key?: string;
+  _key: string;
   _type: "module.taggedProducts";
   tag: string;
   number: number;
@@ -332,7 +332,7 @@ export type SanityPage = {
 };
 
 export type SanityProductHotspot = {
-  _key?: string;
+  _key: string;
   product: SanityProductWithVariant;
   x: number;
   y: number;
@@ -340,7 +340,7 @@ export type SanityProductHotspot = {
 
 export type SanityProductWithVariant = {
   _id: string;
-  _key?: string;
+  _key: string;
   _type: "productWithVariant";
   available: boolean;
   gid: string;
