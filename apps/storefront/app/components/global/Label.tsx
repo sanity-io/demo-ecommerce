@@ -24,5 +24,5 @@ export function Label(props: props) {
 
   //return label || `Missing translation: ${_key}`;
   // eslint-disable-next-line no-console
-  return label || console.log(`Missing translation: ${_key}`);
+  return label || console.log(`Missing translation: ${_key}`) || "";
 }
