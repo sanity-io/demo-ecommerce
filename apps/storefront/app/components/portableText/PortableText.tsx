@@ -3,7 +3,6 @@ import {
   PortableTextComponents,
 } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
-import { WithEncodeDataAttribute } from "@sanity/react-loader";
 import clsx from "clsx";
 import { useMemo } from "react";
 
@@ -19,6 +18,7 @@ import ImagesBlock from "~/components/portableText/blocks/Images";
 import InstagramBlock from "~/components/portableText/blocks/Instagram";
 import ProductsBlock from "~/components/portableText/blocks/Products";
 import TaggedProductsBlock from "~/components/portableText/blocks/TaggedProducts";
+import type { EncodeDataAttributeFunction } from "~/lib/sanity";
 
 const SHARED_LIST_CLASSES = clsx(
   "first:mt-0 last:mb-0", //
@@ -29,7 +29,7 @@ type Props = {
   blocks: PortableTextBlock[];
   className?: string;
   centered?: boolean;
-  encodeDataAttribute?: WithEncodeDataAttribute["encodeDataAttribute"];
+  encodeDataAttribute?: EncodeDataAttributeFunction;
 };
 
 export default function PortableText({

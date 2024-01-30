@@ -3,12 +3,15 @@ import { WithEncodeDataAttribute } from "@sanity/react-loader";
 import clsx from "clsx";
 
 import ProductModule from "~/components/modules/Product";
-import type { SanityModuleProducts } from "~/lib/sanity";
+import type {
+  EncodeDataAttributeFunction,
+  SanityModuleProducts,
+} from "~/lib/sanity";
 
 type Props = {
   value: PortableTextBlock & SanityModuleProducts;
   parentIndex: number;
-  encodeDataAttribute?: WithEncodeDataAttribute["encodeDataAttribute"];
+  encodeDataAttribute?: EncodeDataAttributeFunction;
 };
 
 export default function ProductsBlock({
@@ -44,6 +47,9 @@ export default function ProductsBlock({
               imageAspectClassName="aspect-[320/220]"
               layout={value.layout}
               module={module}
+              // remove last item off path
+              path={path.slice(0, -1)}
+              encodeDataAttribute={encodeDataAttribute}
             />
           </div>
         );

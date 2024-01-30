@@ -68,6 +68,7 @@ export default function Page() {
     data: page,
     error,
     encodeDataAttribute,
+    sourceMap,
   } = useQuery<SanityPage>(query, queryParams, {
     // @ts-expect-error
     initial,

@@ -1,3 +1,4 @@
+import { StudioPathLike } from "@sanity/react-loader";
 import { Image, Money, type ShopifyAnalyticsProduct } from "@shopify/hydrogen";
 import type { ProductVariant } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
@@ -5,6 +6,7 @@ import clsx from "clsx";
 import Badge from "~/components/elements/Badge";
 import { Link } from "~/components/Link";
 import AddToCartButton from "~/components/product/buttons/AddToCartButton";
+import { EncodeDataAttributeFunction } from "~/lib/sanity";
 import {
   getProductOptionString,
   hasMultipleProductOptions,
@@ -19,6 +21,8 @@ type Props = {
   storefrontProduct: ProductWithNodes;
   variantGid?: string;
   imageOnly?: boolean;
+  path?: StudioPathLike;
+  encodeDataAttribute?: EncodeDataAttributeFunction;
 };
 
 export default function ProductCard({
@@ -26,6 +30,9 @@ export default function ProductCard({
   storefrontProduct,
   variantGid,
   imageOnly = false,
+  // These have to be prop-drilled because the content being *displayed* is from Shopify, not Sanity
+  path = [],
+  encodeDataAttribute,
 }: Props) {
   const firstVariant =
     useGid<ProductVariant>(variantGid) ??
@@ -56,6 +63,9 @@ export default function ProductCard({
   return (
     <div className="group relative">
       <div
+        data-sanity={
+          encodeDataAttribute?.([...path, "productWithVariant", "_id"]) ?? ``
+        }
         className={clsx([
           imageAspectClassName,
           "relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-[border-radius] duration-500 ease-out",
@@ -118,6 +128,13 @@ export default function ProductCard({
           <div className="space-y-1">
             {/* Title */}
             <Link
+              data-sanity={
+                encodeDataAttribute?.([
+                  ...path,
+                  "productWithVariant",
+                  "title",
+                ]) ?? ``
+              }
               className={clsx(
                 "font-bold", //
                 "hover:underline"
@@ -129,7 +146,18 @@ export default function ProductCard({
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
-              <div className="text-darkGray">{storefrontProduct.vendor}</div>
+              <div
+                data-sanity={
+                  encodeDataAttribute?.([
+                    ...path,
+                    "productWithVariant",
+                    "vendor",
+                  ]) ?? ``
+                }
+                className="text-darkGray"
+              >
+                {storefrontProduct.vendor}
+              </div>
             )}
 
             {/* Product options */}

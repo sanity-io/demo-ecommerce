@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import { SanityImageAssetDocument } from "@sanity/client";
+import { WithEncodeDataAttribute } from "@sanity/react-loader";
 import type { Image, Slug } from "@sanity/types";
 
 import type { SanityColorTheme } from "~/lib/theme";
@@ -430,3 +431,7 @@ export type SanityGuideProducts = {
   slug: string;
   images: SanityModuleImage[];
 };
+
+// TODO: PR react-loader to export this
+export type EncodeDataAttributeFunction =
+  WithEncodeDataAttribute["encodeDataAttribute"];
