@@ -1,17 +1,26 @@
+import { StudioPathLike } from "@sanity/react-loader";
+
 import CalloutModule from "~/components/modules/Callout";
 import CallToActionModule from "~/components/modules/CallToAction";
 import CollectionModule from "~/components/modules/Collection";
 import ImageModule from "~/components/modules/Image";
 import InstagramModule from "~/components/modules/Instagram";
 import ProductModule from "~/components/modules/Product";
-import type { SanityModule } from "~/lib/sanity";
+import type { EncodeDataAttributeFunction, SanityModule } from "~/lib/sanity";
 
 type Props = {
   imageAspectClassName?: string;
   module: SanityModule;
+  path?: StudioPathLike;
+  encodeDataAttribute?: EncodeDataAttributeFunction;
 };
 
-export default function Module({ imageAspectClassName, module }: Props) {
+export default function Module({
+  imageAspectClassName,
+  module,
+  path,
+  encodeDataAttribute,
+}: Props) {
   switch (module._type) {
     case "module.callout":
       return <CalloutModule module={module} />;
@@ -28,6 +37,8 @@ export default function Module({ imageAspectClassName, module }: Props) {
         <ProductModule
           imageAspectClassName={imageAspectClassName}
           module={module}
+          path={path}
+          encodeDataAttribute={encodeDataAttribute}
         />
       );
     default:

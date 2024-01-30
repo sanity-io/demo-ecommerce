@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import Module from "~/components/modules/Module";
 import ProductCard from "~/components/product/Card";
-import type { SanityModule } from "~/lib/sanity";
+import type { EncodeDataAttributeFunction, SanityModule } from "~/lib/sanity";
 import type { ProductWithNodes } from "~/types/shopify";
 
 // Sanity modules to render in full width (across all grid columns)
@@ -90,9 +90,10 @@ const PRODUCT_LAYOUT = [
 
 type Props = {
   items: (SanityModule | ProductWithNodes)[];
+  encodeDataAttribute: EncodeDataAttributeFunction;
 };
 
-export default function ModuleGrid({ items }: Props) {
+export default function ModuleGrid({ items, encodeDataAttribute }: Props) {
   return (
     <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
@@ -104,6 +105,7 @@ export default function ModuleGrid({ items }: Props) {
           CLASSES.flexJustify[productLayout.flex.justify],
           productLayout.offsetY ? "md:mt-[5vw]" : "mt-0",
         ]);
+        const path = ["modules", index, "_key"];
 
         if (isModule(item)) {
           const isProductModule = item._type === "module.product";
@@ -111,6 +113,7 @@ export default function ModuleGrid({ items }: Props) {
           // Render modules
           return (
             <li
+              data-sanity={encodeDataAttribute?.(path)}
               className={clsx([
                 "flex overflow-hidden",
                 isProductModule
@@ -126,6 +129,8 @@ export default function ModuleGrid({ items }: Props) {
                 <Module
                   imageAspectClassName={productImageAspect}
                   module={item}
+                  path={path.slice(0, -1)}
+                  encodeDataAttribute={encodeDataAttribute}
                 />
               </div>
             </li>
@@ -133,11 +138,17 @@ export default function ModuleGrid({ items }: Props) {
         } else {
           // Render product cards
           return (
-            <li className={productLayoutClasses} key={item.id}>
+            <li
+              key={item.id}
+              data-sanity={encodeDataAttribute?.(path)}
+              className={productLayoutClasses}
+            >
               <div className={productWidth}>
                 <ProductCard
                   imageAspectClassName={productImageAspect}
                   storefrontProduct={item}
+                  path={path.slice(0, -1)}
+                  encodeDataAttribute={encodeDataAttribute}
                 />
               </div>
             </li>

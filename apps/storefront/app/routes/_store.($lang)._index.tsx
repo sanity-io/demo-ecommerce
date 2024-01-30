@@ -59,7 +59,11 @@ export default function Index() {
   const { initial, query, queryParams } =
     useLoaderData<SerializeFrom<typeof loader>>();
 
-  const { error, data: page } = useQuery(
+  const {
+    error,
+    data: page,
+    encodeDataAttribute,
+  } = useQuery<SanityHomePage>(
     query,
     queryParams,
     // @ts-expect-error
@@ -77,7 +81,10 @@ export default function Index() {
 
       {page?.modules && (
         <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-          <ModuleGrid items={page.modules} />
+          <ModuleGrid
+            items={page.modules}
+            encodeDataAttribute={encodeDataAttribute}
+          />
         </div>
       )}
     </>
