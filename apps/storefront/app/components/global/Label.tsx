@@ -1,6 +1,8 @@
 import { useLayoutContext } from "~/hooks/useLayoutContext";
 import { useRootLoaderData } from "~/hooks/useRootLoaderData";
 
+import { cleanString } from "../Filter";
+
 type props = {
   _key: string;
   replacements?: Record<string, string>;
@@ -10,7 +12,9 @@ export function Label(props: props) {
   const { _key, replacements } = props;
   const { labels = [] } = useLayoutContext();
 
-  let label = labels.find(({ key }: { key: string }) => key === _key)?.text;
+  let label = labels.find(
+    ({ key }: { key: string }) => cleanString(key) === cleanString(_key)
+  )?.text;
 
   if (label && replacements) {
     Object.keys(replacements).forEach((key) => {
