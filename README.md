@@ -159,6 +159,47 @@ Then, you can run a local `server.js` using the production build with:
 npm run serve
 ```
 
+## Translation keys
+
+Add the following translations to your Studio:
+
+### Content related
+- global.skipToContent
+- shipping.shippingReturns
+- guide.title
+- faqs.title
+
+
+### Cart/Account related
+- global.account
+- cart.subtotal
+- cart.shipping
+- cart.calculatedAtCheckout
+- cart.checkout
+- cart.title
+- cart.empty
+- cart.quickAdd
+- cart.continueShopping
+
+### Product related
+- global.loadMore
+- cart.addToCart
+- cart.buyNow
+- product.soldOut
+- product.sale
+- product.madeFrom
+- products.relatedProducts
+- collection.noResults
+- collection.shopCollection
+- collection.sortFeatured
+- collection.sortPriceAsc
+- collection.sortPriceDesc
+- collection.sortTitleAsc
+- collection.sortTitleDesc
+- collection.sortBestSelling
+- collection.sortNewArrivals
+
+
 ## Deployment
 
 See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
