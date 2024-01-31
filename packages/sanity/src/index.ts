@@ -76,7 +76,18 @@ export function defineSanityConfig(config: SanityConfig) {
         structure,
       }),
       scheduledPublishing(),
-      assist(),
+      assist({
+        translate: {
+          document: {
+            languageField: 'language',
+            schemaTypes: ['guide', 'page'],
+          },
+          field: {
+            documentTypes: ['collection', 'material', 'product', 'person'],
+            languages: LANGUAGES,
+          },
+        },
+      }),
       googleMapsInput({
         apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
       }),
