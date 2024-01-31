@@ -103,13 +103,26 @@ export const locate: DocumentLocationResolver = (params, context) => {
     case 'product':
     case 'person': {
       const incomingReferences$ = documentStore.listenQuery(
-        `*[references($id) && defined(slug)]`,
+        `*[
+          references($id) 
+          && _type == "product" 
+          && defined(store.slug.current)
+        ]{
+          _type,
+          "title": store.title,
+          "href": store.slug.current
+        }`,
         {id},
         {perspective: 'previewDrafts'}
       )
 
       const document$ = documentStore.listenQuery(
-        `*[_id == $id][0]`,
+        `*[_id == $id][0]{
+          _type,
+          language,
+          "title": coalesce(seo.title, title, store.title, name, "No title"),
+          "href": coalesce(store.slug.current, slug.current, null)
+        }`,
         {id},
         {perspective: 'previewDrafts'}
       )
@@ -120,28 +133,19 @@ export const locate: DocumentLocationResolver = (params, context) => {
             map((document) => ({
               locations: [document, ...incomingReferences]
                 .map((document: any) => {
-                  const title =
-                    document.seo?.title ||
-                    document?.title ||
-                    document?.store?.title ||
-                    document?.name ||
-                    'No title'
-                  const href = `${
-                    'language' in document
-                      ? // @ts-expect-error
-                        localeByLanguage[document.language]
-                      : document._type === 'home'
-                      ? ''
-                      : '/'
-                  }${
-                    // @ts-expect-error
-                    firstSegmentBasedOnType[document._type]
-                  }/${document?.slug?.current || document.store?.slug?.current || ''}`
+                  const {title} = document
+                  let hrefBase = `/`
+                  // @ts-expect-error
+                  const firstSegment = firstSegmentBasedOnType[document._type]
 
-                  return {
-                    title,
-                    href,
+                  if (document._type === 'home') {
+                    hrefBase = `/`
+                  } else if (document.language) {
+                    // @ts-expect-error
+                    hrefBase = `/${localeByLanguage[document.language]}`
                   }
+
+                  return {title, href: `${hrefBase}${firstSegment}/${document.href}`}
                 })
                 .filter(({href, title}: any) => href && title),
             }))

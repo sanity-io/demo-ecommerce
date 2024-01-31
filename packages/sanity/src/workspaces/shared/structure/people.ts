@@ -1,4 +1,4 @@
-import type {ListItemBuilder, StructureBuilder} from 'sanity/desk'
+import type {ListItemBuilder, StructureBuilder} from 'sanity/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 
 import defineStructure from '../../../utils/defineStructure'
@@ -50,7 +50,10 @@ export default defineStructure<ListItemBuilder>((S) =>
           schemaType: 'person',
         })
 
-        return documentNode.views([...documentNode.getViews(), productsPane(S)])
+        return documentNode.views([
+          S.view.form(),
+          productsPane(S)
+        ])
       })
     )
 )
