@@ -39,7 +39,7 @@ export const magazineStructure: StructureResolver = (S, context) =>
                 .title('All ads')
                 .icon(() => '📣'),
               S.listItem()
-                .title('Goolge')
+                .title('Google')
                 .child(
                   S.documentList()
                     .title('Goolge ads')
