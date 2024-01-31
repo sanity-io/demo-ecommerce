@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 
 import ImageWithProductHotspots from "~/components/media/ImageWithProductHotspots";
 import ProductHero from "~/components/product/ProductHero";
@@ -8,11 +8,15 @@ import type {
 } from "~/lib/sanity";
 
 type Props = {
-  content?: SanityImageWithProductHotspots | SanityProductWithVariant;
+  content?: SanityImageWithProductHotspots | SanityProductWithVariant | string;
 };
 
 export default function HeroContent({ content }: Props) {
   const heroContent = useMemo(() => {
+    if (typeof content === "string") {
+      return <h2 className="mb-8 mr-auto p-4 text-xl font-bold">{content}</h2>;
+    }
+
     switch (content?._type) {
       case "imageWithProductHotspots": {
         return (

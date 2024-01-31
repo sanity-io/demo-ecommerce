@@ -6,7 +6,7 @@ import { useColorTheme } from "~/lib/theme";
 
 type Props = {
   fallbackTitle: string;
-  hero?: SanityHeroPage;
+  hero?: SanityHeroPage | { title: string; content: string };
 };
 
 export default function PageHero({ fallbackTitle, hero }: Props) {

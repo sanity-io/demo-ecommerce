@@ -35,6 +35,7 @@ export const event = defineType({
       name: 'title',
       title: 'Event Title',
       description: 'The main title of the event. This will be displayed prominently.',
+      validation: rule => rule.error().error(`Event will not display on the website without a title`)
     }),
     defineField({
       type: 'slug',
@@ -44,6 +45,13 @@ export const event = defineType({
       options: {
         source: 'title',
       },
+      validation: rule => rule.required().error(`Event will not generate a web page without a slug`)
+    }),
+    defineField({
+      type: 'date',
+      name: 'date',
+      title: 'Event Date',
+      description: 'The specific date when the event is scheduled to occur.',
     }),
     defineField({
       name: 'callToAction',
@@ -55,12 +63,6 @@ export const event = defineType({
       name: 'description',
       title: 'Event Description',
       description: 'A detailed description of the event, including its purpose and highlights.',
-    }),
-    defineField({
-      type: 'date',
-      name: 'date',
-      title: 'Event Date',
-      description: 'The specific date when the event is scheduled to occur.',
     }),
     defineField({
       type: 'number',
