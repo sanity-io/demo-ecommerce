@@ -21,7 +21,7 @@ import {ENVIRONMENT, LANGUAGES} from './constants'
 import {locate} from './location'
 import {customDocumentActions} from './plugins/customDocumentActions/index'
 import {types} from './schema'
-import resolveProductionUrl from './utils/resolveProductionUrl'
+// import resolveProductionUrl from './utils/resolveProductionUrl'
 import {commerceStructure} from './workspaces/commerce'
 import {magazineStructure} from './workspaces/magazine/structure'
 import {structure} from './workspaces/shared/structure'
@@ -76,7 +76,18 @@ export function defineSanityConfig(config: SanityConfig) {
         structure,
       }),
       scheduledPublishing(),
-      assist(),
+      assist({
+        translate: {
+          document: {
+            languageField: 'language',
+            schemaTypes: ['guide', 'page'],
+          },
+          field: {
+            documentTypes: ['collection', 'material', 'product', 'person'],
+            languages: LANGUAGES,
+          },
+        },
+      }),
       googleMapsInput({
         apiKey: 'AIzaSyAGcxPVmy0V7OtgCqTE62P9JMvscMHaq3c',
       }),
@@ -159,7 +170,8 @@ export function defineSanityConfig(config: SanityConfig) {
     },
 
     document: {
-      productionUrl: resolveProductionUrl,
+      // This is depreacted as it is confusing with the Presentation tool
+      //productionUrl: resolveProductionUrl,
       unstable_comments: {
         enabled: true,
       },

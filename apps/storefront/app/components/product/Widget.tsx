@@ -85,7 +85,7 @@ export default function ProductWidget({
       {/* Vendor */}
       {storefrontProduct?.vendor && (
         <div className="mt-1 text-md text-darkGray">
-          {storefrontProduct.vendor}
+          {sanityProduct?.creators[0]?.person?.name || storefrontProduct.vendor}
         </div>
       )}
 
