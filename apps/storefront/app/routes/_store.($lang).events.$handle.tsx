@@ -33,7 +33,11 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
 export default function Event() {
   const { initial, query, queryParams } = useLoaderData<typeof loader>();
 
-  const { error, data: event } = useQuery<SanityEventPage>(
+  const {
+    error,
+    data: event,
+    encodeDataAttribute,
+  } = useQuery<SanityEventPage>(
     query,
     queryParams,
     // @ts-expect-error
@@ -71,9 +75,14 @@ export default function Event() {
         }
       : event?.colorTheme;
 
+  const dateAttribute = encodeDataAttribute(["date"]);
+
   return (
     <ColorTheme value={colorTheme}>
-      <PageHero fallbackTitle="Event details" hero={{ title: event.title }} />
+      <PageHero
+        fallbackTitle="Event details"
+        hero={{ title: event.title || event.slug.current }}
+      />
       <article className="grid grid-cols-1 gap-12 md:grid-cols-5">
         <div className="mb-auto flex flex-col items-start gap-4 py-4 md:col-span-3 md:col-start-3 md:gap-8 md:py-8">
           <div className="overflow-hidden rounded-xl">
@@ -90,7 +99,9 @@ export default function Event() {
           ) : null}
         </div>
         <div className="p-4 text-lg md:col-span-2 md:col-start-1 md:row-start-1 md:p-8">
-          <h2 className="mb-8 text-xl font-bold">{date}</h2>
+          <h2 data-sanity={dateAttribute} className="mb-8 text-xl font-bold">
+            {date}
+          </h2>
 
           <table className="mb-8 w-full border-b border-t border-purple-100">
             <tbody className="divide-y divide-purple-100">

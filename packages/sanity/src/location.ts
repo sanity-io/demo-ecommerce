@@ -79,21 +79,30 @@ export const locate: DocumentLocationResolver = (params, context) => {
     case 'collection':
     case 'event': {
       const document$ = documentStore.listenQuery(
-        `*[_id == $id][0]`,
+        `*[_id == $id][0]{
+          _type,
+          "title": coalesce(title, hero.title, seo.title, "Untitled"),
+          "slug": slug.current
+        }`,
         {id},
         {perspective: 'previewDrafts'}
       )
 
       return document$.pipe(
         map((document) => {
+          if (!document || !document.slug) {
+            return null
+          }
+
+          const {_type, title, slug} = document
           // @ts-expect-error
-          const href = `${firstSegmentBasedOnType[document._type]}/${document?.slug?.current || ''}`
+          const firstSegment = firstSegmentBasedOnType[_type]
 
           return {
             locations: [
               {
-                title: document?.title || document?.hero?.title || document.seo?.title,
-                href,
+                title,
+                href: `/${firstSegment}/${slug}`,
               },
             ],
           } satisfies DocumentLocationsState
@@ -110,7 +119,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
         ]{
           _type,
           "title": store.title,
-          "href": store.slug.current
+          "slug": store.slug.current
         }`,
         {id},
         {perspective: 'previewDrafts'}
@@ -121,7 +130,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
           _type,
           language,
           "title": coalesce(seo.title, title, store.title, name, "No title"),
-          "href": coalesce(store.slug.current, slug.current, null)
+          "slug": coalesce(store.slug.current, slug.current, null)
         }`,
         {id},
         {perspective: 'previewDrafts'}
@@ -133,19 +142,23 @@ export const locate: DocumentLocationResolver = (params, context) => {
             map((document) => ({
               locations: [document, ...incomingReferences]
                 .map((document: any) => {
-                  const {title} = document
-                  let hrefBase = `/`
-                  // @ts-expect-error
-                  const firstSegment = firstSegmentBasedOnType[document._type]
-
-                  if (document._type === 'home') {
-                    hrefBase = `/`
-                  } else if (document.language) {
-                    // @ts-expect-error
-                    hrefBase = `/${localeByLanguage[document.language]}`
+                  if (!document) {
+                    return null
                   }
 
-                  return {title, href: `${hrefBase}${firstSegment}/${document.href}`}
+                  const {_type, title, slug, language} = document
+                  let hrefBase = `/`
+                  // @ts-expect-error
+                  const firstSegment = firstSegmentBasedOnType[_type]
+
+                  if (_type === 'home') {
+                    hrefBase = `/`
+                  } else if (language) {
+                    // @ts-expect-error
+                    hrefBase = `/${localeByLanguage[language]}/`
+                  }
+
+                  return {title, href: `${hrefBase}${firstSegment}/${slug}`}
                 })
                 .filter(({href, title}: any) => href && title),
             }))
