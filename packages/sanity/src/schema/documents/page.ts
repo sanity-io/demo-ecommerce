@@ -156,6 +156,26 @@ export default defineField({
         }), */
       ],
     }),
+    defineField({
+      name: 'relatedProducts',
+      title: 'Related products',
+      description: 'Products related to this pages content.',
+      type: 'array',
+      group: ['seo', 'editorial'],
+      validation: (rule) => rule.unique(),
+      of: [
+        defineArrayMember({
+          name: 'productReference',
+          type: 'reference',
+          to: [{type: 'product'}],
+          options: {
+            aiWritingAssistance: {
+              embeddingsIndex: 'Products',
+            },
+          },
+        }),
+      ],
+    }),
     // SEO
     defineField({
       name: 'seo',
