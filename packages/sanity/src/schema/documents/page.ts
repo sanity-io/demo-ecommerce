@@ -106,6 +106,21 @@ export default defineField({
       hidden: ({document}) => !document?.showHero,
       group: 'editorial',
     }),
+    defineField({
+      type: 'image',
+      name: 'articleImage',
+      fields: [
+        defineField({
+          type: 'text',
+          name: 'imagePrompt',
+          title: 'Image prompt',
+          rows: 2,
+        }),
+      ],
+      options: {
+        imagePromptField: 'imagePrompt',
+      },
+    }),
     // Body
     defineField({
       name: 'body',
