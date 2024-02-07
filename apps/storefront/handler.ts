@@ -1,7 +1,7 @@
 // Virtual entry point for the app
 import { STUDIO_PATH } from "@demo-ecommerce/sanity/src/constants";
 import * as remixBuild from "@remix-run/dev/server-build";
-import { createClient as createSanityClient } from "@sanity/client/stega";
+import { createClient as createSanityClient } from "@sanity/client";
 import {
   cartGetIdDefault,
   cartSetIdDefault,

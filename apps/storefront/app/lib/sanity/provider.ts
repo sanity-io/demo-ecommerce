@@ -7,10 +7,6 @@ import type {
   SanityClient,
   UnfilteredResponseQueryOptions,
 } from "@sanity/client";
-import type {
-  InitializedClientStegaConfig,
-  SanityStegaClient,
-} from "@sanity/client/stega";
 import * as queryStore from "@sanity/react-loader";
 import { CacheLong, createWithCache } from "@shopify/hydrogen";
 
@@ -52,15 +48,9 @@ type EnvironmentOptions = {
 };
 
 type QueryStore = ReturnType<typeof queryStore.createQueryStore>;
-type SanityOverlayProviderOptions = {
-  client: SanityStegaClient;
-} & EnvironmentOptions;
-type SanityClientProviderOptions = {
+type SanityProviderOptions = {
   client: SanityClient;
 } & EnvironmentOptions;
-type SanityProviderOptions =
-  | SanityOverlayProviderOptions
-  | SanityClientProviderOptions;
 
 // TODO: narrow the return value based on the options passed in
 export function createSanityProvider(
@@ -111,13 +101,7 @@ export function createSanityProvider(
 
   const { loadQuery } = queryStore;
 
-  // TODO: should this be enforced?
-  // if (client instanceof SanityStegaClient) {
-  //   throw new Error("Stega client must be used with a loader");
-  // }
-
   return {
-    // @ts-expect-error
     client,
     cache,
     loader: { loadQuery },
@@ -129,10 +113,8 @@ export function createSanityProvider(
 /**
  * Checks whether stega is enabled on the configuration passed in
  */
-function isStegaEnabled(
-  config: InitializedClientConfig | InitializedClientStegaConfig
-): config is InitializedClientStegaConfig {
-  return "stega" in config && config.stega?.enabled;
+function isStegaEnabled(config: InitializedClientConfig) {
+  return config.stega?.enabled;
 }
 
 /**

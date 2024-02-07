@@ -1,4 +1,4 @@
-import type { FilterDefault } from "@sanity/client/stega";
+import type { FilterDefault } from "@sanity/client";
 
 const denyList = new Set(["seo"]);
 const allowList = new Set(["title", "text", "body"]);

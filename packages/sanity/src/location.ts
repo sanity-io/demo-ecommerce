@@ -1,4 +1,4 @@
-import type {DocumentLocationResolver, DocumentLocationsState} from '@sanity/presentation'
+import type {DocumentLocationResolver, DocumentLocationsState} from 'sanity/presentation'
 import {map, switchScan} from 'rxjs'
 
 const localeByLanguage = {

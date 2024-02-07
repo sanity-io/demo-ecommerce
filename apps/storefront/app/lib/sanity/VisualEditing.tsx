@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState, useTransition } from "react";
+import { lazy, useSyncExternalStore } from "react";
 
 import { isServer } from "../utils";
 
@@ -26,10 +26,15 @@ const VisualEditingHydrated = isServer()
 
 // Default export required for lazy loading
 export default function VisualEditing() {
-  const [, startTransition] = useTransition();
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => startTransition(() => setHydrated(true)), []);
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
 
   // Prevent hydration mismatch
   return hydrated ? <VisualEditingHydrated /> : <VisualEditingFallback />;
 }
+
+// Empty subscribe function for the useSyncExternalStore hook, as it's only used to detect when hydration is done
+const subscribe = () => () => {};

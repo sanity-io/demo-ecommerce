@@ -1,4 +1,4 @@
-import {usePresentationNavigate, usePresentationParams} from '@sanity/presentation'
+import {usePresentationNavigate, usePresentationParams} from 'sanity/presentation'
 import {Card, Stack, Text} from '@sanity/ui'
 
 const pages = [

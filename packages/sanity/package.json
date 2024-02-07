@@ -17,16 +17,15 @@
     "@sanity/embeddings-index-ui": "^1.1.8",
     "@sanity/google-maps-input": "^3.0.2",
     "@sanity/language-filter": "^3.2.1",
-    "@sanity/presentation": "^1.7.0",
     "@sanity/scheduled-publishing": "^1.2.4",
     "@sanity/ui": "^2.0.1",
-    "@sanity/vision": "^3.21.3",
+    "@sanity/vision": "^3.28.0",
     "rxjs": "^7.8.1",
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-hotspot-array": "^1.0.1",
     "sanity-plugin-internationalized-array": "^1.10.3",
     "sanity-plugin-media": "^2.2.4",
-    "sanity-plugin-workflow": "^1.0.2",
+    "sanity-plugin-workflow": "^1.0.3",
     "slug": "^8.2.2"
   },
   "devDependencies": {
@@ -38,15 +37,15 @@
     "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "^3.26.1",
-    "styled-components": "^5.2",
+    "sanity": "^3.28.0",
+    "styled-components": "^6.1.8",
     "typescript": "^4"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "^3.23.4",
-    "styled-components": "^5.2"
+    "sanity": "^3.28.0",
+    "styled-components": "^6.1.8"
   },
   "prettier": {
     "semi": false,
