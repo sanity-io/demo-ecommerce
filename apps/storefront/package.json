@@ -26,7 +26,7 @@
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "hydrogen-sanity": "^3.3.0",
-    "isbot": "^4.4.0",
+    "isbot": "^5.0.0",
     "lodash.filter": "^4.6.0",
     "pluralize-esm": "^9.0.5",
     "react": "^18.2.0",
