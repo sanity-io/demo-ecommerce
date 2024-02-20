@@ -36,6 +36,15 @@ export default defineField({
       description: 'The primary title of the page, used as the main heading.',
       validation: (rule) => rule.required(),
     }),
+    // Slug
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      description: 'The URL-friendly identifier for the page, derived from the title.',
+      options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
+      validation: validateSlug,
+      group: ['editorial'],
+    }),
     defineField({
       name: 'altTitles',
       title: 'Alternative titles',
@@ -70,14 +79,6 @@ export default defineField({
           ],
         },
       ],
-    }),
-    // Slug
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      description: 'The URL-friendly identifier for the page, derived from the title.',
-      options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
-      validation: validateSlug,
     }),
     // Color Theme
     defineField({

@@ -68,12 +68,12 @@ export function defineSanityConfig(config: SanityConfig) {
     title,
 
     plugins: [
+      structureTool({
+        structure,
+      }),
       presentationTool({
         previewUrl: preview.domain ?? window.location.origin,
         locate,
-      }),
-      structureTool({
-        structure,
       }),
       scheduledPublishing(),
       assist({
@@ -206,7 +206,7 @@ export function defineSanityConfig(config: SanityConfig) {
       name: 'commerce',
       basePath: '/commerce',
       plugins: [
-        ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
+        // ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
         structureTool({
           structure: commerceStructure,
         }),
@@ -215,9 +215,9 @@ export function defineSanityConfig(config: SanityConfig) {
           if (name && ['sanity/structure', '@sanity/vision'].includes(name)) {
             return false
           }
-          if (isPresentation(tools)) {
-            return false
-          }
+          // if (isPresentation(tools)) {
+          //   return false
+          // }
           return true
         }),
       ],
@@ -228,7 +228,7 @@ export function defineSanityConfig(config: SanityConfig) {
       name: 'magazine',
       basePath: '/magazine',
       plugins: [
-        ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
+        // ...sharedConfig.plugins.filter(({tools = []}) => isPresentation(tools)),
         structureTool({
           structure: magazineStructure,
         }),
@@ -237,9 +237,9 @@ export function defineSanityConfig(config: SanityConfig) {
           if (name && ['sanity/structure', '@sanity/vision'].includes(name)) {
             return false
           }
-          if (isPresentation(tools)) {
-            return false
-          }
+          // if (isPresentation(tools)) {
+          //   return false
+          // }
           return true
         }),
       ],
