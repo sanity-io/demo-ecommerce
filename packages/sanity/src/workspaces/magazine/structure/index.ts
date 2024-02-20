@@ -20,10 +20,16 @@ export const magazineStructure: StructureResolver = (S, context) =>
         .icon(() => '👀'),
       S.divider(),
       pages(S, context),
-      S.documentTypeListItem('page')
+      S.listItem()
         .id('experiments')
         .title('Experiments')
-        .icon(() => '🧪'),
+        .icon(() => '🧪')
+        .child(
+          S.documentList()
+            .title('Experiments')
+            .schemaType('page')
+            .filter('_type == "page" && defined(altTitles)')
+        ),
       S.divider(),
       S.listItem().title('Authors').icon(UsersIcon),
       S.divider(),
