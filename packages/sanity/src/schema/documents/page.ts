@@ -49,7 +49,7 @@ export default defineField({
       name: 'altTitles',
       title: 'Alternative titles',
       type: 'array',
-      group: ['editorial', 'seo'],
+      group: ['editorial'],
       description: 'Provide alternative titles for A/B/N testing',
       of: [
         {
@@ -135,15 +135,15 @@ export default defineField({
       title: 'Related content',
       description: 'Drive readers to this related content.',
       type: 'array',
-      group: ['seo', 'editorial'],
+      group: ['editorial'],
       validation: (rule) => rule.unique(),
       of: [
         defineArrayMember({
           name: 'article',
           type: 'reference',
-          to: [{type: 'guide'}],
+          to: [{type: 'page'}],
           options: {
-            aiWritingAssistance: {
+            aiAssist: {
               embeddingsIndex: 'Everything',
             },
           },
@@ -163,7 +163,7 @@ export default defineField({
               type: 'reference',
               to: [{type: 'page'}, {type: 'guide'}],
               options: {
-                aiWritingAssistance: {
+                aiAssist: {
                   embeddingsIndex: 'Everything',
                 },
               },
