@@ -22,7 +22,7 @@
     "@shopify/remix-oxygen": "^2.0.2",
     "@tippyjs/react": "^4.2.6",
     "clsx": "^2.1.0",
-    "embla-carousel-react": "^7.1.0",
+    "embla-carousel-react": "^8.0.0",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "hydrogen-sanity": "^3.3.0",
