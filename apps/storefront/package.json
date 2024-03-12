@@ -41,7 +41,7 @@
     "@remix-run/eslint-config": "^2.5.1",
     "@sanity/types": "^3.25.0",
     "@shopify/cli": "^3.53.1",
-    "@shopify/cli-hydrogen": "^6.1.0",
+    "@shopify/cli-hydrogen": "^7.1.2",
     "@shopify/oxygen-workers-types": "^4.0.0",
     "@shopify/prettier-config": "^1.1.2",
     "@types/eslint": "^8.56.2",
