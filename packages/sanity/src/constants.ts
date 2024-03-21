@@ -34,6 +34,16 @@ export const ENVIRONMENT = Symbol('Sanity Environment')
 export const LANGUAGES = [
   {id: 'en', title: 'English', icon: '🇬🇧', previewUrl: ''},
   {id: 'no', title: 'Norwegian', icon: '🇳🇴', previewUrl: 'no-no'},
+  {id: 'de', title: 'German', icon: '🇩🇪', previewUrl: ''},
+  {id: 'fr', title: 'French', icon: '🇫🇷', previewUrl: ''},
+  {id: 'es', title: 'Spanish', icon: '🇪🇸', previewUrl: ''},
+  {id: 'it', title: 'Italian', icon: '🇮🇹', previewUrl: ''},
+  {id: 'pt', title: 'Portuguese', icon: '🇵🇹', previewUrl: ''},
+  {id: 'nl', title: 'Dutch', icon: '🇳🇱', previewUrl: ''},
+  {id: 'sv', title: 'Swedish', icon: '🇸🇪', previewUrl: ''},
+  {id: 'fi', title: 'Finnish', icon: '🇫🇮', previewUrl: ''},
+  {id: 'da', title: 'Danish', icon: '🇩🇰', previewUrl: ''},
+  {id: 'pl', title: 'Polish', icon: '🇵🇱', previewUrl: ''},
 ]
 
 export const STUDIO_PATH = '/studio'

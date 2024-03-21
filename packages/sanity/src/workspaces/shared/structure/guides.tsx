@@ -16,7 +16,7 @@ export default defineStructure<ListItemBuilder>((S) =>
         .items([
           ...LANGUAGES.map((language) =>
             S.listItem()
-              .title(`Guides (${language.id.toLocaleUpperCase()})`)
+              .title(`Guides (${language.title})`)
               .schemaType('guide')
               .icon(() => <TranslatedDoc icon={<EarthGlobeIcon />} languageIcon={language.icon} />)
               .child(

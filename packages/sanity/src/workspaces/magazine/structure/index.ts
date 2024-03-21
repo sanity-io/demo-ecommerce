@@ -2,6 +2,7 @@ import {UsersIcon} from '@sanity/icons'
 import {StructureResolver} from 'sanity/structure'
 
 import {eventNode} from '../../shared/structure/events'
+import guides from '../../shared/structure/guides'
 import pages from '../../shared/structure/pages'
 
 export const magazineStructure: StructureResolver = (S, context) =>
@@ -9,7 +10,7 @@ export const magazineStructure: StructureResolver = (S, context) =>
     .title('Magazine content')
     .items([
       //home(S, context),
-      S.documentTypeListItem('guide').title('Articles'),
+      guides(S, context),
       S.documentTypeListItem('guide')
         .id('top-guides')
         .title('Top performing stories')

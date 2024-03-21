@@ -80,7 +80,7 @@ export function defineSanityConfig(config: SanityConfig) {
         translate: {
           document: {
             languageField: 'language',
-            schemaTypes: ['guide', 'page'],
+            documentTypes: ['guide', 'page', 'settings'],
           },
           field: {
             documentTypes: ['collection', 'material', 'product', 'person'],
