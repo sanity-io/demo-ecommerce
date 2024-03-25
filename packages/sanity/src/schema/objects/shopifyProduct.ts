@@ -8,7 +8,7 @@ export default defineField({
     collapsed: false,
     collapsible: true,
   },
-  readOnly: false,
+  readOnly: true,
   fieldsets: [
     {
       name: 'status',
