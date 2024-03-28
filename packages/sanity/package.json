@@ -15,7 +15,7 @@
     "@sanity/document-internationalization": "^2.0.3",
     "@sanity/language-filter": "^3.2.2",
     "@sanity/scheduled-publishing": "^1.2.4",
-    "@sanity/ui": "2.0.1",
+    "@sanity/ui": "2.0.12",
     "@sanity/vision": "^3.25.0",
     "sanity-plugin-documents-pane": "^2.2.0",
     "sanity-plugin-hotspot-array": "^1.0.1",
@@ -27,12 +27,12 @@
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
     "@types/lodash.get": "^4.4.9",
-    "@types/slug": "^5.0.7",
-    "eslint": "^8.56.0",
+    "@types/slug": "^5.0.8",
+    "eslint": "^8.57.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^3.2.4",
-    "react": "^18",
-    "typescript": "^5"
+    "react": "^18.2.0",
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
     "react": "^18",
